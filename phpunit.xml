@@ -1,0 +1,26 @@
+<phpunit
+        bootstrap="tests/autoload.php"
+        colors="true"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+>
+    <filter>
+        <whitelist>
+            <directory>./src</directory>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <log type="coverage-html" target="coverage" title="PHPUnit"
+             charset="UTF-8" yui="true" highlight="true"
+             lowUpperBound="50" highLowerBound="90"/>
+    </logging>
+
+    <testsuites>
+        <testsuite name="converter">
+            <directory suffix="Test.php">tests</directory>
+        </testsuite>
+    </testsuites>
+
+</phpunit>

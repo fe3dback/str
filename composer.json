@@ -1,0 +1,20 @@
+{
+    "name": "str/str",
+    "authors": [
+        {
+            "name": "fe3dback",
+            "email": "fe3dback@yandex.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "FS\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require-dev": {
+        "phpbench/phpbench": "1.0.*",
+        "phpunit/phpunit": "^7.1@dev",
+        "danielstjules/stringy": "^3.1"
+    }
+}
