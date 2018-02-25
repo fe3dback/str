@@ -6,7 +6,7 @@
       "extends": "default",
       "title": "The Consumation of Time",
       "description": "Benchmark how long it takes to consume time",
-      "cols": [ "subject", "mode", "diff"],
+      "cols": [ "benchmark", "subject", "mode", "diff"],
       "diff_col": "mode",
       "sort": {"mode":"asc", "benchmark": "asc"},
       "iterations": true

@@ -198,6 +198,123 @@ class SCommonTest extends TestCase
             ];
     }
 
+    public function ContainsProvider()
+    {
+        return
+            [
+                [
+                    ['Hello world', 'o wor'],
+                    true
+                ],
+
+                [
+                    ['Hello world', 'rld'],
+                    true
+                ],
+
+                [
+                    ['世Hello', '世'],
+                    true
+                ],
+
+                [
+                    ['世', '世'],
+                    true
+                ],
+
+                [
+                    ['', ''],
+                    true
+                ],
+
+                [
+                    ['世', ''],
+                    true
+                ],
+
+                [
+                    ['q', 'q'],
+                    true
+                ],
+
+                [
+                    ['qq', 'q!'],
+                    false
+                ],
+
+                [
+                    [' test ', ' test '],
+                    true
+                ],
+
+                [
+                    ['Hello spaces world', ' '],
+                    true
+                ],
+            ];
+    }
+
+    public function ReplaceProvider()
+    {
+        return
+            [
+                [
+                    ['oink oink oinkk', 'k', 'ky', 2],
+                    'oinky oinky oinkk'
+                ],
+
+                [
+                    ['oink oink oink', 'k', 'ky', 4],
+                    'oinky oinky oinky'
+                ],
+
+                [
+                    ['oink oink oink', 'oink', 'moo', -1],
+                    'moo moo moo'
+                ],
+
+                [
+                    ['hello world, hello universe', 'hello', 'привет', 1],
+                    'привет world, hello universe'
+                ],
+
+                [
+                    ['banana', 'a', 'e', 4],
+                    'benene'
+                ],
+
+                [
+                    ['ban 世 a!', ' 世', ' foo', -1],
+                    'ban foo a!'
+                ],
+
+                [
+                    ['世世世世世', '世', '界', 2],
+                    '界界世世世'
+                ],
+
+                [
+                    ['世世世世世', '世', '界', 0],
+                    '世世世世世'
+                ],
+
+                [
+                    ['世q世q世', 'q', 'q', 5],
+                    '世q世q世'
+                ],
+
+                [
+                    ['世q世q世', 'z', 'zz', 2],
+                    '世q世q世'
+                ],
+
+                [
+                    ['', 'a', 'b', -1],
+                    ''
+                ],
+            ];
+    }
+
     /**
      * @dataProvider EnsureLeftProvider
      * @param array $inp
@@ -205,7 +322,7 @@ class SCommonTest extends TestCase
      */
     public function testEnsureLeft(array $inp, string $out)
     {
-        $this->assertEquals($out, Lib\SCommon::ensureLeft(
+        $this->assertEquals($out, Lib\StrCommon::ensureLeft(
             array_shift($inp),
             array_shift($inp)
         ));
@@ -218,7 +335,7 @@ class SCommonTest extends TestCase
      */
     public function testEnsureRight(array $inp, string $out)
     {
-        $this->assertEquals($out, Lib\SCommon::ensureRight(
+        $this->assertEquals($out, Lib\StrCommon::ensureRight(
             array_shift($inp),
             array_shift($inp)
         ));
@@ -231,7 +348,7 @@ class SCommonTest extends TestCase
      */
     public function testHasPrefix(array $inp, bool $result)
     {
-        $this->assertEquals($result, Lib\SCommon::hasPrefix(
+        $this->assertEquals($result, Lib\StrCommon::hasPrefix(
             array_shift($inp),
             array_shift($inp)
         ));
@@ -244,9 +361,126 @@ class SCommonTest extends TestCase
      */
     public function testHasSuffix(array $inp, bool $result)
     {
-        $this->assertEquals($result, Lib\SCommon::hasSuffix(
+        $this->assertEquals($result, Lib\StrCommon::hasSuffix(
             array_shift($inp),
             array_shift($inp)
         ));
+    }
+
+    /**
+     * @dataProvider ContainsProvider
+     * @param array $inp
+     * @param bool $result
+     */
+    public function testContains(array $inp, bool $result)
+    {
+        $this->assertEquals($result, Lib\StrCommon::contains(
+            array_shift($inp),
+            array_shift($inp)
+        ));
+    }
+
+    /**
+     * @dataProvider ReplaceProvider
+     * @param array $params
+     * @param bool $expected
+     */
+    public function testReplace(array $params, string $expected)
+    {
+        $this->assertEquals($expected, Lib\StrCommon::replace(
+            array_shift($params), // s
+            array_shift($params), // old
+            array_shift($params), // new
+            array_shift($params)  // limit
+        ));
+    }
+
+    /**
+     * @dataProvider trimProvider()
+     * @param $expected
+     * @param $str
+     * @param string $chars
+     */
+    public function testTrim($expected, $str, $chars = '')
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->trim($chars));
+    }
+    public function trimProvider()
+    {
+        return [
+            ['foo   bar', '  foo   bar  '],
+            ['foo bar', ' foo bar'],
+            ['foo bar', 'foo bar '],
+            ['foo bar', "\n\t foo bar \n\t"],
+            ['fòô   bàř', '  fòô   bàř  '],
+            ['fòô bàř', ' fòô bàř'],
+            ['fòô bàř', 'fòô bàř '],
+            [' foo bar ', "\n\t foo bar \n\t", "\n\t"],
+            ['fòô bàř', "\n\t fòô bàř \n\t", ''],
+            ['fòô', ' fòô ', ''], // narrow no-break space (U+202F)
+            ['fòô', '  fòô  ', ''], // medium mathematical space (U+205F)
+            ['fòô', '           fòô', ''] // spaces U+2000 to U+200A
+        ];
+    }
+
+    /**
+     * @dataProvider trimLeftProvider()
+     * @param $expected
+     * @param $str
+     * @param string $chars
+     */
+    public function testTrimLeft($expected, $str, $chars = '')
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->trimLeft($chars));
+    }
+    public function trimLeftProvider()
+    {
+        return [
+            ['foo   bar  ', '  foo   bar  '],
+            ['foo bar', ' foo bar'],
+            ['foo bar ', 'foo bar '],
+            ["foo bar \n\t", "\n\t foo bar \n\t"],
+            ['fòô   bàř  ', '  fòô   bàř  '],
+            ['fòô bàř', ' fòô bàř'],
+            ['fòô bàř ', 'fòô bàř '],
+            ['foo bar', '--foo bar', '-'],
+            ['fòô bàř', 'òòfòô bàř', 'ò', 'UTF-8'],
+            ["fòô bàř \n\t", "\n\t fòô bàř \n\t", ''],
+            ['fòô ', ' fòô ', ''], // narrow no-break space (U+202F)
+            ['fòô  ', '  fòô  ', ''], // medium mathematical space (U+205F)
+            ['fòô', '           fòô', ''] // spaces U+2000 to U+200A
+        ];
+    }
+
+    /**
+     * @dataProvider trimRightProvider()
+     * @param $expected
+     * @param $str
+     * @param string $chars
+     */
+    public function testTrimRight($expected, $str, $chars = '')
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->trimRight($chars));
+    }
+    public function trimRightProvider()
+    {
+        return [
+            ['  foo   bar', '  foo   bar  '],
+            ['foo bar', 'foo bar '],
+            [' foo bar', ' foo bar'],
+            ["\n\t foo bar", "\n\t foo bar \n\t"],
+            ['  fòô   bàř', '  fòô   bàř  '],
+            ['fòô bàř', 'fòô bàř '],
+            [' fòô bàř', ' fòô bàř'],
+            ['foo bar', 'foo bar--', '-'],
+            ['fòô bàř', 'fòô bàřòò', 'ò', 'UTF-8'],
+            ["\n\t fòô bàř", "\n\t fòô bàř \n\t", ''],
+            [' fòô', ' fòô ', ''], // narrow no-break space (U+202F)
+            ['  fòô', '  fòô  ', ''], // medium mathematical space (U+205F)
+            ['fòô', 'fòô           ', ''] // spaces U+2000 to U+200A
+        ];
     }
 }

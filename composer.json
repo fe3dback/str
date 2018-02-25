@@ -1,11 +1,26 @@
 {
     "name": "str/str",
+    "description": "A fast string manipulation library with multibyte support. Based on danielstjules/Stringy, with focus on speed.",
+    "homepage": "https://github.com/fe3dback/str",
+    "license": "MIT",
     "authors": [
         {
             "name": "fe3dback",
             "email": "fe3dback@yandex.ru"
+        },
+        {
+            "name": "Daniel St. Jules",
+            "email": "danielst.jules@gmail.com",
+            "homepage": "http://www.danielstjules.com"
         }
     ],
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "support": {
+        "issues": "https://github.com/fe3dback/str/issues",
+        "source": "https://github.com/fe3dback/str"
+    },
     "autoload": {
         "psr-4": {
             "FS\\": "src/"
