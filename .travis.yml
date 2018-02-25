@@ -1,0 +1,9 @@
+language: php
+php:
+  - 7.1
+
+install:
+  - composer install --no-interaction --dev
+
+script:
+  - php ./vendor/bin/phpunit -c phpunit.xml
