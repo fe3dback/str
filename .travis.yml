@@ -6,4 +6,8 @@ install:
   - composer install --no-interaction --dev
 
 script:
+  - mkdir -p ./build/logs
   - php ./vendor/bin/phpunit -c phpunit.xml
+
+after_success:
+  - travis_retry php ./vendor/bin/php-coveralls

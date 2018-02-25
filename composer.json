@@ -15,6 +15,7 @@
     "require-dev": {
         "phpbench/phpbench": "1.0.*",
         "phpunit/phpunit": "^7.1@dev",
-        "danielstjules/stringy": "^3.1"
+        "danielstjules/stringy": "^3.1",
+        "php-coveralls/php-coveralls": "2.0.x-dev"
     }
 }
