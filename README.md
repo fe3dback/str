@@ -1,13 +1,37 @@
-# str
+# str/str
 
 _in dev, please do not use in production_
+
+```php
+$s = new Str('Hello, 世界');
+$s->last(2); // 世界
+$s->chars(); // ['H','e','l','l','o',',',' ','世','界']
+
+$s
+    ->ensureLeft('H') // Hello, 世界
+    ->ensureRight('!!!') // Hello, 世界!!!
+    ->trimRight('!') // Hello, 世界
+    ->append('Str say - '); // Str say - Hello, 世界
+
+$send = function (string $s) {};
+$send((string)$s); // same
+$send($s->toString()); // same
+$send($s->getString()); // same
+```
 
 A fast string manipulation library with multibyte support. 
 Based on "Stringy" library, with focus on speed.
 
+Lib uses php7 features and does not throw any 
+exceptions (because all input parameters are 
+strongly typed). The code is completely covered by unit tests)
+
 [![Build Status](https://travis-ci.org/fe3dback/str.svg?branch=master)](https://travis-ci.org/fe3dback/str) [![Coverage Status](https://coveralls.io/repos/github/fe3dback/str/badge.svg?branch=master)](https://coveralls.io/github/fe3dback/str?branch=master)
 
 ## install
+
+__Requirements__:
+- php7.0
 
 ```bash
 composer require str/str
@@ -102,6 +126,10 @@ composer require str/str
 - [ ] upperCaseFirst
 
 ## benchmark
+
+```bash
+./vendor/bin/phpbench run --report=str
+```
 
 Test subjects:
 - FS ([str/str](https://github.com/fe3dback/str))

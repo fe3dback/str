@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace FS;
-
-use FS\Lib\StrCommon;
-use FS\Lib\StrModifiers;
+use \Str\Str;
+use \Str\Lib\StrCommon;
+use \Str\Lib\StrModifiers;
 use PHPUnit\Framework\TestCase;
 
 class StrCommonTest extends TestCase
@@ -121,7 +120,7 @@ class StrCommonTest extends TestCase
      */
     public function testHasPrefix(array $inp, bool $result)
     {
-        $this->assertEquals($result, Lib\StrCommon::hasPrefix(
+        $this->assertEquals($result, StrCommon::hasPrefix(
             array_shift($inp),
             array_shift($inp)
         ));
@@ -188,7 +187,7 @@ class StrCommonTest extends TestCase
      */
     public function testHasSuffix(array $inp, bool $result)
     {
-        $this->assertEquals($result, Lib\StrCommon::hasSuffix(
+        $this->assertEquals($result, StrCommon::hasSuffix(
             array_shift($inp),
             array_shift($inp)
         ));
@@ -255,7 +254,7 @@ class StrCommonTest extends TestCase
      */
     public function testContains(array $inp, bool $result)
     {
-        $this->assertEquals($result, Lib\StrCommon::contains(
+        $this->assertEquals($result, StrCommon::contains(
             array_shift($inp),
             array_shift($inp)
         ));

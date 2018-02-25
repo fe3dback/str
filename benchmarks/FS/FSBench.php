@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Benchmark\FS;
 
-use FS\Str;
+use Str\Str;
 
 class FSBench
 {

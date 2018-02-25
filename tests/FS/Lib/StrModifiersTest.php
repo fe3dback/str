@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace FS;
-
-use FS\Lib\StrModifiers;
+use Str\Str;
+use Str\Lib\StrModifiers;
 use PHPUnit\Framework\TestCase;
 
 class StrModifiersTest extends TestCase

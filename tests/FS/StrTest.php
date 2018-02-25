@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FS;
+namespace Str;
 
 use PHPUnit\Framework\TestCase;
 

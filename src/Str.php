@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
-namespace FS;
+namespace Str;
 
-use \FS\Lib\StrCommon;
-use FS\Lib\StrModifiers;
+use \Str\Lib\StrCommon;
+use \Str\Lib\StrModifiers;
 
 class Str
 {
+    const ENCODING = 'UTF-8';
+
     /** @var string */
     private $str;
 

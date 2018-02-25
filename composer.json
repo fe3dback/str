@@ -23,7 +23,7 @@
     },
     "autoload": {
         "psr-4": {
-            "FS\\": "src/"
+            "Str\\": "src/"
         }
     },
     "minimum-stability": "dev",

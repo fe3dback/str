@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FS\Lib;
+namespace Str\Lib;
 
 class StrModifiers
 {
