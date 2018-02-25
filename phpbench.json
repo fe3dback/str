@@ -4,13 +4,12 @@
   "reports": {
     "str": {
       "extends": "default",
-      "title": "The Consumation of Time",
-      "description": "Benchmark how long it takes to consume time",
-      "cols": [ "benchmark", "subject", "mode", "diff"],
+      "title": "Benchmark string libs",
+      "cols": [ "benchmark", "subject", "mode", "mem_peak", "diff"],
       "diff_col": "mode",
-      "sort": {"mode":"asc", "benchmark": "asc"},
+      "sort": {"benchmark":"asc", "mode": "asc"},
+      "break": ["benchmark"],
       "iterations": true
-
     }
   }
 }

@@ -129,4 +129,95 @@ class StrCommon
 
         return self::substr($s, -$length);
     }
+
+    /**
+     * Returns the index of the first occurrence of $needle in the string,
+     * and false if not found. Accepts an optional offset from which to begin
+     * the search.
+     *
+     * @param  string $haystack
+     * @param  string $needle Substring to look for
+     * @param  int $offset Offset from which to search
+     * @return int The occurrence's index if found, otherwise -1
+     */
+    final public static function indexOf(string $haystack, string $needle, int $offset = 0): int
+    {
+        if ($needle === '' || $haystack === '') {
+            return -1;
+        }
+
+        $maxLen = \mb_strlen($haystack);
+
+        if ($offset < 0) {
+            $offset = $maxLen - (int)abs($offset);
+        }
+
+        if ($offset > $maxLen) {
+            return -1;
+        }
+
+        if ($offset < 0) {
+            return -1;
+        }
+
+        $pos = \mb_strpos($haystack, $needle, $offset);
+        return false === $pos ? -1 : $pos;
+    }
+
+    /**
+     * Returns the index of the last occurrence of $needle in the string,
+     * and false if not found. Accepts an optional offset from which to begin
+     * the search. Offsets may be negative to count from the last character
+     * in the string.
+     *
+     * @param  string $haystack
+     * @param  string $needle Substring to look for
+     * @param  int $offset Offset from which to search
+     * @return int The last occurrence's index if found, otherwise -1
+     */
+    final public static function indexOfLast(string $haystack, string $needle, int $offset = 0): int
+    {
+        if ($needle === '' || $haystack === '') {
+            return -1;
+        }
+
+        $maxLen = \mb_strlen($haystack);
+
+        if ($offset < 0) {
+            $offset = $maxLen - (int)abs($offset);
+        }
+
+        if ($offset > $maxLen) {
+            return -1;
+        }
+
+        if ($offset < 0) {
+            return -1;
+        }
+
+        $pos = \mb_strrpos($haystack, $needle, $offset) ?: -1;
+        return false === $pos ? -1 : $pos;
+    }
+
+    /**
+     * Returns the number of occurrences of $substring in the given string.
+     * By default, the comparison is case-sensitive, but can be made insensitive
+     * by setting $caseSensitive to false.
+     *
+     * @param  string $haystack
+     * @param  string $needle The substring to search for
+     * @param  bool $caseSensitive Whether or not to enforce case-sensitivity
+     * @return int The number of $substring occurrences
+     */
+    final public static function countSubstr(string $haystack, string $needle, bool $caseSensitive = true): int
+    {
+        if ($caseSensitive) {
+            return \mb_substr_count($haystack, $needle);
+        }
+
+        $haystack = (string)\mb_strtoupper($haystack);
+        $needle = (string)\mb_strtoupper($needle);
+
+        return \mb_substr_count($haystack, $needle);
+    }
 }

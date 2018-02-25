@@ -104,6 +104,14 @@ class StrTest extends TestCase
         $this->assertEquals('', $s->first(0));
         $this->assertEquals('bàř', $s->last(3));
         $this->assertEquals('', $s->last(-1));
+
+        $this->assertEquals(6, $s->indexOf('世'));
+        $this->assertEquals(2, $s->indexOf('l'));
+        $this->assertEquals(3, $s->indexOfLast('l'));
+
+        $s = new Str(' 世 HeLlo 世 fòôbàř');
+        $this->assertEquals(2, $s->countSubstr('世'));
+        $this->assertEquals(2, $s->countSubstr('l', false));
     }
 
 

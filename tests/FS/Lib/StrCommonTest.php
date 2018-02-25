@@ -435,4 +435,102 @@ class StrCommonTest extends TestCase
             ['fòô bàř', 'fòô bàř', 8],
         ];
     }
+
+    /**
+     * @dataProvider indexOfProvider()
+     * @param $expected
+     * @param $haystack
+     * @param $needle
+     * @param int $offset
+     */
+    public function testIndexOf($expected, $haystack, $needle, $offset = 0)
+    {
+        $this->assertEquals($expected, StrCommon::indexOf($haystack, $needle, $offset));
+    }
+    public function indexOfProvider()
+    {
+        return [
+            [6, 'foo & bar', 'bar'],
+            [6, 'foo & bar', 'bar', 0],
+            [-1, 'foo & bar', 'baz'],
+            [-1, 'foo & bar', 'baz', 0],
+            [0, 'foo & bar & foo', 'foo', 0],
+            [12, 'foo & bar & foo', 'foo', 5],
+            [12, 'foo & bar & foo', 'foo', -5],
+            [6, 'fòô & bàř', 'bàř', 0],
+            [-1, 'fòô & bàř', 'baz', 0],
+            [0, 'fòô & bàř & fòô', 'fòô', 0],
+            [12, 'fòô & bàř & fòô', 'fòô', 5],
+            [12, 'fòô & bàř & fòô', 'fòô', -5],
+            [-1, 'q', 'q', -5],
+            [-1, '', '', 0],
+            [-1, 'q', '', 0],
+            [-1, '', 'q', 0],
+            [-1, 'q', 'q', 5],
+        ];
+    }
+
+    /**
+     * @dataProvider indexOfLastProvider()
+     * @param $expected
+     * @param $haystack
+     * @param $needle
+     * @param int $offset
+     */
+    public function testIndexOfLast($expected, $haystack, $needle, $offset = 0)
+    {
+        $this->assertEquals($expected, StrCommon::indexOfLast($haystack, $needle, $offset));
+    }
+    public function indexOfLastProvider()
+    {
+        return [
+            [6, 'foo & bar', 'bar'],
+            [6, 'foo & bar', 'bar', 0],
+            [-1, 'foo & bar', 'baz'],
+            [-1, 'foo & bar', 'baz', 0],
+            [12, 'foo & bar & foo', 'foo', 0],
+            [12, 'foo & bar & foo', 'foo', -5],
+            [6, 'fòô & bàř', 'bàř', 0],
+            [-1, 'fòô & bàř', 'baz', 0],
+            [12, 'fòô & bàř & fòô', 'fòô', 0],
+            [12, 'fòô & bàř & fòô', 'fòô', -5],
+            [-1, 'q', 'q', -5],
+            [-1, '', '', 0],
+            [-1, 'q', '', 0],
+            [-1, '', 'q', 0],
+            [-1, 'q', 'q', 5],
+        ];
+    }
+
+    /**
+     * @dataProvider countSubstrProvider()
+     * @param $expected
+     * @param $str
+     * @param $substring
+     * @param bool $caseSensitive
+     */
+    public function testCountSubstr($expected, $str, $substring, $caseSensitive = true)
+    {
+        $this->assertEquals($expected, StrCommon::countSubstr($str, $substring, $caseSensitive));
+    }
+    public function countSubstrProvider()
+    {
+        return [
+            [0, '', 'foo'],
+            [0, 'foo', 'bar'],
+            [1, 'foo bar', 'foo'],
+            [2, 'foo bar', 'o'],
+            [0, '', 'fòô'],
+            [0, 'fòô', 'bàř'],
+            [1, 'fòô bàř', 'fòô'],
+            [2, 'fôòô bàř', 'ô'],
+            [0, 'fÔÒÔ bàř', 'ô'],
+            [0, 'foo', 'BAR', false],
+            [1, 'foo bar', 'FOo', false],
+            [2, 'foo bar', 'O', false],
+            [1, 'fòô bàř', 'fÒÔ', false],
+            [2, 'fôòô bàř', 'Ô', false],
+            [2, 'συγγραφέας', 'Σ', false]
+        ];
+    }
 }

@@ -9,8 +9,6 @@ use \Str\Lib\StrModifiers;
 
 class Str
 {
-    const ENCODING = 'UTF-8';
-
     /** @var string */
     private $str;
 
@@ -262,5 +260,48 @@ class Str
     public function last(int $length = 1): string
     {
         return StrCommon::last($this->str, $length);
+    }
+
+    /**
+     * Returns the index of the first occurrence of $needle in the string,
+     * and false if not found. Accepts an optional offset from which to begin
+     * the search.
+     *
+     * @param  string $needle Substring to look for
+     * @param  int $offset Offset from which to search
+     * @return int The occurrence's index if found, otherwise -1
+     */
+    public function indexOf(string $needle, int $offset = 0): int
+    {
+        return StrCommon::indexOf($this->str, $needle, $offset);
+    }
+
+    /**
+     * Returns the index of the last occurrence of $needle in the string,
+     * and false if not found. Accepts an optional offset from which to begin
+     * the search. Offsets may be negative to count from the last character
+     * in the string.
+     *
+     * @param  string $needle Substring to look for
+     * @param  int $offset Offset from which to search
+     * @return int The last occurrence's index if found, otherwise -1
+     */
+    public function indexOfLast(string $needle, int $offset = 0): int
+    {
+        return StrCommon::indexOfLast($this->str, $needle, $offset);
+    }
+
+    /**
+     * Returns the number of occurrences of $substring in the given string.
+     * By default, the comparison is case-sensitive, but can be made insensitive
+     * by setting $caseSensitive to false.
+     *
+     * @param  string $needle The substring to search for
+     * @param  bool $caseSensitive Whether or not to enforce case-sensitivity
+     * @return int The number of $substring occurrences
+     */
+    public function countSubstr(string $needle, bool $caseSensitive = true): int
+    {
+        return StrCommon::countSubstr($this->str, $needle, $caseSensitive);
     }
 }
