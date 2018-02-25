@@ -42,4 +42,26 @@ class StringyBench
     {
         (new Stringy(' hello world  '))->trimRight();
     }
+
+    public function bench_Length(): void
+    {
+        (new Stringy('Hello world'))->length();
+    }
+
+    public function bench_First(): void
+    {
+        (new Stringy('Hello world'))->first(6);
+        (new Stringy('Hello world'))->first(-6);
+    }
+
+    public function bench_Last(): void
+    {
+        (new Stringy('Hello world'))->first(6);
+        (new Stringy('Hello world'))->first(-6);
+    }
+
+    public function chars(): void
+    {
+        (new Stringy('Hello world'))->chars();
+    }
 }

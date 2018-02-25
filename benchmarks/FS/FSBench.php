@@ -42,4 +42,26 @@ class FSBench
     {
         (new Str(' hello world  '))->trimRight();
     }
+
+    public function bench_Length(): void
+    {
+        (new Str('Hello world'))->length();
+    }
+
+    public function bench_First(): void
+    {
+        (new Str('Hello world'))->first(6);
+        (new Str('Hello world'))->first(-6);
+    }
+
+    public function bench_Last(): void
+    {
+        (new Str('Hello world'))->first(6);
+        (new Str('Hello world'))->first(-6);
+    }
+
+    public function chars(): void
+    {
+        (new Str('Hello world'))->chars();
+    }
 }

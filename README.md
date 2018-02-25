@@ -20,19 +20,26 @@ composer require str/str
 - [x] ensureRight
 - [x] hasPrefix
 - [x] hasSuffix
+- [x] contains
 - [x] replace - add limit param
+- [x] toLowerCase
+- [x] toUpperCase
 - [x] trim
 - [x] trimLeft
 - [x] trimRight
+- [x] append
+- [x] prepend
+- [x] at
+- [x] substr
+- [x] chars
+- [x] first
+- [x] last
+- [x] length
 
 ### Todo Stringy
-- [ ] append
-- [ ] at
 - [ ] between
 - [ ] camelize
-- [ ] chars
 - [ ] collapseWhitespace
-- [ ] contains
 - [ ] containsAll
 - [ ] containsAny
 - [ ] countSubstr
@@ -40,7 +47,6 @@ composer require str/str
 - [ ] delimit
 - [ ] endsWith
 - [ ] endsWithAny
-- [ ] first
 - [ ] getEncoding
 - [ ] hasLowerCase
 - [ ] hasUpperCase
@@ -59,8 +65,6 @@ composer require str/str
 - [ ] isLowerCase
 - [ ] isSerialized
 - [ ] isUpperCase
-- [ ] last
-- [ ] length
 - [ ] lines
 - [ ] longestCommonPrefix
 - [ ] longestCommonSuffix
@@ -70,7 +74,6 @@ composer require str/str
 - [ ] padBoth
 - [ ] padLeft
 - [ ] padRight
-- [ ] prepend
 - [ ] regexReplace
 - [ ] removeLeft
 - [ ] removeRight
@@ -84,18 +87,15 @@ composer require str/str
 - [ ] startsWith
 - [ ] startsWithAny
 - [ ] stripWhitespace
-- [ ] substr
 - [ ] surround
 - [ ] swapCase
 - [ ] tidy
 - [ ] titleize
 - [ ] toAscii
 - [ ] toBoolean
-- [ ] toLowerCase
 - [ ] toSpaces
 - [ ] toTabs
 - [ ] toTitleCase
-- [ ] toUpperCase
 - [ ] truncate
 - [ ] underscored
 - [ ] upperCamelize

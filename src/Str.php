@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FS;
 
 use \FS\Lib\StrCommon;
+use FS\Lib\StrModifiers;
 
 class Str
 {
@@ -45,7 +46,7 @@ class Str
     }
 
     /**
-     * string has prefix at the start
+     * check if string has prefix at the start?
      *
      * @param string $prefix
      * @return bool
@@ -56,7 +57,7 @@ class Str
     }
 
     /**
-     * string has suffix at the end?
+     * check if string has suffix at the end?
      *
      * @param string $suffix
      * @return bool
@@ -75,7 +76,7 @@ class Str
      */
     public function ensureLeft(string $check): Str
     {
-        $this->str = StrCommon::ensureLeft($this->str, $check);
+        $this->str = StrModifiers::ensureLeft($this->str, $check);
         return $this;
     }
 
@@ -88,8 +89,19 @@ class Str
      */
     public function ensureRight(string $check): Str
     {
-        $this->str = StrCommon::ensureRight($this->str, $check);
+        $this->str = StrModifiers::ensureRight($this->str, $check);
         return $this;
+    }
+
+    /**
+     * Check if $haystack contain $needle substring
+     *
+     * @param string $sub
+     * @return bool
+     */
+    public function contains(string $sub): bool
+    {
+        return StrCommon::contains($this->str, $sub);
     }
 
     /**
@@ -107,7 +119,7 @@ class Str
      */
     public function replace(string $old, string $new, int $times = -1): Str
     {
-        $this->str = StrCommon::replace($this->str, $old, $new, $times);
+        $this->str = StrModifiers::replace($this->str, $old, $new, $times);
         return $this;
     }
 
@@ -141,7 +153,7 @@ class Str
      */
     public function trim(string $chars = ''): Str
     {
-        $this->str = StrCommon::trim($this->str, $chars);
+        $this->str = StrModifiers::trim($this->str, $chars);
         return $this;
     }
 
@@ -155,7 +167,7 @@ class Str
      */
     public function trimLeft(string $chars = ''): Str
     {
-        $this->str = StrCommon::trimLeft($this->str, $chars);
+        $this->str = StrModifiers::trimLeft($this->str, $chars);
         return $this;
     }
 
@@ -169,7 +181,84 @@ class Str
      */
     public function trimRight(string $chars = ''): Str
     {
-        $this->str = StrCommon::trimRight($this->str, $chars);
+        $this->str = StrModifiers::trimRight($this->str, $chars);
         return $this;
+    }
+
+    /**
+     * Append $sub to str
+     *
+     * @param string $sub
+     * @return Str
+     */
+    public function append(string $sub): Str
+    {
+        $this->str .= $sub;
+        return $this;
+    }
+
+    /**
+     * Prepend $sub to str
+     *
+     * @param string $sub
+     * @return Str
+     */
+    public function prepend(string $sub): Str
+    {
+        $this->str = $sub . $this->str;
+        return $this;
+    }
+
+    /**
+     * Returns the character at $pos, with indexes starting at 0.
+     *
+     * @param int $pos
+     * @return string
+     */
+    public function at(int $pos): string
+    {
+        return StrCommon::at($this->str, $pos);
+    }
+
+    /**
+     * Returns an array consisting of the characters in the string.
+     *
+     * @return array An array of string chars
+     */
+    public function chars(): array
+    {
+        return StrCommon::chars($this->str);
+    }
+
+    /**
+     * Return string length
+     *
+     * @return int
+     */
+    public function length(): int
+    {
+        return \mb_strlen($this->str);
+    }
+
+    /**
+     * Returns the first $length characters of the string.
+     *
+     * @param int $length Number of characters to retrieve from the start
+     * @return string
+     */
+    public function first(int $length = 1): string
+    {
+        return StrCommon::first($this->str, $length);
+    }
+
+    /**
+     * Returns the last $length characters of the string.
+     *
+     * @param  int    $length Number of characters to retrieve from the end
+     * @return string
+     */
+    public function last(int $length = 1): string
+    {
+        return StrCommon::last($this->str, $length);
     }
 }
