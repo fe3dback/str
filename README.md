@@ -62,30 +62,33 @@ composer require str/str
 - [x] indexOf
 - [x] indexOfLast
 - [x] countSubstr
+- [x] containsAll
+- [x] containsAny
+- [x] startsWith
+- [x] startsWithAny
+- [x] endsWith
+- [x] endsWithAny
+- [x] pad
+- [x] padBoth
+- [x] padLeft
+- [x] padRight
+- [x] insert
+- [x] removeLeft
+- [x] removeRight
+- [x] repeat
+- [x] reverse
+- [x] shuffle
+- [x] between
+- [x] camelize
+- [x] collapseWhitespace
+- [x] dasherize
+- [x] delimit
+- [x] lowerCaseFirst
+- [x] regexReplace
+- [x] upperCaseFirst
+- [x] isUUID
 
 ### Todo Stringy
-- [ ] containsAll
-- [ ] containsAny
-- [ ] startsWith
-- [ ] startsWithAny
-- [ ] endsWith
-- [ ] endsWithAny
-- [ ] pad
-- [ ] padBoth
-- [ ] padLeft
-- [ ] padRight
-- [ ] insert
-- [ ] removeLeft
-- [ ] removeRight
-- [ ] repeat
-- [ ] reverse
-- [ ] shuffle
-- [ ] between
-- [ ] camelize
-- [ ] collapseWhitespace
-- [ ] dasherize
-- [ ] delimit
-- [ ] getEncoding
 - [ ] hasLowerCase
 - [ ] hasUpperCase
 - [ ] htmlDecode
@@ -104,8 +107,6 @@ composer require str/str
 - [ ] longestCommonPrefix
 - [ ] longestCommonSuffix
 - [ ] longestCommonSubstring
-- [ ] lowerCaseFirst
-- [ ] regexReplace
 - [ ] safeTruncate
 - [ ] slugify
 - [ ] slice
@@ -123,10 +124,9 @@ composer require str/str
 - [ ] truncate
 - [ ] underscored
 - [ ] upperCamelize
-- [ ] upperCaseFirst
 
 ### Todo New
-- [ ] isUUID
+
 
 ## benchmark
 
