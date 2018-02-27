@@ -128,10 +128,45 @@ composer require str/str
 ### Todo New
 - [ ] isUUID
 
+## Optimization
+
+After each mutation set, we can check string for ASCII range,
+and save this to bool flag.
+
+if flag is ON, we can use default ASCII functions, if not
+we can use UTF-8 multi-byte functions.
+
+#### benchmark: AsciiBench
+
+subject | mode | mem_peak | diff
+ --- | --- | --- | --- 
+bench_CType | 81.000μs | 1,324,128b | 1.00x
+bench_MbDetectEncoding | 103.000μs | 1,324,136b | 1.27x
+bench_Regex | 153.000μs | 1,324,128b | 1.89x
+
+#### benchmark: UTF8Bench
+
+subject | mode | mem_peak | diff
+ --- | --- | --- | --- 
+bench_ASCII | 15.000μs | 1,311,000b | 1.00x
+bench_UTF8 | 197.000μs | 1,326,232b | 13.13x
+bench_UTF8_ForceEncoding | 224.000μs | 1,326,248b | 14.93x
+bench_UTF8_DefaultEncoding | 229.000μs | 1,326,248b | 15.27x
+
 ## benchmark
 
+internal tests:
 ```bash
-./vendor/bin/phpbench run --report=str
+./vendor/bin/phpbench run --config=bench_internal.json --report=str
+```
+
+lib code tests (versus):
+```bash
+./vendor/bin/phpbench run --config=bench_lib.json --report=str
+```
+
+generate md:
+```bash
 ./vendor/bin/phpbench run -o markdown --report=str
 ```
 

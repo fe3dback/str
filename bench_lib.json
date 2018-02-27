@@ -1,6 +1,6 @@
 {
   "bootstrap": "vendor/autoload.php",
-  "path": "benchmarks",
+  "path": "benchmarks/lib",
   "reports": {
     "str": {
       "extends": "default",
