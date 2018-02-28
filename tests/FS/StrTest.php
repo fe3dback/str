@@ -33,7 +33,7 @@ class StrTest extends TestCase
     public function testCommon()
     {
         $s = new Str('b3467be4-1bd7-11e8-accf-0ed5f89f718b');
-        $this->assertEquals(false, $s->isUUID());
+        $this->assertEquals(false, $s->isUUIDv4());
 
         $s = (new Str('世'))
             ->ensureLeft('Hello ')

@@ -2,7 +2,7 @@
 
 namespace Benchmark;
 
-use Str\Lib\StrCommon;
+use Str\Lib\StrCommonMB;
 use Str\Str;
 use Stringy\StaticStringy;
 use Stringy\Stringy;
@@ -14,7 +14,7 @@ class CountSubStrBench
     }
 
     public function bench_StrStatic() {
-        StrCommon::countSubstr('HelLo wOrld', '1', false);
+        StrCommonMB::countSubstr('HelLo wOrld', '1', false);
     }
 
     public function bench_Stringy() {

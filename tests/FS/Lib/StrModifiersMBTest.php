@@ -6,7 +6,7 @@ use Str\Str;
 use Str\Lib\StrModifiersMB;
 use PHPUnit\Framework\TestCase;
 
-class StrModifiersTest extends TestCase
+class StrModifiersMBTest extends TestCase
 {
     /**
      * @dataProvider SubstrProvider

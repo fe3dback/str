@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Str\Lib;
 
-class StrCommon
+class StrCommonMB
 {
     /**
      * check if string has prefix at the start?
@@ -73,7 +73,7 @@ class StrCommon
      */
     final public static function at(string $s, int $pos): string
     {
-        return StrModifiers::substr($s, $pos, 1);
+        return StrModifiersMB::substr($s, $pos, 1);
     }
 
     /**

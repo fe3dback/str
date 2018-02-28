@@ -6,7 +6,7 @@ namespace Str\Lib;
 
 use Str\Str;
 
-class StrModifiers
+class StrModifiersMB
 {
     /**
      * Returns the substring beginning at $start with the specified $length.
@@ -164,7 +164,7 @@ class StrModifiers
     final public static function append(string $str, string $sub): string
     {
         $result = $str;
-        return $result .= $sub;
+        return $result . $sub;
     }
 
     /**
@@ -190,7 +190,7 @@ class StrModifiers
      */
     final public static function ensureLeft(string $str, string $check): string
     {
-        if (StrCommon::hasPrefix($str, $check)) { return $str; }
+        if (StrCommonMB::hasPrefix($str, $check)) { return $str; }
 
         return $check . $str;
     }
@@ -205,7 +205,7 @@ class StrModifiers
      */
     final public static function ensureRight(string $str, string $check): string
     {
-        if (StrCommon::hasSuffix($str, $check)) { return $str; }
+        if (StrCommonMB::hasSuffix($str, $check)) { return $str; }
 
         return $str . $check;
     }

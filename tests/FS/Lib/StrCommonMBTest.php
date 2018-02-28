@@ -7,7 +7,7 @@ use \Str\Lib\StrCommonMB;
 use \Str\Lib\StrModifiersMB;
 use PHPUnit\Framework\TestCase;
 
-class StrCommonTest extends TestCase
+class StrCommonMBTest extends TestCase
 {
     /**
      * @dataProvider EnsureLeftProvider
