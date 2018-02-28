@@ -1,0 +1,17 @@
+{
+  "bootstrap": "vendor/autoload.php",
+  "path": "benchmarks/internal",
+  "reports": {
+    "str": {
+      "extends": "default",
+      "title": "Benchmark string libs",
+      "cols": [
+        "benchmark", "subject", "mode", "mem_peak", "diff"
+      ],
+      "diff_col": "mode",
+      "sort": {"mode": "asc"},
+      "break": ["benchmark"],
+      "iterations": true
+    }
+  }
+}
