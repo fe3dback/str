@@ -26,9 +26,9 @@ class UTF8Bench
 
     public function bench_UTF8_ForceEncoding()
     {
-        mb_strlen($a = mb_strtolower(mb_strtoupper(self::ASCII_STR, 'UTF-8'), 'UTF-8'), 'UTF-8');
-        mb_strpos($a, '#', 0, 'UTF-8');
-        mb_strrpos($a, 'old', 'UTF-8');
+        mb_strlen($a = mb_strtolower(mb_strtoupper(self::ASCII_STR)));
+        mb_strpos($a, '#', 0);
+        mb_strrpos($a, 'old');
         Str\Lib\StrModifiers::replace($a, 'valid', 'invalid');
         Str\Lib\StrModifiers::replace($a, '##UNKNOWN##', 'ABC');
     }

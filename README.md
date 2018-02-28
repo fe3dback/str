@@ -40,7 +40,6 @@ composer require str/str
 ## support List
 
 ### Done
-- [x] ensureLeft
 - [x] ensureRight
 - [x] hasPrefix
 - [x] hasSuffix
@@ -62,71 +61,71 @@ composer require str/str
 - [x] indexOf
 - [x] indexOfLast
 - [x] countSubstr
+- [x] containsAll
+- [x] containsAny
+- [x] startsWith
+- [x] startsWithAny
+- [x] endsWith
+- [x] endsWithAny
+- [x] pad
+- [x] padBoth
+- [x] padLeft
+- [x] padRight
+- [x] insert
+- [x] removeLeft
+- [x] removeRight
+- [x] repeat
+- [x] reverse
+- [x] shuffle
+- [x] between
+- [x] camelize
+- [x] collapseWhitespace
+- [x] dasherize
+- [x] delimit
+- [x] lowerCaseFirst
+- [x] regexReplace
+- [x] upperCaseFirst
+- [x] isUUIDv4
+- [x] hasLowerCase
+- [x] hasUpperCase
+- [x] htmlDecode
+- [x] htmlEncode
+- [x] humanize
+- [x] isAlpha
+- [x] isAlphanumeric
+- [x] isBase64
+- [x] isBlank
+- [x] isHexadecimal
+- [x] isJson
+- [x] isLowerCase
+- [x] isSerialized
+- [x] isUpperCase
+- [x] lines
+- [x] split
+- [x] longestCommonPrefix
+- [x] longestCommonSuffix
+- [x] longestCommonSubstring
+- [x] safeTruncate
+- [x] slugify
+- [x] toAscii
+- [x] slice
+- [x] stripWhitespace
+- [x] truncate
+- [x] upperCamelize
 
 ### Todo Stringy
-- [ ] containsAll
-- [ ] containsAny
-- [ ] startsWith
-- [ ] startsWithAny
-- [ ] endsWith
-- [ ] endsWithAny
-- [ ] pad
-- [ ] padBoth
-- [ ] padLeft
-- [ ] padRight
-- [ ] insert
-- [ ] removeLeft
-- [ ] removeRight
-- [ ] repeat
-- [ ] reverse
-- [ ] shuffle
-- [ ] between
-- [ ] camelize
-- [ ] collapseWhitespace
-- [ ] dasherize
-- [ ] delimit
-- [ ] getEncoding
-- [ ] hasLowerCase
-- [ ] hasUpperCase
-- [ ] htmlDecode
-- [ ] htmlEncode
-- [ ] humanize
-- [ ] isAlpha
-- [ ] isAlphanumeric
-- [ ] isBase64
-- [ ] isBlank
-- [ ] isHexadecimal
-- [ ] isJson
-- [ ] isLowerCase
-- [ ] isSerialized
-- [ ] isUpperCase
-- [ ] lines
-- [ ] longestCommonPrefix
-- [ ] longestCommonSuffix
-- [ ] longestCommonSubstring
-- [ ] lowerCaseFirst
-- [ ] regexReplace
-- [ ] safeTruncate
-- [ ] slugify
-- [ ] slice
-- [ ] split
-- [ ] stripWhitespace
 - [ ] surround
 - [ ] swapCase
 - [ ] tidy
 - [ ] titleize
-- [ ] toAscii
 - [ ] toBoolean
 - [ ] toSpaces
 - [ ] toTabs
 - [ ] toTitleCase
-- [ ] truncate
 - [ ] underscored
-- [ ] upperCamelize
-- [ ] upperCaseFirst
 
 ### Todo New
-- [ ] isUUID
+
 
 ## Optimization
 

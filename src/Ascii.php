@@ -12,7 +12,7 @@ class Ascii
      */
     final public static function checkWithRegex(string $s): bool
     {
-        return !(bool)preg_match('/[^\x20-\x7f]/', $s);
+        return !(bool)\preg_match('/[^\x20-\x7f]/', $s);
     }
 
     /**
@@ -21,7 +21,7 @@ class Ascii
      */
     final public static function checkWithMb(string $s): bool
     {
-        return (bool)mb_detect_encoding($s, 'ASCII', true);
+        return (bool)\mb_detect_encoding($s, 'ASCII', true);
     }
 
     /**
@@ -30,7 +30,7 @@ class Ascii
      */
     final public static function checkWithCType(string $s): bool
     {
-        return ctype_print($s);
+        return \ctype_print($s);
     }
 
 }
