@@ -8,6 +8,66 @@ use Str\Str;
 
 class StrModifiers
 {
+    /**
+     * Returns the substring beginning at $start with the specified $length.
+     * It differs from the mb_substr() function in that providing a $length of
+     * null will return the rest of the string, rather than an empty string.
+     *
+     * @param  string $s
+     * @param  int $start Position of the first character to use
+     * @param  int $length Maximum number of characters used
+     * @return string
+     */
+    final public static function substr(string $s, int $start = 0, int $length = 0): string
+    {
+        $length = !$length ? \mb_strlen($s) : $length;
+        return \mb_substr($s, $start, $length);
+    }
+
+    /**
+     * Returns an array consisting of the characters in the string.
+     *
+     * @param string $s
+     * @return array An array of string chars
+     */
+    final public static function chars(string $s): array
+    {
+        $chars = [];
+
+        for ($i = 0, $iMax = \mb_strlen($s); $i < $iMax; $i++) {
+            $chars[] = mb_substr($s, $i, 1);
+        }
+
+        return $chars;
+    }
+
+    /**
+     * Returns the first $length characters of the string.
+     *
+     * @param string $s String for search
+     * @param int $length Number of characters to retrieve from the start
+     * @return string
+     */
+    final public static function first(string $s, int $length): string
+    {
+        if ($length <= 0) { return ''; }
+
+        return self::substr($s, 0, $length);
+    }
+
+    /**
+     * Returns the last $length characters of the string.
+     *
+     * @param string $s String for search
+     * @param int $length Number of characters to retrieve from the end
+     * @return string
+     */
+    final public static function last(string $s, int $length): string
+    {
+        if ($length <= 0) { return ''; }
+
+        return self::substr($s, -$length);
+    }
 
     /** @noinspection MoreThanThreeArgumentsInspection */
     /**
@@ -92,6 +152,32 @@ class StrModifiers
     {
         $chars = $chars ? \preg_quote($chars, '/') : '\s';
         return (string)\mb_ereg_replace("[$chars]+\$", '', $str);
+    }
+
+    /**
+     * Append $sub to str
+     *
+     * @param string $str
+     * @param string $sub
+     * @return Str
+     */
+    final public static function append(string $str, string $sub): string
+    {
+        $result = $str;
+        return $result .= $sub;
+    }
+
+    /**
+     * Prepend $sub to str
+     *
+     * @param string $str
+     * @param string $sub
+     * @return Str
+     */
+    final public static function prepend(string $str, string $sub): string
+    {
+        $result = $str;
+        return $sub . $result;
     }
 
     /**
@@ -397,6 +483,28 @@ class StrModifiers
         );
 
         return $result;
+    }
+
+    /**
+     * Make a string lowercase
+     * @param string $str
+     * @return Str
+     */
+    final public static function toLowerCase(string $str): string
+    {
+        $result = $str;
+        return \mb_strtolower($result);
+    }
+
+    /**
+     * Make a string uppercase
+     * @param string $str
+     * @return Str
+     */
+    final public static function toUpperCase(string $str): string
+    {
+        $result = $str;
+        return \mb_strtoupper($result);
     }
 
     /**

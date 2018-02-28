@@ -86,7 +86,7 @@ composer require str/str
 - [x] lowerCaseFirst
 - [x] regexReplace
 - [x] upperCaseFirst
-- [x] isUUID
+- [x] isUUIDv4
 
 ### Todo Stringy
 - [ ] hasLowerCase

@@ -15,9 +15,7 @@ class StrCommon
      */
     final public static function hasPrefix(string $s, string $prefix): bool
     {
-        if ($s === '' || $prefix === '') {
-            return false;
-        }
+        if ($s === '' || $prefix === '') { return false; }
 
         return (0 === \mb_strpos($s, $prefix));
     }
@@ -31,11 +29,20 @@ class StrCommon
      */
     final public static function hasSuffix(string $s, string $suffix): bool
     {
-        if ($s === '' || $suffix === '') {
-            return false;
-        }
+        if ($s === '' || $suffix === '') { return false; }
 
         return \mb_substr($s, -\mb_strlen($suffix)) === $suffix;
+    }
+
+    /**
+     * Return string length
+     *
+     * @param string $str
+     * @return int
+     */
+    final public static function length(string $str): int
+    {
+        return \mb_strlen($str);
     }
 
     /**
@@ -48,31 +55,13 @@ class StrCommon
      */
     final public static function contains(string $haystack, string $needle, bool $caseSensitive = true): bool
     {
-        if ($haystack === '' || $needle === '') {
-            return true;
-        }
+        if ($haystack === '' || $needle === '') { return true; }
 
         if ($caseSensitive) {
             return false !== \mb_strpos($haystack, $needle);
         }
 
         return (false !== \mb_stripos($haystack, $needle));
-    }
-
-    /**
-     * Returns the substring beginning at $start with the specified $length.
-     * It differs from the mb_substr() function in that providing a $length of
-     * null will return the rest of the string, rather than an empty string.
-     *
-     * @param  string $s
-     * @param  int $start Position of the first character to use
-     * @param  int $length Maximum number of characters used
-     * @return string
-     */
-    final public static function substr(string $s, int $start = 0, int $length = 0): string
-    {
-        $length = !$length ? \mb_strlen($s) : $length;
-        return \mb_substr($s, $start, $length);
     }
 
     /**
@@ -84,55 +73,7 @@ class StrCommon
      */
     final public static function at(string $s, int $pos): string
     {
-        return self::substr($s, $pos, 1);
-    }
-
-    /**
-     * Returns an array consisting of the characters in the string.
-     *
-     * @param string $s
-     * @return array An array of string chars
-     */
-    final public static function chars(string $s): array
-    {
-        $chars = [];
-        for ($i = 0, $iMax = \mb_strlen($s); $i < $iMax; $i++) {
-            $chars[] = mb_substr($s, $i, 1);
-        }
-
-        return $chars;
-    }
-
-    /**
-     * Returns the first $length characters of the string.
-     *
-     * @param string $s String for search
-     * @param int $length Number of characters to retrieve from the start
-     * @return string
-     */
-    final public static function first(string $s, int $length): string
-    {
-        if ($length <= 0) {
-            return '';
-        }
-
-        return self::substr($s, 0, $length);
-    }
-
-    /**
-     * Returns the last $length characters of the string.
-     *
-     * @param string $s String for search
-     * @param int $length Number of characters to retrieve from the end
-     * @return string
-     */
-    final public static function last(string $s, int $length): string
-    {
-        if ($length <= 0) {
-            return '';
-        }
-
-        return self::substr($s, -$length);
+        return StrModifiers::substr($s, $pos, 1);
     }
 
     /**
@@ -147,9 +88,7 @@ class StrCommon
      */
     final public static function indexOf(string $haystack, string $needle, int $offset = 0): int
     {
-        if ($needle === '' || $haystack === '') {
-            return -1;
-        }
+        if ($needle === '' || $haystack === '')  { return -1; }
 
         $maxLen = \mb_strlen($haystack);
 
@@ -157,15 +96,12 @@ class StrCommon
             $offset = $maxLen - (int)abs($offset);
         }
 
-        if ($offset > $maxLen) {
-            return -1;
-        }
+        if ($offset > $maxLen)  { return -1; }
 
-        if ($offset < 0) {
-            return -1;
-        }
+        if ($offset < 0)  { return -1; }
 
         $pos = \mb_strpos($haystack, $needle, $offset);
+
         return false === $pos ? -1 : $pos;
     }
 
@@ -182,9 +118,7 @@ class StrCommon
      */
     final public static function indexOfLast(string $haystack, string $needle, int $offset = 0): int
     {
-        if ($needle === '' || $haystack === '') {
-            return -1;
-        }
+        if ($needle === '' || $haystack === '') { return -1; }
 
         $maxLen = \mb_strlen($haystack);
 
@@ -192,15 +126,12 @@ class StrCommon
             $offset = $maxLen - (int)abs($offset);
         }
 
-        if ($offset > $maxLen) {
-            return -1;
-        }
+        if ($offset > $maxLen) { return -1; }
 
-        if ($offset < 0) {
-            return -1;
-        }
+        if ($offset < 0) { return -1; }
 
         $pos = \mb_strrpos($haystack, $needle, $offset) ?: -1;
+
         return false === $pos ? -1 : $pos;
     }
 
@@ -238,14 +169,10 @@ class StrCommon
      */
     final public static function containsAll(string $str, array $needles, bool $caseSensitive = true): bool
     {
-        if (empty($needles)) {
-            return false;
-        }
+        if (empty($needles)) { return false; }
 
         foreach ($needles as $needle) {
-            if (!self::contains($str, $needle, $caseSensitive)) {
-                return false;
-            }
+            if (!self::contains($str, $needle, $caseSensitive)) { return false; }
         }
 
         return true;
@@ -263,14 +190,10 @@ class StrCommon
      */
     final public static function containsAny(string $str, array $needles, bool $caseSensitive = true): bool
     {
-        if (empty($needles)) {
-            return false;
-        }
+        if (empty($needles)) { return false; }
 
         foreach ($needles as $needle) {
-            if (self::contains($str, $needle, $caseSensitive)) {
-                return true;
-            }
+            if (self::contains($str, $needle, $caseSensitive)) { return true; }
         }
 
         return false;
@@ -289,9 +212,7 @@ class StrCommon
      */
     final public static function startsWith(string $str, string $substring, bool $caseSensitive = true): bool
     {
-        if ('' === $str && '' !== $substring) {
-            return false;
-        }
+        if ('' === $str && '' !== $substring) { return false; }
 
         $substringLength = \mb_strlen($substring);
         $startOfStr = \mb_substr($str, 0, $substringLength);
@@ -317,14 +238,10 @@ class StrCommon
      */
     final public static function startsWithAny(string $str, array $substrings, bool $caseSensitive = true): bool
     {
-        if (empty($substrings)) {
-            return false;
-        }
+        if (empty($substrings)) { return false; }
 
         foreach ($substrings as $substring) {
-            if (self::startsWith($str, $substring, $caseSensitive)) {
-                return true;
-            }
+            if (self::startsWith($str, $substring, $caseSensitive)) { return true; }
         }
 
         return false;
@@ -368,18 +285,10 @@ class StrCommon
      */
     final public static function endsWithAny(string $str, array $substrings, bool $caseSensitive = true): bool
     {
-        if (empty($substrings)) {
-            return false;
-        }
+        if (empty($substrings)) { return false; }
 
         foreach ($substrings as $substring) {
-            if (!\is_string($substring)) {
-                return false;
-            }
-
-            if (self::endsWith($str, $substring, $caseSensitive)) {
-                return true;
-            }
+            if (self::endsWith($str, $substring, $caseSensitive)) { return true; }
         }
 
         return false;
@@ -391,7 +300,7 @@ class StrCommon
      * @param string $str
      * @return bool
      */
-    final public static function isUUID(string $str): bool
+    final public static function isUUIDv4(string $str): bool
     {
         $l = '[a-f0-9]';
         $pattern = "/^{$l}{8}-?{$l}{4}-?4{$l}{3}-?[89ab]{$l}{3}-?{$l}{12}\Z/";

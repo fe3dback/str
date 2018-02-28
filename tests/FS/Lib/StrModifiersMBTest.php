@@ -3,11 +3,193 @@
 declare(strict_types=1);
 
 use Str\Str;
-use Str\Lib\StrModifiers;
+use Str\Lib\StrModifiersMB;
 use PHPUnit\Framework\TestCase;
 
 class StrModifiersTest extends TestCase
 {
+    /**
+     * @dataProvider SubstrProvider
+     * @param $expected
+     * @param $str
+     * @param int $start
+     * @param int $length
+     */
+    public function testSubstr($expected, $str, $start = 0, $length = 1)
+    {
+        $this->assertEquals($expected, StrModifiersMB::substr($str, $start, $length));
+    }
+
+    public function SubstrProvider()
+    {
+        return [
+            ['Hel', 'Hello world', 0, 3],
+            ['H世', 'H世ello world', 0, 2],
+            [' H世', '  H世', 1, 4],
+            ['123', '000123000', 3, 3],
+        ];
+    }
+
+    /**
+     * @dataProvider charsProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testChars($expected, $str)
+    {
+        $this->assertInternalType('array', $expected);
+        $this->assertEquals($expected, StrModifiersMB::chars($str));
+    }
+
+    public function charsProvider()
+    {
+        return [
+            [[], ''],
+            [['T', 'e', 's', 't'], 'Test'],
+            [['F', 'ò', 'ô', ' ', 'B', 'à', 'ř'], 'Fòô Bàř']
+        ];
+    }
+
+    /**
+     * @dataProvider firstProvider()
+     * @param $expected
+     * @param $str
+     * @param $n
+     */
+    public function testFirst($expected, $str, $n)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->first($n));
+    }
+
+    public function firstProvider()
+    {
+        return [
+            ['', 'foo bar', -5],
+            ['', 'foo bar', 0],
+            ['f', 'foo bar', 1],
+            ['foo', 'foo bar', 3],
+            ['foo bar', 'foo bar', 7],
+            ['foo bar', 'foo bar', 8],
+            ['', 'fòô bàř', -5],
+            ['', 'fòô bàř', 0],
+            ['f', 'fòô bàř', 1],
+            ['fòô', 'fòô bàř', 3],
+            ['fòô bàř', 'fòô bàř', 7],
+            ['fòô bàř', 'fòô bàř', 8],
+        ];
+    }
+
+    /**
+     * @dataProvider lastProvider()
+     * @param $expected
+     * @param $str
+     * @param $n
+     */
+    public function testLast($expected, $str, $n)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->last($n));
+    }
+
+    public function lastProvider()
+    {
+        return [
+            ['', 'foo bar', -5],
+            ['', 'foo bar', 0],
+            ['r', 'foo bar', 1],
+            ['bar', 'foo bar', 3],
+            ['foo bar', 'foo bar', 7],
+            ['foo bar', 'foo bar', 8],
+            ['', 'fòô bàř', -5],
+            ['', 'fòô bàř', 0],
+            ['ř', 'fòô bàř', 1],
+            ['bàř', 'fòô bàř', 3],
+            ['fòô bàř', 'fòô bàř', 7],
+            ['fòô bàř', 'fòô bàř', 8],
+        ];
+    }
+
+    /**
+     * @dataProvider toLowerCaseProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testToLowerCase($expected, $str)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->toLowerCase());
+    }
+    public function toLowerCaseProvider()
+    {
+        return [
+            ['foo bar', 'FOO BAR'],
+            [' foo_bar ', ' FOO_bar '],
+            ['fòô bàř', 'FÒÔ BÀŘ'],
+            [' fòô_bàř ', ' FÒÔ_bàř '],
+            ['αυτοκίνητο', 'ΑΥΤΟΚΊΝΗΤΟ'],
+        ];
+    }
+
+    /**
+     * @dataProvider toUpperCaseProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testToUpperCase($expected, $str)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->toUpperCase());
+    }
+    public function toUpperCaseProvider()
+    {
+        return [
+            ['FOO BAR', 'foo bar'],
+            [' FOO_BAR ', ' FOO_bar '],
+            ['FÒÔ BÀŘ', 'fòô bàř'],
+            [' FÒÔ_BÀŘ ', ' FÒÔ_bàř '],
+            ['ΑΥΤΟΚΊΝΗΤΟ', 'αυτοκίνητο'],
+        ];
+    }
+
+    /**
+     * @dataProvider appendProvider()
+     * @param $expected
+     * @param $str
+     * @param $string
+     */
+    public function testAppend($expected, $str, $string)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->append($string));
+    }
+    public function appendProvider()
+    {
+        return [
+            ['foobar', 'foo', 'bar'],
+            ['fòôbàř', 'fòô', 'bàř']
+        ];
+    }
+
+    /**
+     * @dataProvider prependProvider()
+     * @param $expected
+     * @param $str
+     * @param $string
+     */
+    public function testPrepend($expected, $str, $string)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->prepend($string));
+    }
+    public function prependProvider()
+    {
+        return [
+            ['foobar', 'bar', 'foo'],
+            ['fòôbàř', 'bàř', 'fòô']
+        ];
+    }
+
     /**
      * @dataProvider ReplaceProvider
      * @param array $params
@@ -15,7 +197,7 @@ class StrModifiersTest extends TestCase
      */
     public function testReplace(array $params, string $expected)
     {
-        $this->assertEquals($expected, StrModifiers::replace(
+        $this->assertEquals($expected, StrModifiersMB::replace(
             array_shift($params), // s
             array_shift($params), // old
             array_shift($params), // new
@@ -424,16 +606,16 @@ class StrModifiersTest extends TestCase
     {
         $s = new Str($str);
         $result = $s->shuffle();
-        $this->assertEquals(\mb_strlen($str), \mb_strlen((string)$result));
 
-        $strLen = \mb_strlen($str);
+        $oldValues = StrModifiersMB::chars((string)$s);
+        $newValues = StrModifiersMB::chars((string)$result);
+
+        $countOld = array_count_values($oldValues);
+        $countNew = array_count_values($newValues);
+
         // We'll make sure that the chars are present after shuffle
-        for ($i = 0; $i < $strLen; $i++) {
-            $char = \mb_substr($str, $i, 1);
-            $countBefore = \mb_substr_count((string)$str, $char);
-            $countAfter = \mb_substr_count((string)$result, $char);
-            $this->assertEquals($countBefore, $countAfter);
-        }
+        $this->assertEquals($countOld, $countNew);
+        $this->assertEquals(true, empty(array_diff($countOld, $countNew)));
     }
     public function shuffleProvider()
     {

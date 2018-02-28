@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use \Str\Str;
-use \Str\Lib\StrCommon;
-use \Str\Lib\StrModifiers;
+use \Str\Lib\StrCommonMB;
+use \Str\Lib\StrModifiersMB;
 use PHPUnit\Framework\TestCase;
 
 class StrCommonTest extends TestCase
@@ -16,7 +16,7 @@ class StrCommonTest extends TestCase
      */
     public function testEnsureLeft(array $inp, string $out)
     {
-        $this->assertEquals($out, StrModifiers::ensureLeft(
+        $this->assertEquals($out, StrModifiersMB::ensureLeft(
             array_shift($inp),
             array_shift($inp)
         ));
@@ -70,7 +70,7 @@ class StrCommonTest extends TestCase
      */
     public function testEnsureRight(array $inp, string $out)
     {
-        $this->assertEquals($out, StrModifiers::ensureRight(
+        $this->assertEquals($out, StrModifiersMB::ensureRight(
             array_shift($inp),
             array_shift($inp)
         ));
@@ -124,7 +124,7 @@ class StrCommonTest extends TestCase
      */
     public function testHasPrefix(array $inp, bool $result)
     {
-        $this->assertEquals($result, StrCommon::hasPrefix(
+        $this->assertEquals($result, StrCommonMB::hasPrefix(
             array_shift($inp),
             array_shift($inp)
         ));
@@ -193,7 +193,7 @@ class StrCommonTest extends TestCase
      */
     public function testHasSuffix(array $inp, bool $result)
     {
-        $this->assertEquals($result, StrCommon::hasSuffix(
+        $this->assertEquals($result, StrCommonMB::hasSuffix(
             array_shift($inp),
             array_shift($inp)
         ));
@@ -256,6 +256,24 @@ class StrCommonTest extends TestCase
     }
 
     /**
+     * @dataProvider lengthProvider()
+     */
+    public function testLength($expected, $str)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->length());
+    }
+    public function lengthProvider()
+    {
+        return [
+            [11, '  foo bar  '],
+            [1, 'f'],
+            [0, ''],
+            [7, 'fòô bàř']
+        ];
+    }
+
+    /**
      * @dataProvider ContainsProvider
      * @param $expected
      * @param $haystack
@@ -266,7 +284,7 @@ class StrCommonTest extends TestCase
     {
         $this->assertEquals(
             $expected,
-            StrCommon::contains($haystack, $needle, $caseSensitive),
+            StrCommonMB::contains($haystack, $needle, $caseSensitive),
             sprintf('%s - %s', $haystack, $needle)
         );
     }
@@ -300,28 +318,6 @@ class StrCommonTest extends TestCase
     }
 
     /**
-     * @dataProvider SubstrProvider
-     * @param $expected
-     * @param $str
-     * @param int $start
-     * @param int $length
-     */
-    public function testSubstr($expected, $str, $start = 0, $length = 1)
-    {
-        $this->assertEquals($expected, StrCommon::substr($str, $start, $length));
-    }
-
-    public function SubstrProvider()
-    {
-        return [
-            ['Hel', 'Hello world', 0, 3],
-            ['H世', 'H世ello world', 0, 2],
-            [' H世', '  H世', 1, 4],
-            ['123', '000123000', 3, 3],
-        ];
-    }
-
-    /**
      * @dataProvider AtProvider
      * @param $expected
      * @param $str
@@ -329,7 +325,7 @@ class StrCommonTest extends TestCase
      */
     public function testAt($expected, $str, $pos)
     {
-        $this->assertEquals($expected, StrCommon::at($str, $pos));
+        $this->assertEquals($expected, StrCommonMB::at($str, $pos));
     }
 
     public function AtProvider()
@@ -347,86 +343,6 @@ class StrCommonTest extends TestCase
     }
 
     /**
-     * @dataProvider charsProvider()
-     * @param $expected
-     * @param $str
-     */
-    public function testChars($expected, $str)
-    {
-        $this->assertInternalType('array', $expected);
-        $this->assertEquals($expected, StrCommon::chars($str));
-    }
-
-    public function charsProvider()
-    {
-        return [
-            [[], ''],
-            [['T', 'e', 's', 't'], 'Test'],
-            [['F', 'ò', 'ô', ' ', 'B', 'à', 'ř'], 'Fòô Bàř']
-        ];
-    }
-
-    /**
-     * @dataProvider firstProvider()
-     * @param $expected
-     * @param $str
-     * @param $n
-     */
-    public function testFirst($expected, $str, $n)
-    {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->first($n));
-    }
-
-    public function firstProvider()
-    {
-        return [
-            ['', 'foo bar', -5],
-            ['', 'foo bar', 0],
-            ['f', 'foo bar', 1],
-            ['foo', 'foo bar', 3],
-            ['foo bar', 'foo bar', 7],
-            ['foo bar', 'foo bar', 8],
-            ['', 'fòô bàř', -5],
-            ['', 'fòô bàř', 0],
-            ['f', 'fòô bàř', 1],
-            ['fòô', 'fòô bàř', 3],
-            ['fòô bàř', 'fòô bàř', 7],
-            ['fòô bàř', 'fòô bàř', 8],
-        ];
-    }
-
-    /**
-     * @dataProvider lastProvider()
-     * @param $expected
-     * @param $str
-     * @param $n
-     */
-    public function testLast($expected, $str, $n)
-    {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->last($n));
-    }
-
-    public function lastProvider()
-    {
-        return [
-            ['', 'foo bar', -5],
-            ['', 'foo bar', 0],
-            ['r', 'foo bar', 1],
-            ['bar', 'foo bar', 3],
-            ['foo bar', 'foo bar', 7],
-            ['foo bar', 'foo bar', 8],
-            ['', 'fòô bàř', -5],
-            ['', 'fòô bàř', 0],
-            ['ř', 'fòô bàř', 1],
-            ['bàř', 'fòô bàř', 3],
-            ['fòô bàř', 'fòô bàř', 7],
-            ['fòô bàř', 'fòô bàř', 8],
-        ];
-    }
-
-    /**
      * @dataProvider indexOfProvider()
      * @param $expected
      * @param $haystack
@@ -435,7 +351,7 @@ class StrCommonTest extends TestCase
      */
     public function testIndexOf($expected, $haystack, $needle, $offset = 0)
     {
-        $this->assertEquals($expected, StrCommon::indexOf($haystack, $needle, $offset));
+        $this->assertEquals($expected, StrCommonMB::indexOf($haystack, $needle, $offset));
     }
 
     public function indexOfProvider()
@@ -470,7 +386,7 @@ class StrCommonTest extends TestCase
      */
     public function testIndexOfLast($expected, $haystack, $needle, $offset = 0)
     {
-        $this->assertEquals($expected, StrCommon::indexOfLast($haystack, $needle, $offset));
+        $this->assertEquals($expected, StrCommonMB::indexOfLast($haystack, $needle, $offset));
     }
 
     public function indexOfLastProvider()
@@ -503,7 +419,7 @@ class StrCommonTest extends TestCase
      */
     public function testCountSubstr($expected, $str, $substring, $caseSensitive = true)
     {
-        $this->assertEquals($expected, StrCommon::countSubstr($str, $substring, $caseSensitive));
+        $this->assertEquals($expected, StrCommonMB::countSubstr($str, $substring, $caseSensitive));
     }
 
     public function countSubstrProvider()
@@ -536,7 +452,7 @@ class StrCommonTest extends TestCase
      */
     public function testContainsAll($expected, $haystack, $needles, $caseSensitive = true)
     {
-        $this->assertEquals($expected, StrCommon::containsAll($haystack, $needles, $caseSensitive), $haystack);
+        $this->assertEquals($expected, StrCommonMB::containsAll($haystack, $needles, $caseSensitive), $haystack);
     }
 
     public function containsAllProvider()
@@ -584,7 +500,7 @@ class StrCommonTest extends TestCase
      */
     public function testContainsAny($expected, $haystack, $needles, $caseSensitive = true)
     {
-        $this->assertEquals($expected, StrCommon::containsAny($haystack, $needles, $caseSensitive), $haystack);
+        $this->assertEquals($expected, StrCommonMB::containsAny($haystack, $needles, $caseSensitive), $haystack);
     }
     public function containsAnyProvider()
     {
@@ -631,7 +547,7 @@ class StrCommonTest extends TestCase
      */
     public function testStartsWith($expected, $str, $substring, $caseSensitive = true)
     {
-        $this->assertEquals($expected, StrCommon::startsWith($str, $substring, $caseSensitive), $str);
+        $this->assertEquals($expected, StrCommonMB::startsWith($str, $substring, $caseSensitive), $str);
     }
     public function startsWithProvider()
     {
@@ -659,7 +575,7 @@ class StrCommonTest extends TestCase
      */
     public function testStartsWithAny($expected, $str, $substrings, $caseSensitive = true)
     {
-        $this->assertEquals($expected, StrCommon::startsWithAny($str, $substrings, $caseSensitive), $str);
+        $this->assertEquals($expected, StrCommonMB::startsWithAny($str, $substrings, $caseSensitive), $str);
     }
     public function startsWithProviderAny()
     {
@@ -688,7 +604,7 @@ class StrCommonTest extends TestCase
      */
     public function testEndsWith($expected, $str, $substring, $caseSensitive = true)
     {
-        $this->assertEquals($expected, StrCommon::endsWith($str, $substring, $caseSensitive), $str);
+        $this->assertEquals($expected, StrCommonMB::endsWith($str, $substring, $caseSensitive), $str);
     }
     public function endsWithProvider()
     {
@@ -716,7 +632,7 @@ class StrCommonTest extends TestCase
      */
     public function testEndsWithAny($expected, $str, $substrings, $caseSensitive = true)
     {
-        $this->assertEquals($expected, StrCommon::endsWithAny($str, $substrings, $caseSensitive), $str);
+        $this->assertEquals($expected, StrCommonMB::endsWithAny($str, $substrings, $caseSensitive), $str);
     }
     public function endsWithAnyProvider()
     {
@@ -732,21 +648,20 @@ class StrCommonTest extends TestCase
             [false, 'FOO bars', ['foo', 'foo BARS']],
             [false, 'FÒÔ bàřs', ['fòô', 'fòô bàřs'], true],
             [false, 'fòô bàřs', ['fòô', 'fòô BÀŘS'], true],
-            [false, 'anything', []],
-            [false, 'string', [1, 29, 0x2891], true]
+            [false, 'anything', []]
         ];
     }
 
     /**
-     * @dataProvider isUUIDProvider()
+     * @dataProvider isUUIDv4Provider()
      * @param $expected
      * @param $str
      */
-    public function testIsUUID($expected, $str)
+    public function testIsUUIDv4($expected, $str)
     {
-        $this->assertEquals($expected, StrCommon::isUUID($str), $str);
+        $this->assertEquals($expected, StrCommonMB::isUUIDv4($str), $str);
     }
-    public function isUUIDProvider()
+    public function isUUIDv4Provider()
     {
         return [
             [true, 'ae815123-537f-4eb3-a9b8-35881c29e1ac'],
