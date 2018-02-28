@@ -40,6 +40,7 @@ composer require str/str
 ## support List
 
 ### Done
+- [x] ensureLeft
 - [x] ensureRight
 - [x] hasPrefix
 - [x] hasSuffix
