@@ -40,7 +40,6 @@ composer require str/str
 ## support List
 
 ### Done
-- [x] ensureLeft
 - [x] ensureRight
 - [x] hasPrefix
 - [x] hasSuffix
@@ -87,43 +86,43 @@ composer require str/str
 - [x] regexReplace
 - [x] upperCaseFirst
 - [x] isUUIDv4
+- [x] hasLowerCase
+- [x] hasUpperCase
+- [x] htmlDecode
+- [x] htmlEncode
+- [x] humanize
+- [x] isAlpha
+- [x] isAlphanumeric
+- [x] isBase64
+- [x] isBlank
+- [x] isHexadecimal
+- [x] isJson
+- [x] isLowerCase
+- [x] isSerialized
+- [x] isUpperCase
+- [x] lines
+- [x] split
+- [x] longestCommonPrefix
+- [x] longestCommonSuffix
+- [x] longestCommonSubstring
+- [x] safeTruncate
+- [x] slugify
+- [x] toAscii
+- [x] slice
+- [x] stripWhitespace
+- [x] truncate
+- [x] upperCamelize
 
 ### Todo Stringy
-- [ ] hasLowerCase
-- [ ] hasUpperCase
-- [ ] htmlDecode
-- [ ] htmlEncode
-- [ ] humanize
-- [ ] isAlpha
-- [ ] isAlphanumeric
-- [ ] isBase64
-- [ ] isBlank
-- [ ] isHexadecimal
-- [ ] isJson
-- [ ] isLowerCase
-- [ ] isSerialized
-- [ ] isUpperCase
-- [ ] lines
-- [ ] longestCommonPrefix
-- [ ] longestCommonSuffix
-- [ ] longestCommonSubstring
-- [ ] safeTruncate
-- [ ] slugify
-- [ ] slice
-- [ ] split
-- [ ] stripWhitespace
 - [ ] surround
 - [ ] swapCase
 - [ ] tidy
 - [ ] titleize
-- [ ] toAscii
 - [ ] toBoolean
 - [ ] toSpaces
 - [ ] toTabs
 - [ ] toTitleCase
-- [ ] truncate
 - [ ] underscored
-- [ ] upperCamelize
 
 ### Todo New
 

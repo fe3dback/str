@@ -661,4 +661,370 @@ class Str
     {
         return StrCommonMB::isUUIDv4($this->str);
     }
+
+    /**
+     * Returns true if the string contains a lower case char, false
+     * otherwise.
+     *
+     * @return bool Whether or not the string contains a lower case character.
+     */
+    public function hasLowerCase(): bool
+    {
+        return StrCommonMB::matchesPattern($this->str, '.*[[:lower:]]');
+    }
+
+    /**
+     * Returns true if the string contains an upper case char, false
+     * otherwise.
+     *
+     * @return bool Whether or not the string contains an upper case character.
+     */
+    public function hasUpperCase(): bool
+    {
+        return StrCommonMB::matchesPattern($this->str, '.*[[:upper:]]');
+    }
+
+    /**
+     * Returns true if $str matches the supplied pattern, false otherwise.
+     *
+     * @param  string $pattern Regex pattern to match against
+     * @return bool   Whether or not $str matches the pattern
+     */
+    public function matchesPattern(string $pattern): bool
+    {
+        return StrCommonMB::matchesPattern($this->str, $pattern);
+    }
+
+    /**
+     * Convert all HTML entities to their applicable characters. An alias of
+     * html_entity_decode. For a list of flags, refer to
+     * http://php.net/manual/en/function.html-entity-decode.php
+     *
+     * @param  int|null $flags Optional flags
+     * @return static   Object with the resulting $str after being html decoded.
+     */
+    public function htmlDecode($flags = ENT_COMPAT): Str
+    {
+        $this->str = StrModifiersMB::htmlDecode($this->str, $flags);
+        return $this;
+    }
+
+    /**
+     * Convert all applicable characters to HTML entities. An alias of
+     * htmlentities. Refer to http://php.net/manual/en/function.htmlentities.php
+     * for a list of flags.
+     *
+     * @param  int|null $flags Optional flags
+     * @return static   Object with the resulting $str after being html encoded.
+     */
+    public function htmlEncode($flags = ENT_COMPAT): Str
+    {
+        $this->str = StrModifiersMB::htmlEncode($this->str, $flags);
+        return $this;
+    }
+
+    /**
+     * Capitalizes the first word of the string, replaces underscores with
+     * spaces, and strips '_id'.
+     *
+     * @return static Object with a humanized $str
+     */
+    public function humanize(): Str
+    {
+        $this->str = StrModifiersMB::humanize($this->str);
+        return $this;
+    }
+
+    /**
+     * Returns true if the string contains only alphabetic chars, false
+     * otherwise.
+     *
+     * @return bool Whether or not $str contains only alphabetic chars
+     */
+    public function isAlpha(): bool
+    {
+        return StrCommonMB::isAlpha($this->str);
+    }
+
+    /**
+     * Returns true if the string contains only alphabetic and numeric chars,
+     * false otherwise.
+     *
+     * @return bool Whether or not $str contains only alphanumeric chars
+     */
+    public function isAlphanumeric(): bool
+    {
+        return StrCommonMB::isAlphanumeric($this->str);
+    }
+
+    /**
+     * Returns true if the string is base64 encoded, false otherwise.
+     *
+     * @return bool Whether or not $str is base64 encoded
+     */
+    public function isBase64(): bool
+    {
+        return StrCommonMB::isBase64($this->str);
+    }
+
+    /**
+     * Returns true if the string contains only whitespace chars, false
+     * otherwise.
+     *
+     * @return bool Whether or not $str contains only whitespace characters
+     */
+    public function isBlank(): bool
+    {
+        return StrCommonMB::isBlank($this->str);
+    }
+
+    /**
+     * Returns true if the string contains only hexadecimal chars, false
+     * otherwise.
+     *
+     * @return bool Whether or not $str contains only hexadecimal chars
+     */
+    public function isHexadecimal(): bool
+    {
+        return StrCommonMB::isHexadecimal($this->str);
+    }
+
+    /**
+     * Returns true if the string is JSON, false otherwise. Unlike json_decode
+     * in PHP 5.x, this method is consistent with PHP 7 and other JSON parsers,
+     * in that an empty string is not considered valid JSON.
+     *
+     * @return bool Whether or not $str is JSON
+     */
+    public function isJson(): bool
+    {
+        return StrCommonMB::isJson($this->str);
+    }
+
+    /**
+     * Returns true if the string contains only lower case chars, false
+     * otherwise.
+     *
+     * @return bool Whether or not $str contains only lower case characters
+     */
+    public function isLowerCase(): bool
+    {
+        return StrCommonMB::isLowerCase($this->str);
+    }
+
+    /**
+     * Returns true if the string is serialized, false otherwise.
+     *
+     * @return bool Whether or not $str is serialized
+     */
+    public function isSerialized(): bool
+    {
+        return StrCommonMB::isSerialized($this->str);
+    }
+
+    /**
+     * Returns true if the string contains only lower case chars, false
+     * otherwise.
+     *
+     * @return bool Whether or not $str contains only lower case characters
+     */
+    public function isUpperCase(): bool
+    {
+        return StrCommonMB::isUpperCase($this->str);
+    }
+
+    /**
+     * Splits on newlines and carriage returns, returning an array of Stringy
+     * objects corresponding to the lines in the string.
+     *
+     * @return static[] An array of Stringy objects
+     */
+    public function lines(): array
+    {
+        return StrModifiersMB::lines($this->str);
+    }
+
+    /**
+     * Splits the string with the provided regular expression, returning an
+     * array of Stringy objects. An optional integer $limit will truncate the
+     * results.
+     *
+     * @param  string $pattern The regex with which to split the string
+     * @param  int $limit Optional maximum number of results to return
+     * @return static[] An array of Stringy objects
+     */
+    public function split(string $pattern, int $limit = -1): array
+    {
+        return StrModifiersMB::split($this->str, $pattern, $limit);
+    }
+
+    /**
+     * Returns the longest common prefix between the string and $otherStr.
+     *
+     * @param  string $otherStr Second string for comparison
+     * @return static Object with its $str being the longest common prefix
+     */
+    public function longestCommonPrefix(string $otherStr): Str
+    {
+        $this->str = StrModifiersMB::longestCommonPrefix($this->str, $otherStr);
+        return $this;
+    }
+
+    /**
+     * Returns the longest common suffix between the string and $otherStr.
+     *
+     * @param  string $otherStr Second string for comparison
+     * @return static Object with its $str being the longest common suffix
+     */
+    public function longestCommonSuffix(string $otherStr): Str
+    {
+        $this->str = StrModifiersMB::longestCommonSuffix($this->str, $otherStr);
+        return $this;
+    }
+
+    /**
+     * Returns the longest common substring between the string and $otherStr.
+     * In the case of ties, it returns that which occurs first.
+     *
+     * @param  string $otherStr Second string for comparison
+     * @return static Object with its $str being the longest common substring
+     */
+    public function longestCommonSubstring(string $otherStr): Str
+    {
+        $this->str = StrModifiersMB::longestCommonSubstring($this->str, $otherStr);
+        return $this;
+    }
+
+    /**
+     * Truncates the string to a given length, while ensuring that it does not
+     * split words. If $substring is provided, and truncating occurs, the
+     * string is further truncated so that the substring may be appended without
+     * exceeding the desired length.
+     *
+     * @param  int    $length    Desired length of the truncated string
+     * @param  string $substring The substring to append if it can fit
+     * @return static Object with the resulting $str after truncating
+     */
+    public function safeTruncate(int $length, string $substring = ''): Str
+    {
+        $this->str = StrModifiersMB::safeTruncate($this->str, $length, $substring);
+        return $this;
+    }
+
+    /**
+     * Converts the string into an URL slug. This includes replacing non-ASCII
+     * characters with their closest ASCII equivalents, removing remaining
+     * non-ASCII and non-alphanumeric characters, and replacing whitespace with
+     * $replacement. The replacement defaults to a single dash, and the string
+     * is also converted to lowercase. The language of the source string can
+     * also be supplied for language-specific transliteration.
+     *
+     * @param  string $replacement The string used to replace whitespace
+     * @param  string $language    Language of the source string
+     * @return static Object whose $str has been converted to an URL slug
+     */
+    public function slugify(string $replacement = '-', string $language = 'en'): Str
+    {
+        $this->str = StrModifiersMB::slugify($this->str, $replacement, $language);
+        return $this;
+    }
+
+    /**
+     * Returns an ASCII version of the string. A set of non-ASCII characters are
+     * replaced with their closest ASCII counterparts, and the rest are removed
+     * by default. The language or locale of the source string can be supplied
+     * for language-specific transliteration in any of the following formats:
+     * en, en_GB, or en-GB. For example, passing "de" results in "äöü" mapping
+     * to "aeoeue" rather than "aou" as in other languages.
+     *
+     * @param  string $language          Language of the source string
+     * @param  bool   $removeUnsupported Whether or not to remove the
+     *                                    unsupported characters
+     * @return static Object whose $str contains only ASCII characters
+     */
+    public function toAscii(string $language = 'en', bool $removeUnsupported = true): Str
+    {
+        $this->str = StrModifiersMB::toAscii($this->str, $language, $removeUnsupported);
+        return $this;
+    }
+
+    /**
+     * Returns the replacements for the toAscii() method.
+     *
+     * @return array An array of replacements.
+     */
+    public function charsArray(): array
+    {
+        return StrCommonMB::charsArray();
+    }
+
+    /**
+     * Returns language-specific replacements for the toAscii() method.
+     * For example, German will map 'ä' to 'ae', while other languages
+     * will simply return 'a'.
+     *
+     * @param  string $language Language of the source string
+     * @return array  An array of replacements.
+     */
+    public function langSpecificCharsArray(string $language = 'en'): array
+    {
+        return StrCommonMB::langSpecificCharsArray($language);
+    }
+
+    /**
+     * Returns the substring beginning at $start, and up to, but not including
+     * the index specified by $end. If $end is omitted, the function extracts
+     * the remaining string. If $end is negative, it is computed from the end
+     * of the string.
+     *
+     * @param  int    $start Initial index from which to begin extraction
+     * @param  int    $end   Optional index at which to end extraction
+     * @return static Object with its $str being the extracted substring
+     */
+    public function slice(int $start, int $end = null): Str
+    {
+        $this->str = StrModifiersMB::slice($this->str, $start, $end);
+        return $this;
+    }
+
+    /**
+     * Strip all whitespace characters. This includes tabs and newline
+     * characters, as well as multibyte whitespace such as the thin space
+     * and ideographic space.
+     *
+     * @return static Object with whitespace stripped
+     */
+    public function stripWhitespace(): Str
+    {
+        $this->str = StrModifiersMB::stripWhitespace($this->str);
+        return $this;
+    }
+
+    /**
+     * Truncates the string to a given length. If $substring is provided, and
+     * truncating occurs, the string is further truncated so that the substring
+     * may be appended without exceeding the desired length.
+     *
+     * @param  int    $length    Desired length of the truncated string
+     * @param  string $substring The substring to append if it can fit
+     * @return static Object with the resulting $str after truncating
+     */
+    public function truncate(int $length, string $substring = ''): Str
+    {
+        $this->str = StrModifiersMB::truncate($this->str, $length, $substring);
+        return $this;
+    }
+
+    /**
+     * Returns an UpperCamelCase version of the supplied string. It trims
+     * surrounding spaces, capitalizes letters following digits, spaces, dashes
+     * and underscores, and removes spaces, dashes, underscores.
+     *
+     * @return static Object with $str in UpperCamelCase
+     */
+    public function upperCamelize(): Str
+    {
+        $this->str = StrModifiersMB::upperCamelize($this->str);
+        return $this;
+    }
 }

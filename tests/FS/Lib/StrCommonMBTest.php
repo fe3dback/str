@@ -672,4 +672,313 @@ class StrCommonMBTest extends TestCase
             [false, 'b3467be4-1bd7-11e8-accf-0ed5f89f718b'],
         ];
     }
+
+    /**
+     * @dataProvider hasLowerCaseProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testHasLowerCase($expected, $str)
+    {
+        $this->assertEquals($expected, StrCommonMB::hasLowerCase($str), $str);
+    }
+    public function hasLowerCaseProvider()
+    {
+        return [
+            [false, ''],
+            [true, 'foobar'],
+            [false, 'FOO BAR'],
+            [true, 'fOO BAR'],
+            [true, 'foO BAR'],
+            [true, 'FOO BAr'],
+            [true, 'Foobar'],
+            [false, 'FÒÔBÀŘ'],
+            [true, 'fòôbàř'],
+            [true, 'fòôbàř2'],
+            [true, 'Fòô bàř'],
+            [true, 'fòôbÀŘ'],
+        ];
+    }
+
+    /**
+     * @dataProvider hasUpperCaseProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testHasUpperCase($expected, $str)
+    {
+        $this->assertEquals($expected, StrCommonMB::hasUpperCase($str), $str);
+    }
+    public function hasUpperCaseProvider()
+    {
+        return [
+            [false, ''],
+            [true, 'FOOBAR'],
+            [false, 'foo bar'],
+            [true, 'Foo bar'],
+            [true, 'FOo bar'],
+            [true, 'foo baR'],
+            [true, 'fOOBAR'],
+            [false, 'fòôbàř'],
+            [true, 'FÒÔBÀŘ'],
+            [true, 'FÒÔBÀŘ2'],
+            [true, 'fÒÔ BÀŘ'],
+            [true, 'FÒÔBàř'],
+        ];
+    }
+
+    /**
+     * @dataProvider matchesPatternProvider()
+     * @param $expected
+     * @param $str
+     * @param $pattern
+     */
+    public function testMatchesPattern($expected, $str, $pattern)
+    {
+        $this->assertEquals($expected, StrCommonMB::matchesPattern($str, $pattern), $str);
+    }
+    public function matchesPatternProvider()
+    {
+        return [
+            [true, 'FOOBAR', '.*FOO'],
+            [false, 'foo bar', '.*  bar'],
+            [true, 'Foo bar', '.* ba'],
+            [true, 'FOo bar', '.*Oo'],
+            [true, 'foo baR', '.*aR'],
+            [true, 'fOOBAR', '.*OBA'],
+            [false, 'fòôbàř', '.*foo'],
+        ];
+    }
+
+    /**
+     * @dataProvider isAlphaProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testIsAlpha($expected, $str)
+    {
+        $this->assertEquals($expected, StrCommonMB::isAlpha($str), $str);
+    }
+    public function isAlphaProvider()
+    {
+        return [
+            [true, ''],
+            [true, 'foobar'],
+            [false, 'foo bar'],
+            [false, 'foobar2'],
+            [true, 'fòôbàř'],
+            [false, 'fòô bàř'],
+            [false, 'fòôbàř2'],
+            [true, 'ҠѨњфгШ'],
+            [false, 'ҠѨњ¨ˆфгШ'],
+            [true, '丹尼爾']
+        ];
+    }
+
+    /**
+     * @dataProvider isAlphanumericProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testIsAlphanumeric($expected, $str)
+    {
+        $this->assertEquals($expected, StrCommonMB::isAlphanumeric($str), $str);
+    }
+    public function isAlphanumericProvider()
+    {
+        return [
+            [true, ''],
+            [true, 'foobar1'],
+            [false, 'foo bar'],
+            [false, 'foobar2"'],
+            [false, "\nfoobar\n"],
+            [true, 'fòôbàř1'],
+            [false, 'fòô bàř'],
+            [false, 'fòôbàř2"'],
+            [true, 'ҠѨњфгШ'],
+            [false, 'ҠѨњ¨ˆфгШ'],
+            [true, '丹尼爾111'],
+            [true, 'دانيال1'],
+            [false, 'دانيال1 ']
+        ];
+    }
+
+    /**
+     * @dataProvider isBase64Provider()
+     */
+    public function testIsBase64($expected, $str)
+    {
+        $this->assertEquals($expected, StrCommonMB::isBase64($str), $str);
+    }
+    public function isBase64Provider()
+    {
+        return [
+            [false, ' '],
+            [true, ''],
+            [true, base64_encode('FooBar') ],
+            [true, base64_encode(' ') ],
+            [true, base64_encode('FÒÔBÀŘ') ],
+            [true, base64_encode('συγγραφέας') ],
+            [false, 'Foobar'],
+        ];
+    }
+
+    /**
+     * @dataProvider isBlankProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testIsBlank($expected, $str)
+    {
+        $this->assertEquals($expected, StrCommonMB::isBlank($str), $str);
+    }
+    public function isBlankProvider()
+    {
+        return [
+            [true, ''],
+            [true, ' '],
+            [true, "\n\t "],
+            [true, "\n\t  \v\f"],
+            [false, "\n\t a \v\f"],
+            [false, "\n\t ' \v\f"],
+            [false, "\n\t 2 \v\f"],
+            [true, ''],
+            [true, ' '], // no-break space (U+00A0)
+            [true, '           '], // spaces U+2000 to U+200A
+            [true, ' '], // narrow no-break space (U+202F)
+            [true, ' '], // medium mathematical space (U+205F)
+            [true, '　'], // ideographic space (U+3000)
+            [false, '　z'],
+            [false, '　1'],
+        ];
+    }
+
+    /**
+     * @dataProvider isHexadecimalProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testIsHexadecimal($expected, $str)
+    {
+        $this->assertEquals($expected, StrCommonMB::isHexadecimal($str), $str);
+    }
+    public function isHexadecimalProvider()
+    {
+        return [
+            [true, ''],
+            [true, 'abcdef'],
+            [true, 'ABCDEF'],
+            [true, '0123456789'],
+            [true, '0123456789AbCdEf'],
+            [false, '0123456789x'],
+            [false, 'ABCDEFx'],
+            [true, 'abcdef'],
+            [true, 'ABCDEF'],
+            [true, '0123456789'],
+            [true, '0123456789AbCdEf'],
+            [false, '0123456789x'],
+            [false, 'ABCDEFx'],
+        ];
+    }
+
+    /**
+     * @dataProvider isJsonProvider()
+     */
+    public function testIsJson($expected, $str)
+    {
+        $this->assertEquals($expected, StrCommonMB::isJson($str), $str);
+    }
+    public function isJsonProvider()
+    {
+        return [
+            [false, ''],
+            [false, '  '],
+            [true, 'null'],
+            [true, 'true'],
+            [true, 'false'],
+            [true, '[]'],
+            [true, '{}'],
+            [true, '123'],
+            [true, '{"foo": "bar"}'],
+            [false, '{"foo":"bar",}'],
+            [false, '{"foo"}'],
+            [true, '["foo"]'],
+            [false, '{"foo": "bar"]'],
+            [true, '123'],
+            [true, '{"fòô": "bàř"}'],
+            [false, '{"fòô":"bàř",}'],
+            [false, '{"fòô"}'],
+            [false, '["fòô": "bàř"]'],
+            [true, '["fòô"]'],
+            [false, '{"fòô": "bàř"]'],
+        ];
+    }
+
+    /**
+     * @dataProvider isLowerCaseProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testIsLowerCase($expected, $str)
+    {
+        $this->assertEquals($expected, StrCommonMB::isLowerCase($str), $str);
+    }
+    public function isLowerCaseProvider()
+    {
+        return [
+            [true, ''],
+            [true, 'foobar'],
+            [false, 'foo bar'],
+            [false, 'Foobar'],
+            [true, 'fòôbàř'],
+            [false, 'fòôbàř2'],
+            [false, 'fòô bàř'],
+            [false, 'fòôbÀŘ'],
+        ];
+    }
+
+    /**
+     * @dataProvider isSerializedProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testIsSerialized($expected, $str)
+    {
+        $this->assertEquals($expected, StrCommonMB::isSerialized($str), $str);
+    }
+    public function isSerializedProvider()
+    {
+        return [
+            [false, ''],
+            [true, 'a:1:{s:3:"foo";s:3:"bar";}'],
+            [false, 'a:1:{s:3:"foo";s:3:"bar"}'],
+            [true, serialize(['foo' => 'bar'])],
+            [true, 'a:1:{s:5:"fòô";s:5:"bàř";}'],
+            [false, 'a:1:{s:5:"fòô";s:5:"bàř"}'],
+            [true, serialize(['fòô' => 'bár'])],
+        ];
+    }
+
+    /**
+     * @dataProvider isUpperCaseProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testIsUpperCase($expected, $str)
+    {
+        $this->assertEquals($expected, StrCommonMB::isUpperCase($str), $str);
+    }
+    public function isUpperCaseProvider()
+    {
+        return [
+            [true, ''],
+            [true, 'FOOBAR'],
+            [false, 'FOO BAR'],
+            [false, 'fOOBAR'],
+            [true, 'FÒÔBÀŘ'],
+            [false, 'FÒÔBÀŘ2'],
+            [false, 'FÒÔ BÀŘ'],
+            [false, 'FÒÔBàř'],
+        ];
+    }
 }

@@ -339,14 +339,14 @@ class StrModifiersMB
      */
     final public static function removeLeft(string $str, string $substring): string
     {
-        $result = new Str($str);
+        $result = $str;
 
-        if ($result->startsWith($substring)) {
+        if (StrCommonMB::startsWith($result, $substring)) {
             $substringLength = \mb_strlen($substring);
-            return (string)$result->substr($substringLength);
+            return self::substr($result, $substringLength);
         }
 
-        return (string)$result;
+        return $result;
     }
 
     /**
@@ -358,14 +358,13 @@ class StrModifiersMB
      */
     final public static function removeRight(string $str, string $substring): string
     {
-        $result = new Str($str);
+        $result = $str;
 
-        if ($result->endsWith($substring)) {
-            $substringLength = \mb_strlen($substring);
-            return (string)$result->substr(0, $result->length() - $substringLength);
+        if (StrCommonMB::endsWith($result, $substring)) {
+            return self::substr($result, 0, \mb_strlen($result) - \mb_strlen($substring));
         }
 
-        return (string)$result;
+        return $result;
     }
 
     /**
@@ -432,19 +431,19 @@ class StrModifiersMB
      */
     final public static function between(string $str, string $start, string $end, int $offset = 0): string
     {
-        $string = new Str($str);
-        $startIndex = $string->indexOf($start, $offset);
+        $string = $str;
+        $startIndex = StrCommonMB::indexOf($string, $start, $offset);
 
         if ($startIndex === -1) { return ''; }
 
         $substrIndex = $startIndex + \mb_strlen($start);
-        $endIndex = $string->indexOf($end, $substrIndex);
+        $endIndex = StrCommonMB::indexOf($string, $end, $substrIndex);
 
         if ($endIndex === -1) { return ''; }
 
         if ($endIndex === $substrIndex) { return ''; }
 
-        return (string)$string->substr($substrIndex, $endIndex - $substrIndex);
+        return self::substr($string, $substrIndex, $endIndex - $substrIndex);
     }
 
     /**
@@ -457,8 +456,9 @@ class StrModifiersMB
      */
     final public static function camelize(string $str): string
     {
-        $string = new Str($str);
-        $string = $string->trim()->lowerCaseFirst();
+        $string = $str;
+        $string = self::trim($string);
+        $string = self::lowerCaseFirst($string);
         $result = (string)$string;
         $result = preg_replace('/^[-_]+/', '', $result);
 
@@ -545,10 +545,10 @@ class StrModifiersMB
      */
     final public static function collapseWhitespace(string $str): string
     {
-        $result = new Str($str);
-        $result->regexReplace('[[:space:]]+', ' ')->trim();
+        $result = $str;
+        $result = self::regexReplace($result, '[[:space:]]+', ' ');
 
-        return (string)$result;
+        return self::trim($result);
     }
 
     /**
@@ -595,13 +595,404 @@ class StrModifiersMB
      */
     final public static function delimit(string $str, string $delimiter): string
     {
-        $result = new Str($str);
-        $result = $result
-            ->trim()
-            ->regexReplace('\B([A-Z])', '-\1')
-            ->toLowerCase()
-            ->regexReplace('[-_\s]+', $delimiter);
+        $result = $str;
+        $result = self::trim($result);
+        $result = self::regexReplace($result, '\B([A-Z])', '-\1');
+        $result = self::toLowerCase($result);
 
-        return (string)$result;
+        return self::regexReplace($result, '[-_\s]+', $delimiter);
+    }
+
+    /**
+     * Convert all HTML entities to their applicable characters. An alias of
+     * html_entity_decode. For a list of flags, refer to
+     * http://php.net/manual/en/function.html-entity-decode.php
+     *
+     * @param string $str
+     * @param  int|null $flags Optional flags
+     * @return static   Object with the resulting $str after being html decoded.
+     */
+    final public static function htmlDecode(string $str, int $flags = ENT_COMPAT): string
+    {
+        $result = $str;
+
+        return \html_entity_decode($result, $flags);
+    }
+
+    /**
+     * Convert all applicable characters to HTML entities. An alias of
+     * htmlentities. Refer to http://php.net/manual/en/function.htmlentities.php
+     * for a list of flags.
+     *
+     * @param string $str
+     * @param  int|null $flags Optional flags
+     * @return static   Object with the resulting $str after being html encoded.
+     */
+    final public static function htmlEncode(string $str, int $flags = ENT_COMPAT): string
+    {
+        $result = $str;
+
+        return \htmlentities($result, $flags);
+    }
+
+    /**
+     * Capitalizes the first word of the string, replaces underscores with
+     * spaces, and strips '_id'.
+     *
+     * @param string $str
+     * @return static Object with a humanized $str
+     */
+    final public static function humanize(string $str): string
+    {
+        $result = $str;
+        $result = str_replace(['_id', '_'], ['', ' '], $result);
+        $result = self::trim($result);
+
+        return self::upperCaseFirst($result);
+    }
+
+    /**
+     * Splits on newlines and carriage returns, returning an array of Stringy
+     * objects corresponding to the lines in the string.
+     *
+     * @param string $str
+     * @return static[] An array of Stringy objects
+     */
+    final public static function lines(string $str): array
+    {
+        $result = $str;
+
+        return self::split($result, '[\r\n]{1,2}');
+    }
+
+    /**
+     * Splits the string with the provided regular expression, returning an
+     * array of Stringy objects. An optional integer $limit will truncate the
+     * results.
+     *
+     * @param string $str
+     * @param  string $pattern The regex with which to split the string
+     * @param  int $limit Optional maximum number of results to return
+     * @return static[] An array of Stringy objects
+     */
+    final public static function split(string $str, string $pattern, int $limit = -1): array
+    {
+        $innerStr = $str;
+        if (0 === $limit || '' === $innerStr) { return []; }
+
+        // mb_split errors when supplied an empty pattern in < PHP 5.4.13
+        // and HHVM < 3.8
+        if ($pattern === '') { return [new Str($innerStr)]; }
+
+        // mb_split returns the remaining unsplit string in the last index when
+        // supplying a limit
+        $limit = ($limit > 0) ? $limit + 1 : -1;
+
+        $array = \mb_split($pattern, $innerStr, $limit);
+        $arrLen = \count($array);
+
+        if ($limit > 0 && $arrLen === $limit) {
+            array_pop($array);
+        }
+
+        $result = [];
+        foreach ($array as $string) {
+            $result[] = new Str($string);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns the longest common prefix between the string and $otherStr.
+     *
+     * @param string $str
+     * @param  string $otherStr Second string for comparison
+     * @return static Object with its $str being the longest common prefix
+     */
+    final public static function longestCommonPrefix(string $str, string $otherStr): string
+    {
+        $innerStr = $str;
+        $maxLength = min(\mb_strlen($innerStr), \mb_strlen($otherStr));
+
+        $longestCommonPrefix = '';
+
+        for ($i = 0; $i < $maxLength; $i++) {
+            $char = \mb_substr($innerStr, $i, 1);
+
+            if ($char === \mb_substr($otherStr, $i, 1)) {
+                $longestCommonPrefix .= $char;
+            } else { break; }
+        }
+
+        return $longestCommonPrefix;
+    }
+
+    /**
+     * Returns the longest common suffix between the string and $otherStr.
+     *
+     * @param string $str
+     * @param  string $otherStr Second string for comparison
+     * @return static Object with its $str being the longest common suffix
+     */
+    final public static function longestCommonSuffix(string $str, string $otherStr): string
+    {
+        $innerStr = $str;
+        $maxLength = min(\mb_strlen($innerStr), \mb_strlen($otherStr));
+
+        $longestCommonSuffix = '';
+
+        for ($i = 1; $i <= $maxLength; $i++) {
+            $char = \mb_substr($innerStr, -$i, 1);
+
+            if ($char === \mb_substr($otherStr, -$i, 1)) {
+                $longestCommonSuffix = $char . $longestCommonSuffix;
+            } else { break; }
+        }
+
+        return $longestCommonSuffix;
+    }
+
+    /**
+     * Returns the longest common substring between the string and $otherStr.
+     * In the case of ties, it returns that which occurs first.
+     *
+     * @param string $str
+     * @param  string $otherStr Second string for comparison
+     * @return static Object with its $str being the longest common substring
+     */
+    final public static function longestCommonSubstring(string $str, string $otherStr): string
+    {
+        $innerStr = $str;
+
+        // Uses dynamic programming to solve
+        // http://en.wikipedia.org/wiki/Longest_common_substring_problem
+        $strLength = \mb_strlen($innerStr);
+        $otherLength = \mb_strlen($otherStr);
+
+        // Return if either string is empty
+        if ($strLength === 0 || $otherLength === 0) {
+            $innerStr = '';
+            return $innerStr;
+        }
+
+        $len = 0;
+        $end = 0;
+        $table = array_fill(0, $strLength + 1,
+            array_fill(0, $otherLength + 1, 0));
+
+        for ($i = 1; $i <= $strLength; $i++) {
+            for ($j = 1; $j <= $otherLength; $j++) {
+                $strChar = \mb_substr($innerStr, $i - 1, 1);
+                $otherChar = \mb_substr($otherStr, $j - 1, 1);
+
+                if ($strChar === $otherChar) {
+                    $table[$i][$j] = $table[$i - 1][$j - 1] + 1;
+                    if ($table[$i][$j] > $len) {
+                        $len = $table[$i][$j];
+                        $end = $i;
+                    }
+                } else {
+                    $table[$i][$j] = 0;
+                }
+            }
+        }
+
+        $innerStr = \mb_substr($innerStr, $end - $len, $len);
+
+        return $innerStr;
+    }
+
+    /**
+     * Truncates the string to a given length, while ensuring that it does not
+     * split words. If $substring is provided, and truncating occurs, the
+     * string is further truncated so that the substring may be appended without
+     * exceeding the desired length.
+     *
+     * @param string $str
+     * @param  int $length Desired length of the truncated string
+     * @param  string $substring The substring to append if it can fit
+     * @return static Object with the resulting $str after truncating
+     */
+    final public static function safeTruncate(string $str, int $length, string $substring = ''): string
+    {
+        $innerStr = $str;
+        if ($length >= \mb_strlen($innerStr)) {
+            return $innerStr;
+        }
+
+        // Need to further trim the string so we can append the substring
+        $substringLength = \mb_strlen($substring);
+        $length -= $substringLength;
+
+        $truncated = \mb_substr($innerStr, 0, $length);
+
+        // If the last word was truncated
+        if (\mb_strpos($innerStr, ' ', $length - 1) !== $length) {
+            // Find pos of the last occurrence of a space, get up to that
+            $lastPos = \mb_strrpos($truncated, ' ', 0);
+            if ($lastPos !== false) {
+                $truncated = \mb_substr($truncated, 0, $lastPos);
+            }
+        }
+
+        $innerStr = $truncated . $substring;
+
+        return $innerStr;
+    }
+
+    /**
+     * Converts the string into an URL slug. This includes replacing non-ASCII
+     * characters with their closest ASCII equivalents, removing remaining
+     * non-ASCII and non-alphanumeric characters, and replacing whitespace with
+     * $replacement. The replacement defaults to a single dash, and the string
+     * is also converted to lowercase. The language of the source string can
+     * also be supplied for language-specific transliteration.
+     *
+     * @param string $str
+     * @param  string $replacement The string used to replace whitespace
+     * @param  string $language Language of the source string
+     * @return static Object whose $str has been converted to an URL slug
+     */
+    final public static function slugify(string $str, string $replacement = '-', string $language = 'en'): string
+    {
+        $innerStr = self::toAscii($str, $language);
+
+        $innerStr = \str_replace('@', $replacement, $innerStr);
+        $quotedReplacement = \preg_quote($replacement, '');
+        $pattern = "/[^a-zA-Z\d\s-_$quotedReplacement]/u";
+        $innerStr = \preg_replace($pattern, '', $innerStr);
+
+        $innerStr = self::toLowerCase($innerStr);
+        $innerStr = self::delimit($innerStr, $replacement);
+        $innerStr = self::removeLeft($innerStr, $replacement);
+
+        return self::removeRight($innerStr, $replacement);
+    }
+
+    /**
+     * Returns an ASCII version of the string. A set of non-ASCII characters are
+     * replaced with their closest ASCII counterparts, and the rest are removed
+     * by default. The language or locale of the source string can be supplied
+     * for language-specific transliteration in any of the following formats:
+     * en, en_GB, or en-GB. For example, passing "de" results in "äöü" mapping
+     * to "aeoeue" rather than "aou" as in other languages.
+     *
+     * @param string $str
+     * @param  string $language Language of the source string
+     * @param  bool $removeUnsupported Whether or not to remove the
+     *                                    unsupported characters
+     * @return string Object whose $str contains only ASCII characters
+     */
+    final public static function toAscii(string $str, string $language = 'en', bool $removeUnsupported = true): string
+    {
+        $innerStr = $str;
+
+        $langSpecific = StrCommonMB::langSpecificCharsArray($language);
+
+        if (!empty($langSpecific)) {
+            $innerStr = \str_replace($langSpecific[0], $langSpecific[1], $innerStr);
+        }
+
+        // @todo optimize
+        foreach (StrCommonMB::charsArray() as $key => $value) {
+            foreach ($value as $item) {
+                $innerStr = self::replace($innerStr, $item, (string)$key);
+            }
+        }
+
+        if ($removeUnsupported) {
+            $innerStr = \preg_replace('/[^\x20-\x7E]/', '', $innerStr);
+        }
+
+        return $innerStr;
+    }
+
+    /**
+     * Returns the substring beginning at $start, and up to, but not including
+     * the index specified by $end. If $end is omitted, the function extracts
+     * the remaining string. If $end is negative, it is computed from the end
+     * of the string.
+     *
+     * @param string $str
+     * @param  int $start Initial index from which to begin extraction
+     * @param  int $end Optional index at which to end extraction
+     * @return static Object with its $str being the extracted substring
+     */
+    final public static function slice(string $str, int $start, int $end = null): string
+    {
+        $innerStr = $str;
+
+        if ($end === null) {
+            $length = \mb_strlen($innerStr);
+        }
+        elseif ($end >= 0 && $end <= $start) {
+            return '';
+        }
+        elseif ($end < 0) {
+            $length = \mb_strlen($innerStr) + $end - $start;
+        }
+        else {
+            $length = $end - $start;
+        }
+
+        return self::substr($innerStr, $start, $length);
+    }
+
+    /**
+     * Strip all whitespace characters. This includes tabs and newline
+     * characters, as well as multibyte whitespace such as the thin space
+     * and ideographic space.
+     *
+     * @param string $str
+     * @return static Object with whitespace stripped
+     */
+    final public static function stripWhitespace(string $str): string
+    {
+        $innerStr = $str;
+        return self::regexReplace($innerStr, '[[:space:]]+', '');
+    }
+
+    /**
+     * Truncates the string to a given length. If $substring is provided, and
+     * truncating occurs, the string is further truncated so that the substring
+     * may be appended without exceeding the desired length.
+     *
+     * @param string $str
+     * @param  int $length Desired length of the truncated string
+     * @param  string $substring The substring to append if it can fit
+     * @return static Object with the resulting $str after truncating
+     */
+    final public static function truncate(string $str, int $length, string $substring = ''): string
+    {
+        $innerStr = $str;
+        if ($length >= \mb_strlen($innerStr)) {
+            return $innerStr;
+        }
+
+        // Need to further trim the string so we can append the substring
+        $substringLength = \mb_strlen($substring);
+        $length -= $substringLength;
+
+        $truncated = \mb_substr($innerStr, 0, $length);
+        $innerStr = $truncated . $substring;
+
+        return $innerStr;
+    }
+
+    /**
+     * Returns an UpperCamelCase version of the supplied string. It trims
+     * surrounding spaces, capitalizes letters following digits, spaces, dashes
+     * and underscores, and removes spaces, dashes, underscores.
+     *
+     * @param string $str
+     * @return static Object with $str in UpperCamelCase
+     */
+    final public static function upperCamelize(string $str): string
+    {
+        $innerStr = $str;
+        $innerStr = self::camelize($innerStr);
+
+        return self::upperCaseFirst($innerStr);
     }
 }
