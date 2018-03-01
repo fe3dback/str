@@ -33,7 +33,7 @@ class StrTest extends TestCase
     public function testCommon()
     {
         $s = new Str('b3467be4-1bd7-11e8-accf-0ed5f89f718b');
-        $this->assertEquals(false, $s->isUUIDv4());
+        $this->assertFalse($s->isUUIDv4());
 
         $s = (new Str('世'))
             ->ensureLeft('Hello ')
@@ -41,10 +41,6 @@ class StrTest extends TestCase
 
         $this->assertEquals('HeLlo 世', $s);
         $this->assertTrue($s->hasPrefix('HeL'));
-        $this->assertEquals('H', $s->at(0));
-        $this->assertEquals('e', $s->at(1));
-        $this->assertEquals('L', $s->at(2));
-        $this->assertEquals('世', $s->at(6));
         $this->assertTrue($s->hasLowerCase());
         $this->assertTrue($s->hasUpperCase());
         $this->assertFalse($s->isAlpha());
@@ -67,12 +63,16 @@ class StrTest extends TestCase
         $this->assertCount(5, $s->chars());
         $this->assertEquals(5, $s->length());
         $this->assertEquals(\count($s->chars()), $s->length());
+
+        $s = new Str('no');
+        $this->assertFalse($s->toBoolean());
     }
 
     public function testModifiers()
     {
         $s = new Str('Önnek İş');
         $this->assertEquals('önnek iş', $s->toLowerCase());
+        $this->assertEquals('ö', $s->at(0));
 
         $s = new Str('fòôbàř');
         $this->assertEquals('FÒÔBÀŘ', $s->toUpperCase());
@@ -82,6 +82,60 @@ class StrTest extends TestCase
 
         $s = new Str('author_id');
         $this->assertEquals('Author', $s->humanize());
+        $this->assertEquals('aUTHOR', $s->swapCase());
+
+        $s = new Str('Hello 世 fòôbàř');
+        $this->assertEquals('He', $s->first(2));
+        $this->assertEquals('', $s->first(0));
+
+        $s = new Str('Hello 世 fòôbàř');
+        $this->assertEquals('bàř', $s->last(3));
+        $this->assertEquals('', $s->last(-1));
+
+        $s = new Str('fòô');
+        $this->assertEquals('   fòô   ', $s->pad(9, ' ', 'both'));
+        $this->assertEquals('bàř   fòô   ', $s->padLeft(12, 'bàř'));
+        $this->assertEquals('bàř   fòô   bàř', $s->padRight(15, 'bàř'));
+        $this->assertEquals('bàbàř   fòô   bàřbà', $s->padBoth(19, 'bàř'));
+        $this->assertEquals('bàbàř fòô bàřbà', $s->collapseWhitespace());
+        $this->assertEquals('bàbàř*fòô*bàřbà', $s->delimit('*'));
+
+        $s = new Str('oo bar');
+        $this->assertEquals('foo bar', $s->insert('f', 0));
+        $this->assertEquals('oo bar', $s->removeLeft('f'));
+        $this->assertEquals('oo b', $s->removeRight('ar'));
+        $this->assertEquals('oo boo b', $s->repeat(2));
+        $this->assertEquals('b oob oo', $s->reverse());
+        $this->assertEquals('bOobOo', $s->camelize());
+        $this->assertEquals('b-oob-oo', $s->dasherize());
+        $this->assertEquals('booo', $s->safeTruncate(4, 'ooo'));
+        $this->assertEquals('oo', $s->substr(2));
+        $this->assertEquals('oo', $s->truncate(8, 'i'));
+
+        $s = new Str('{foo} and {bar}');
+        $this->assertEquals('bar', $s->between('{', '}', 1));
+        $this->assertEquals('__bar__', $s->surround('__'));
+
+        $s = new Str('foo and other stuff');
+        $this->assertEquals('foo-and-other-stuff', $s->slugify());
+        $this->assertEquals('foo_and_other_stuff', $s->underscored());
+
+        $s = new Str('fòôbàř');
+        $this->assertEquals('foobar', $s->toAscii());
+        $this->assertEquals('oobar', $s->slice(1));
+
+        $s = new Str('str with     whitespace ');
+        $this->assertEquals('strwithwhitespace', $s->stripWhitespace());
+        $this->assertEquals('Strwithwhitespace', $s->upperCamelize());
+
+        $s = new Str('I see…');
+        $this->assertEquals('I see...', $s->tidy());
+        $this->assertEquals('I See...', $s->titleize());
+
+        $s = new Str("\t\tstr\twith tabs");
+        $this->assertEquals('strwith tabs', $s->toSpaces(0));
+        $this->assertEquals("strwith\ttabs", $s->toTabs(1));
+        $this->assertEquals("Strwith\tTabs", $s->toTitleCase());
     }
 
     public function testTrim()
@@ -119,14 +173,11 @@ class StrTest extends TestCase
         $this->assertFalse($s->contains('bò世'));
         $this->assertFalse($s->contains('  '));
 
-        $this->assertEquals('He', $s->first(2));
-        $this->assertEquals('', $s->first(0));
-        $this->assertEquals('bàř', $s->last(3));
-        $this->assertEquals('', $s->last(-1));
-        $this->assertEquals(true, $s->startsWith('Hel'));
-        $this->assertEquals(true, $s->startsWithAny(['not', 'Hel']));
-        $this->assertEquals(true, $s->endsWith('àř'));
-        $this->assertEquals(false, $s->endsWithAny(['世', 'Hel']));
+        $this->assertTrue($s->startsWith('Hel'));
+        $this->assertTrue($s->startsWithAny(['not', 'Hel']));
+
+        $this->assertTrue($s->endsWith('àř'));
+        $this->assertFalse($s->endsWithAny(['世', 'Hel']));
 
         $this->assertEquals(6, $s->indexOf('世'));
         $this->assertEquals(2, $s->indexOf('l'));
@@ -135,48 +186,9 @@ class StrTest extends TestCase
         $s = new Str(' 世 HeLlo 世 fòôbàř');
         $this->assertEquals(2, $s->countSubstr('世'));
         $this->assertEquals(2, $s->countSubstr('l', false));
-        $this->assertEquals(true, $s->containsAll(['世', 'fòôbàř']));
-        $this->assertEquals(false, $s->containsAny(['gh', 'H2']));
-
-        $s = new Str('');
-        $this->assertEquals(false, $s->startsWith('anything'));
-    }
-
-    public function testPadMutativeFunctions()
-    {
-        $s = new Str('fòô');
-        $this->assertEquals('   fòô   ', $s->pad(9, ' ', 'both'));
-        $this->assertEquals('bàř   fòô   ', $s->padLeft(12, 'bàř'));
-        $this->assertEquals('bàř   fòô   bàř', $s->padRight(15, 'bàř'));
-        $this->assertEquals('bàbàř   fòô   bàřbà', $s->padBoth(19, 'bàř'));
-        $this->assertEquals('bàbàř fòô bàřbà', $s->collapseWhitespace());
-        $this->assertEquals('bàbàř*fòô*bàřbà', $s->delimit('*'));
-
-        $s = new Str('oo bar');
-        $this->assertEquals('foo bar', $s->insert('f', 0));
-        $this->assertEquals('oo bar', $s->removeLeft('f'));
-        $this->assertEquals('oo b', $s->removeRight('ar'));
-        $this->assertEquals('oo boo b', $s->repeat(2));
-        $this->assertEquals('b oob oo', $s->reverse());
-        $this->assertEquals('bOobOo', $s->camelize());
-        $this->assertEquals('b-oob-oo', $s->dasherize());
-        $this->assertEquals('booo', $s->safeTruncate(4, 'ooo'));
-        $this->assertEquals('oo', $s->substr(2));
-        $this->assertEquals('oo', $s->truncate(8, 'i'));
-
-        $s = new Str('{foo} and {bar}');
-        $this->assertEquals('bar', $s->between('{', '}', 1));
-
-        $s = new Str('foo and other stuff');
-        $this->assertEquals('foo-and-other-stuff', $s->slugify());
-
-        $s = new Str('fòôbàř');
-        $this->assertEquals('foobar', $s->toAscii());
-        $this->assertEquals('oobar', $s->slice(1));
-
-        $s = new Str('str with     whitespace ');
-        $this->assertEquals('strwithwhitespace', $s->stripWhitespace());
-        $this->assertEquals('Strwithwhitespace', $s->upperCamelize());
+        $this->assertTrue($s->containsAll(['世', 'fòôbàř']));
+        $this->assertFalse($s->containsAny(['gh', 'H2']));
+        $this->assertFalse($s->startsWith('anything'));
     }
 
     public function testRandomFunctions()
@@ -189,7 +201,7 @@ class StrTest extends TestCase
     {
         $s = new Str('fòô ');
         $this->assertEquals('bàř', $s->regexReplace('f[òô]+\s', 'bàř'));
-        $this->assertEquals(true, $s->matchesPattern('b'));
+        $this->assertTrue($s->matchesPattern('b'));
     }
 
     public function testHtmlFunctions()

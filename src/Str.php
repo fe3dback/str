@@ -18,7 +18,7 @@ class Str
     }
 
     /**
-     * get result string
+     * Get resulting string
      *
      * @return string
      */
@@ -28,7 +28,7 @@ class Str
     }
 
     /**
-     * alias for getString method
+     * Alias for getString method
      *
      * @return string
      */
@@ -47,10 +47,10 @@ class Str
 
     /**
      * Returns the substring beginning at $start with the specified $length.
-     * It differs from the mb_substr() function in that providing a $length of
-     * null will return the rest of the string, rather than an empty string.
+     * It differs from the mb_substr() function in that providing a $length of 0
+     * will return the rest of the string, rather than an empty string.
      *
-     * @param  int $start Position of the first character to use
+     * @param  int $start  Position of the first character to use
      * @param  int $length Maximum number of characters used
      * @return Str
      */
@@ -61,9 +61,9 @@ class Str
     }
 
     /**
-     * check if string has prefix at the start?
+     * Check if the string has $prefix at the start
      *
-     * @param string $prefix
+     * @param  string $prefix
      * @return bool
      */
     public function hasPrefix(string $prefix): bool
@@ -72,9 +72,9 @@ class Str
     }
 
     /**
-     * check if string has suffix at the end?
+     * Check if the string has $suffix at the end
      *
-     * @param string $suffix
+     * @param  string $suffix
      * @return bool
      */
     public function hasSuffix(string $suffix): bool
@@ -83,11 +83,11 @@ class Str
     }
 
     /**
-     * Check if prefix exist in string, and
-     * prepend prefix to str - if not
+     * Check whether $prefix exists in the string, and
+     * prepend $prefix to the string if it doesn't
      *
-     * @param string $check
-     * @return $this
+     * @param  string $check
+     * @return Str
      */
     public function ensureLeft(string $check): Str
     {
@@ -96,11 +96,11 @@ class Str
     }
 
     /**
-     * Check if suffix exist in string, and
-     * append suffix to str - if not.
+     * Check whether $suffix exists in the string, and
+     * append $suffix to the string if it doesn't
      *
-     * @param string $check
-     * @return $this
+     * @param  string $check
+     * @return Str
      */
     public function ensureRight(string $check): Str
     {
@@ -109,9 +109,9 @@ class Str
     }
 
     /**
-     * Check if $haystack contain $needle substring
+     * Check if $haystack contains $needle substring
      *
-     * @param string $sub
+     * @param  string $sub
      * @return bool
      */
     public function contains(string $sub): bool
@@ -127,10 +127,10 @@ class Str
      * for a k-rune string. If n < 0,
      * there is no limit on the number of replacements.
      *
-     * @param $old
-     * @param $new
-     * @param int $times
-     * @return $this
+     * @param  string $old
+     * @param  string $new
+     * @param  int    $times
+     * @return Str
      */
     public function replace(string $old, string $new, int $times = -1): Str
     {
@@ -140,6 +140,7 @@ class Str
 
     /**
      * Make a string lowercase
+     *
      * @return Str
      */
     public function toLowerCase(): Str
@@ -150,6 +151,7 @@ class Str
 
     /**
      * Make a string uppercase
+     *
      * @return Str
      */
     public function toUpperCase(): Str
@@ -158,12 +160,12 @@ class Str
         return $this;
     }
 
-    /**s
+    /**
      * Returns a string with whitespace removed from the start and end of the
      * string. Supports the removal of unicode whitespace. Accepts an optional
      * string of characters to strip instead of the defaults.
      *
-     * @param string $chars
+     * @param  string $chars
      * @return Str
      */
     public function trim(string $chars = ''): Str
@@ -201,9 +203,9 @@ class Str
     }
 
     /**
-     * Append $sub to str
+     * Append $sub to the string
      *
-     * @param string $sub
+     * @param  string $sub
      * @return Str
      */
     public function append(string $sub): Str
@@ -213,9 +215,9 @@ class Str
     }
 
     /**
-     * Prepend $sub to str
+     * Prepend $sub to the string
      *
-     * @param string $sub
+     * @param  string $sub
      * @return Str
      */
     public function prepend(string $sub): Str
@@ -227,12 +229,13 @@ class Str
     /**
      * Returns the character at $pos, with indexes starting at 0.
      *
-     * @param int $pos
-     * @return string
+     * @param  int $pos
+     * @return Str
      */
-    public function at(int $pos): string
+    public function at(int $pos): Str
     {
-        return StrCommonMB::at($this->str, $pos);
+        $this->str = StrModifiersMB::at($this->str, $pos);
+        return $this;
     }
 
     /**
@@ -258,23 +261,25 @@ class Str
     /**
      * Returns the first $length characters of the string.
      *
-     * @param int $length Number of characters to retrieve from the start
-     * @return string
+     * @param  int $length Number of characters to retrieve from the start
+     * @return Str
      */
-    public function first(int $length = 1): string
+    public function first(int $length = 1): Str
     {
-        return StrModifiersMB::first($this->str, $length);
+        $this->str =  StrModifiersMB::first($this->str, $length);
+        return $this;
     }
 
     /**
      * Returns the last $length characters of the string.
      *
-     * @param  int    $length Number of characters to retrieve from the end
-     * @return string
+     * @param  int $length Number of characters to retrieve from the end
+     * @return Str
      */
-    public function last(int $length = 1): string
+    public function last(int $length = 1): Str
     {
-        return StrModifiersMB::last($this->str, $length);
+        $this->str = StrModifiersMB::last($this->str, $length);
+        return $this;
     }
 
     /**
@@ -283,8 +288,8 @@ class Str
      * the search.
      *
      * @param  string $needle Substring to look for
-     * @param  int $offset Offset from which to search
-     * @return int The occurrence's index if found, otherwise -1
+     * @param  int    $offset Offset from which to search
+     * @return int            The occurrence's index if found, otherwise -1
      */
     public function indexOf(string $needle, int $offset = 0): int
     {
@@ -298,8 +303,8 @@ class Str
      * in the string.
      *
      * @param  string $needle Substring to look for
-     * @param  int $offset Offset from which to search
-     * @return int The last occurrence's index if found, otherwise -1
+     * @param  int    $offset Offset from which to search
+     * @return int            The last occurrence's index if found, otherwise -1
      */
     public function indexOfLast(string $needle, int $offset = 0): int
     {
@@ -311,9 +316,9 @@ class Str
      * By default, the comparison is case-sensitive, but can be made insensitive
      * by setting $caseSensitive to false.
      *
-     * @param  string $needle The substring to search for
-     * @param  bool $caseSensitive Whether or not to enforce case-sensitivity
-     * @return int The number of $substring occurrences
+     * @param  string $needle        The substring to search for
+     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
+     * @return int                   The number of $substring occurrences
      */
     public function countSubstr(string $needle, bool $caseSensitive = true): int
     {
@@ -325,9 +330,9 @@ class Str
      * default the comparison is case-sensitive, but can be made insensitive by
      * setting $caseSensitive to false.
      *
-     * @param  string[] $needles Substrings to look for
-     * @param  bool $caseSensitive Whether or not to enforce case-sensitivity
-     * @return bool     Whether or not $str contains $needle
+     * @param  array $needles       Substrings to look for
+     * @param  bool  $caseSensitive Whether or not to enforce case-sensitivity
+     * @return bool                 Whether or not $str contains $needle
      */
     public function containsAll(array $needles, bool $caseSensitive = true): bool
     {
@@ -339,9 +344,9 @@ class Str
      * default the comparison is case-sensitive, but can be made insensitive by
      * setting $caseSensitive to false.
      *
-     * @param  string[] $needles       Substrings to look for
-     * @param  bool     $caseSensitive Whether or not to enforce case-sensitivity
-     * @return bool     Whether or not $str contains $needle
+     * @param  array $needles       Substrings to look for
+     * @param  bool  $caseSensitive Whether or not to enforce case-sensitivity
+     * @return bool                 Whether or not $str contains $needle
      */
     public function containsAny(array $needles, bool $caseSensitive = true): bool
     {
@@ -354,9 +359,8 @@ class Str
      * by setting $caseSensitive to false.
      *
      * @param  string $substring     The substring to look for
-     * @param  bool   $caseSensitive Whether or not to enforce
-     *                               case-sensitivity
-     * @return bool   Whether or not $str starts with $substring
+     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
+     * @return bool                  Whether or not $str starts with $substring
      */
     public function startsWith(string $substring, bool $caseSensitive = true): bool
     {
@@ -368,10 +372,9 @@ class Str
      * otherwise. By default the comparison is case-sensitive, but can be made
      * insensitive by setting $caseSensitive to false.
      *
-     * @param  string[] $substrings    Substrings to look for
-     * @param  bool     $caseSensitive Whether or not to enforce
-     *                                 case-sensitivity
-     * @return bool     Whether or not $str starts with $substring
+     * @param  array $substrings    Substrings to look for
+     * @param  bool  $caseSensitive Whether or not to enforce case-sensitivity
+     * @return bool                 Whether or not $str starts with $substring
      */
     public function startsWithAny(array $substrings, bool $caseSensitive = true): bool
     {
@@ -385,7 +388,7 @@ class Str
      *
      * @param  string $substring     The substring to look for
      * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
-     * @return bool   Whether or not $str ends with $substring
+     * @return bool                  Whether or not $str ends with $substring
      */
     public function endsWith(string $substring, bool $caseSensitive = true): bool
     {
@@ -397,10 +400,9 @@ class Str
      * By default, the comparison is case-sensitive, but can be made insensitive
      * by setting $caseSensitive to false.
      *
-     * @param  string[] $substrings    Substrings to look for
-     * @param  bool     $caseSensitive Whether or not to enforce
-     *                                 case-sensitivity
-     * @return bool     Whether or not $str ends with $substring
+     * @param  array $substrings    Substrings to look for
+     * @param  bool  $caseSensitive Whether or not to enforce case-sensitivity
+     * @return bool                 Whether or not $str ends with $substring
      */
     public function endsWithAny(array $substrings, bool $caseSensitive = true): bool
     {
@@ -413,8 +415,8 @@ class Str
      * default string used for padding is a space, and the default type (one of
      * 'left', 'right', 'both') is 'right'.
      *
-     * @param  int $length Desired string length after padding
-     * @param  string $padStr String used to pad, defaults to space
+     * @param  int    $length  Desired string length after padding
+     * @param  string $padStr  String used to pad, defaults to space
      * @param  string $padType One of 'left', 'right', 'both'
      * @return Str
      */
@@ -428,9 +430,9 @@ class Str
      * Returns a new string of a given length such that both sides of the
      * string are padded. Alias for pad() with a $padType of 'both'.
      *
-     * @param  int $length Desired string length after padding
+     * @param  int    $length Desired string length after padding
      * @param  string $padStr String used to pad, defaults to space
-     * @return static Str with padding applied
+     * @return Str
      */
     public function padBoth(int $length, string $padStr = ' '): Str
     {
@@ -446,9 +448,9 @@ class Str
      * Returns a new string of a given length such that the beginning of the
      * string is padded. Alias for pad() with a $padType of 'left'.
      *
-     * @param  int $length Desired string length after padding
+     * @param  int    $length Desired string length after padding
      * @param  string $padStr String used to pad, defaults to space
-     * @return static Str with left padding
+     * @return Str
      */
     public function padLeft(int $length, string $padStr = ' '): Str
     {
@@ -460,9 +462,9 @@ class Str
      * Returns a new string of a given length such that the end of the string
      * is padded. Alias for pad() with a $padType of 'right'.
      *
-     * @param  int $length Desired string length after padding
+     * @param  int    $length Desired string length after padding
      * @param  string $padStr String used to pad, defaults to space
-     * @return static Str with right padding
+     * @return Str
      */
     public function padRight(int $length, string $padStr = ' '): Str
     {
@@ -475,7 +477,7 @@ class Str
      *
      * @param  string $substring String to be inserted
      * @param  int    $index     The index at which to insert the substring
-     * @return static Object with the resulting $str after the insertion
+     * @return Str
      */
     public function insert(string $substring, int $index): Str
     {
@@ -487,7 +489,7 @@ class Str
      * Returns a new string with the prefix $substring removed, if present.
      *
      * @param  string $substring The prefix to remove
-     * @return static Object having a $str without the prefix $substring
+     * @return Str
      */
     public function removeLeft(string $substring): Str
     {
@@ -499,7 +501,7 @@ class Str
      * Returns a new string with the suffix $substring removed, if present.
      *
      * @param  string $substring The suffix to remove
-     * @return static Object having a $str without the suffix $substring
+     * @return Str
      */
     public function removeRight(string $substring): Str
     {
@@ -510,8 +512,8 @@ class Str
     /**
      * Returns a repeated string given a multiplier. An alias for str_repeat.
      *
-     * @param  int    $multiplier The number of times to repeat the string
-     * @return static Object with a repeated str
+     * @param  int $multiplier The number of times to repeat the string
+     * @return Str
      */
     public function repeat(int $multiplier): Str
     {
@@ -520,9 +522,9 @@ class Str
     }
 
     /**
-     * Returns a reversed string. A multibyte version of strrev().
+     * Returns a reversed string. A multi-byte version of strrev().
      *
-     * @return static Object with a reversed $str
+     * @return Str
      */
     public function reverse(): Str
     {
@@ -531,10 +533,10 @@ class Str
     }
 
     /**
-     * A multibyte str_shuffle() function. It returns a string with its
+     * A multi-byte str_shuffle() function. It returns a string with its
      * characters in random order.
      *
-     * @return static Object with a shuffled $str
+     * @return Str
      */
     public function shuffle(): Str
     {
@@ -550,7 +552,7 @@ class Str
      * @param  string $start  Delimiter marking the start of the substring
      * @param  string $end    Delimiter marking the end of the substring
      * @param  int    $offset Index from which to begin the search
-     * @return static Object whose $str is a substring between $start and $end
+     * @return Str
      */
     public function between(string $start, string $end, int $offset = 0): Str
     {
@@ -563,7 +565,7 @@ class Str
      * capitalizes letters following digits, spaces, dashes and underscores,
      * and removes spaces, dashes, as well as underscores.
      *
-     * @return static Object with $str in camelCase
+     * @return Str
      */
     public function camelize(): Str
     {
@@ -574,7 +576,7 @@ class Str
     /**
      * Converts the first character of the string to lower case.
      *
-     * @return static Object with the first character of $str being lower case
+     * @return Str
      */
     public function lowerCaseFirst(): Str
     {
@@ -585,7 +587,7 @@ class Str
     /**
      * Converts the first character of the supplied string to upper case.
      *
-     * @return static Object with the first character of $str being upper case
+     * @return Str
      */
     public function upperCaseFirst(): Str
     {
@@ -596,9 +598,9 @@ class Str
     /**
      * Trims the string and replaces consecutive whitespace characters with a
      * single space. This includes tabs and newline characters, as well as
-     * multibyte whitespace such as the thin space and ideographic space.
+     * multi-byte whitespace such as the thin space and ideographic space.
      *
-     * @return static Object with a trimmed $str and condensed whitespace
+     * @return Str
      */
     public function collapseWhitespace(): Str
     {
@@ -608,15 +610,15 @@ class Str
 
     /**
      * Replaces all occurrences of $pattern in $str by $replacement. An alias
-     * for mb_ereg_replace(). Note that the 'i' option with multibyte patterns
+     * for mb_ereg_replace(). Note that the 'i' option with multi-byte patterns
      * in mb_ereg_replace() requires PHP 5.6+ for correct results. This is due
      * to a lack of support in the bundled version of Oniguruma in PHP < 5.6,
      * and current versions of HHVM (3.8 and below).
      *
-     * @param  string $pattern The regular expression pattern
+     * @param  string $pattern     The regular expression pattern
      * @param  string $replacement The string to replace with
-     * @param  string $options Matching conditions to be used
-     * @return static Object with the resulting $str after the replacements
+     * @param  string $options     Matching conditions to be used
+     * @return Str
      */
     public function regexReplace(string $pattern, string $replacement, string $options = 'msr'): Str
     {
@@ -629,7 +631,7 @@ class Str
      * inserted before uppercase characters (with the exception of the first
      * character of the string), and in place of spaces as well as underscores.
      *
-     * @return static Object with a dasherized $str
+     * @return Str
      */
     public function dasherize(): Str
     {
@@ -644,7 +646,7 @@ class Str
      * and underscores. Alpha delimiters are not converted to lowercase.
      *
      * @param  string $delimiter Sequence used to separate parts of the string
-     * @return static Object with a delimited $str
+     * @return Str
      */
     public function delimit($delimiter): Str
     {
@@ -652,8 +654,9 @@ class Str
         return $this;
     }
 
-    /** Checks if the given string is a valid UUID v.4
-     * It doesn't matter whether the given UUID has dashes
+    /**
+     * Checks if the given string is a valid UUID v.4.
+     * It doesn't matter whether the given UUID has dashes.
      *
      * @return bool
      */
@@ -663,8 +666,7 @@ class Str
     }
 
     /**
-     * Returns true if the string contains a lower case char, false
-     * otherwise.
+     * Returns true if the string contains a lower case char, false otherwise.
      *
      * @return bool Whether or not the string contains a lower case character.
      */
@@ -674,8 +676,7 @@ class Str
     }
 
     /**
-     * Returns true if the string contains an upper case char, false
-     * otherwise.
+     * Returns true if the string contains an upper case char, false otherwise.
      *
      * @return bool Whether or not the string contains an upper case character.
      */
@@ -688,7 +689,7 @@ class Str
      * Returns true if $str matches the supplied pattern, false otherwise.
      *
      * @param  string $pattern Regex pattern to match against
-     * @return bool   Whether or not $str matches the pattern
+     * @return bool            Whether or not $str matches the pattern
      */
     public function matchesPattern(string $pattern): bool
     {
@@ -700,10 +701,10 @@ class Str
      * html_entity_decode. For a list of flags, refer to
      * http://php.net/manual/en/function.html-entity-decode.php
      *
-     * @param  int|null $flags Optional flags
-     * @return static   Object with the resulting $str after being html decoded.
+     * @param  int $flags Optional flags
+     * @return Str
      */
-    public function htmlDecode($flags = ENT_COMPAT): Str
+    public function htmlDecode(int $flags = ENT_COMPAT): Str
     {
         $this->str = StrModifiersMB::htmlDecode($this->str, $flags);
         return $this;
@@ -714,10 +715,10 @@ class Str
      * htmlentities. Refer to http://php.net/manual/en/function.htmlentities.php
      * for a list of flags.
      *
-     * @param  int|null $flags Optional flags
-     * @return static   Object with the resulting $str after being html encoded.
+     * @param  int $flags Optional flags
+     * @return Str
      */
-    public function htmlEncode($flags = ENT_COMPAT): Str
+    public function htmlEncode(int $flags = ENT_COMPAT): Str
     {
         $this->str = StrModifiersMB::htmlEncode($this->str, $flags);
         return $this;
@@ -727,7 +728,7 @@ class Str
      * Capitalizes the first word of the string, replaces underscores with
      * spaces, and strips '_id'.
      *
-     * @return static Object with a humanized $str
+     * @return Str
      */
     public function humanize(): Str
     {
@@ -736,8 +737,7 @@ class Str
     }
 
     /**
-     * Returns true if the string contains only alphabetic chars, false
-     * otherwise.
+     * Returns true if the string contains only alphabetic chars, false otherwise.
      *
      * @return bool Whether or not $str contains only alphabetic chars
      */
@@ -747,8 +747,8 @@ class Str
     }
 
     /**
-     * Returns true if the string contains only alphabetic and numeric chars,
-     * false otherwise.
+     * Returns true if the string contains only alphabetic and numeric
+     * chars, false otherwise.
      *
      * @return bool Whether or not $str contains only alphanumeric chars
      */
@@ -768,8 +768,7 @@ class Str
     }
 
     /**
-     * Returns true if the string contains only whitespace chars, false
-     * otherwise.
+     * Returns true if the string contains only whitespace chars, false otherwise.
      *
      * @return bool Whether or not $str contains only whitespace characters
      */
@@ -779,8 +778,7 @@ class Str
     }
 
     /**
-     * Returns true if the string contains only hexadecimal chars, false
-     * otherwise.
+     * Returns true if the string contains only hexadecimal chars, false otherwise.
      *
      * @return bool Whether or not $str contains only hexadecimal chars
      */
@@ -802,8 +800,7 @@ class Str
     }
 
     /**
-     * Returns true if the string contains only lower case chars, false
-     * otherwise.
+     * Returns true if the string contains only lower case chars, false otherwise.
      *
      * @return bool Whether or not $str contains only lower case characters
      */
@@ -823,8 +820,7 @@ class Str
     }
 
     /**
-     * Returns true if the string contains only lower case chars, false
-     * otherwise.
+     * Returns true if the string contains only lower case chars, false otherwise.
      *
      * @return bool Whether or not $str contains only lower case characters
      */
@@ -837,7 +833,7 @@ class Str
      * Splits on newlines and carriage returns, returning an array of Stringy
      * objects corresponding to the lines in the string.
      *
-     * @return static[] An array of Stringy objects
+     * @return array of strings
      */
     public function lines(): array
     {
@@ -850,8 +846,8 @@ class Str
      * results.
      *
      * @param  string $pattern The regex with which to split the string
-     * @param  int $limit Optional maximum number of results to return
-     * @return static[] An array of Stringy objects
+     * @param  int    $limit   Optional maximum number of results to return
+     * @return array of strings
      */
     public function split(string $pattern, int $limit = -1): array
     {
@@ -862,7 +858,7 @@ class Str
      * Returns the longest common prefix between the string and $otherStr.
      *
      * @param  string $otherStr Second string for comparison
-     * @return static Object with its $str being the longest common prefix
+     * @return Str
      */
     public function longestCommonPrefix(string $otherStr): Str
     {
@@ -874,7 +870,7 @@ class Str
      * Returns the longest common suffix between the string and $otherStr.
      *
      * @param  string $otherStr Second string for comparison
-     * @return static Object with its $str being the longest common suffix
+     * @return Str
      */
     public function longestCommonSuffix(string $otherStr): Str
     {
@@ -887,7 +883,7 @@ class Str
      * In the case of ties, it returns that which occurs first.
      *
      * @param  string $otherStr Second string for comparison
-     * @return static Object with its $str being the longest common substring
+     * @return Str
      */
     public function longestCommonSubstring(string $otherStr): Str
     {
@@ -903,7 +899,7 @@ class Str
      *
      * @param  int    $length    Desired length of the truncated string
      * @param  string $substring The substring to append if it can fit
-     * @return static Object with the resulting $str after truncating
+     * @return Str
      */
     public function safeTruncate(int $length, string $substring = ''): Str
     {
@@ -921,7 +917,7 @@ class Str
      *
      * @param  string $replacement The string used to replace whitespace
      * @param  string $language    Language of the source string
-     * @return static Object whose $str has been converted to an URL slug
+     * @return Str
      */
     public function slugify(string $replacement = '-', string $language = 'en'): Str
     {
@@ -938,9 +934,8 @@ class Str
      * to "aeoeue" rather than "aou" as in other languages.
      *
      * @param  string $language          Language of the source string
-     * @param  bool   $removeUnsupported Whether or not to remove the
-     *                                    unsupported characters
-     * @return static Object whose $str contains only ASCII characters
+     * @param  bool   $removeUnsupported Whether or not to remove the unsupported characters
+     * @return Str
      */
     public function toAscii(string $language = 'en', bool $removeUnsupported = true): Str
     {
@@ -977,9 +972,9 @@ class Str
      * the remaining string. If $end is negative, it is computed from the end
      * of the string.
      *
-     * @param  int    $start Initial index from which to begin extraction
-     * @param  int    $end   Optional index at which to end extraction
-     * @return static Object with its $str being the extracted substring
+     * @param  int $start Initial index from which to begin extraction
+     * @param  int $end   Optional index at which to end extraction
+     * @return Str
      */
     public function slice(int $start, int $end = null): Str
     {
@@ -989,10 +984,10 @@ class Str
 
     /**
      * Strip all whitespace characters. This includes tabs and newline
-     * characters, as well as multibyte whitespace such as the thin space
+     * characters, as well as multi-byte whitespace such as the thin space
      * and ideographic space.
      *
-     * @return static Object with whitespace stripped
+     * @return Str
      */
     public function stripWhitespace(): Str
     {
@@ -1007,7 +1002,7 @@ class Str
      *
      * @param  int    $length    Desired length of the truncated string
      * @param  string $substring The substring to append if it can fit
-     * @return static Object with the resulting $str after truncating
+     * @return Str
      */
     public function truncate(int $length, string $substring = ''): Str
     {
@@ -1020,11 +1015,129 @@ class Str
      * surrounding spaces, capitalizes letters following digits, spaces, dashes
      * and underscores, and removes spaces, dashes, underscores.
      *
-     * @return static Object with $str in UpperCamelCase
+     * @return Str
      */
     public function upperCamelize(): Str
     {
         $this->str = StrModifiersMB::upperCamelize($this->str);
+        return $this;
+    }
+
+    /**
+     * Surrounds $str with the given substring.
+     *
+     * @param  string $substring The substring to add to both sides
+     * @return Str
+     */
+    public function surround(string $substring): Str
+    {
+        $this->str = StrModifiersMB::surround($this->str, $substring);
+        return $this;
+    }
+
+    /**
+     * Returns a case swapped version of the string.
+     *
+     * @return Str
+     */
+    public function swapCase(): Str
+    {
+        $this->str = StrModifiersMB::swapCase($this->str);
+        return $this;
+    }
+
+    /**
+     * Returns a string with smart quotes, ellipsis characters, and dashes from
+     * Windows-1252 (commonly used in Word documents) replaced by their ASCII
+     * equivalents.
+     *
+     * @return Str
+     */
+    public function tidy()
+    {
+        $this->str = StrModifiersMB::tidy($this->str);
+        return $this;
+    }
+
+    /**
+     * Returns a trimmed string with the first letter of each word capitalized.
+     * Also accepts an array, $ignore, allowing you to list words not to be
+     * capitalized.
+     *
+     * @param  array $ignore An array of words not to capitalize
+     * @return Str
+     */
+    public function titleize(array $ignore = []): Str
+    {
+        $this->str = StrModifiersMB::titleize($this->str, $ignore);
+        return $this;
+    }
+
+    /**
+     * Returns a boolean representation of the given logical string value.
+     * For example, 'true', '1', 'on' and 'yes' will return true. 'false', '0',
+     * 'off', and 'no' will return false. In all instances, case is ignored.
+     * For other numeric strings, their sign will determine the return value.
+     * In addition, blank strings consisting of only whitespace will return
+     * false. For all other strings, the return value is a result of a
+     * boolean cast.
+     *
+     * @return bool A boolean value for the string
+     */
+    public function toBoolean(): bool
+    {
+        return StrCommonMB::toBoolean($this->str);
+    }
+
+    /**
+     * Converts each tab in the string to some number of spaces, as defined by
+     * $tabLength. By default, each tab is converted to 4 consecutive spaces.
+     *
+     * @param  int $tabLength Number of spaces to replace each tab with
+     * @return Str
+     */
+    public function toSpaces(int $tabLength = 4): Str
+    {
+        $this->str = StrModifiersMB::toSpaces($this->str, $tabLength);
+        return $this;
+    }
+
+    /**
+     * Converts each occurrence of some consecutive number of spaces, as
+     * defined by $tabLength, to a tab. By default, each 4 consecutive spaces
+     * are converted to a tab.
+     *
+     * @param  int $tabLength Number of spaces to replace with a tab
+     * @return Str
+     */
+    public function toTabs(int $tabLength = 4): Str
+    {
+        $this->str = StrModifiersMB::toTabs($this->str, $tabLength);
+        return $this;
+    }
+
+    /**
+     * Converts the first character of each word in the string to uppercase.
+     *
+     * @return Str
+     */
+    public function toTitleCase(): Str
+    {
+        $this->str = StrModifiersMB::toTitleCase($this->str);
+        return $this;
+    }
+
+    /**
+     * Returns a lowercase and trimmed string separated by underscores.
+     * Underscores are inserted before uppercase characters (with the exception
+     * of the first character of the string), and in place of spaces as well as
+     * dashes.
+     *
+     * @return Str
+     */
+    public function underscored(): Str
+    {
+        $this->str = StrModifiersMB::underscored($this->str);
         return $this;
     }
 }

@@ -2,121 +2,11 @@
 
 declare(strict_types=1);
 
-use \Str\Str;
 use \Str\Lib\StrCommonMB;
-use \Str\Lib\StrModifiersMB;
 use PHPUnit\Framework\TestCase;
 
 class StrCommonMBTest extends TestCase
 {
-    /**
-     * @dataProvider EnsureLeftProvider
-     * @param array $inp
-     * @param string $out
-     */
-    public function testEnsureLeft(array $inp, string $out)
-    {
-        $this->assertEquals($out, StrModifiersMB::ensureLeft(
-            array_shift($inp),
-            array_shift($inp)
-        ));
-    }
-
-    public function EnsureLeftProvider()
-    {
-        return
-            [
-                [
-                    ['Hello world', '_left>>'],
-                    '_left>>Hello world',
-                ],
-
-                [
-                    ['_left>>Hello world', '_left>>'],
-                    '_left>>Hello world',
-                ],
-
-                [
-                    ['q', 'q'],
-                    'q',
-                ],
-
-                [
-                    ['qq', 'q'],
-                    'qq',
-                ],
-
-                [
-                    ['Hello, 世界', '界'],
-                    '界Hello, 世界',
-                ],
-
-                [
-                    ['界Hello, 世界', '界'],
-                    '界Hello, 世界',
-                ],
-
-                [
-                    ['世', '世'],
-                    '世',
-                ],
-            ];
-    }
-
-    /**
-     * @dataProvider EnsureRightProvider
-     * @param array $inp
-     * @param string $out
-     */
-    public function testEnsureRight(array $inp, string $out)
-    {
-        $this->assertEquals($out, StrModifiersMB::ensureRight(
-            array_shift($inp),
-            array_shift($inp)
-        ));
-    }
-
-    public function EnsureRightProvider()
-    {
-        return
-            [
-                [
-                    ['Hello world', '<<_right'],
-                    'Hello world<<_right',
-                ],
-
-                [
-                    ['Hello world<<_right', '<<_right'],
-                    'Hello world<<_right',
-                ],
-
-                [
-                    ['q', 'q'],
-                    'q',
-                ],
-
-                [
-                    ['qq', 'q'],
-                    'qq',
-                ],
-
-                [
-                    ['Hello, 世界', '世'],
-                    'Hello, 世界世',
-                ],
-
-                [
-                    ['Hello, 世界界', '界'],
-                    'Hello, 世界界',
-                ],
-
-                [
-                    ['世', '世'],
-                    '世',
-                ],
-            ];
-    }
-
     /**
      * @dataProvider HasPrefixProvider
      * @param array $inp
@@ -138,47 +28,38 @@ class StrCommonMBTest extends TestCase
                     ['Hello world', 'Hel'],
                     true
                 ],
-
                 [
                     ['Hello world', 'ell'],
                     false
                 ],
-
                 [
                     ['世Hello world', '世'],
                     true
                 ],
-
                 [
                     ['世H世ello world世', '世H世'],
                     true
                 ],
-
                 [
                     ['世h世ello world世', '世H'],
                     false
                 ],
-
                 [
                     ['h', 'h'],
                     true
                 ],
-
                 [
                     ['hh', 'hh'],
                     true
                 ],
-
                 [
                     ['hhh', 'h'],
                     true
                 ],
-
                 [
                     ['h', ''],
                     false
                 ],
-
                 [
                     ['', 'h'],
                     false
@@ -207,47 +88,38 @@ class StrCommonMBTest extends TestCase
                     ['Hello world', 'rld'],
                     true
                 ],
-
                 [
                     ['Hello world', 'orl'],
                     false
                 ],
-
                 [
                     ['Hello world世', '世'],
                     true
                 ],
-
                 [
                     ['世H世ello worl世d世', '世d世'],
                     true
                 ],
-
                 [
                     ['世h世ello world世', 'D世'],
                     false
                 ],
-
                 [
                     ['h', 'h'],
                     true
                 ],
-
                 [
                     ['hh', 'hh'],
                     true
                 ],
-
                 [
                     ['hhh', 'h'],
                     true
                 ],
-
                 [
                     ['h', ''],
                     false
                 ],
-
                 [
                     ['', 'h'],
                     false
@@ -257,11 +129,12 @@ class StrCommonMBTest extends TestCase
 
     /**
      * @dataProvider lengthProvider()
+     * @param $expected
+     * @param $str
      */
     public function testLength($expected, $str)
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->length());
+        $this->assertEquals($expected, StrCommonMB::length($str));
     }
     public function lengthProvider()
     {
@@ -314,31 +187,6 @@ class StrCommonMBTest extends TestCase
             [false, 'Str contains foo bar', 'foo bar ', false],
             [false, 'Ο συγγραφέας είπε', '  συγγραφέας ', false],
             [false, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ' ßÅ˚', false]
-        ];
-    }
-
-    /**
-     * @dataProvider AtProvider
-     * @param $expected
-     * @param $str
-     * @param $pos
-     */
-    public function testAt($expected, $str, $pos)
-    {
-        $this->assertEquals($expected, StrCommonMB::at($str, $pos));
-    }
-
-    public function AtProvider()
-    {
-        return [
-            ['H', 'Hello world', 0],
-            ['e', 'Hello world', 1],
-            ['d', 'Hello world', -1],
-            ['世', '世', -1],
-            ['世', '世', 0],
-            ['', '', 0],
-            ['', '', -1],
-            ['', '', 1],
         ];
     }
 
@@ -805,6 +653,8 @@ class StrCommonMBTest extends TestCase
 
     /**
      * @dataProvider isBase64Provider()
+     * @param $expected
+     * @param $str
      */
     public function testIsBase64($expected, $str)
     {
@@ -883,6 +733,8 @@ class StrCommonMBTest extends TestCase
 
     /**
      * @dataProvider isJsonProvider()
+     * @param $str
+     * @param $expected
      */
     public function testIsJson($expected, $str)
     {
@@ -979,6 +831,36 @@ class StrCommonMBTest extends TestCase
             [false, 'FÒÔBÀŘ2'],
             [false, 'FÒÔ BÀŘ'],
             [false, 'FÒÔBàř'],
+        ];
+    }
+
+    /**
+     * @dataProvider toBooleanProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testToBoolean($expected, $str)
+    {
+        $this->assertEquals($expected, StrCommonMB::toBoolean($str), $str);
+    }
+    public function toBooleanProvider()
+    {
+        return [
+            [true, 'true'],
+            [true, '1'],
+            [true, 'on'],
+            [true, 'ON'],
+            [true, 'yes'],
+            [true, '999'],
+            [false, 'false'],
+            [false, '0'],
+            [false, 'off'],
+            [false, 'OFF'],
+            [false, 'no'],
+            [false, '-999'],
+            [false, ''],
+            [false, ' '],
+            [false, '  '] // narrow no-break space (U+202F)
         ];
     }
 }

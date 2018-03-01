@@ -21,12 +21,12 @@ $send($s->toString()); // same
 $send($s->getString()); // same
 ```
 
-A fast string manipulation library with multibyte support. 
+A fast string manipulation library with multi-byte support. 
 Based on "Stringy" library, with focus on speed.
 
 Lib uses php7 features and does not throw any 
 exceptions (because all input parameters are 
-strongly typed). The code is completely covered by unit tests)
+strongly typed). The code is completely covered by unit tests.
 
 ## install
 
@@ -40,6 +40,7 @@ composer require str/str
 ## support List
 
 ### Done
+- [x] ensureLeft
 - [x] ensureRight
 - [x] hasPrefix
 - [x] hasSuffix
@@ -112,17 +113,15 @@ composer require str/str
 - [x] stripWhitespace
 - [x] truncate
 - [x] upperCamelize
-
-### Todo Stringy
-- [ ] surround
-- [ ] swapCase
-- [ ] tidy
-- [ ] titleize
-- [ ] toBoolean
-- [ ] toSpaces
-- [ ] toTabs
-- [ ] toTitleCase
-- [ ] underscored
+- [x] surround
+- [x] swapCase
+- [x] tidy
+- [x] titleize
+- [x] toBoolean
+- [x] toSpaces
+- [x] toTabs
+- [x] toTitleCase
+- [x] underscored
 
 ### Todo New
 
