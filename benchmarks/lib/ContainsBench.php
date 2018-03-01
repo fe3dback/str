@@ -5,7 +5,7 @@ namespace Benchmark;
 use Str\Str;
 use Stringy\Stringy;
 
-class Contains
+class ContainsBench
 {
     public function bench_contains_Str() {
         (new Str(' hello world '))->contains('test');
