@@ -11,7 +11,7 @@ class StrCommonMB
      * For example, German will map 'ä' to 'ae', while other languages
      * will simply return 'a'.
      *
-     * @param  string $language Language of the source string
+     * @param  string $language Language of the source string.
      * @return array  An array of replacements.
      */
     final public static function langSpecificCharsArray(string $language = 'en'): array
@@ -52,7 +52,7 @@ class StrCommonMB
     final public static function charsArray(): array
     {
         static $charsArray;
-        if (isset($charsArray)) { return $charsArray; }
+        if (null !== $charsArray) { return $charsArray; }
 
         /** @noinspection UselessReturnInspection */
         return $charsArray = [
@@ -221,10 +221,10 @@ class StrCommonMB
     }
 
     /**
-     * check if string has prefix at the start?
+     * Check if the string has $prefix at the start
      *
-     * @param string $s
-     * @param string $prefix
+     * @param  string $s
+     * @param  string $prefix
      * @return bool
      */
     final public static function hasPrefix(string $s, string $prefix): bool
@@ -235,10 +235,10 @@ class StrCommonMB
     }
 
     /**
-     * check if string has suffix at the end?
+     * Check if the string has $suffix at the end
      *
-     * @param string $s
-     * @param string $suffix
+     * @param  string $s
+     * @param  string $suffix
      * @return bool
      */
     final public static function hasSuffix(string $s, string $suffix): bool
@@ -251,7 +251,7 @@ class StrCommonMB
     /**
      * Return string length
      *
-     * @param string $str
+     * @param  string $str
      * @return int
      */
     final public static function length(string $str): int
@@ -262,9 +262,9 @@ class StrCommonMB
     /**
      * Check if $haystack contains $needle substring
      *
-     * @param string $haystack
-     * @param string $needle
-     * @param bool $caseSensitive
+     * @param  string $haystack
+     * @param  string $needle
+     * @param  bool $caseSensitive
      * @return bool
      */
     final public static function contains(string $haystack, string $needle, bool $caseSensitive = true): bool
@@ -276,18 +276,6 @@ class StrCommonMB
         }
 
         return (false !== \mb_stripos($haystack, $needle));
-    }
-
-    /**
-     * Returns the character at $pos, with indexes starting at 0.
-     *
-     * @param string $s
-     * @param int $pos
-     * @return string
-     */
-    final public static function at(string $s, int $pos): string
-    {
-        return StrModifiersMB::substr($s, $pos, 1);
     }
 
     /**
@@ -376,9 +364,9 @@ class StrCommonMB
      * default the comparison is case-sensitive, but can be made insensitive by
      * setting $caseSensitive to false.
      *
-     * @param string $str
-     * @param string[] $needles Substrings to look for
-     * @param bool $caseSensitive Whether or not to enforce case-sensitivity
+     * @param  string $str
+     * @param  string[] $needles Substrings to look for
+     * @param  bool $caseSensitive Whether or not to enforce case-sensitivity
      * @return bool Whether or not $str contains $needle
      */
     final public static function containsAll(string $str, array $needles, bool $caseSensitive = true): bool
@@ -397,9 +385,9 @@ class StrCommonMB
      * default the comparison is case-sensitive, but can be made insensitive by
      * setting $caseSensitive to false.
      *
-     * @param string $str
-     * @param string[] $needles Substrings to look for
-     * @param bool $caseSensitive Whether or not to enforce case-sensitivity
+     * @param  string $str
+     * @param  string[] $needles Substrings to look for
+     * @param  bool $caseSensitive Whether or not to enforce case-sensitivity
      * @return bool Whether or not $str contains $needle
      */
     final public static function containsAny(string $str, array $needles, bool $caseSensitive = true): bool
@@ -418,10 +406,9 @@ class StrCommonMB
      * default, the comparison is case-sensitive, but can be made insensitive
      * by setting $caseSensitive to false.
      *
-     * @param string $str
+     * @param  string $str
      * @param  string $substring The substring to look for
-     * @param  bool $caseSensitive Whether or not to enforce
-     *                               case-sensitivity
+     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
      * @return bool   Whether or not $str starts with $substring
      */
     final public static function startsWith(string $str, string $substring, bool $caseSensitive = true): bool
@@ -444,10 +431,9 @@ class StrCommonMB
      * otherwise. By default the comparison is case-sensitive, but can be made
      * insensitive by setting $caseSensitive to false.
      *
-     * @param string $str
+     * @param  string   $str
      * @param  string[] $substrings Substrings to look for
-     * @param  bool $caseSensitive Whether or not to enforce
-     *                                 case-sensitivity
+     * @param  bool     $caseSensitive Whether or not to enforce case-sensitivity
      * @return bool     Whether or not $str starts with $substring
      */
     final public static function startsWithAny(string $str, array $substrings, bool $caseSensitive = true): bool
@@ -466,9 +452,9 @@ class StrCommonMB
      * default, the comparison is case-sensitive, but can be made insensitive
      * by setting $caseSensitive to false.
      *
-     * @param string $str
+     * @param  string $str
      * @param  string $substring The substring to look for
-     * @param  bool $caseSensitive Whether or not to enforce case-sensitivity
+     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
      * @return bool   Whether or not $str ends with $substring
      */
     final public static function endsWith(string $str, string $substring, bool $caseSensitive = true): bool
@@ -491,10 +477,9 @@ class StrCommonMB
      * By default, the comparison is case-sensitive, but can be made insensitive
      * by setting $caseSensitive to false.
      *
-     * @param string $str
+     * @param  string   $str
      * @param  string[] $substrings Substrings to look for
-     * @param  bool $caseSensitive Whether or not to enforce
-     *                                 case-sensitivity
+     * @param  bool     $caseSensitive Whether or not to enforce case-sensitivity
      * @return bool     Whether or not $str ends with $substring
      */
     final public static function endsWithAny(string $str, array $substrings, bool $caseSensitive = true): bool
@@ -508,10 +493,11 @@ class StrCommonMB
         return false;
     }
 
-    /** Checks if the given string is a valid UUID v.4
-     * It doesn't matter whether the given UUID has dashes
+    /**
+     * Checks if the given string is a valid UUID v.4.
+     * It doesn't matter whether the given UUID has dashes.
      *
-     * @param string $str
+     * @param  string $str
      * @return bool
      */
     final public static function isUUIDv4(string $str): bool
@@ -519,15 +505,15 @@ class StrCommonMB
         $l = '[a-f0-9]';
         $pattern = "/^{$l}{8}-?{$l}{4}-?4{$l}{3}-?[89ab]{$l}{3}-?{$l}{12}\Z/";
 
-        return (bool)\preg_match($pattern, $str);
+        return (bool) \preg_match($pattern, $str);
     }
 
     /**
      * Returns true if the string contains a lower case char, false
      * otherwise.
      *
-     * @param string $str
-     * @return bool Whether or not the string contains a lower case character.
+     * @param  string $str
+     * @return bool
      */
     final public static function hasLowerCase(string $str): bool
     {
@@ -538,8 +524,8 @@ class StrCommonMB
      * Returns true if the string contains an upper case char, false
      * otherwise.
      *
-     * @param string $str
-     * @return bool Whether or not the string contains an upper case character.
+     * @param  string $str
+     * @return bool
      */
     final public static function hasUpperCase(string $str): bool
     {
@@ -549,7 +535,7 @@ class StrCommonMB
     /**
      * Returns true if $str matches the supplied pattern, false otherwise.
      *
-     * @param string $str
+     * @param  string $str
      * @param  string $pattern Regex pattern to match against
      * @return bool   Whether or not $str matches the pattern
      */
@@ -562,8 +548,8 @@ class StrCommonMB
      * Returns true if the string contains only alphabetic chars, false
      * otherwise.
      *
-     * @param string $str
-     * @return bool Whether or not $str contains only alphabetic chars
+     * @param  string $str
+     * @return bool   Whether or not $str contains only alphabetic chars
      */
     final public static function isAlpha(string $str): bool
     {
@@ -574,8 +560,8 @@ class StrCommonMB
      * Returns true if the string contains only alphabetic and numeric chars,
      * false otherwise.
      *
-     * @param string $str
-     * @return bool Whether or not $str contains only alphanumeric chars
+     * @param  string $str
+     * @return bool   Whether or not $str contains only alphanumeric chars
      */
     final public static function isAlphanumeric(string $str): bool
     {
@@ -585,8 +571,8 @@ class StrCommonMB
     /**
      * Returns true if the string is base64 encoded, false otherwise.
      *
-     * @param string $str
-     * @return bool Whether or not $str is base64 encoded
+     * @param  string $str
+     * @return bool   Whether or not $str is base64 encoded
      */
     final public static function isBase64(string $str): bool
     {
@@ -597,8 +583,8 @@ class StrCommonMB
      * Returns true if the string contains only whitespace chars, false
      * otherwise.
      *
-     * @param string $str
-     * @return bool Whether or not $str contains only whitespace characters
+     * @param  string $str
+     * @return bool   Whether or not $str contains only whitespace characters
      */
     final public static function isBlank(string $str): bool
     {
@@ -609,8 +595,8 @@ class StrCommonMB
      * Returns true if the string contains only hexadecimal chars, false
      * otherwise.
      *
-     * @param string $str
-     * @return bool Whether or not $str contains only hexadecimal chars
+     * @param  string $str
+     * @return bool   Whether or not $str contains only hexadecimal chars
      */
     final public static function isHexadecimal(string $str): bool
     {
@@ -622,8 +608,8 @@ class StrCommonMB
      * in PHP 5.x, this method is consistent with PHP 7 and other JSON parsers,
      * in that an empty string is not considered valid JSON.
      *
-     * @param string $str
-     * @return bool Whether or not $str is JSON
+     * @param  string $str
+     * @return bool   Whether or not $str is JSON
      */
     final public static function isJson(string $str): bool
     {
@@ -638,8 +624,8 @@ class StrCommonMB
      * Returns true if the string contains only lower case chars, false
      * otherwise.
      *
-     * @param string $str
-     * @return bool Whether or not $str contains only lower case characters
+     * @param  string $str
+     * @return bool   Whether or not $str contains only lower case characters
      */
     final public static function isLowerCase(string $str): bool
     {
@@ -649,8 +635,8 @@ class StrCommonMB
     /**
      * Returns true if the string is serialized, false otherwise.
      *
-     * @param string $str
-     * @return bool Whether or not $str is serialized
+     * @param  string $str
+     * @return bool   Whether or not $str is serialized
      */
     final public static function isSerialized(string $str): bool
     {
@@ -661,11 +647,51 @@ class StrCommonMB
      * Returns true if the string contains only lower case chars, false
      * otherwise.
      *
-     * @param string $str
-     * @return bool Whether or not $str contains only lower case characters
+     * @param  string $str
+     * @return bool   Whether or not $str contains only lower case characters
      */
     final public static function isUpperCase(string $str): bool
     {
         return self::matchesPattern($str,'^[[:upper:]]*$');
+    }
+
+    /**
+     * Returns a boolean representation of the given logical string value.
+     * For example, 'true', '1', 'on' and 'yes' will return true. 'false', '0',
+     * 'off', and 'no' will return false. In all instances, case is ignored.
+     * For other numeric strings, their sign will determine the return value.
+     * In addition, blank strings consisting of only whitespace will return
+     * false. For all other strings, the return value is a result of a
+     * boolean cast.
+     *
+     * @param  string $str
+     * @return bool   A boolean value for the string
+     */
+    final public static function toBoolean(string $str): bool
+    {
+        $innerStr = $str;
+        $key = $str;
+        $key = StrModifiersMB::toLowerCase($key);
+
+        $map = [
+            'true'  => true,
+            '1'     => true,
+            'on'    => true,
+            'yes'   => true,
+            'false' => false,
+            '0'     => false,
+            'off'   => false,
+            'no'    => false
+        ];
+
+        if (\array_key_exists($key, $map)) {
+            return $map[$key];
+        }
+        /** @noinspection RedundantElseClauseInspection */
+        elseif (\is_numeric($innerStr)) {
+            return ((int)$innerStr > 0);
+        }
+
+        return (bool) StrModifiersMB::regexReplace($innerStr,'[[:space:]]', '');
     }
 }

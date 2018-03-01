@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace Str\Lib;
 
-use Str\Str;
-
 class StrModifiersMB
 {
     /**
      * Returns the substring beginning at $start with the specified $length.
-     * It differs from the mb_substr() function in that providing a $length of
-     * null will return the rest of the string, rather than an empty string.
+     * It differs from the mb_substr() function in that providing a $length of 0
+     * will return the rest of the string, rather than an empty string.
      *
      * @param  string $s
-     * @param  int $start Position of the first character to use
-     * @param  int $length Maximum number of characters used
+     * @param  int    $start Position of the first character to use
+     * @param  int    $length Maximum number of characters used
      * @return string
      */
     final public static function substr(string $s, int $start = 0, int $length = 0): string
@@ -25,10 +23,22 @@ class StrModifiersMB
     }
 
     /**
+     * Returns the character at $pos, with indexes starting at 0.
+     *
+     * @param  string $s
+     * @param  int    $pos
+     * @return string
+     */
+    final public static function at(string $s, int $pos): string
+    {
+        return self::substr($s, $pos, 1);
+    }
+
+    /**
      * Returns an array consisting of the characters in the string.
      *
-     * @param string $s
-     * @return array An array of string chars
+     * @param  string $s
+     * @return array  An array of string chars
      */
     final public static function chars(string $s): array
     {
@@ -44,11 +54,11 @@ class StrModifiersMB
     /**
      * Returns the first $length characters of the string.
      *
-     * @param string $s String for search
-     * @param int $length Number of characters to retrieve from the start
+     * @param  string $s String for search
+     * @param  int    $length Number of characters to retrieve from the start
      * @return string
      */
-    final public static function first(string $s, int $length): string
+    final public static function first(string $s, int $length = 1): string
     {
         if ($length <= 0) { return ''; }
 
@@ -58,11 +68,11 @@ class StrModifiersMB
     /**
      * Returns the last $length characters of the string.
      *
-     * @param string $s String for search
-     * @param int $length Number of characters to retrieve from the end
+     * @param  string $s String for search
+     * @param  int    $length Number of characters to retrieve from the end
      * @return string
      */
-    final public static function last(string $s, int $length): string
+    final public static function last(string $s, int $length = 1): string
     {
         if ($length <= 0) { return ''; }
 
@@ -71,18 +81,17 @@ class StrModifiersMB
 
     /** @noinspection MoreThanThreeArgumentsInspection */
     /**
-     * Replace returns a copy of the string s with the first
+     * Replace returns a copy of the string $str with the first
      * n non-overlapping instances of old replaced by new.
      * If old is empty, it matches at the beginning of the string and
      * after each UTF-8 sequence, yielding up to k+1 replacements
      * for a k-rune string. If n < 0,
      * there is no limit on the number of replacements.
      *
-     * @param string $str
-     * @param string $old
-     * @param string $new
-     * @param int $limit
-     *
+     * @param  string $str
+     * @param  string $old
+     * @param  string $new
+     * @param  int    $limit
      * @return string
      */
     final public static function replace(string $str, string $old, string $new, int $limit = -1): string
@@ -157,9 +166,9 @@ class StrModifiersMB
     /**
      * Append $sub to str
      *
-     * @param string $str
-     * @param string $sub
-     * @return Str
+     * @param  string $str
+     * @param  string $sub
+     * @return string
      */
     final public static function append(string $str, string $sub): string
     {
@@ -170,9 +179,9 @@ class StrModifiersMB
     /**
      * Prepend $sub to str
      *
-     * @param string $str
-     * @param string $sub
-     * @return Str
+     * @param  string $str
+     * @param  string $sub
+     * @return string
      */
     final public static function prepend(string $str, string $sub): string
     {
@@ -181,11 +190,11 @@ class StrModifiersMB
     }
 
     /**
-     * Check if prefix exist in string, and
-     * prepend prefix to str - if not
+     * Check whether $prefix exists in the string, and
+     * prepend $prefix to the string if it doesn't
      *
-     * @param $str
-     * @param $check
+     * @param  $str
+     * @param  $check
      * @return string
      */
     final public static function ensureLeft(string $str, string $check): string
@@ -196,11 +205,11 @@ class StrModifiersMB
     }
 
     /**
-     * Check if suffix exist in string, and
-     * append suffix to str - if not.
+     * Check whether $suffix exists in the string, and
+     * append $suffix to the string if it doesn't
      *
-     * @param $str
-     * @param $check
+     * @param  $str
+     * @param  $check
      * @return string
      */
     final public static function ensureRight(string $str, string $check): string
@@ -210,15 +219,16 @@ class StrModifiersMB
         return $str . $check;
     }
 
+    /** @noinspection MoreThanThreeArgumentsInspection */
     /**
      * Pads the string to a given length with $padStr. If length is less than
      * or equal to the length of the string, no padding takes places. The
      * default string used for padding is a space, and the default type (one of
      * 'left', 'right', 'both') is 'right'.
      *
-     * @param string $str
-     * @param  int $length Desired string length after padding
-     * @param  string $padStr String used to pad, defaults to space
+     * @param  string $str
+     * @param  int    $length  Desired string length after padding
+     * @param  string $padStr  String used to pad, defaults to space
      * @param  string $padType One of 'left', 'right', 'both'
      * @return string
      */
@@ -240,10 +250,10 @@ class StrModifiersMB
      * Returns a new string of a given length such that both sides of the
      * string are padded. Alias for pad() with a $padType of 'both'.
      *
-     * @param string $str
-     * @param  int $length Desired string length after padding
+     * @param  string $str
+     * @param  int    $length Desired string length after padding
      * @param  string $padStr String used to pad, defaults to space
-     * @return static String with padding applied
+     * @return string
      */
     final public static function padBoth(string $str, int $length, string $padStr = ' '): string
     {
@@ -256,10 +266,10 @@ class StrModifiersMB
      * Returns a new string of a given length such that the beginning of the
      * string is padded. Alias for pad() with a $padType of 'left'.
      *
-     * @param string $str
-     * @param  int $length Desired string length after padding
+     * @param  string $str
+     * @param  int    $length Desired string length after padding
      * @param  string $padStr String used to pad, defaults to space
-     * @return static String with left padding
+     * @return string
      */
     final public static function padLeft(string $str, int $length, string $padStr = ' '): string
     {
@@ -270,25 +280,26 @@ class StrModifiersMB
      * Returns a new string of a given length such that the end of the string
      * is padded. Alias for pad() with a $padType of 'right'.
      *
-     * @param string $str
-     * @param  int $length Desired string length after padding
+     * @param  string $str
+     * @param  int    $length Desired string length after padding
      * @param  string $padStr String used to pad, defaults to space
-     * @return static String with right padding
+     * @return string
      */
     final public static function padRight(string $str, int $length, string $padStr = ' '): string
     {
         return self::applyPadding($str, 0, $length - \mb_strlen($str), $padStr);
     }
 
+    /** @noinspection MoreThanThreeArgumentsInspection */
     /**
      * Adds the specified amount of left and right padding to the given string.
      * The default character used is a space.
      *
-     * @param string $str
-     * @param  int $left Length of left padding
-     * @param  int $right Length of right padding
+     * @param  string $str
+     * @param  int    $left   Length of left padding
+     * @param  int    $right  Length of right padding
      * @param  string $padStr String used to pad
-     * @return static String with padding applied
+     * @return string
      */
     final public static function applyPadding(string $str, int $left = 0, int $right = 0, string $padStr = ' '): string
     {
@@ -311,10 +322,10 @@ class StrModifiersMB
     /**
      * Inserts $substring into the string at the $index provided.
      *
-     * @param string $str
+     * @param  string $str
      * @param  string $substring String to be inserted
-     * @param  int $index The index at which to insert the substring
-     * @return static Object with the resulting $str after the insertion
+     * @param  int    $index     The index at which to insert the substring
+     * @return string with the resulting $str after the insertion
      */
     final public static function insert(string $str, string $substring, int $index): string
     {
@@ -333,9 +344,9 @@ class StrModifiersMB
     /**
      * Returns a new string with the prefix $substring removed, if present.
      *
-     * @param string $str
+     * @param  string $str
      * @param  string $substring The prefix to remove
-     * @return static Object having a $str without the prefix $substring
+     * @return string having a $str without the prefix $substring
      */
     final public static function removeLeft(string $str, string $substring): string
     {
@@ -352,9 +363,9 @@ class StrModifiersMB
     /**
      * Returns a new string with the suffix $substring removed, if present.
      *
-     * @param string $str
+     * @param  string $str
      * @param  string $substring The suffix to remove
-     * @return static Object having a $str without the suffix $substring
+     * @return string having a $str without the suffix $substring
      */
     final public static function removeRight(string $str, string $substring): string
     {
@@ -370,9 +381,9 @@ class StrModifiersMB
     /**
      * Returns a repeated string given a multiplier. An alias for str_repeat.
      *
-     * @param string $str
-     * @param  int $multiplier The number of times to repeat the string
-     * @return static Object with a repeated str
+     * @param  string $str
+     * @param  int    $multiplier The number of times to repeat the string
+     * @return string with a repeated str
      */
     final public static function repeat(string $str, int $multiplier): string
     {
@@ -380,10 +391,10 @@ class StrModifiersMB
     }
 
     /**
-     * Returns a reversed string. A multibyte version of strrev().
+     * Returns a reversed string. A multi-byte version of strrev().
      *
-     * @param string $str
-     * @return static Object with a reversed $str
+     * @param  string $str
+     * @return string
      */
     final public static function reverse(string $str): string
     {
@@ -399,11 +410,11 @@ class StrModifiersMB
     }
 
     /**
-     * A multibyte str_shuffle() function. It returns a string with its
+     * A multi-byte str_shuffle() function. It returns a string with its
      * characters in random order.
      *
-     * @param string $str
-     * @return static Object with a shuffled $str
+     * @param  string $str
+     * @return string
      */
     final public static function shuffle(string $str): string
     {
@@ -418,16 +429,17 @@ class StrModifiersMB
         return $shuffledStr;
     }
 
+    /** @noinspection MoreThanThreeArgumentsInspection */
     /**
      * Returns the substring between $start and $end, if found, or an empty
      * string. An optional offset may be supplied from which to begin the
      * search for the start string.
      *
-     * @param string $str
-     * @param  string $start Delimiter marking the start of the substring
-     * @param  string $end Delimiter marking the end of the substring
-     * @param  int $offset Index from which to begin the search
-     * @return static Object whose $str is a substring between $start and $end
+     * @param  string $str
+     * @param  string $start  Delimiter marking the start of the substring
+     * @param  string $end    Delimiter marking the end of the substring
+     * @param  int    $offset Index from which to begin the search
+     * @return string
      */
     final public static function between(string $str, string $start, string $end, int $offset = 0): string
     {
@@ -451,8 +463,8 @@ class StrModifiersMB
      * capitalizes letters following digits, spaces, dashes and underscores,
      * and removes spaces, dashes, as well as underscores.
      *
-     * @param string $str
-     * @return static Object with $str in camelCase
+     * @param  string $str
+     * @return string in camelCase
      */
     final public static function camelize(string $str): string
     {
@@ -487,8 +499,9 @@ class StrModifiersMB
 
     /**
      * Make a string lowercase
-     * @param string $str
-     * @return Str
+     *
+     * @param  string $str
+     * @return string
      */
     final public static function toLowerCase(string $str): string
     {
@@ -498,8 +511,9 @@ class StrModifiersMB
 
     /**
      * Make a string uppercase
-     * @param string $str
-     * @return Str
+     *
+     * @param  string $str
+     * @return string
      */
     final public static function toUpperCase(string $str): string
     {
@@ -510,8 +524,8 @@ class StrModifiersMB
     /**
      * Converts the first character of the string to lower case.
      *
-     * @param string $str
-     * @return static Object with the first character of $str being lower case
+     * @param  string $str
+     * @return string
      */
     final public static function lowerCaseFirst(string $str): string
     {
@@ -524,8 +538,8 @@ class StrModifiersMB
     /**
      * Converts the first character of the supplied string to upper case.
      *
-     * @param string $str
-     * @return static Object with the first character of $str being upper case
+     * @param  string $str
+     * @return string
      */
     final public static function upperCaseFirst(string $str): string
     {
@@ -538,10 +552,10 @@ class StrModifiersMB
     /**
      * Trims the string and replaces consecutive whitespace characters with a
      * single space. This includes tabs and newline characters, as well as
-     * multibyte whitespace such as the thin space and ideographic space.
+     * multi-byte whitespace such as the thin space and ideographic space.
      *
-     * @param string $str
-     * @return static Object with a trimmed $str and condensed whitespace
+     * @param  string $str
+     * @return string
      */
     final public static function collapseWhitespace(string $str): string
     {
@@ -551,18 +565,19 @@ class StrModifiersMB
         return self::trim($result);
     }
 
+    /** @noinspection MoreThanThreeArgumentsInspection */
     /**
      * Replaces all occurrences of $pattern in $str by $replacement. An alias
-     * for mb_ereg_replace(). Note that the 'i' option with multibyte patterns
+     * for mb_ereg_replace(). Note that the 'i' option with multi-byte patterns
      * in mb_ereg_replace() requires PHP 5.6+ for correct results. This is due
      * to a lack of support in the bundled version of Oniguruma in PHP < 5.6,
      * and current versions of HHVM (3.8 and below).
      *
-     * @param string $str
-     * @param  string $pattern The regular expression pattern
+     * @param  string $str
+     * @param  string $pattern     The regular expression pattern
      * @param  string $replacement The string to replace with
-     * @param  string $options Matching conditions to be used
-     * @return static Object with the resulting $str after the replacements
+     * @param  string $options     Matching conditions to be used
+     * @return string
      */
     final public static function regexReplace(string $str, string $pattern, string $replacement, string $options = 'msr'): string
     {
@@ -575,8 +590,8 @@ class StrModifiersMB
      * inserted before uppercase characters (with the exception of the first
      * character of the string), and in place of spaces as well as underscores.
      *
-     * @param string $str
-     * @return static Object with a dasherized $str
+     * @param  string $str
+     * @return string
      */
     final public static function dasherize(string $str): string
     {
@@ -589,9 +604,9 @@ class StrModifiersMB
      * of the first character of the string), and in place of spaces, dashes,
      * and underscores. Alpha delimiters are not converted to lowercase.
      *
-     * @param string $str
+     * @param  string $str
      * @param  string $delimiter Sequence used to separate parts of the string
-     * @return static Object with a delimited $str
+     * @return string
      */
     final public static function delimit(string $str, string $delimiter): string
     {
@@ -608,9 +623,9 @@ class StrModifiersMB
      * html_entity_decode. For a list of flags, refer to
      * http://php.net/manual/en/function.html-entity-decode.php
      *
-     * @param string $str
-     * @param  int|null $flags Optional flags
-     * @return static   Object with the resulting $str after being html decoded.
+     * @param  string $str
+     * @param  int    $flags Optional flags
+     * @return string
      */
     final public static function htmlDecode(string $str, int $flags = ENT_COMPAT): string
     {
@@ -624,9 +639,9 @@ class StrModifiersMB
      * htmlentities. Refer to http://php.net/manual/en/function.htmlentities.php
      * for a list of flags.
      *
-     * @param string $str
-     * @param  int|null $flags Optional flags
-     * @return static   Object with the resulting $str after being html encoded.
+     * @param  string $str
+     * @param  int    $flags Optional flags
+     * @return string
      */
     final public static function htmlEncode(string $str, int $flags = ENT_COMPAT): string
     {
@@ -639,8 +654,8 @@ class StrModifiersMB
      * Capitalizes the first word of the string, replaces underscores with
      * spaces, and strips '_id'.
      *
-     * @param string $str
-     * @return static Object with a humanized $str
+     * @param  string $str
+     * @return string
      */
     final public static function humanize(string $str): string
     {
@@ -652,11 +667,11 @@ class StrModifiersMB
     }
 
     /**
-     * Splits on newlines and carriage returns, returning an array of Stringy
-     * objects corresponding to the lines in the string.
+     * Splits on newlines and carriage returns, returning an array of strings
+     * corresponding to the lines in the string.
      *
-     * @param string $str
-     * @return static[] An array of Stringy objects
+     * @param  string $str
+     * @return array of strings
      */
     final public static function lines(string $str): array
     {
@@ -667,13 +682,13 @@ class StrModifiersMB
 
     /**
      * Splits the string with the provided regular expression, returning an
-     * array of Stringy objects. An optional integer $limit will truncate the
+     * array of strings. An optional integer $limit will truncate the
      * results.
      *
-     * @param string $str
+     * @param  string $str
      * @param  string $pattern The regex with which to split the string
-     * @param  int $limit Optional maximum number of results to return
-     * @return static[] An array of Stringy objects
+     * @param  int    $limit   Optional maximum number of results to return
+     * @return array of strings
      */
     final public static function split(string $str, string $pattern, int $limit = -1): array
     {
@@ -682,7 +697,7 @@ class StrModifiersMB
 
         // mb_split errors when supplied an empty pattern in < PHP 5.4.13
         // and HHVM < 3.8
-        if ($pattern === '') { return [new Str($innerStr)]; }
+        if ($pattern === '') { return [$innerStr]; }
 
         // mb_split returns the remaining unsplit string in the last index when
         // supplying a limit
@@ -697,7 +712,7 @@ class StrModifiersMB
 
         $result = [];
         foreach ($array as $string) {
-            $result[] = new Str($string);
+            $result[] = $string;
         }
 
         return $result;
@@ -706,9 +721,9 @@ class StrModifiersMB
     /**
      * Returns the longest common prefix between the string and $otherStr.
      *
-     * @param string $str
+     * @param  string $str
      * @param  string $otherStr Second string for comparison
-     * @return static Object with its $str being the longest common prefix
+     * @return string being the longest common prefix
      */
     final public static function longestCommonPrefix(string $str, string $otherStr): string
     {
@@ -731,9 +746,9 @@ class StrModifiersMB
     /**
      * Returns the longest common suffix between the string and $otherStr.
      *
-     * @param string $str
+     * @param  string $str
      * @param  string $otherStr Second string for comparison
-     * @return static Object with its $str being the longest common suffix
+     * @return string being the longest common suffix
      */
     final public static function longestCommonSuffix(string $str, string $otherStr): string
     {
@@ -757,9 +772,9 @@ class StrModifiersMB
      * Returns the longest common substring between the string and $otherStr.
      * In the case of ties, it returns that which occurs first.
      *
-     * @param string $str
+     * @param  string $str
      * @param  string $otherStr Second string for comparison
-     * @return static Object with its $str being the longest common substring
+     * @return string being the longest common substring
      */
     final public static function longestCommonSubstring(string $str, string $otherStr): string
     {
@@ -809,10 +824,10 @@ class StrModifiersMB
      * string is further truncated so that the substring may be appended without
      * exceeding the desired length.
      *
-     * @param string $str
-     * @param  int $length Desired length of the truncated string
+     * @param  string $str
+     * @param  int    $length    Desired length of the truncated string
      * @param  string $substring The substring to append if it can fit
-     * @return static Object with the resulting $str after truncating
+     * @return string
      */
     final public static function safeTruncate(string $str, int $length, string $substring = ''): string
     {
@@ -849,10 +864,10 @@ class StrModifiersMB
      * is also converted to lowercase. The language of the source string can
      * also be supplied for language-specific transliteration.
      *
-     * @param string $str
+     * @param  string $str
      * @param  string $replacement The string used to replace whitespace
-     * @param  string $language Language of the source string
-     * @return static Object whose $str has been converted to an URL slug
+     * @param  string $language    Language of the source string
+     * @return string
      */
     final public static function slugify(string $str, string $replacement = '-', string $language = 'en'): string
     {
@@ -878,11 +893,10 @@ class StrModifiersMB
      * en, en_GB, or en-GB. For example, passing "de" results in "äöü" mapping
      * to "aeoeue" rather than "aou" as in other languages.
      *
-     * @param string $str
-     * @param  string $language Language of the source string
-     * @param  bool $removeUnsupported Whether or not to remove the
-     *                                    unsupported characters
-     * @return string Object whose $str contains only ASCII characters
+     * @param  string $str
+     * @param  string $language          Language of the source string
+     * @param  bool   $removeUnsupported Whether or not to remove the unsupported characters
+     * @return string
      */
     final public static function toAscii(string $str, string $language = 'en', bool $removeUnsupported = true): string
     {
@@ -896,6 +910,7 @@ class StrModifiersMB
 
         // @todo optimize
         foreach (StrCommonMB::charsArray() as $key => $value) {
+            /** @noinspection ForeachSourceInspection */
             foreach ($value as $item) {
                 $innerStr = self::replace($innerStr, $item, (string)$key);
             }
@@ -914,10 +929,10 @@ class StrModifiersMB
      * the remaining string. If $end is negative, it is computed from the end
      * of the string.
      *
-     * @param string $str
-     * @param  int $start Initial index from which to begin extraction
-     * @param  int $end Optional index at which to end extraction
-     * @return static Object with its $str being the extracted substring
+     * @param  string $str
+     * @param  int    $start Initial index from which to begin extraction
+     * @param  int    $end   Optional index at which to end extraction
+     * @return string being the extracted substring
      */
     final public static function slice(string $str, int $start, int $end = null): string
     {
@@ -941,11 +956,11 @@ class StrModifiersMB
 
     /**
      * Strip all whitespace characters. This includes tabs and newline
-     * characters, as well as multibyte whitespace such as the thin space
+     * characters, as well as multi-byte whitespace such as the thin space
      * and ideographic space.
      *
-     * @param string $str
-     * @return static Object with whitespace stripped
+     * @param  string $str
+     * @return string with whitespace stripped
      */
     final public static function stripWhitespace(string $str): string
     {
@@ -958,10 +973,10 @@ class StrModifiersMB
      * truncating occurs, the string is further truncated so that the substring
      * may be appended without exceeding the desired length.
      *
-     * @param string $str
-     * @param  int $length Desired length of the truncated string
+     * @param  string $str
+     * @param  int    $length    Desired length of the truncated string
      * @param  string $substring The substring to append if it can fit
-     * @return static Object with the resulting $str after truncating
+     * @return string
      */
     final public static function truncate(string $str, int $length, string $substring = ''): string
     {
@@ -985,8 +1000,8 @@ class StrModifiersMB
      * surrounding spaces, capitalizes letters following digits, spaces, dashes
      * and underscores, and removes spaces, dashes, underscores.
      *
-     * @param string $str
-     * @return static Object with $str in UpperCamelCase
+     * @param  string $str
+     * @return string
      */
     final public static function upperCamelize(string $str): string
     {
@@ -994,5 +1009,162 @@ class StrModifiersMB
         $innerStr = self::camelize($innerStr);
 
         return self::upperCaseFirst($innerStr);
+    }
+
+    /**
+     * Surrounds $str with the given substring.
+     *
+     * @param  string $str
+     * @param  string $substring The substring to add to both sides
+     * @return string
+     */
+    final public static function surround(string $str, string $substring): string
+    {
+        $innerStr = $str;
+
+        return implode('', [$substring, $innerStr, $substring]);
+    }
+
+    /**
+     * Returns a case swapped version of the string.
+     *
+     * @param  string $str
+     * @return string that has each character's case swapped
+     */
+    final public static function swapCase(string $str): string
+    {
+        $innerStr = $str;
+
+        $innerStr = preg_replace_callback(
+            '/[\S]/u',
+            function ($match) {
+                if ($match[0] === \mb_strtoupper($match[0])) {
+                    return \mb_strtolower($match[0]);
+                }
+
+                return \mb_strtoupper($match[0]);
+            },
+            $innerStr
+        );
+
+        return $innerStr;
+    }
+
+    /**
+     * Returns a string with smart quotes, ellipsis characters, and dashes from
+     * Windows-1252 (commonly used in Word documents) replaced by their ASCII
+     * equivalents.
+     *
+     * @param  string $str
+     * @return string
+     */
+    final public static function tidy(string $str): string
+    {
+        $innerStr = $str;
+        return  preg_replace([
+            '/\x{2026}/u',
+            '/[\x{201C}\x{201D}]/u',
+            '/[\x{2018}\x{2019}]/u',
+            '/[\x{2013}\x{2014}]/u',
+        ], [
+            '...',
+            '"',
+            "'",
+            '-',
+        ], $innerStr);
+    }
+
+    /**
+     * Returns a trimmed string with the first letter of each word capitalized.
+     * Also accepts an array, $ignore, allowing you to list words not to be
+     * capitalized.
+     *
+     * @param  string $str
+     * @param  array  $ignore An array of words not to capitalize
+     * @return string
+     */
+    final public static function titleize(string $str, array $ignore = []): string
+    {
+        $innerStr = $str;
+        $innerStr = self::trim($innerStr);
+
+        $innerStr = preg_replace_callback(
+            '/([\S]+)/u',
+            function ($match) use ($ignore) {
+                if ($ignore && \in_array($match[0], $ignore, true)) {
+                    return $match[0];
+                }
+
+                $innerStr = $match[0];
+                $innerStr = self::toLowerCase($innerStr);
+
+                return self::upperCaseFirst($innerStr);
+            },
+            $innerStr
+        );
+
+        return $innerStr;
+    }
+
+    /**
+     * Converts each tab in the string to some number of spaces, as defined by
+     * $tabLength. By default, each tab is converted to 4 consecutive spaces.
+     *
+     * @param  string $str
+     * @param  int    $tabLength Number of spaces to replace each tab with
+     * @return string
+     */
+    final public static function toSpaces(string $str, int $tabLength = 4): string
+    {
+        $innerStr = $str;
+        $spaces = \str_repeat(' ', $tabLength);
+
+        return \str_replace("\t", $spaces, $innerStr);
+    }
+
+    /**
+     * Converts each occurrence of some consecutive number of spaces, as
+     * defined by $tabLength, to a tab. By default, each 4 consecutive spaces
+     * are converted to a tab.
+     *
+     * @param  string $str
+     * @param  int    $tabLength Number of spaces to replace with a tab
+     * @return string
+     */
+    final public static function toTabs(string $str, int $tabLength = 4): string
+    {
+        $innerStr = $str;
+        $spaces = \str_repeat(' ', $tabLength);
+
+        return \str_replace($spaces, "\t", $innerStr);
+    }
+
+    /**
+     * Converts the first character of each word in the string to uppercase.
+     *
+     * @param  string $str
+     * @return string
+     */
+    final public static function toTitleCase(string $str): string
+    {
+        $innerStr = $str;
+
+        return \mb_convert_case($innerStr, \MB_CASE_TITLE);
+    }
+
+    /**
+     * Returns a lowercase and trimmed string separated by underscores.
+     * Underscores are inserted before uppercase characters (with the exception
+     * of the first character of the string), and in place of spaces as well as
+     * dashes.
+     *
+     * @param  string $str
+     * @return string
+     */
+    final public static function underscored(string $str): string
+    {
+        $innerStr = $str;
+
+        return self::delimit($innerStr, '_');
     }
 }

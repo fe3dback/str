@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Str\Str;
 use Str\Lib\StrModifiersMB;
 use PHPUnit\Framework\TestCase;
 
@@ -27,6 +26,127 @@ class StrModifiersMBTest extends TestCase
             ['H世', 'H世ello world', 0, 2],
             [' H世', '  H世', 1, 4],
             ['123', '000123000', 3, 3],
+        ];
+    }
+
+    /**
+     * @dataProvider EnsureRightProvider
+     * @param array $inp
+     * @param string $out
+     */
+    public function testEnsureRight(array $inp, string $out)
+    {
+        $this->assertEquals($out, StrModifiersMB::ensureRight(
+            array_shift($inp),
+            array_shift($inp)
+        ));
+    }
+
+    public function EnsureRightProvider()
+    {
+        return
+            [
+                [
+                    ['Hello world', '<<_right'],
+                    'Hello world<<_right',
+                ],
+                [
+                    ['Hello world<<_right', '<<_right'],
+                    'Hello world<<_right',
+                ],
+                [
+                    ['q', 'q'],
+                    'q',
+                ],
+                [
+                    ['qq', 'q'],
+                    'qq',
+                ],
+                [
+                    ['Hello, 世界', '世'],
+                    'Hello, 世界世',
+                ],
+                [
+                    ['Hello, 世界界', '界'],
+                    'Hello, 世界界',
+                ],
+                [
+                    ['世', '世'],
+                    '世',
+                ],
+            ];
+    }
+
+    /**
+     * @dataProvider EnsureLeftProvider
+     * @param array $inp
+     * @param string $out
+     */
+    public function testEnsureLeft(array $inp, string $out)
+    {
+        $this->assertEquals($out, StrModifiersMB::ensureLeft(
+            array_shift($inp),
+            array_shift($inp)
+        ));
+    }
+
+    public function EnsureLeftProvider()
+    {
+        return
+            [
+                [
+                    ['Hello world', '_left>>'],
+                    '_left>>Hello world',
+                ],
+                [
+                    ['_left>>Hello world', '_left>>'],
+                    '_left>>Hello world',
+                ],
+                [
+                    ['q', 'q'],
+                    'q',
+                ],
+                [
+                    ['qq', 'q'],
+                    'qq',
+                ],
+                [
+                    ['Hello, 世界', '界'],
+                    '界Hello, 世界',
+                ],
+                [
+                    ['界Hello, 世界', '界'],
+                    '界Hello, 世界',
+                ],
+                [
+                    ['世', '世'],
+                    '世',
+                ],
+            ];
+    }
+
+    /**
+     * @dataProvider AtProvider
+     * @param $expected
+     * @param $str
+     * @param $pos
+     */
+    public function testAt($expected, $str, $pos)
+    {
+        $this->assertEquals($expected, StrModifiersMB::at($str, $pos));
+    }
+
+    public function AtProvider()
+    {
+        return [
+            ['H', 'Hello world', 0],
+            ['e', 'Hello world', 1],
+            ['d', 'Hello world', -1],
+            ['世', '世', -1],
+            ['世', '世', 0],
+            ['', '', 0],
+            ['', '', -1],
+            ['', '', 1],
         ];
     }
 
@@ -58,8 +178,7 @@ class StrModifiersMBTest extends TestCase
      */
     public function testFirst($expected, $str, $n)
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->first($n));
+        $this->assertEquals($expected, StrModifiersMB::first($str, $n));
     }
 
     public function firstProvider()
@@ -88,8 +207,7 @@ class StrModifiersMBTest extends TestCase
      */
     public function testLast($expected, $str, $n)
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->last($n));
+        $this->assertEquals($expected, StrModifiersMB::last($str, $n));
     }
 
     public function lastProvider()
@@ -117,8 +235,7 @@ class StrModifiersMBTest extends TestCase
      */
     public function testToLowerCase($expected, $str)
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->toLowerCase());
+        $this->assertEquals($expected, StrModifiersMB::toLowerCase($str));
     }
     public function toLowerCaseProvider()
     {
@@ -138,8 +255,7 @@ class StrModifiersMBTest extends TestCase
      */
     public function testToUpperCase($expected, $str)
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->toUpperCase());
+        $this->assertEquals($expected, StrModifiersMB::toUpperCase($str));
     }
     public function toUpperCaseProvider()
     {
@@ -160,8 +276,7 @@ class StrModifiersMBTest extends TestCase
      */
     public function testAppend($expected, $str, $string)
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->append($string));
+        $this->assertEquals($expected, StrModifiersMB::append($str, $string));
     }
     public function appendProvider()
     {
@@ -179,8 +294,7 @@ class StrModifiersMBTest extends TestCase
      */
     public function testPrepend($expected, $str, $string)
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->prepend($string));
+        $this->assertEquals($expected, StrModifiersMB::prepend($str, $string));
     }
     public function prependProvider()
     {
@@ -192,10 +306,10 @@ class StrModifiersMBTest extends TestCase
 
     /**
      * @dataProvider ReplaceProvider
-     * @param array $params
-     * @param string $expected
+     * @param $params
+     * @param $expected
      */
-    public function testReplace(array $params, string $expected)
+    public function testReplace($params, $expected)
     {
         $this->assertEquals($expected, StrModifiersMB::replace(
             array_shift($params), // s
@@ -212,52 +326,42 @@ class StrModifiersMBTest extends TestCase
                     ['oink oink oinkk', 'k', 'ky', 2],
                     'oinky oinky oinkk'
                 ],
-
                 [
                     ['oink oink oink', 'k', 'ky', 4],
                     'oinky oinky oinky'
                 ],
-
                 [
                     ['oink oink oink', 'oink', 'moo', -1],
                     'moo moo moo'
                 ],
-
                 [
                     ['hello world, hello universe', 'hello', 'привет', 1],
                     'привет world, hello universe'
                 ],
-
                 [
                     ['banana', 'a', 'e', 4],
                     'benene'
                 ],
-
                 [
                     ['ban 世 a!', ' 世', ' foo', -1],
                     'ban foo a!'
                 ],
-
                 [
                     ['世世世世世', '世', '界', 2],
                     '界界世世世'
                 ],
-
                 [
                     ['世世世世世', '世', '界', 0],
                     '世世世世世'
                 ],
-
                 [
                     ['世q世q世', 'q', 'q', 5],
                     '世q世q世'
                 ],
-
                 [
                     ['世q世q世', 'z', 'zz', 2],
                     '世q世q世'
                 ],
-
                 [
                     ['', 'a', 'b', -1],
                     ''
@@ -273,8 +377,7 @@ class StrModifiersMBTest extends TestCase
      */
     public function testTrim($expected, $str, $chars = '')
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->trim($chars));
+        $this->assertEquals($expected, StrModifiersMB::trim($str, $chars));
     }
     public function trimProvider()
     {
@@ -302,8 +405,7 @@ class StrModifiersMBTest extends TestCase
      */
     public function testTrimLeft($expected, $str, $chars = '')
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->trimLeft($chars));
+        $this->assertEquals($expected, StrModifiersMB::trimLeft($str, $chars));
     }
     public function trimLeftProvider()
     {
@@ -328,12 +430,11 @@ class StrModifiersMBTest extends TestCase
      * @dataProvider trimRightProvider()
      * @param $expected
      * @param $str
-     * @param string $chars
+     * @param $chars
      */
     public function testTrimRight($expected, $str, $chars = '')
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->trimRight($chars));
+        $this->assertEquals($expected, StrModifiersMB::trimRight($str, $chars));
     }
     public function trimRightProvider()
     {
@@ -359,13 +460,12 @@ class StrModifiersMBTest extends TestCase
      * @param $expected
      * @param $str
      * @param $length
-     * @param string $padStr
-     * @param string $padType
+     * @param $padStr
+     * @param $padType
      */
     public function testPad($expected, $str, $length, $padStr = ' ', $padType = 'right')
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->pad($length, $padStr, $padType));
+        $this->assertEquals($expected, StrModifiersMB::pad($str, $length, $padStr, $padType));
     }
     public function padProvider()
     {
@@ -396,12 +496,11 @@ class StrModifiersMBTest extends TestCase
      * @param $expected
      * @param $str
      * @param $length
-     * @param string $padStr
+     * @param $padStr
      */
     public function testPadLeft($expected, $str, $length, $padStr = ' ')
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->padLeft($length, $padStr));
+        $this->assertEquals($expected, StrModifiersMB::padLeft($str, $length, $padStr));
     }
     public function padLeftProvider()
     {
@@ -421,12 +520,11 @@ class StrModifiersMBTest extends TestCase
      * @param $expected
      * @param $str
      * @param $length
-     * @param string $padStr
+     * @param $padStr
      */
     public function testPadRight($expected, $str, $length, $padStr = ' ')
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->padRight($length, $padStr));
+        $this->assertEquals($expected, StrModifiersMB::padRight($str, $length, $padStr));
     }
     public function padRightProvider()
     {
@@ -446,12 +544,11 @@ class StrModifiersMBTest extends TestCase
      * @param $expected
      * @param $str
      * @param $length
-     * @param string $padStr
+     * @param $padStr
      */
     public function testPadBoth($expected, $str, $length, $padStr = ' ')
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->padBoth($length, $padStr));
+        $this->assertEquals($expected, StrModifiersMB::padBoth($str, $length, $padStr));
     }
     public function padBothProvider()
     {
@@ -479,8 +576,7 @@ class StrModifiersMBTest extends TestCase
      */
     public function testInsert($expected, $str, $substring, $index)
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->insert($substring, $index));
+        $this->assertEquals($expected, StrModifiersMB::insert($str, $substring, $index));
     }
     public function insertProvider()
     {
@@ -504,20 +600,19 @@ class StrModifiersMBTest extends TestCase
      */
     public function testRemoveLeft($expected, $str, $substring)
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->removeLeft($substring));
+        $this->assertEquals($expected, StrModifiersMB::removeLeft($str, $substring));
     }
     public function removeLeftProvider()
     {
-        $s = new Str('foo bar');
+        $s = 'foo bar';
         return [
             ['foo bar', 'foo bar', ''],
             ['oo bar', 'foo bar', 'f'],
             ['bar', 'foo bar', 'foo '],
             ['foo bar', 'foo bar', 'oo'],
             ['foo bar', 'foo bar', 'oo bar'],
-            ['oo bar', 'foo bar', $s->first()],
-            ['oo bar', 'foo bar', $s->at(0)],
+            ['oo bar', 'foo bar', StrModifiersMB::first($s)],
+            ['oo bar', 'foo bar', StrModifiersMB::at($s,0)],
             ['fòô bàř', 'fòô bàř', ''],
             ['òô bàř', 'fòô bàř', 'f'],
             ['bàř', 'fòô bàř', 'fòô '],
@@ -534,20 +629,19 @@ class StrModifiersMBTest extends TestCase
      */
     public function testRemoveRight($expected, $str, $substring)
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->removeRight($substring));
+        $this->assertEquals($expected, StrModifiersMB::removeRight($str, $substring));
     }
     public function removeRightProvider()
     {
-        $s = new Str('foo bar');
+        $s = 'foo bar';
         return [
             ['foo bar', 'foo bar', ''],
             ['foo ba', 'foo bar', 'r'],
             ['foo', 'foo bar', ' bar'],
             ['foo bar', 'foo bar', 'ba'],
             ['foo bar', 'foo bar', 'foo ba'],
-            ['foo ba', 'foo bar', $s->last()],
-            ['foo ba', 'foo bar', $s->at(6)],
+            ['foo ba', 'foo bar', StrModifiersMB::last($s)],
+            ['foo ba', 'foo bar', StrModifiersMB::at($s,6)],
             ['fòô bàř', 'fòô bàř', ''],
             ['fòô bà', 'fòô bàř', 'ř'],
             ['fòô', 'fòô bàř', ' bàř'],
@@ -558,11 +652,13 @@ class StrModifiersMBTest extends TestCase
 
     /**
      * @dataProvider repeatProvider()
+     * @param $expected
+     * @param $str
+     * @param $multiplier
      */
     public function testRepeat($expected, $str, $multiplier)
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->repeat($multiplier));
+        $this->assertEquals($expected, StrModifiersMB::repeat($str, $multiplier));
     }
     public function repeatProvider()
     {
@@ -584,8 +680,7 @@ class StrModifiersMBTest extends TestCase
      */
     public function testReverse($expected, $str)
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, $s->reverse());
+        $this->assertEquals($expected, StrModifiersMB::reverse($str));
     }
     public function reverseProvider()
     {
@@ -604,18 +699,17 @@ class StrModifiersMBTest extends TestCase
      */
     public function testShuffle($str)
     {
-        $s = new Str($str);
-        $result = $s->shuffle();
+        $result = StrModifiersMB::shuffle($str);
 
-        $oldValues = StrModifiersMB::chars((string)$s);
-        $newValues = StrModifiersMB::chars((string)$result);
+        $oldValues = StrModifiersMB::chars($str);
+        $newValues = StrModifiersMB::chars($result);
 
         $countOld = array_count_values($oldValues);
         $countNew = array_count_values($newValues);
 
         // We'll make sure that the chars are present after shuffle
         $this->assertEquals($countOld, $countNew);
-        $this->assertEquals(true, empty(array_diff($countOld, $countNew)));
+        $this->assertEmpty(array_diff($countOld, $countNew));
     }
     public function shuffleProvider()
     {
@@ -636,8 +730,7 @@ class StrModifiersMBTest extends TestCase
      */
     public function testBetween($expected, $str, $start, $end, $offset = 0)
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, (string)$s->between($start, $end, $offset), $str);
+        $this->assertEquals($expected, StrModifiersMB::between($str, $start, $end, $offset), $str);
     }
     public function betweenProvider()
     {
@@ -663,11 +756,12 @@ class StrModifiersMBTest extends TestCase
 
     /**
      * @dataProvider camelizeProvider()
+     * @param $expected
+     * @param $str
      */
     public function testCamelize($expected, $str)
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, (string)$s->camelize(), $str);
+        $this->assertEquals($expected, StrModifiersMB::camelize($str), $str);
     }
     public function camelizeProvider()
     {
@@ -701,8 +795,7 @@ class StrModifiersMBTest extends TestCase
      */
     public function testUpperCaseFirst($expected, $str)
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, (string)$s->upperCaseFirst(), $str);
+        $this->assertEquals($expected, StrModifiersMB::upperCaseFirst($str), $str);
     }
     public function upperCaseFirstProvider()
     {
@@ -722,8 +815,7 @@ class StrModifiersMBTest extends TestCase
      */
     public function testLowerCaseFirst($expected, $str)
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, (string)$s->lowerCaseFirst(), $str);
+        $this->assertEquals($expected, StrModifiersMB::lowerCaseFirst($str), $str);
     }
     public function lowerCaseFirstProvider()
     {
@@ -743,8 +835,7 @@ class StrModifiersMBTest extends TestCase
      */
     public function testCollapseWhitespace($expected, $str)
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, (string)$s->collapseWhitespace(), $str);
+        $this->assertEquals($expected, StrModifiersMB::collapseWhitespace($str), $str);
     }
     public function collapseWhitespaceProvider()
     {
@@ -774,8 +865,7 @@ class StrModifiersMBTest extends TestCase
      */
     public function testRegexReplace($expected, $str, $pattern, $replacement, $options = 'msr')
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, (string)$s->regexReplace($pattern, $replacement, $options), $str);
+        $this->assertEquals($expected, StrModifiersMB::regexReplace($str, $pattern, $replacement, $options), $str);
     }
     public function regexReplaceProvider()
     {
@@ -799,8 +889,7 @@ class StrModifiersMBTest extends TestCase
      */
     public function testDasherize($expected, $str)
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, (string)$s->dasherize(), $str);
+        $this->assertEquals($expected, StrModifiersMB::dasherize($str), $str);
     }
     public function dasherizeProvider()
     {
@@ -835,8 +924,7 @@ class StrModifiersMBTest extends TestCase
      */
     public function testDelimit($expected, $str, $delimiter)
     {
-        $s = new Str($str);
-        $this->assertEquals($expected, (string)$s->delimit($delimiter), $str);
+        $this->assertEquals($expected, StrModifiersMB::delimit($str, $delimiter), $str);
     }
     public function delimitProvider()
     {
@@ -937,7 +1025,7 @@ class StrModifiersMBTest extends TestCase
     public function linesProvider()
     {
         return [
-            [[], ""],
+            [[], ''],
             [[''], "\r\n"],
             [['foo', 'bar'], "foo\nbar"],
             [['foo', 'bar'], "foo\rbar"],
@@ -1286,6 +1374,8 @@ class StrModifiersMBTest extends TestCase
 
     /**
      * @dataProvider upperCamelizeProvider()
+     * @param $expected
+     * @param $str
      */
     public function testUpperCamelize($expected, $str)
     {
@@ -1307,6 +1397,180 @@ class StrModifiersMBTest extends TestCase
             ['CamelΣase', 'camel σase'],
             ['ΣτανιλCase', 'στανιλ case'],
             ['ΣamelCase', 'Σamel  Case']
+        ];
+    }
+
+    /**
+     * @dataProvider surroundProvider()
+     * @param $expected
+     * @param $str
+     * @param $substring
+     */
+    public function testSurround($expected, $str, $substring)
+    {
+        $this->assertEquals($expected, StrModifiersMB::surround($str, $substring), $str);
+    }
+    public function surroundProvider()
+    {
+        return [
+            ['__foobar__', 'foobar', '__'],
+            ['test', 'test', ''],
+            ['**', '', '*'],
+            ['¬fòô bàř¬', 'fòô bàř', '¬'],
+            ['ßå∆˚ test ßå∆˚', ' test ', 'ßå∆˚']
+        ];
+    }
+
+    /**
+     * @dataProvider swapCaseProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testSwapCase($expected, $str)
+    {
+        $this->assertEquals($expected, StrModifiersMB::swapCase($str), $str);
+    }
+    public function swapCaseProvider()
+    {
+        return [
+            ['TESTcASE', 'testCase'],
+            ['tEST-cASE', 'Test-Case'],
+            [' - σASH  cASE', ' - Σash  Case'],
+            ['νΤΑΝΙΛ', 'Ντανιλ']
+        ];
+    }
+
+    /**
+     * @dataProvider tidyProvider()
+     */
+    public function testTidy($expected, $str)
+    {
+        $this->assertEquals($expected, StrModifiersMB::tidy($str), $str);
+    }
+    public function tidyProvider()
+    {
+        return [
+            ['"I see..."', '“I see…”'],
+            ["'This too'", "‘This too’"],
+            ['test-dash', 'test—dash'],
+            ['Ο συγγραφέας είπε...', 'Ο συγγραφέας είπε…']
+        ];
+    }
+
+    /**
+     * @dataProvider titleizeProvider()
+     * @param $expected
+     * @param $str
+     * @param array $ignore
+     */
+    public function testTitleize($expected, $str, $ignore = [])
+    {
+        $this->assertEquals($expected, StrModifiersMB::titleize($str, $ignore), $str);
+    }
+    public function titleizeProvider()
+    {
+        $ignore = ['at', 'by', 'for', 'in', 'of', 'on', 'out', 'to', 'the'];
+        return [
+            ['Title Case', 'TITLE CASE'],
+            ['Testing The Method', 'testing the method'],
+            ['Testing the Method', 'testing the method', $ignore],
+            ['I Like to Watch Dvds at Home', 'i like to watch DVDs at home',
+                $ignore],
+            ['Θα Ήθελα Να Φύγει', '  Θα ήθελα να φύγει  ', []]
+        ];
+    }
+
+    /**
+     * @dataProvider toSpacesProvider()
+     * @param $expected
+     * @param $str
+     * @param int $tabLength
+     */
+    public function testToSpaces($expected, $str, $tabLength = 4)
+    {
+        $this->assertEquals($expected, StrModifiersMB::toSpaces($str, $tabLength), $str);
+    }
+    public function toSpacesProvider()
+    {
+        return [
+            ['    foo    bar    ', '	foo	bar	'],
+            ['     foo     bar     ', '	foo	bar	', 5],
+            ['    foo  bar  ', '		foo	bar	', 2],
+            ['foobar', '	foo	bar	', 0],
+            ["    foo\n    bar", "	foo\n	bar"],
+            ["    fòô\n    bàř", "	fòô\n	bàř"]
+        ];
+    }
+
+    /**
+     * @dataProvider toTabsProvider()
+     * @param $expected
+     * @param $str
+     * @param int $tabLength
+     */
+    public function testToTabs($expected, $str, $tabLength = 4)
+    {
+        $this->assertEquals($expected, StrModifiersMB::toTabs($str, $tabLength), $str);
+    }
+    public function toTabsProvider()
+    {
+        return [
+            ['	foo	bar	', '    foo    bar    '],
+            ['	foo	bar	', '     foo     bar     ', 5],
+            ['		foo	bar	', '    foo  bar  ', 2],
+            ["	foo\n	bar", "    foo\n    bar"],
+            ["	fòô\n	bàř", "    fòô\n    bàř"]
+        ];
+    }
+
+    /**
+     * @dataProvider toTitleCaseProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testToTitleCase($expected, $str)
+    {
+        $this->assertEquals($expected, StrModifiersMB::toTitleCase($str), $str);
+    }
+    public function toTitleCaseProvider()
+    {
+        return [
+            ['Foo Bar', 'foo bar'],
+            [' Foo_Bar ', ' foo_bar '],
+            ['Fòô Bàř', 'fòô bàř'],
+            [' Fòô_Bàř ', ' fòô_bàř '],
+            ['Αυτοκίνητο Αυτοκίνητο', 'αυτοκίνητο αυτοκίνητο'],
+        ];
+    }
+
+    /**
+     * @dataProvider underscoredProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testUnderscored($expected, $str)
+    {
+        $this->assertEquals($expected, StrModifiersMB::underscored($str), $str);
+    }
+    public function underscoredProvider()
+    {
+        return [
+            ['test_case', 'testCase'],
+            ['test_case', 'Test-Case'],
+            ['test_case', 'test case'],
+            ['test_case', 'test -case'],
+            ['_test_case', '-test - case'],
+            ['test_case', 'test_case'],
+            ['test_c_test', '  test c test'],
+            ['test_u_case', 'TestUCase'],
+            ['test_c_c_test', 'TestCCTest'],
+            ['string_with1number', 'string_with1number'],
+            ['string_with_2_2_numbers', 'String-with_2_2 numbers'],
+            ['1test2case', '1test2case'],
+            ['yes_we_can', 'yesWeCan'],
+            ['test_σase', 'test Σase'],
+            ['στανιλ_case', 'Στανιλ case'],
+            ['σash_case', 'Σash  Case']
         ];
     }
 }
