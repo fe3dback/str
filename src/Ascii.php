@@ -7,7 +7,7 @@ namespace Str;
 class Ascii
 {
     /**
-     * @param string $s
+     * @param  string $s
      * @return bool
      */
     final public static function checkWithRegex(string $s): bool
@@ -16,7 +16,7 @@ class Ascii
     }
 
     /**
-     * @param string $s
+     * @param  string $s
      * @return bool
      */
     final public static function checkWithMb(string $s): bool
@@ -25,12 +25,11 @@ class Ascii
     }
 
     /**
-     * @param string $s
+     * @param  string $s
      * @return bool
      */
     final public static function checkWithCType(string $s): bool
     {
         return \ctype_print($s);
     }
-
 }
