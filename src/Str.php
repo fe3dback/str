@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Str;
 
-use \Str\Lib\StrCommonMB;
-use \Str\Lib\StrModifiersMB;
+use \Str\Lib\StrMB;
 
 class Str
 {
@@ -56,7 +55,7 @@ class Str
      */
     public function substr(int $start = 0, int $length = 0): Str
     {
-        $this->str = StrModifiersMB::substr($this->str, $start, $length);
+        $this->str = StrMB::substr($this->str, $start, $length);
         return $this;
     }
 
@@ -68,7 +67,7 @@ class Str
      */
     public function hasPrefix(string $prefix): bool
     {
-        return StrCommonMB::hasPrefix($this->str, $prefix);
+        return StrMB::hasPrefix($this->str, $prefix);
     }
 
     /**
@@ -79,7 +78,7 @@ class Str
      */
     public function hasSuffix(string $suffix): bool
     {
-        return StrCommonMB::hasSuffix($this->str, $suffix);
+        return StrMB::hasSuffix($this->str, $suffix);
     }
 
     /**
@@ -91,7 +90,7 @@ class Str
      */
     public function ensureLeft(string $check): Str
     {
-        $this->str = StrModifiersMB::ensureLeft($this->str, $check);
+        $this->str = StrMB::ensureLeft($this->str, $check);
         return $this;
     }
 
@@ -104,7 +103,7 @@ class Str
      */
     public function ensureRight(string $check): Str
     {
-        $this->str = StrModifiersMB::ensureRight($this->str, $check);
+        $this->str = StrMB::ensureRight($this->str, $check);
         return $this;
     }
 
@@ -116,7 +115,7 @@ class Str
      */
     public function contains(string $sub): bool
     {
-        return StrCommonMB::contains($this->str, $sub);
+        return StrMB::contains($this->str, $sub);
     }
 
     /**
@@ -134,7 +133,7 @@ class Str
      */
     public function replace(string $old, string $new, int $times = -1): Str
     {
-        $this->str = StrModifiersMB::replace($this->str, $old, $new, $times);
+        $this->str = StrMB::replace($this->str, $old, $new, $times);
         return $this;
     }
 
@@ -145,7 +144,7 @@ class Str
      */
     public function toLowerCase(): Str
     {
-        $this->str = StrModifiersMB::toLowerCase($this->str);
+        $this->str = StrMB::toLowerCase($this->str);
         return $this;
     }
 
@@ -156,7 +155,7 @@ class Str
      */
     public function toUpperCase(): Str
     {
-        $this->str = StrModifiersMB::toUpperCase($this->str);
+        $this->str = StrMB::toUpperCase($this->str);
         return $this;
     }
 
@@ -170,7 +169,7 @@ class Str
      */
     public function trim(string $chars = ''): Str
     {
-        $this->str = StrModifiersMB::trim($this->str, $chars);
+        $this->str = StrMB::trim($this->str, $chars);
         return $this;
     }
 
@@ -184,7 +183,7 @@ class Str
      */
     public function trimLeft(string $chars = ''): Str
     {
-        $this->str = StrModifiersMB::trimLeft($this->str, $chars);
+        $this->str = StrMB::trimLeft($this->str, $chars);
         return $this;
     }
 
@@ -198,7 +197,7 @@ class Str
      */
     public function trimRight(string $chars = ''): Str
     {
-        $this->str = StrModifiersMB::trimRight($this->str, $chars);
+        $this->str = StrMB::trimRight($this->str, $chars);
         return $this;
     }
 
@@ -210,7 +209,7 @@ class Str
      */
     public function append(string $sub): Str
     {
-        $this->str = StrModifiersMB::append($this->str, $sub);
+        $this->str = StrMB::append($this->str, $sub);
         return $this;
     }
 
@@ -222,7 +221,7 @@ class Str
      */
     public function prepend(string $sub): Str
     {
-        $this->str = StrModifiersMB::prepend($this->str, $sub);
+        $this->str = StrMB::prepend($this->str, $sub);
         return $this;
     }
 
@@ -234,7 +233,7 @@ class Str
      */
     public function at(int $pos): Str
     {
-        $this->str = StrModifiersMB::at($this->str, $pos);
+        $this->str = StrMB::at($this->str, $pos);
         return $this;
     }
 
@@ -245,7 +244,7 @@ class Str
      */
     public function chars(): array
     {
-        return StrModifiersMB::chars($this->str);
+        return StrMB::chars($this->str);
     }
 
     /**
@@ -255,7 +254,7 @@ class Str
      */
     public function length(): int
     {
-        return StrCommonMB::length($this->str);
+        return StrMB::length($this->str);
     }
 
     /**
@@ -266,7 +265,7 @@ class Str
      */
     public function first(int $length = 1): Str
     {
-        $this->str =  StrModifiersMB::first($this->str, $length);
+        $this->str =  StrMB::first($this->str, $length);
         return $this;
     }
 
@@ -278,7 +277,7 @@ class Str
      */
     public function last(int $length = 1): Str
     {
-        $this->str = StrModifiersMB::last($this->str, $length);
+        $this->str = StrMB::last($this->str, $length);
         return $this;
     }
 
@@ -293,7 +292,7 @@ class Str
      */
     public function indexOf(string $needle, int $offset = 0): int
     {
-        return StrCommonMB::indexOf($this->str, $needle, $offset);
+        return StrMB::indexOf($this->str, $needle, $offset);
     }
 
     /**
@@ -308,7 +307,7 @@ class Str
      */
     public function indexOfLast(string $needle, int $offset = 0): int
     {
-        return StrCommonMB::indexOfLast($this->str, $needle, $offset);
+        return StrMB::indexOfLast($this->str, $needle, $offset);
     }
 
     /**
@@ -322,7 +321,7 @@ class Str
      */
     public function countSubstr(string $needle, bool $caseSensitive = true): int
     {
-        return StrCommonMB::countSubstr($this->str, $needle, $caseSensitive);
+        return StrMB::countSubstr($this->str, $needle, $caseSensitive);
     }
 
     /**
@@ -336,7 +335,7 @@ class Str
      */
     public function containsAll(array $needles, bool $caseSensitive = true): bool
     {
-        return StrCommonMB::containsAll($this->str, $needles, $caseSensitive);
+        return StrMB::containsAll($this->str, $needles, $caseSensitive);
     }
 
     /**
@@ -350,7 +349,7 @@ class Str
      */
     public function containsAny(array $needles, bool $caseSensitive = true): bool
     {
-        return StrCommonMB::containsAny($this->str, $needles, $caseSensitive);
+        return StrMB::containsAny($this->str, $needles, $caseSensitive);
     }
 
     /**
@@ -364,7 +363,7 @@ class Str
      */
     public function startsWith(string $substring, bool $caseSensitive = true): bool
     {
-        return StrCommonMB::startsWith($this->str, $substring, $caseSensitive);
+        return StrMB::startsWith($this->str, $substring, $caseSensitive);
     }
 
     /**
@@ -378,7 +377,7 @@ class Str
      */
     public function startsWithAny(array $substrings, bool $caseSensitive = true): bool
     {
-        return StrCommonMB::startsWithAny($this->str, $substrings, $caseSensitive);
+        return StrMB::startsWithAny($this->str, $substrings, $caseSensitive);
     }
 
     /**
@@ -392,7 +391,7 @@ class Str
      */
     public function endsWith(string $substring, bool $caseSensitive = true): bool
     {
-        return StrCommonMB::endsWith($this->str, $substring, $caseSensitive);
+        return StrMB::endsWith($this->str, $substring, $caseSensitive);
     }
 
     /**
@@ -406,7 +405,7 @@ class Str
      */
     public function endsWithAny(array $substrings, bool $caseSensitive = true): bool
     {
-        return StrCommonMB::endsWithAny($this->str, $substrings, $caseSensitive);
+        return StrMB::endsWithAny($this->str, $substrings, $caseSensitive);
     }
 
     /**
@@ -422,7 +421,7 @@ class Str
      */
     public function pad(int $length, string $padStr = ' ', string $padType = 'right'): Str
     {
-        $this->str = StrModifiersMB::pad($this->str, $length, $padStr, $padType);
+        $this->str = StrMB::pad($this->str, $length, $padStr, $padType);
         return $this;
     }
 
@@ -438,7 +437,7 @@ class Str
     {
         $padding = $length - \mb_strlen($this->str);
 
-        $this->str = StrModifiersMB::applyPadding($this->str, (int)floor($padding / 2), (int)ceil($padding / 2),
+        $this->str = StrMB::applyPadding($this->str, (int)floor($padding / 2), (int)ceil($padding / 2),
             $padStr);
 
         return $this;
@@ -454,7 +453,7 @@ class Str
      */
     public function padLeft(int $length, string $padStr = ' '): Str
     {
-        $this->str = StrModifiersMB::applyPadding($this->str, $length - \mb_strlen($this->str), 0, $padStr);
+        $this->str = StrMB::applyPadding($this->str, $length - \mb_strlen($this->str), 0, $padStr);
         return $this;
     }
 
@@ -468,7 +467,7 @@ class Str
      */
     public function padRight(int $length, string $padStr = ' '): Str
     {
-        $this->str = StrModifiersMB::applyPadding($this->str, 0, $length - \mb_strlen($this->str), $padStr);
+        $this->str = StrMB::applyPadding($this->str, 0, $length - \mb_strlen($this->str), $padStr);
         return $this;
     }
 
@@ -481,7 +480,7 @@ class Str
      */
     public function insert(string $substring, int $index): Str
     {
-        $this->str = StrModifiersMB::insert($this->str, $substring, $index);
+        $this->str = StrMB::insert($this->str, $substring, $index);
         return $this;
     }
 
@@ -493,7 +492,7 @@ class Str
      */
     public function removeLeft(string $substring): Str
     {
-        $this->str = StrModifiersMB::removeLeft($this->str, $substring);
+        $this->str = StrMB::removeLeft($this->str, $substring);
         return $this;
     }
 
@@ -505,7 +504,7 @@ class Str
      */
     public function removeRight(string $substring): Str
     {
-        $this->str = StrModifiersMB::removeRight($this->str, $substring);
+        $this->str = StrMB::removeRight($this->str, $substring);
         return $this;
     }
 
@@ -517,7 +516,7 @@ class Str
      */
     public function repeat(int $multiplier): Str
     {
-        $this->str = StrModifiersMB::repeat($this->str, $multiplier);
+        $this->str = StrMB::repeat($this->str, $multiplier);
         return $this;
     }
 
@@ -528,7 +527,7 @@ class Str
      */
     public function reverse(): Str
     {
-        $this->str = StrModifiersMB::reverse($this->str);
+        $this->str = StrMB::reverse($this->str);
         return $this;
     }
 
@@ -540,7 +539,7 @@ class Str
      */
     public function shuffle(): Str
     {
-        $this->str = StrModifiersMB::shuffle($this->str);
+        $this->str = StrMB::shuffle($this->str);
         return $this;
     }
 
@@ -556,7 +555,7 @@ class Str
      */
     public function between(string $start, string $end, int $offset = 0): Str
     {
-        $this->str = StrModifiersMB::between($this->str, $start, $end, $offset);
+        $this->str = StrMB::between($this->str, $start, $end, $offset);
         return $this;
     }
 
@@ -569,7 +568,7 @@ class Str
      */
     public function camelize(): Str
     {
-        $this->str = StrModifiersMB::camelize($this->str);
+        $this->str = StrMB::camelize($this->str);
         return $this;
     }
 
@@ -580,7 +579,7 @@ class Str
      */
     public function lowerCaseFirst(): Str
     {
-        $this->str = StrModifiersMB::lowerCaseFirst($this->str);
+        $this->str = StrMB::lowerCaseFirst($this->str);
         return $this;
     }
 
@@ -591,7 +590,7 @@ class Str
      */
     public function upperCaseFirst(): Str
     {
-        $this->str = StrModifiersMB::upperCaseFirst($this->str);
+        $this->str = StrMB::upperCaseFirst($this->str);
         return $this;
     }
 
@@ -604,7 +603,7 @@ class Str
      */
     public function collapseWhitespace(): Str
     {
-        $this->str = StrModifiersMB::collapseWhitespace($this->str);
+        $this->str = StrMB::collapseWhitespace($this->str);
         return $this;
     }
 
@@ -622,7 +621,7 @@ class Str
      */
     public function regexReplace(string $pattern, string $replacement, string $options = 'msr'): Str
     {
-        $this->str = StrModifiersMB::regexReplace($this->str, $pattern, $replacement, $options);
+        $this->str = StrMB::regexReplace($this->str, $pattern, $replacement, $options);
         return $this;
     }
 
@@ -635,7 +634,7 @@ class Str
      */
     public function dasherize(): Str
     {
-        $this->str = StrModifiersMB::dasherize($this->str);
+        $this->str = StrMB::dasherize($this->str);
         return $this;
     }
 
@@ -650,7 +649,7 @@ class Str
      */
     public function delimit($delimiter): Str
     {
-        $this->str = StrModifiersMB::delimit($this->str, $delimiter);
+        $this->str = StrMB::delimit($this->str, $delimiter);
         return $this;
     }
 
@@ -662,7 +661,7 @@ class Str
      */
     public function isUUIDv4(): bool
     {
-        return StrCommonMB::isUUIDv4($this->str);
+        return StrMB::isUUIDv4($this->str);
     }
 
     /**
@@ -672,7 +671,7 @@ class Str
      */
     public function hasLowerCase(): bool
     {
-        return StrCommonMB::matchesPattern($this->str, '.*[[:lower:]]');
+        return StrMB::matchesPattern($this->str, '.*[[:lower:]]');
     }
 
     /**
@@ -682,7 +681,7 @@ class Str
      */
     public function hasUpperCase(): bool
     {
-        return StrCommonMB::matchesPattern($this->str, '.*[[:upper:]]');
+        return StrMB::matchesPattern($this->str, '.*[[:upper:]]');
     }
 
     /**
@@ -693,7 +692,7 @@ class Str
      */
     public function matchesPattern(string $pattern): bool
     {
-        return StrCommonMB::matchesPattern($this->str, $pattern);
+        return StrMB::matchesPattern($this->str, $pattern);
     }
 
     /**
@@ -706,7 +705,7 @@ class Str
      */
     public function htmlDecode(int $flags = ENT_COMPAT): Str
     {
-        $this->str = StrModifiersMB::htmlDecode($this->str, $flags);
+        $this->str = StrMB::htmlDecode($this->str, $flags);
         return $this;
     }
 
@@ -720,7 +719,7 @@ class Str
      */
     public function htmlEncode(int $flags = ENT_COMPAT): Str
     {
-        $this->str = StrModifiersMB::htmlEncode($this->str, $flags);
+        $this->str = StrMB::htmlEncode($this->str, $flags);
         return $this;
     }
 
@@ -732,7 +731,7 @@ class Str
      */
     public function humanize(): Str
     {
-        $this->str = StrModifiersMB::humanize($this->str);
+        $this->str = StrMB::humanize($this->str);
         return $this;
     }
 
@@ -743,7 +742,7 @@ class Str
      */
     public function isAlpha(): bool
     {
-        return StrCommonMB::isAlpha($this->str);
+        return StrMB::isAlpha($this->str);
     }
 
     /**
@@ -754,7 +753,7 @@ class Str
      */
     public function isAlphanumeric(): bool
     {
-        return StrCommonMB::isAlphanumeric($this->str);
+        return StrMB::isAlphanumeric($this->str);
     }
 
     /**
@@ -764,7 +763,7 @@ class Str
      */
     public function isBase64(): bool
     {
-        return StrCommonMB::isBase64($this->str);
+        return StrMB::isBase64($this->str);
     }
 
     /**
@@ -774,7 +773,7 @@ class Str
      */
     public function isBlank(): bool
     {
-        return StrCommonMB::isBlank($this->str);
+        return StrMB::isBlank($this->str);
     }
 
     /**
@@ -784,7 +783,7 @@ class Str
      */
     public function isHexadecimal(): bool
     {
-        return StrCommonMB::isHexadecimal($this->str);
+        return StrMB::isHexadecimal($this->str);
     }
 
     /**
@@ -796,7 +795,7 @@ class Str
      */
     public function isJson(): bool
     {
-        return StrCommonMB::isJson($this->str);
+        return StrMB::isJson($this->str);
     }
 
     /**
@@ -806,7 +805,7 @@ class Str
      */
     public function isLowerCase(): bool
     {
-        return StrCommonMB::isLowerCase($this->str);
+        return StrMB::isLowerCase($this->str);
     }
 
     /**
@@ -816,7 +815,7 @@ class Str
      */
     public function isSerialized(): bool
     {
-        return StrCommonMB::isSerialized($this->str);
+        return StrMB::isSerialized($this->str);
     }
 
     /**
@@ -826,7 +825,7 @@ class Str
      */
     public function isUpperCase(): bool
     {
-        return StrCommonMB::isUpperCase($this->str);
+        return StrMB::isUpperCase($this->str);
     }
 
     /**
@@ -837,7 +836,7 @@ class Str
      */
     public function lines(): array
     {
-        return StrModifiersMB::lines($this->str);
+        return StrMB::lines($this->str);
     }
 
     /**
@@ -851,7 +850,7 @@ class Str
      */
     public function split(string $pattern, int $limit = -1): array
     {
-        return StrModifiersMB::split($this->str, $pattern, $limit);
+        return StrMB::split($this->str, $pattern, $limit);
     }
 
     /**
@@ -862,7 +861,7 @@ class Str
      */
     public function longestCommonPrefix(string $otherStr): Str
     {
-        $this->str = StrModifiersMB::longestCommonPrefix($this->str, $otherStr);
+        $this->str = StrMB::longestCommonPrefix($this->str, $otherStr);
         return $this;
     }
 
@@ -874,7 +873,7 @@ class Str
      */
     public function longestCommonSuffix(string $otherStr): Str
     {
-        $this->str = StrModifiersMB::longestCommonSuffix($this->str, $otherStr);
+        $this->str = StrMB::longestCommonSuffix($this->str, $otherStr);
         return $this;
     }
 
@@ -887,7 +886,7 @@ class Str
      */
     public function longestCommonSubstring(string $otherStr): Str
     {
-        $this->str = StrModifiersMB::longestCommonSubstring($this->str, $otherStr);
+        $this->str = StrMB::longestCommonSubstring($this->str, $otherStr);
         return $this;
     }
 
@@ -903,7 +902,7 @@ class Str
      */
     public function safeTruncate(int $length, string $substring = ''): Str
     {
-        $this->str = StrModifiersMB::safeTruncate($this->str, $length, $substring);
+        $this->str = StrMB::safeTruncate($this->str, $length, $substring);
         return $this;
     }
 
@@ -921,7 +920,7 @@ class Str
      */
     public function slugify(string $replacement = '-', string $language = 'en'): Str
     {
-        $this->str = StrModifiersMB::slugify($this->str, $replacement, $language);
+        $this->str = StrMB::slugify($this->str, $replacement, $language);
         return $this;
     }
 
@@ -939,7 +938,7 @@ class Str
      */
     public function toAscii(string $language = 'en', bool $removeUnsupported = true): Str
     {
-        $this->str = StrModifiersMB::toAscii($this->str, $language, $removeUnsupported);
+        $this->str = StrMB::toAscii($this->str, $language, $removeUnsupported);
         return $this;
     }
 
@@ -950,7 +949,7 @@ class Str
      */
     public function charsArray(): array
     {
-        return StrCommonMB::charsArray();
+        return StrMB::charsArray();
     }
 
     /**
@@ -963,7 +962,7 @@ class Str
      */
     public function langSpecificCharsArray(string $language = 'en'): array
     {
-        return StrCommonMB::langSpecificCharsArray($language);
+        return StrMB::langSpecificCharsArray($language);
     }
 
     /**
@@ -978,7 +977,7 @@ class Str
      */
     public function slice(int $start, int $end = null): Str
     {
-        $this->str = StrModifiersMB::slice($this->str, $start, $end);
+        $this->str = StrMB::slice($this->str, $start, $end);
         return $this;
     }
 
@@ -991,7 +990,7 @@ class Str
      */
     public function stripWhitespace(): Str
     {
-        $this->str = StrModifiersMB::stripWhitespace($this->str);
+        $this->str = StrMB::stripWhitespace($this->str);
         return $this;
     }
 
@@ -1006,7 +1005,7 @@ class Str
      */
     public function truncate(int $length, string $substring = ''): Str
     {
-        $this->str = StrModifiersMB::truncate($this->str, $length, $substring);
+        $this->str = StrMB::truncate($this->str, $length, $substring);
         return $this;
     }
 
@@ -1019,7 +1018,7 @@ class Str
      */
     public function upperCamelize(): Str
     {
-        $this->str = StrModifiersMB::upperCamelize($this->str);
+        $this->str = StrMB::upperCamelize($this->str);
         return $this;
     }
 
@@ -1031,7 +1030,7 @@ class Str
      */
     public function surround(string $substring): Str
     {
-        $this->str = StrModifiersMB::surround($this->str, $substring);
+        $this->str = StrMB::surround($this->str, $substring);
         return $this;
     }
 
@@ -1042,7 +1041,7 @@ class Str
      */
     public function swapCase(): Str
     {
-        $this->str = StrModifiersMB::swapCase($this->str);
+        $this->str = StrMB::swapCase($this->str);
         return $this;
     }
 
@@ -1055,7 +1054,7 @@ class Str
      */
     public function tidy()
     {
-        $this->str = StrModifiersMB::tidy($this->str);
+        $this->str = StrMB::tidy($this->str);
         return $this;
     }
 
@@ -1069,7 +1068,7 @@ class Str
      */
     public function titleize(array $ignore = []): Str
     {
-        $this->str = StrModifiersMB::titleize($this->str, $ignore);
+        $this->str = StrMB::titleize($this->str, $ignore);
         return $this;
     }
 
@@ -1086,7 +1085,7 @@ class Str
      */
     public function toBoolean(): bool
     {
-        return StrCommonMB::toBoolean($this->str);
+        return StrMB::toBoolean($this->str);
     }
 
     /**
@@ -1098,7 +1097,7 @@ class Str
      */
     public function toSpaces(int $tabLength = 4): Str
     {
-        $this->str = StrModifiersMB::toSpaces($this->str, $tabLength);
+        $this->str = StrMB::toSpaces($this->str, $tabLength);
         return $this;
     }
 
@@ -1112,7 +1111,7 @@ class Str
      */
     public function toTabs(int $tabLength = 4): Str
     {
-        $this->str = StrModifiersMB::toTabs($this->str, $tabLength);
+        $this->str = StrMB::toTabs($this->str, $tabLength);
         return $this;
     }
 
@@ -1123,7 +1122,7 @@ class Str
      */
     public function toTitleCase(): Str
     {
-        $this->str = StrModifiersMB::toTitleCase($this->str);
+        $this->str = StrMB::toTitleCase($this->str);
         return $this;
     }
 
@@ -1137,7 +1136,7 @@ class Str
      */
     public function underscored(): Str
     {
-        $this->str = StrModifiersMB::underscored($this->str);
+        $this->str = StrMB::underscored($this->str);
         return $this;
     }
 }
