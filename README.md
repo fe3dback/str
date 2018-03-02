@@ -127,13 +127,13 @@ composer require str/str
 - [x] move
 - [x] overwrite
 - [x] snakeize
+- [x] afterFirst
+- [x] beforeFirst
+- [x] afterLast
+- [x] beforeLast
 
 ### Todo New
 - [ ] appendUniqueIdentifier
-- [ ] afterFirst
-- [ ] beforeFirst
-- [ ] afterLast
-- [ ] beforeLast
 - [ ] ord
 - [ ] quote
 - [ ] unquote
