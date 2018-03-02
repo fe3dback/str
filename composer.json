@@ -26,6 +26,7 @@
         "source": "https://github.com/fe3dback/str"
     },
     "autoload": {
+        "files": ["src/Lib/StrMB.php"],
         "psr-4": {
             "Str\\": "src/"
         }

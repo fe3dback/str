@@ -12,15 +12,10 @@ namespace Str\Lib;
  * @param  string $language Language of the source string.
  * @return array  An array of replacements.
  */
-function langSpecificCharsArray(string $language = 'en'): array
+function libstr_langSpecificCharsArray(string $language = 'en'): array
 {
     $split = preg_split('/[-_]/', $language);
     $language = strtolower($split[0]);
-
-    static $charsArray;
-    if (isset($charsArray[$language])) {
-        return $charsArray[$language];
-    }
 
     $languageSpecific = [
         'de' => [
@@ -34,12 +29,10 @@ function langSpecificCharsArray(string $language = 'en'): array
     ];
 
     if (isset($languageSpecific[$language])) {
-        $charsArray[$language] = $languageSpecific[$language];
-    } else {
-        $charsArray[$language] = [];
+        return $languageSpecific[$language];
     }
 
-    return $charsArray[$language];
+    return [];
 }
 
 /**
@@ -47,11 +40,8 @@ function langSpecificCharsArray(string $language = 'en'): array
  *
  * @return array An array of replacements.
  */
-function charsArray(): array
+function libstr_charsArray(): array
 {
-    static $charsArray;
-    if (null !== $charsArray) { return $charsArray; }
-
     /** @noinspection UselessReturnInspection */
     return $charsArray = [
         '0'     => ['°', '₀', '۰', '０'],
@@ -219,13 +209,13 @@ function charsArray(): array
 }
 
 /**
- * Check if the string has $prefix at the start
+ * Check if the string has $prefix at the start.
  *
  * @param  string $s
  * @param  string $prefix
  * @return bool
  */
-function hasPrefix(string $s, string $prefix): bool
+function libstr_hasPrefix(string $s, string $prefix): bool
 {
     if ($s === '' || $prefix === '') { return false; }
 
@@ -233,13 +223,13 @@ function hasPrefix(string $s, string $prefix): bool
 }
 
 /**
- * Check if the string has $suffix at the end
+ * Check if the string has $suffix at the end.
  *
  * @param  string $s
  * @param  string $suffix
  * @return bool
  */
-function hasSuffix(string $s, string $suffix): bool
+function libstr_hasSuffix(string $s, string $suffix): bool
 {
     if ($s === '' || $suffix === '') { return false; }
 
@@ -252,20 +242,20 @@ function hasSuffix(string $s, string $suffix): bool
  * @param  string $str
  * @return int
  */
-function length(string $str): int
+function libstr_length(string $str): int
 {
     return \mb_strlen($str);
 }
 
 /**
- * Check if $haystack contains $needle substring
+ * Check if $haystack contains $needle substring.
  *
  * @param  string $haystack
  * @param  string $needle
  * @param  bool $caseSensitive
  * @return bool
  */
-function containsOurs(string $haystack, string $needle, bool $caseSensitive = true): bool
+function libstr_contains(string $haystack, string $needle, bool $caseSensitive = true): bool
 {
     if ($haystack === '' || $needle === '') { return true; }
 
@@ -286,7 +276,7 @@ function containsOurs(string $haystack, string $needle, bool $caseSensitive = tr
  * @param  int $offset Offset from which to search
  * @return int The occurrence's index if found, otherwise -1
  */
-function indexOf(string $haystack, string $needle, int $offset = 0): int
+function libstr_indexOf(string $haystack, string $needle, int $offset = 0): int
 {
     if ($needle === '' || $haystack === '')  { return -1; }
 
@@ -316,7 +306,7 @@ function indexOf(string $haystack, string $needle, int $offset = 0): int
  * @param  int $offset Offset from which to search
  * @return int The last occurrence's index if found, otherwise -1
  */
-function indexOfLast(string $haystack, string $needle, int $offset = 0): int
+function libstr_indexOfLast(string $haystack, string $needle, int $offset = 0): int
 {
     if ($needle === '' || $haystack === '') { return -1; }
 
@@ -341,11 +331,11 @@ function indexOfLast(string $haystack, string $needle, int $offset = 0): int
  * by setting $caseSensitive to false.
  *
  * @param  string $haystack
- * @param  string $needle The substring to search for
- * @param  bool $caseSensitive Whether or not to enforce case-sensitivity
- * @return int The number of $substring occurrences
+ * @param  string $needle        The substring to search for
+ * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
+ * @return int                   The number of $substring occurrences
  */
-function countSubstr(string $haystack, string $needle, bool $caseSensitive = true): int
+function libstr_countSubstr(string $haystack, string $needle, bool $caseSensitive = true): int
 {
     if ($caseSensitive) {
         return \mb_substr_count($haystack, $needle);
@@ -362,17 +352,17 @@ function countSubstr(string $haystack, string $needle, bool $caseSensitive = tru
  * default the comparison is case-sensitive, but can be made insensitive by
  * setting $caseSensitive to false.
  *
- * @param  string $str
- * @param  string[] $needles Substrings to look for
- * @param  bool $caseSensitive Whether or not to enforce case-sensitivity
- * @return bool Whether or not $str contains $needle
+ * @param  string   $str
+ * @param  string[] $needles       Substrings to look for
+ * @param  bool     $caseSensitive Whether or not to enforce case-sensitivity
+ * @return bool                    Whether or not $str contains $needle
  */
-function containsAll(string $str, array $needles, bool $caseSensitive = true): bool
+function libstr_containsAll(string $str, array $needles, bool $caseSensitive = true): bool
 {
     if (empty($needles)) { return false; }
 
     foreach ($needles as $needle) {
-        if (!containsOurs($str, $needle, $caseSensitive)) { return false; }
+        if (!libstr_contains($str, $needle, $caseSensitive)) { return false; }
     }
 
     return true;
@@ -383,17 +373,17 @@ function containsAll(string $str, array $needles, bool $caseSensitive = true): b
  * default the comparison is case-sensitive, but can be made insensitive by
  * setting $caseSensitive to false.
  *
- * @param  string $str
- * @param  string[] $needles Substrings to look for
- * @param  bool $caseSensitive Whether or not to enforce case-sensitivity
- * @return bool Whether or not $str contains $needle
+ * @param  string   $str
+ * @param  string[] $needles       Substrings to look for
+ * @param  bool     $caseSensitive Whether or not to enforce case-sensitivity
+ * @return bool                    Whether or not $str contains $needle
  */
-function containsAny(string $str, array $needles, bool $caseSensitive = true): bool
+function libstr_containsAny(string $str, array $needles, bool $caseSensitive = true): bool
 {
     if (empty($needles)) { return false; }
 
     foreach ($needles as $needle) {
-        if (containsOurs($str, $needle, $caseSensitive)) { return true; }
+        if (libstr_contains($str, $needle, $caseSensitive)) { return true; }
     }
 
     return false;
@@ -405,11 +395,11 @@ function containsAny(string $str, array $needles, bool $caseSensitive = true): b
  * by setting $caseSensitive to false.
  *
  * @param  string $str
- * @param  string $substring The substring to look for
+ * @param  string $substring     The substring to look for
  * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
- * @return bool   Whether or not $str starts with $substring
+ * @return bool                  Whether or not $str starts with $substring
  */
-function startsWith(string $str, string $substring, bool $caseSensitive = true): bool
+function libstr_startsWith(string $str, string $substring, bool $caseSensitive = true): bool
 {
     if ('' === $str && '' !== $substring) { return false; }
 
@@ -430,16 +420,16 @@ function startsWith(string $str, string $substring, bool $caseSensitive = true):
  * insensitive by setting $caseSensitive to false.
  *
  * @param  string   $str
- * @param  string[] $substrings Substrings to look for
+ * @param  string[] $substrings    Substrings to look for
  * @param  bool     $caseSensitive Whether or not to enforce case-sensitivity
- * @return bool     Whether or not $str starts with $substring
+ * @return bool                    Whether or not $str starts with $substring
  */
-function startsWithAny(string $str, array $substrings, bool $caseSensitive = true): bool
+function libstr_startsWithAny(string $str, array $substrings, bool $caseSensitive = true): bool
 {
     if (empty($substrings)) { return false; }
 
     foreach ($substrings as $substring) {
-        if (startsWith($str, $substring, $caseSensitive)) { return true; }
+        if (libstr_startsWith($str, $substring, $caseSensitive)) { return true; }
     }
 
     return false;
@@ -451,11 +441,11 @@ function startsWithAny(string $str, array $substrings, bool $caseSensitive = tru
  * by setting $caseSensitive to false.
  *
  * @param  string $str
- * @param  string $substring The substring to look for
+ * @param  string $substring     The substring to look for
  * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
- * @return bool   Whether or not $str ends with $substring
+ * @return bool                  Whether or not $str ends with $substring
  */
-function endsWith(string $str, string $substring, bool $caseSensitive = true): bool
+function libstr_endsWith(string $str, string $substring, bool $caseSensitive = true): bool
 {
     $substringLength = \mb_strlen($substring);
     $strLength = \mb_strlen($str);
@@ -476,16 +466,16 @@ function endsWith(string $str, string $substring, bool $caseSensitive = true): b
  * by setting $caseSensitive to false.
  *
  * @param  string   $str
- * @param  string[] $substrings Substrings to look for
+ * @param  string[] $substrings    Substrings to look for
  * @param  bool     $caseSensitive Whether or not to enforce case-sensitivity
- * @return bool     Whether or not $str ends with $substring
+ * @return bool                    Whether or not $str ends with $substring
  */
-function endsWithAny(string $str, array $substrings, bool $caseSensitive = true): bool
+function libstr_endsWithAny(string $str, array $substrings, bool $caseSensitive = true): bool
 {
     if (empty($substrings)) { return false; }
 
     foreach ($substrings as $substring) {
-        if (endsWith($str, $substring, $caseSensitive)) { return true; }
+        if (libstr_endsWith($str, $substring, $caseSensitive)) { return true; }
     }
 
     return false;
@@ -498,7 +488,7 @@ function endsWithAny(string $str, array $substrings, bool $caseSensitive = true)
  * @param  string $str
  * @return bool
  */
-function isUUIDv4(string $str): bool
+function libstr_isUUIDv4(string $str): bool
 {
     $l = '[a-f0-9]';
     $pattern = "/^{$l}{8}-?{$l}{4}-?4{$l}{3}-?[89ab]{$l}{3}-?{$l}{12}\Z/";
@@ -507,27 +497,25 @@ function isUUIDv4(string $str): bool
 }
 
 /**
- * Returns true if the string contains a lower case char, false
- * otherwise.
+ * Returns true if the string contains a lower case char, false otherwise.
  *
  * @param  string $str
  * @return bool
  */
-function hasLowerCase(string $str): bool
+function libstr_hasLowerCase(string $str): bool
 {
-    return matchesPattern($str, '.*[[:lower:]]');
+    return libstr_matchesPattern($str, '.*[[:lower:]]');
 }
 
 /**
- * Returns true if the string contains an upper case char, false
- * otherwise.
+ * Returns true if the string contains an upper case char, false otherwise.
  *
  * @param  string $str
  * @return bool
  */
-function hasUpperCase(string $str): bool
+function libstr_hasUpperCase(string $str): bool
 {
-    return matchesPattern($str, '.*[[:upper:]]');
+    return libstr_matchesPattern($str, '.*[[:upper:]]');
 }
 
 /**
@@ -535,35 +523,33 @@ function hasUpperCase(string $str): bool
  *
  * @param  string $str
  * @param  string $pattern Regex pattern to match against
- * @return bool   Whether or not $str matches the pattern
+ * @return bool            Whether or not $str matches the pattern
  */
-function matchesPattern(string $str, string $pattern): bool
+function libstr_matchesPattern(string $str, string $pattern): bool
 {
     return \mb_ereg_match($pattern, $str);
 }
 
 /**
- * Returns true if the string contains only alphabetic chars, false
- * otherwise.
+ * Returns true if the string contains only alphabetic chars, false otherwise.
  *
  * @param  string $str
  * @return bool   Whether or not $str contains only alphabetic chars
  */
-function isAlpha(string $str): bool
+function libstr_isAlpha(string $str): bool
 {
-    return matchesPattern($str,'^[[:alpha:]]*$');
+    return libstr_matchesPattern($str,'^[[:alpha:]]*$');
 }
 
 /**
- * Returns true if the string contains only alphabetic and numeric chars,
- * false otherwise.
+ * Returns true if the string contains only alphabetic and numeric chars, false otherwise.
  *
  * @param  string $str
  * @return bool   Whether or not $str contains only alphanumeric chars
  */
-function isAlphanumeric(string $str): bool
+function libstr_isAlphanumeric(string $str): bool
 {
-    return matchesPattern($str,'^[[:alnum:]]*$');
+    return libstr_matchesPattern($str,'^[[:alnum:]]*$');
 }
 
 /**
@@ -572,33 +558,31 @@ function isAlphanumeric(string $str): bool
  * @param  string $str
  * @return bool   Whether or not $str is base64 encoded
  */
-function isBase64(string $str): bool
+function libstr_isBase64(string $str): bool
 {
     return (base64_encode(base64_decode($str)) === $str);
 }
 
 /**
- * Returns true if the string contains only whitespace chars, false
- * otherwise.
+ * Returns true if the string contains only whitespace chars, false otherwise.
  *
  * @param  string $str
  * @return bool   Whether or not $str contains only whitespace characters
  */
-function isBlank(string $str): bool
+function libstr_isBlank(string $str): bool
 {
-    return matchesPattern($str,'^[[:space:]]*$');
+    return libstr_matchesPattern($str,'^[[:space:]]*$');
 }
 
 /**
- * Returns true if the string contains only hexadecimal chars, false
- * otherwise.
+ * Returns true if the string contains only hexadecimal chars, false otherwise.
  *
  * @param  string $str
  * @return bool   Whether or not $str contains only hexadecimal chars
  */
-function isHexadecimal(string $str): bool
+function libstr_isHexadecimal(string $str): bool
 {
-    return matchesPattern($str,'^[[:xdigit:]]*$');
+    return libstr_matchesPattern($str,'^[[:xdigit:]]*$');
 }
 
 /**
@@ -609,7 +593,7 @@ function isHexadecimal(string $str): bool
  * @param  string $str
  * @return bool   Whether or not $str is JSON
  */
-function isJson(string $str): bool
+function libstr_isJson(string $str): bool
 {
     if ('' === $str) { return false; }
 
@@ -619,15 +603,14 @@ function isJson(string $str): bool
 }
 
 /**
- * Returns true if the string contains only lower case chars, false
- * otherwise.
+ * Returns true if the string contains only lower case chars, false  otherwise.
  *
  * @param  string $str
  * @return bool   Whether or not $str contains only lower case characters
  */
-function isLowerCase(string $str): bool
+function libstr_isLowerCase(string $str): bool
 {
-    return matchesPattern($str, '^[[:lower:]]*$');
+    return libstr_matchesPattern($str, '^[[:lower:]]*$');
 }
 
 /**
@@ -636,21 +619,20 @@ function isLowerCase(string $str): bool
  * @param  string $str
  * @return bool   Whether or not $str is serialized
  */
-function isSerialized(string $str): bool
+function libstr_isSerialized(string $str): bool
 {
     return $str === 'b:0;' || @unserialize($str, []) !== false;
 }
 
 /**
- * Returns true if the string contains only lower case chars, false
- * otherwise.
+ * Returns true if the string contains only lower case chars, false otherwise.
  *
  * @param  string $str
  * @return bool   Whether or not $str contains only lower case characters
  */
-function isUpperCase(string $str): bool
+function libstr_isUpperCase(string $str): bool
 {
-    return matchesPattern($str,'^[[:upper:]]*$');
+    return libstr_matchesPattern($str,'^[[:upper:]]*$');
 }
 
 /**
@@ -665,11 +647,11 @@ function isUpperCase(string $str): bool
  * @param  string $str
  * @return bool   A boolean value for the string
  */
-function toBoolean(string $str): bool
+function libstr_toBoolean(string $str): bool
 {
     $innerStr = $str;
     $key = $str;
-    $key = toLowerCase($key);
+    $key = libstr_toLowerCase($key);
 
     $map = [
         'true'  => true,
@@ -690,7 +672,7 @@ function toBoolean(string $str): bool
         return ((int)$innerStr > 0);
     }
 
-    return (bool) regexReplace($innerStr,'[[:space:]]', '');
+    return (bool) libstr_regexReplace($innerStr,'[[:space:]]', '');
 }
 
 /**
@@ -703,7 +685,7 @@ function toBoolean(string $str): bool
  * @param  int    $length Maximum number of characters used
  * @return string
  */
-function substrOurs(string $s, int $start = 0, int $length = 0): string
+function libstr_substr(string $s, int $start = 0, int $length = 0): string
 {
     $length = !$length ? \mb_strlen($s) : $length;
     return \mb_substr($s, $start, $length);
@@ -716,9 +698,9 @@ function substrOurs(string $s, int $start = 0, int $length = 0): string
  * @param  int    $pos
  * @return string
  */
-function at(string $s, int $pos): string
+function libstr_at(string $s, int $pos): string
 {
-    return substrOurs($s, $pos, 1);
+    return libstr_substr($s, $pos, 1);
 }
 
 /**
@@ -727,12 +709,12 @@ function at(string $s, int $pos): string
  * @param  string $s
  * @return array  An array of string chars
  */
-function chars(string $s): array
+function libstr_chars(string $s): array
 {
     $chars = [];
 
     for ($i = 0, $iMax = \mb_strlen($s); $i < $iMax; $i++) {
-        $chars[] = mb_substr($s, $i, 1);
+        $chars[] = \mb_substr($s, $i, 1);
     }
 
     return $chars;
@@ -741,29 +723,29 @@ function chars(string $s): array
 /**
  * Returns the first $length characters of the string.
  *
- * @param  string $s String for search
+ * @param  string $s      String for search
  * @param  int    $length Number of characters to retrieve from the start
  * @return string
  */
-function first(string $s, int $length = 1): string
+function libstr_first(string $s, int $length = 1): string
 {
     if ($length <= 0) { return ''; }
 
-    return substrOurs($s, 0, $length);
+    return libstr_substr($s, 0, $length);
 }
 
 /**
  * Returns the last $length characters of the string.
  *
- * @param  string $s String for search
+ * @param  string $s      String for search
  * @param  int    $length Number of characters to retrieve from the end
  * @return string
  */
-function last(string $s, int $length = 1): string
+function libstr_last(string $s, int $length = 1): string
 {
     if ($length <= 0) { return ''; }
 
-    return substrOurs($s, -$length);
+    return libstr_substr($s, -$length);
 }
 
 /** @noinspection MoreThanThreeArgumentsInspection */
@@ -781,7 +763,7 @@ function last(string $s, int $length = 1): string
  * @param  int    $limit
  * @return string
  */
-function replace(string $str, string $old, string $new, int $limit = -1): string
+function libstr_replace(string $str, string $old, string $new, int $limit = -1): string
 {
     if ($old === $new || $limit === 0) { return $str; }
 
@@ -811,10 +793,10 @@ function replace(string $str, string $old, string $new, int $limit = -1): string
  * string of characters to strip instead of the defaults.
  *
  * @param  string $str
- * @param  string $chars - Optional string of characters to strip
+ * @param  string $chars Optional string of characters to strip
  * @return string
  */
-function trim(string $str, string $chars = ''): string
+function libstr_trim(string $str, string $chars = ''): string
 {
     $chars = $chars ? \preg_quote($chars, '/') : '\s';
     return (string)\mb_ereg_replace("^[$chars]+|[$chars]+\$", '', $str);
@@ -829,7 +811,7 @@ function trim(string $str, string $chars = ''): string
  * @param  string $chars Optional string of characters to strip
  * @return string
  */
-function trimLeft(string $str, string $chars = ''): string
+function libstr_trimLeft(string $str, string $chars = ''): string
 {
     $chars = $chars ? \preg_quote($chars, '/') : '\s';
     return (string)\mb_ereg_replace("^[$chars]+", '', $str);
@@ -844,7 +826,7 @@ function trimLeft(string $str, string $chars = ''): string
  * @param  string $chars Optional string of characters to strip
  * @return string
  */
-function trimRight(string $str, string $chars = ''): string
+function libstr_trimRight(string $str, string $chars = ''): string
 {
     $chars = $chars ? \preg_quote($chars, '/') : '\s';
     return (string)\mb_ereg_replace("[$chars]+\$", '', $str);
@@ -857,7 +839,7 @@ function trimRight(string $str, string $chars = ''): string
  * @param  string $sub
  * @return string
  */
-function append(string $str, string $sub): string
+function libstr_append(string $str, string $sub): string
 {
     $result = $str;
     return $result . $sub;
@@ -870,7 +852,7 @@ function append(string $str, string $sub): string
  * @param  string $sub
  * @return string
  */
-function prepend(string $str, string $sub): string
+function libstr_prepend(string $str, string $sub): string
 {
     $result = $str;
     return $sub . $result;
@@ -884,9 +866,9 @@ function prepend(string $str, string $sub): string
  * @param  $check
  * @return string
  */
-function ensureLeft(string $str, string $check): string
+function libstr_ensureLeft(string $str, string $check): string
 {
-    if (hasPrefix($str, $check)) { return $str; }
+    if (libstr_hasPrefix($str, $check)) { return $str; }
 
     return $check . $str;
 }
@@ -899,9 +881,9 @@ function ensureLeft(string $str, string $check): string
  * @param  $check
  * @return string
  */
-function ensureRight(string $str, string $check): string
+function libstr_ensureRight(string $str, string $check): string
 {
-    if (hasSuffix($str, $check)) { return $str; }
+    if (libstr_hasSuffix($str, $check)) { return $str; }
 
     return $str . $check;
 }
@@ -919,17 +901,17 @@ function ensureRight(string $str, string $check): string
  * @param  string $padType One of 'left', 'right', 'both'
  * @return string
  */
-function pad(string $str, int $length, string $padStr = ' ', string $padType = 'right'): string
+function libstr_pad(string $str, int $length, string $padStr = ' ', string $padType = 'right'): string
 {
     if (!\in_array($padType, ['left', 'right', 'both'], true)) { return $str; }
 
     switch ($padType) {
         case 'left':
-            return padLeft($str, $length, $padStr);
+            return libstr_padLeft($str, $length, $padStr);
         case 'right':
-            return padRight($str, $length, $padStr);
+            return libstr_padRight($str, $length, $padStr);
         default:
-            return padBoth($str, $length, $padStr);
+            return libstr_padBoth($str, $length, $padStr);
     }
 }
 
@@ -942,11 +924,11 @@ function pad(string $str, int $length, string $padStr = ' ', string $padType = '
  * @param  string $padStr String used to pad, defaults to space
  * @return string
  */
-function padBoth(string $str, int $length, string $padStr = ' '): string
+function libstr_padBoth(string $str, int $length, string $padStr = ' '): string
 {
     $padding = $length - \mb_strlen($str);
 
-    return applyPadding($str, (int)floor($padding / 2), (int)ceil($padding / 2), $padStr);
+    return libstr_applyPadding($str, (int)floor($padding / 2), (int)ceil($padding / 2), $padStr);
 }
 
 /**
@@ -958,9 +940,9 @@ function padBoth(string $str, int $length, string $padStr = ' '): string
  * @param  string $padStr String used to pad, defaults to space
  * @return string
  */
-function padLeft(string $str, int $length, string $padStr = ' '): string
+function libstr_padLeft(string $str, int $length, string $padStr = ' '): string
 {
-    return applyPadding($str, $length - \mb_strlen($str), 0, $padStr);
+    return libstr_applyPadding($str, $length - \mb_strlen($str), 0, $padStr);
 }
 
 /**
@@ -972,9 +954,9 @@ function padLeft(string $str, int $length, string $padStr = ' '): string
  * @param  string $padStr String used to pad, defaults to space
  * @return string
  */
-function padRight(string $str, int $length, string $padStr = ' '): string
+function libstr_padRight(string $str, int $length, string $padStr = ' '): string
 {
-    return applyPadding($str, 0, $length - \mb_strlen($str), $padStr);
+    return libstr_applyPadding($str, 0, $length - \mb_strlen($str), $padStr);
 }
 
 /** @noinspection MoreThanThreeArgumentsInspection */
@@ -988,7 +970,7 @@ function padRight(string $str, int $length, string $padStr = ' '): string
  * @param  string $padStr String used to pad
  * @return string
  */
-function applyPadding(string $str, int $left = 0, int $right = 0, string $padStr = ' '): string
+function libstr_applyPadding(string $str, int $left = 0, int $right = 0, string $padStr = ' '): string
 {
     $result = $str;
     $length = \mb_strlen($padStr);
@@ -1014,7 +996,7 @@ function applyPadding(string $str, int $left = 0, int $right = 0, string $padStr
  * @param  int    $index     The index at which to insert the substring
  * @return string with the resulting $str after the insertion
  */
-function insert(string $str, string $substring, int $index): string
+function libstr_insert(string $str, string $substring, int $index): string
 {
     $result = $str;
 
@@ -1035,13 +1017,13 @@ function insert(string $str, string $substring, int $index): string
  * @param  string $substring The prefix to remove
  * @return string having a $str without the prefix $substring
  */
-function removeLeft(string $str, string $substring): string
+function libstr_removeLeft(string $str, string $substring): string
 {
     $result = $str;
 
-    if (startsWith($result, $substring)) {
+    if (libstr_startsWith($result, $substring)) {
         $substringLength = \mb_strlen($substring);
-        return substrOurs($result, $substringLength);
+        return libstr_substr($result, $substringLength);
     }
 
     return $result;
@@ -1054,12 +1036,12 @@ function removeLeft(string $str, string $substring): string
  * @param  string $substring The suffix to remove
  * @return string having a $str without the suffix $substring
  */
-function removeRight(string $str, string $substring): string
+function libstr_removeRight(string $str, string $substring): string
 {
     $result = $str;
 
-    if (endsWith($result, $substring)) {
-        return substrOurs($result, 0, \mb_strlen($result) - \mb_strlen($substring));
+    if (libstr_endsWith($result, $substring)) {
+        return libstr_substr($result, 0, \mb_strlen($result) - \mb_strlen($substring));
     }
 
     return $result;
@@ -1072,9 +1054,9 @@ function removeRight(string $str, string $substring): string
  * @param  int    $multiplier The number of times to repeat the string
  * @return string with a repeated str
  */
-function repeat(string $str, int $multiplier): string
+function libstr_repeat(string $str, int $multiplier): string
 {
-    return str_repeat($str, $multiplier);
+    return \str_repeat($str, $multiplier);
 }
 
 /**
@@ -1083,7 +1065,7 @@ function repeat(string $str, int $multiplier): string
  * @param  string $str
  * @return string
  */
-function reverse(string $str): string
+function libstr_reverse(string $str): string
 {
     $strLength = \mb_strlen($str);
     $reversed = '';
@@ -1103,7 +1085,7 @@ function reverse(string $str): string
  * @param  string $str
  * @return string
  */
-function shuffle(string $str): string
+function libstr_shuffle(string $str): string
 {
     $indexes = \range(0, \mb_strlen($str) - 1);
     \shuffle($indexes);
@@ -1128,21 +1110,21 @@ function shuffle(string $str): string
  * @param  int    $offset Index from which to begin the search
  * @return string
  */
-function between(string $str, string $start, string $end, int $offset = 0): string
+function libstr_between(string $str, string $start, string $end, int $offset = 0): string
 {
     $string = $str;
-    $startIndex = indexOf($string, $start, $offset);
+    $startIndex = libstr_indexOf($string, $start, $offset);
 
     if ($startIndex === -1) { return ''; }
 
     $substrIndex = $startIndex + \mb_strlen($start);
-    $endIndex = indexOf($string, $end, $substrIndex);
+    $endIndex = libstr_indexOf($string, $end, $substrIndex);
 
     if ($endIndex === -1) { return ''; }
 
     if ($endIndex === $substrIndex) { return ''; }
 
-    return substrOurs($string, $substrIndex, $endIndex - $substrIndex);
+    return libstr_substr($string, $substrIndex, $endIndex - $substrIndex);
 }
 
 /**
@@ -1153,12 +1135,12 @@ function between(string $str, string $start, string $end, int $offset = 0): stri
  * @param  string $str
  * @return string in camelCase
  */
-function camelize(string $str): string
+function libstr_camelize(string $str): string
 {
     $string = $str;
     $string = trim($string);
-    $string = lowerCaseFirst($string);
-    $result = (string)$string;
+    $string = libstr_lowerCaseFirst($string);
+    $result = $string;
     $result = preg_replace('/^[-_]+/', '', $result);
 
     $result = preg_replace_callback(
@@ -1190,7 +1172,7 @@ function camelize(string $str): string
  * @param  string $str
  * @return string
  */
-function toLowerCase(string $str): string
+function libstr_toLowerCase(string $str): string
 {
     $result = $str;
     return \mb_strtolower($result);
@@ -1202,7 +1184,7 @@ function toLowerCase(string $str): string
  * @param  string $str
  * @return string
  */
-function toUpperCase(string $str): string
+function libstr_toUpperCase(string $str): string
 {
     $result = $str;
     return \mb_strtoupper($result);
@@ -1214,7 +1196,7 @@ function toUpperCase(string $str): string
  * @param  string $str
  * @return string
  */
-function lowerCaseFirst(string $str): string
+function libstr_lowerCaseFirst(string $str): string
 {
     $first = \mb_substr($str, 0, 1);
     $rest = \mb_substr($str, 1);
@@ -1228,7 +1210,7 @@ function lowerCaseFirst(string $str): string
  * @param  string $str
  * @return string
  */
-function upperCaseFirst(string $str): string
+function libstr_upperCaseFirst(string $str): string
 {
     $first = \mb_substr($str, 0, 1);
     $rest = \mb_substr($str, 1);
@@ -1244,12 +1226,12 @@ function upperCaseFirst(string $str): string
  * @param  string $str
  * @return string
  */
-function collapseWhitespace(string $str): string
+function libstr_collapseWhitespace(string $str): string
 {
     $result = $str;
-    $result = regexReplace($result, '[[:space:]]+', ' ');
+    $result = libstr_regexReplace($result, '[[:space:]]+', ' ');
 
-    return trim($result);
+    return libstr_trim($result);
 }
 
 /** @noinspection MoreThanThreeArgumentsInspection */
@@ -1266,7 +1248,7 @@ function collapseWhitespace(string $str): string
  * @param  string $options     Matching conditions to be used
  * @return string
  */
-function regexReplace(string $str, string $pattern, string $replacement, string $options = 'msr'): string
+function libstr_regexReplace(string $str, string $pattern, string $replacement, string $options = 'msr'): string
 {
     $result = $str;
     return \mb_ereg_replace($pattern, $replacement, $result, $options);
@@ -1280,9 +1262,9 @@ function regexReplace(string $str, string $pattern, string $replacement, string 
  * @param  string $str
  * @return string
  */
-function dasherize(string $str): string
+function libstr_dasherize(string $str): string
 {
-    return delimit($str, '-');
+    return libstr_delimit($str, '-');
 }
 
 /**
@@ -1295,14 +1277,14 @@ function dasherize(string $str): string
  * @param  string $delimiter Sequence used to separate parts of the string
  * @return string
  */
-function delimit(string $str, string $delimiter): string
+function libstr_delimit(string $str, string $delimiter): string
 {
     $result = $str;
     $result = trim($result);
-    $result = regexReplace($result, '\B([A-Z])', '-\1');
-    $result = toLowerCase($result);
+    $result = libstr_regexReplace($result, '\B([A-Z])', '-\1');
+    $result = libstr_toLowerCase($result);
 
-    return regexReplace($result, '[-_\s]+', $delimiter);
+    return libstr_regexReplace($result, '[-_\s]+', $delimiter);
 }
 
 /**
@@ -1314,7 +1296,7 @@ function delimit(string $str, string $delimiter): string
  * @param  int    $flags Optional flags
  * @return string
  */
-function htmlDecode(string $str, int $flags = ENT_COMPAT): string
+function libstr_htmlDecode(string $str, int $flags = ENT_COMPAT): string
 {
     $result = $str;
 
@@ -1330,7 +1312,7 @@ function htmlDecode(string $str, int $flags = ENT_COMPAT): string
  * @param  int    $flags Optional flags
  * @return string
  */
-function htmlEncode(string $str, int $flags = ENT_COMPAT): string
+function libstr_htmlEncode(string $str, int $flags = ENT_COMPAT): string
 {
     $result = $str;
 
@@ -1344,13 +1326,13 @@ function htmlEncode(string $str, int $flags = ENT_COMPAT): string
  * @param  string $str
  * @return string
  */
-function humanize(string $str): string
+function libstr_humanize(string $str): string
 {
     $result = $str;
-    $result = str_replace(['_id', '_'], ['', ' '], $result);
-    $result = trim($result);
+    $result = \str_replace(['_id', '_'], ['', ' '], $result);
+    $result = libstr_trim($result);
 
-    return upperCaseFirst($result);
+    return libstr_upperCaseFirst($result);
 }
 
 /**
@@ -1360,11 +1342,11 @@ function humanize(string $str): string
  * @param  string $str
  * @return array of strings
  */
-function lines(string $str): array
+function libstr_lines(string $str): array
 {
     $result = $str;
 
-    return split($result, '[\r\n]{1,2}');
+    return libstr_split($result, '[\r\n]{1,2}');
 }
 
 /**
@@ -1377,7 +1359,7 @@ function lines(string $str): array
  * @param  int    $limit   Optional maximum number of results to return
  * @return array of strings
  */
-function split(string $str, string $pattern, int $limit = -1): array
+function libstr_split(string $str, string $pattern, int $limit = -1): array
 {
     $innerStr = $str;
     if (0 === $limit || '' === $innerStr) { return []; }
@@ -1412,7 +1394,7 @@ function split(string $str, string $pattern, int $limit = -1): array
  * @param  string $otherStr Second string for comparison
  * @return string being the longest common prefix
  */
-function longestCommonPrefix(string $str, string $otherStr): string
+function libstr_longestCommonPrefix(string $str, string $otherStr): string
 {
     $innerStr = $str;
     $maxLength = min(\mb_strlen($innerStr), \mb_strlen($otherStr));
@@ -1437,7 +1419,7 @@ function longestCommonPrefix(string $str, string $otherStr): string
  * @param  string $otherStr Second string for comparison
  * @return string being the longest common suffix
  */
-function longestCommonSuffix(string $str, string $otherStr): string
+function libstr_longestCommonSuffix(string $str, string $otherStr): string
 {
     $innerStr = $str;
     $maxLength = min(\mb_strlen($innerStr), \mb_strlen($otherStr));
@@ -1463,7 +1445,7 @@ function longestCommonSuffix(string $str, string $otherStr): string
  * @param  string $otherStr Second string for comparison
  * @return string being the longest common substring
  */
-function longestCommonSubstring(string $str, string $otherStr): string
+function libstr_longestCommonSubstring(string $str, string $otherStr): string
 {
     $innerStr = $str;
 
@@ -1516,7 +1498,7 @@ function longestCommonSubstring(string $str, string $otherStr): string
  * @param  string $substring The substring to append if it can fit
  * @return string
  */
-function safeTruncate(string $str, int $length, string $substring = ''): string
+function libstr_safeTruncate(string $str, int $length, string $substring = ''): string
 {
     $innerStr = $str;
     if ($length >= \mb_strlen($innerStr)) {
@@ -1556,20 +1538,20 @@ function safeTruncate(string $str, int $length, string $substring = ''): string
  * @param  string $language    Language of the source string
  * @return string
  */
-function slugify(string $str, string $replacement = '-', string $language = 'en'): string
+function libstr_slugify(string $str, string $replacement = '-', string $language = 'en'): string
 {
-    $innerStr = toAscii($str, $language);
+    $innerStr = libstr_toAscii($str, $language);
 
     $innerStr = \str_replace('@', $replacement, $innerStr);
     $quotedReplacement = \preg_quote($replacement, '');
     $pattern = "/[^a-zA-Z\d\s-_$quotedReplacement]/u";
     $innerStr = \preg_replace($pattern, '', $innerStr);
 
-    $innerStr = toLowerCase($innerStr);
-    $innerStr = delimit($innerStr, $replacement);
-    $innerStr = removeLeft($innerStr, $replacement);
+    $innerStr = libstr_toLowerCase($innerStr);
+    $innerStr = libstr_delimit($innerStr, $replacement);
+    $innerStr = libstr_removeLeft($innerStr, $replacement);
 
-    return removeRight($innerStr, $replacement);
+    return libstr_removeRight($innerStr, $replacement);
 }
 
 /**
@@ -1585,21 +1567,21 @@ function slugify(string $str, string $replacement = '-', string $language = 'en'
  * @param  bool   $removeUnsupported Whether or not to remove the unsupported characters
  * @return string
  */
-function toAscii(string $str, string $language = 'en', bool $removeUnsupported = true): string
+function libstr_toAscii(string $str, string $language = 'en', bool $removeUnsupported = true): string
 {
     $innerStr = $str;
 
-    $langSpecific = langSpecificCharsArray($language);
+    $langSpecific = libstr_langSpecificCharsArray($language);
 
     if (!empty($langSpecific)) {
         $innerStr = \str_replace($langSpecific[0], $langSpecific[1], $innerStr);
     }
 
     // @todo optimize
-    foreach (charsArray() as $key => $value) {
+    foreach (libstr_charsArray() as $key => $value) {
         /** @noinspection ForeachSourceInspection */
         foreach ($value as $item) {
-            $innerStr = replace($innerStr, $item, (string)$key);
+            $innerStr = libstr_replace($innerStr, $item, (string)$key);
         }
     }
 
@@ -1621,7 +1603,7 @@ function toAscii(string $str, string $language = 'en', bool $removeUnsupported =
  * @param  int    $end   Optional index at which to end extraction
  * @return string being the extracted substring
  */
-function slice(string $str, int $start, int $end = null): string
+function libstr_slice(string $str, int $start, int $end = null): string
 {
     $innerStr = $str;
 
@@ -1638,7 +1620,7 @@ function slice(string $str, int $start, int $end = null): string
         $length = $end - $start;
     }
 
-    return substrOurs($innerStr, $start, $length);
+    return libstr_substr($innerStr, $start, $length);
 }
 
 /**
@@ -1649,10 +1631,10 @@ function slice(string $str, int $start, int $end = null): string
  * @param  string $str
  * @return string with whitespace stripped
  */
-function stripWhitespace(string $str): string
+function libstr_stripWhitespace(string $str): string
 {
     $innerStr = $str;
-    return regexReplace($innerStr, '[[:space:]]+', '');
+    return libstr_regexReplace($innerStr, '[[:space:]]+', '');
 }
 
 /**
@@ -1665,7 +1647,7 @@ function stripWhitespace(string $str): string
  * @param  string $substring The substring to append if it can fit
  * @return string
  */
-function truncate(string $str, int $length, string $substring = ''): string
+function libstr_truncate(string $str, int $length, string $substring = ''): string
 {
     $innerStr = $str;
     if ($length >= \mb_strlen($innerStr)) {
@@ -1690,12 +1672,12 @@ function truncate(string $str, int $length, string $substring = ''): string
  * @param  string $str
  * @return string
  */
-function upperCamelize(string $str): string
+function libstr_upperCamelize(string $str): string
 {
     $innerStr = $str;
-    $innerStr = camelize($innerStr);
+    $innerStr = libstr_camelize($innerStr);
 
-    return upperCaseFirst($innerStr);
+    return libstr_upperCaseFirst($innerStr);
 }
 
 /**
@@ -1705,7 +1687,7 @@ function upperCamelize(string $str): string
  * @param  string $substring The substring to add to both sides
  * @return string
  */
-function surround(string $str, string $substring): string
+function libstr_surround(string $str, string $substring): string
 {
     $innerStr = $str;
 
@@ -1718,7 +1700,7 @@ function surround(string $str, string $substring): string
  * @param  string $str
  * @return string that has each character's case swapped
  */
-function swapCase(string $str): string
+function libstr_swapCase(string $str): string
 {
     $innerStr = $str;
 
@@ -1745,10 +1727,10 @@ function swapCase(string $str): string
  * @param  string $str
  * @return string
  */
-function tidy(string $str): string
+function libstr_tidy(string $str): string
 {
     $innerStr = $str;
-    return  preg_replace([
+    return preg_replace([
         '/\x{2026}/u',
         '/[\x{201C}\x{201D}]/u',
         '/[\x{2018}\x{2019}]/u',
@@ -1770,7 +1752,7 @@ function tidy(string $str): string
  * @param  array  $ignore An array of words not to capitalize
  * @return string
  */
-function titleize(string $str, array $ignore = []): string
+function libstr_titleize(string $str, array $ignore = []): string
 {
     $innerStr = $str;
     $innerStr = trim($innerStr);
@@ -1783,9 +1765,9 @@ function titleize(string $str, array $ignore = []): string
             }
 
             $innerStr = $match[0];
-            $innerStr = toLowerCase($innerStr);
+            $innerStr = libstr_toLowerCase($innerStr);
 
-            return upperCaseFirst($innerStr);
+            return libstr_upperCaseFirst($innerStr);
         },
         $innerStr
     );
@@ -1801,7 +1783,7 @@ function titleize(string $str, array $ignore = []): string
  * @param  int    $tabLength Number of spaces to replace each tab with
  * @return string
  */
-function toSpaces(string $str, int $tabLength = 4): string
+function libstr_toSpaces(string $str, int $tabLength = 4): string
 {
     $innerStr = $str;
     $spaces = \str_repeat(' ', $tabLength);
@@ -1818,7 +1800,7 @@ function toSpaces(string $str, int $tabLength = 4): string
  * @param  int    $tabLength Number of spaces to replace with a tab
  * @return string
  */
-function toTabs(string $str, int $tabLength = 4): string
+function libstr_toTabs(string $str, int $tabLength = 4): string
 {
     $innerStr = $str;
     $spaces = \str_repeat(' ', $tabLength);
@@ -1832,7 +1814,7 @@ function toTabs(string $str, int $tabLength = 4): string
  * @param  string $str
  * @return string
  */
-function toTitleCase(string $str): string
+function libstr_toTitleCase(string $str): string
 {
     $innerStr = $str;
 
@@ -1848,9 +1830,9 @@ function toTitleCase(string $str): string
  * @param  string $str
  * @return string
  */
-function underscored(string $str): string
+function libstr_underscored(string $str): string
 {
     $innerStr = $str;
 
-    return delimit($innerStr, '_');
+    return libstr_delimit($innerStr, '_');
 }

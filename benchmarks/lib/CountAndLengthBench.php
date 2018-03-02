@@ -2,9 +2,7 @@
 
 namespace Benchmark;
 
-use Str\Lib\StrMB;
 use Str\Str;
-use Stringy\StaticStringy;
 use Stringy\Stringy;
 
 class CountAndLengthBench
@@ -37,15 +35,7 @@ class CountAndLengthBench
         (new Str('HelLo wOrld'))->countSubstr('l', false);
     }
 
-    public function bench_count_StrStatic() {
-        StrMB::countSubstr('HelLo wOrld', '1', false);
-    }
-
     public function bench_count_Stringy() {
         (new Stringy('HelLo wOrld'))->countSubstr('l', false);
-    }
-
-    public function bench_count_StringyStatic() {
-        StaticStringy::countSubstr('HelLo wOrld', '1', false);
     }
 }

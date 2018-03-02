@@ -3,92 +3,89 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use function Str\Lib\applyPadding;
-use function Str\Lib\charsArray;
-use function Str\Lib\langSpecificCharsArray;
-use function Str\Lib\matchesPattern;
-use function Str\Lib\ensureLeft;
-use function Str\Lib\ensureRight;
-use function Str\Lib\hasPrefix;
-use function Str\Lib\hasSuffix;
-use function Str\Lib\containsOurs;
-use function Str\Lib\replace;
-use function Str\Lib\toLowerCase;
-use function Str\Lib\toUpperCase;
-use function Str\Lib\trim;
-use function Str\Lib\trimLeft;
-use function Str\Lib\trimRight;
-use function Str\Lib\append;
-use function Str\Lib\prepend;
-use function Str\Lib\at;
-use function Str\Lib\substr;
-use function Str\Lib\chars;
-use function Str\Lib\first;
-use function Str\Lib\last;
-use function Str\Lib\length;
-use function Str\Lib\indexOf;
-use function Str\Lib\indexOfLast;
-use function Str\Lib\countSubstr;
-use function Str\Lib\containsAll;
-use function Str\Lib\containsAny;
-use function Str\Lib\startsWith;
-use function Str\Lib\startsWithAny;
-use function Str\Lib\endsWith;
-use function Str\Lib\endsWithAny;
-use function Str\Lib\pad;
-use function Str\Lib\padBoth;
-use function Str\Lib\padLeft;
-use function Str\Lib\padRight;
-use function Str\Lib\insert;
-use function Str\Lib\removeLeft;
-use function Str\Lib\removeRight;
-use function Str\Lib\repeat;
-use function Str\Lib\reverse;
-use function Str\Lib\shuffle;
-use function Str\Lib\between;
-use function Str\Lib\camelize;
-use function Str\Lib\collapseWhitespace;
-use function Str\Lib\dasherize;
-use function Str\Lib\delimit;
-use function Str\Lib\lowerCaseFirst;
-use function Str\Lib\regexReplace;
-use function Str\Lib\upperCaseFirst;
-use function Str\Lib\isUUIDv4;
-use function Str\Lib\hasLowerCase;
-use function Str\Lib\hasUpperCase;
-use function Str\Lib\htmlDecode;
-use function Str\Lib\htmlEncode;
-use function Str\Lib\humanize;
-use function Str\Lib\isAlpha;
-use function Str\Lib\isAlphanumeric;
-use function Str\Lib\isBase64;
-use function Str\Lib\isBlank;
-use function Str\Lib\isHexadecimal;
-use function Str\Lib\isJson;
-use function Str\Lib\isLowerCase;
-use function Str\Lib\isSerialized;
-use function Str\Lib\isUpperCase;
-use function Str\Lib\lines;
-use function Str\Lib\split;
-use function Str\Lib\longestCommonPrefix;
-use function Str\Lib\longestCommonSuffix;
-use function Str\Lib\longestCommonSubstring;
-use function Str\Lib\safeTruncate;
-use function Str\Lib\slugify;
-use function Str\Lib\toAscii;
-use function Str\Lib\slice;
-use function Str\Lib\stripWhitespace;
-use function Str\Lib\truncate;
-use function Str\Lib\upperCamelize;
-use function Str\Lib\surround;
-use function Str\Lib\swapCase;
-use function Str\Lib\tidy;
-use function Str\Lib\titleize;
-use function Str\Lib\toBoolean;
-use function Str\Lib\toSpaces;
-use function Str\Lib\toTabs;
-use function Str\Lib\toTitleCase;
-use function Str\Lib\underscored;
+use function Str\Lib\libstr_matchesPattern;
+use function Str\Lib\libstr_ensureLeft;
+use function Str\Lib\libstr_ensureRight;
+use function Str\Lib\libstr_hasPrefix;
+use function Str\Lib\libstr_hasSuffix;
+use function Str\Lib\libstr_contains;
+use function Str\Lib\libstr_replace;
+use function Str\Lib\libstr_toLowerCase;
+use function Str\Lib\libstr_toUpperCase;
+use function Str\Lib\libstr_trim;
+use function Str\Lib\libstr_trimLeft;
+use function Str\Lib\libstr_trimRight;
+use function Str\Lib\libstr_append;
+use function Str\Lib\libstr_prepend;
+use function Str\Lib\libstr_at;
+use function Str\Lib\libstr_substr;
+use function Str\Lib\libstr_chars;
+use function Str\Lib\libstr_first;
+use function Str\Lib\libstr_last;
+use function Str\Lib\libstr_length;
+use function Str\Lib\libstr_indexOf;
+use function Str\Lib\libstr_indexOfLast;
+use function Str\Lib\libstr_countSubstr;
+use function Str\Lib\libstr_containsAll;
+use function Str\Lib\libstr_containsAny;
+use function Str\Lib\libstr_startsWith;
+use function Str\Lib\libstr_startsWithAny;
+use function Str\Lib\libstr_endsWith;
+use function Str\Lib\libstr_endsWithAny;
+use function Str\Lib\libstr_pad;
+use function Str\Lib\libstr_padBoth;
+use function Str\Lib\libstr_padLeft;
+use function Str\Lib\libstr_padRight;
+use function Str\Lib\libstr_insert;
+use function Str\Lib\libstr_removeLeft;
+use function Str\Lib\libstr_removeRight;
+use function Str\Lib\libstr_repeat;
+use function Str\Lib\libstr_reverse;
+use function Str\Lib\libstr_shuffle;
+use function Str\Lib\libstr_between;
+use function Str\Lib\libstr_camelize;
+use function Str\Lib\libstr_collapseWhitespace;
+use function Str\Lib\libstr_dasherize;
+use function Str\Lib\libstr_delimit;
+use function Str\Lib\libstr_lowerCaseFirst;
+use function Str\Lib\libstr_regexReplace;
+use function Str\Lib\libstr_upperCaseFirst;
+use function Str\Lib\libstr_isUUIDv4;
+use function Str\Lib\libstr_hasLowerCase;
+use function Str\Lib\libstr_hasUpperCase;
+use function Str\Lib\libstr_htmlDecode;
+use function Str\Lib\libstr_htmlEncode;
+use function Str\Lib\libstr_humanize;
+use function Str\Lib\libstr_isAlpha;
+use function Str\Lib\libstr_isAlphanumeric;
+use function Str\Lib\libstr_isBase64;
+use function Str\Lib\libstr_isBlank;
+use function Str\Lib\libstr_isHexadecimal;
+use function Str\Lib\libstr_isJson;
+use function Str\Lib\libstr_isLowerCase;
+use function Str\Lib\libstr_isSerialized;
+use function Str\Lib\libstr_isUpperCase;
+use function Str\Lib\libstr_lines;
+use function Str\Lib\libstr_split;
+use function Str\Lib\libstr_longestCommonPrefix;
+use function Str\Lib\libstr_longestCommonSuffix;
+use function Str\Lib\libstr_longestCommonSubstring;
+use function Str\Lib\libstr_safeTruncate;
+use function Str\Lib\libstr_slugify;
+use function Str\Lib\libstr_toAscii;
+use function Str\Lib\libstr_slice;
+use function Str\Lib\libstr_stripWhitespace;
+use function Str\Lib\libstr_truncate;
+use function Str\Lib\libstr_upperCamelize;
+use function Str\Lib\libstr_surround;
+use function Str\Lib\libstr_swapCase;
+use function Str\Lib\libstr_tidy;
+use function Str\Lib\libstr_titleize;
+use function Str\Lib\libstr_toBoolean;
+use function Str\Lib\libstr_toSpaces;
+use function Str\Lib\libstr_toTabs;
+use function Str\Lib\libstr_toTitleCase;
+use function Str\Lib\libstr_underscored;
 
 class StrMBTest extends TestCase
 {
@@ -99,7 +96,7 @@ class StrMBTest extends TestCase
      */
     public function testHasPrefix(array $inp, bool $result)
     {
-        $this->assertEquals($result, hasPrefix(
+        $this->assertEquals($result, libstr_hasPrefix(
             array_shift($inp),
             array_shift($inp)
         ));
@@ -159,7 +156,7 @@ class StrMBTest extends TestCase
      */
     public function testHasSuffix(array $inp, bool $result)
     {
-        $this->assertEquals($result, hasSuffix(
+        $this->assertEquals($result, libstr_hasSuffix(
             array_shift($inp),
             array_shift($inp)
         ));
@@ -219,7 +216,7 @@ class StrMBTest extends TestCase
      */
     public function testLength($expected, $str)
     {
-        $this->assertEquals($expected, length($str));
+        $this->assertEquals($expected, libstr_length($str));
     }
     public function lengthProvider()
     {
@@ -242,7 +239,7 @@ class StrMBTest extends TestCase
     {
         $this->assertEquals(
             $expected,
-            containsOurs($haystack, $needle, $caseSensitive),
+            libstr_contains($haystack, $needle, $caseSensitive),
             sprintf('%s - %s', $haystack, $needle)
         );
     }
@@ -284,7 +281,7 @@ class StrMBTest extends TestCase
      */
     public function testIndexOf($expected, $haystack, $needle, $offset = 0)
     {
-        $this->assertEquals($expected, indexOf($haystack, $needle, $offset));
+        $this->assertEquals($expected, libstr_indexOf($haystack, $needle, $offset));
     }
 
     public function indexOfProvider()
@@ -319,7 +316,7 @@ class StrMBTest extends TestCase
      */
     public function testIndexOfLast($expected, $haystack, $needle, $offset = 0)
     {
-        $this->assertEquals($expected, indexOfLast($haystack, $needle, $offset));
+        $this->assertEquals($expected, libstr_indexOfLast($haystack, $needle, $offset));
     }
 
     public function indexOfLastProvider()
@@ -352,7 +349,7 @@ class StrMBTest extends TestCase
      */
     public function testCountSubstr($expected, $str, $substring, $caseSensitive = true)
     {
-        $this->assertEquals($expected, countSubstr($str, $substring, $caseSensitive));
+        $this->assertEquals($expected, libstr_countSubstr($str, $substring, $caseSensitive));
     }
 
     public function countSubstrProvider()
@@ -385,7 +382,7 @@ class StrMBTest extends TestCase
      */
     public function testContainsAll($expected, $haystack, $needles, $caseSensitive = true)
     {
-        $this->assertEquals($expected, containsAll($haystack, $needles, $caseSensitive), $haystack);
+        $this->assertEquals($expected, libstr_containsAll($haystack, $needles, $caseSensitive), $haystack);
     }
 
     public function containsAllProvider()
@@ -433,7 +430,7 @@ class StrMBTest extends TestCase
      */
     public function testContainsAny($expected, $haystack, $needles, $caseSensitive = true)
     {
-        $this->assertEquals($expected, containsAny($haystack, $needles, $caseSensitive), $haystack);
+        $this->assertEquals($expected, libstr_containsAny($haystack, $needles, $caseSensitive), $haystack);
     }
     public function containsAnyProvider()
     {
@@ -480,7 +477,7 @@ class StrMBTest extends TestCase
      */
     public function testStartsWith($expected, $str, $substring, $caseSensitive = true)
     {
-        $this->assertEquals($expected, startsWith($str, $substring, $caseSensitive), $str);
+        $this->assertEquals($expected, libstr_startsWith($str, $substring, $caseSensitive), $str);
     }
     public function startsWithProvider()
     {
@@ -508,7 +505,7 @@ class StrMBTest extends TestCase
      */
     public function testStartsWithAny($expected, $str, $substrings, $caseSensitive = true)
     {
-        $this->assertEquals($expected, startsWithAny($str, $substrings, $caseSensitive), $str);
+        $this->assertEquals($expected, libstr_startsWithAny($str, $substrings, $caseSensitive), $str);
     }
     public function startsWithProviderAny()
     {
@@ -537,7 +534,7 @@ class StrMBTest extends TestCase
      */
     public function testEndsWith($expected, $str, $substring, $caseSensitive = true)
     {
-        $this->assertEquals($expected, endsWith($str, $substring, $caseSensitive), $str);
+        $this->assertEquals($expected, libstr_endsWith($str, $substring, $caseSensitive), $str);
     }
     public function endsWithProvider()
     {
@@ -565,7 +562,7 @@ class StrMBTest extends TestCase
      */
     public function testEndsWithAny($expected, $str, $substrings, $caseSensitive = true)
     {
-        $this->assertEquals($expected, endsWithAny($str, $substrings, $caseSensitive), $str);
+        $this->assertEquals($expected, libstr_endsWithAny($str, $substrings, $caseSensitive), $str);
     }
     public function endsWithAnyProvider()
     {
@@ -592,7 +589,7 @@ class StrMBTest extends TestCase
      */
     public function testIsUUIDv4($expected, $str)
     {
-        $this->assertEquals($expected, isUUIDv4($str), $str);
+        $this->assertEquals($expected, libstr_isUUIDv4($str), $str);
     }
     public function isUUIDv4Provider()
     {
@@ -613,7 +610,7 @@ class StrMBTest extends TestCase
      */
     public function testHasLowerCase($expected, $str)
     {
-        $this->assertEquals($expected, hasLowerCase($str), $str);
+        $this->assertEquals($expected, libstr_hasLowerCase($str), $str);
     }
     public function hasLowerCaseProvider()
     {
@@ -640,7 +637,7 @@ class StrMBTest extends TestCase
      */
     public function testHasUpperCase($expected, $str)
     {
-        $this->assertEquals($expected, hasUpperCase($str), $str);
+        $this->assertEquals($expected, libstr_hasUpperCase($str), $str);
     }
     public function hasUpperCaseProvider()
     {
@@ -668,7 +665,7 @@ class StrMBTest extends TestCase
      */
     public function testMatchesPattern($expected, $str, $pattern)
     {
-        $this->assertEquals($expected, matchesPattern($str, $pattern), $str);
+        $this->assertEquals($expected, libstr_matchesPattern($str, $pattern), $str);
     }
     public function matchesPatternProvider()
     {
@@ -690,7 +687,7 @@ class StrMBTest extends TestCase
      */
     public function testIsAlpha($expected, $str)
     {
-        $this->assertEquals($expected, isAlpha($str), $str);
+        $this->assertEquals($expected, libstr_isAlpha($str), $str);
     }
     public function isAlphaProvider()
     {
@@ -715,7 +712,7 @@ class StrMBTest extends TestCase
      */
     public function testIsAlphanumeric($expected, $str)
     {
-        $this->assertEquals($expected, isAlphanumeric($str), $str);
+        $this->assertEquals($expected, libstr_isAlphanumeric($str), $str);
     }
     public function isAlphanumericProvider()
     {
@@ -743,7 +740,7 @@ class StrMBTest extends TestCase
      */
     public function testIsBase64($expected, $str)
     {
-        $this->assertEquals($expected, isBase64($str), $str);
+        $this->assertEquals($expected, libstr_isBase64($str), $str);
     }
     public function isBase64Provider()
     {
@@ -765,7 +762,7 @@ class StrMBTest extends TestCase
      */
     public function testIsBlank($expected, $str)
     {
-        $this->assertEquals($expected, isBlank($str), $str);
+        $this->assertEquals($expected, libstr_isBlank($str), $str);
     }
     public function isBlankProvider()
     {
@@ -795,7 +792,7 @@ class StrMBTest extends TestCase
      */
     public function testIsHexadecimal($expected, $str)
     {
-        $this->assertEquals($expected, isHexadecimal($str), $str);
+        $this->assertEquals($expected, libstr_isHexadecimal($str), $str);
     }
     public function isHexadecimalProvider()
     {
@@ -823,7 +820,7 @@ class StrMBTest extends TestCase
      */
     public function testIsJson($expected, $str)
     {
-        $this->assertEquals($expected, isJson($str), $str);
+        $this->assertEquals($expected, libstr_isJson($str), $str);
     }
     public function isJsonProvider()
     {
@@ -858,7 +855,7 @@ class StrMBTest extends TestCase
      */
     public function testIsLowerCase($expected, $str)
     {
-        $this->assertEquals($expected, isLowerCase($str), $str);
+        $this->assertEquals($expected, libstr_isLowerCase($str), $str);
     }
     public function isLowerCaseProvider()
     {
@@ -881,7 +878,7 @@ class StrMBTest extends TestCase
      */
     public function testIsSerialized($expected, $str)
     {
-        $this->assertEquals($expected, isSerialized($str), $str);
+        $this->assertEquals($expected, libstr_isSerialized($str), $str);
     }
     public function isSerializedProvider()
     {
@@ -903,7 +900,7 @@ class StrMBTest extends TestCase
      */
     public function testIsUpperCase($expected, $str)
     {
-        $this->assertEquals($expected, isUpperCase($str), $str);
+        $this->assertEquals($expected, libstr_isUpperCase($str), $str);
     }
     public function isUpperCaseProvider()
     {
@@ -926,7 +923,7 @@ class StrMBTest extends TestCase
      */
     public function testToBoolean($expected, $str)
     {
-        $this->assertEquals($expected, toBoolean($str), $str);
+        $this->assertEquals($expected, libstr_toBoolean($str), $str);
     }
     public function toBooleanProvider()
     {
@@ -958,7 +955,7 @@ class StrMBTest extends TestCase
      */
     public function testSubstr($expected, $str, $start = 0, $length = 1)
     {
-        $this->assertEquals($expected, substr($str, $start, $length));
+        $this->assertEquals($expected, libstr_substr($str, $start, $length));
     }
 
     public function SubstrProvider()
@@ -978,7 +975,7 @@ class StrMBTest extends TestCase
      */
     public function testEnsureRight(array $inp, string $out)
     {
-        $this->assertEquals($out, ensureRight(
+        $this->assertEquals($out, libstr_ensureRight(
             array_shift($inp),
             array_shift($inp)
         ));
@@ -1026,7 +1023,7 @@ class StrMBTest extends TestCase
      */
     public function testEnsureLeft(array $inp, string $out)
     {
-        $this->assertEquals($out, ensureLeft(
+        $this->assertEquals($out, libstr_ensureLeft(
             array_shift($inp),
             array_shift($inp)
         ));
@@ -1075,7 +1072,7 @@ class StrMBTest extends TestCase
      */
     public function testAt($expected, $str, $pos)
     {
-        $this->assertEquals($expected, at($str, $pos));
+        $this->assertEquals($expected, libstr_at($str, $pos));
     }
 
     public function AtProvider()
@@ -1100,7 +1097,7 @@ class StrMBTest extends TestCase
     public function testChars($expected, $str)
     {
         $this->assertInternalType('array', $expected);
-        $this->assertEquals($expected, chars($str));
+        $this->assertEquals($expected, libstr_chars($str));
     }
 
     public function charsProvider()
@@ -1120,7 +1117,7 @@ class StrMBTest extends TestCase
      */
     public function testFirst($expected, $str, $n)
     {
-        $this->assertEquals($expected, first($str, $n));
+        $this->assertEquals($expected, libstr_first($str, $n));
     }
 
     public function firstProvider()
@@ -1149,7 +1146,7 @@ class StrMBTest extends TestCase
      */
     public function testLast($expected, $str, $n)
     {
-        $this->assertEquals($expected, last($str, $n));
+        $this->assertEquals($expected, libstr_last($str, $n));
     }
 
     public function lastProvider()
@@ -1177,7 +1174,7 @@ class StrMBTest extends TestCase
      */
     public function testToLowerCase($expected, $str)
     {
-        $this->assertEquals($expected, toLowerCase($str));
+        $this->assertEquals($expected, libstr_toLowerCase($str));
     }
     public function toLowerCaseProvider()
     {
@@ -1197,7 +1194,7 @@ class StrMBTest extends TestCase
      */
     public function testToUpperCase($expected, $str)
     {
-        $this->assertEquals($expected, toUpperCase($str));
+        $this->assertEquals($expected, libstr_toUpperCase($str));
     }
     public function toUpperCaseProvider()
     {
@@ -1218,7 +1215,7 @@ class StrMBTest extends TestCase
      */
     public function testAppend($expected, $str, $string)
     {
-        $this->assertEquals($expected, append($str, $string));
+        $this->assertEquals($expected, libstr_append($str, $string));
     }
     public function appendProvider()
     {
@@ -1236,7 +1233,7 @@ class StrMBTest extends TestCase
      */
     public function testPrepend($expected, $str, $string)
     {
-        $this->assertEquals($expected, prepend($str, $string));
+        $this->assertEquals($expected, libstr_prepend($str, $string));
     }
     public function prependProvider()
     {
@@ -1253,7 +1250,7 @@ class StrMBTest extends TestCase
      */
     public function testReplace($params, $expected)
     {
-        $this->assertEquals($expected, replace(
+        $this->assertEquals($expected, libstr_replace(
             array_shift($params), // s
             array_shift($params), // old
             array_shift($params), // new
@@ -1319,7 +1316,7 @@ class StrMBTest extends TestCase
      */
     public function testTrim($expected, $str, $chars = '')
     {
-        $this->assertEquals($expected, trim($str, $chars));
+        $this->assertEquals($expected, libstr_trim($str, $chars));
     }
     public function trimProvider()
     {
@@ -1347,7 +1344,7 @@ class StrMBTest extends TestCase
      */
     public function testTrimLeft($expected, $str, $chars = '')
     {
-        $this->assertEquals($expected, trimLeft($str, $chars));
+        $this->assertEquals($expected, libstr_trimLeft($str, $chars));
     }
     public function trimLeftProvider()
     {
@@ -1376,7 +1373,7 @@ class StrMBTest extends TestCase
      */
     public function testTrimRight($expected, $str, $chars = '')
     {
-        $this->assertEquals($expected, trimRight($str, $chars));
+        $this->assertEquals($expected, libstr_trimRight($str, $chars));
     }
     public function trimRightProvider()
     {
@@ -1407,7 +1404,7 @@ class StrMBTest extends TestCase
      */
     public function testPad($expected, $str, $length, $padStr = ' ', $padType = 'right')
     {
-        $this->assertEquals($expected, pad($str, $length, $padStr, $padType));
+        $this->assertEquals($expected, libstr_pad($str, $length, $padStr, $padType));
     }
     public function padProvider()
     {
@@ -1442,7 +1439,7 @@ class StrMBTest extends TestCase
      */
     public function testPadLeft($expected, $str, $length, $padStr = ' ')
     {
-        $this->assertEquals($expected, padLeft($str, $length, $padStr));
+        $this->assertEquals($expected, libstr_padLeft($str, $length, $padStr));
     }
     public function padLeftProvider()
     {
@@ -1466,7 +1463,7 @@ class StrMBTest extends TestCase
      */
     public function testPadRight($expected, $str, $length, $padStr = ' ')
     {
-        $this->assertEquals($expected, padRight($str, $length, $padStr));
+        $this->assertEquals($expected, libstr_padRight($str, $length, $padStr));
     }
     public function padRightProvider()
     {
@@ -1490,7 +1487,7 @@ class StrMBTest extends TestCase
      */
     public function testPadBoth($expected, $str, $length, $padStr = ' ')
     {
-        $this->assertEquals($expected, padBoth($str, $length, $padStr));
+        $this->assertEquals($expected, libstr_padBoth($str, $length, $padStr));
     }
     public function padBothProvider()
     {
@@ -1518,7 +1515,7 @@ class StrMBTest extends TestCase
      */
     public function testInsert($expected, $str, $substring, $index)
     {
-        $this->assertEquals($expected, insert($str, $substring, $index));
+        $this->assertEquals($expected, libstr_insert($str, $substring, $index));
     }
     public function insertProvider()
     {
@@ -1542,7 +1539,7 @@ class StrMBTest extends TestCase
      */
     public function testRemoveLeft($expected, $str, $substring)
     {
-        $this->assertEquals($expected, removeLeft($str, $substring));
+        $this->assertEquals($expected, libstr_removeLeft($str, $substring));
     }
     public function removeLeftProvider()
     {
@@ -1553,8 +1550,8 @@ class StrMBTest extends TestCase
             ['bar', 'foo bar', 'foo '],
             ['foo bar', 'foo bar', 'oo'],
             ['foo bar', 'foo bar', 'oo bar'],
-            ['oo bar', 'foo bar', first($s)],
-            ['oo bar', 'foo bar', at($s,0)],
+            ['oo bar', 'foo bar', libstr_first($s)],
+            ['oo bar', 'foo bar', libstr_at($s,0)],
             ['fòô bàř', 'fòô bàř', ''],
             ['òô bàř', 'fòô bàř', 'f'],
             ['bàř', 'fòô bàř', 'fòô '],
@@ -1571,7 +1568,7 @@ class StrMBTest extends TestCase
      */
     public function testRemoveRight($expected, $str, $substring)
     {
-        $this->assertEquals($expected, removeRight($str, $substring));
+        $this->assertEquals($expected, libstr_removeRight($str, $substring));
     }
     public function removeRightProvider()
     {
@@ -1582,8 +1579,8 @@ class StrMBTest extends TestCase
             ['foo', 'foo bar', ' bar'],
             ['foo bar', 'foo bar', 'ba'],
             ['foo bar', 'foo bar', 'foo ba'],
-            ['foo ba', 'foo bar', last($s)],
-            ['foo ba', 'foo bar', at($s,6)],
+            ['foo ba', 'foo bar', libstr_last($s)],
+            ['foo ba', 'foo bar', libstr_at($s,6)],
             ['fòô bàř', 'fòô bàř', ''],
             ['fòô bà', 'fòô bàř', 'ř'],
             ['fòô', 'fòô bàř', ' bàř'],
@@ -1600,7 +1597,7 @@ class StrMBTest extends TestCase
      */
     public function testRepeat($expected, $str, $multiplier)
     {
-        $this->assertEquals($expected, repeat($str, $multiplier));
+        $this->assertEquals($expected, libstr_repeat($str, $multiplier));
     }
     public function repeatProvider()
     {
@@ -1622,7 +1619,7 @@ class StrMBTest extends TestCase
      */
     public function testReverse($expected, $str)
     {
-        $this->assertEquals($expected, reverse($str));
+        $this->assertEquals($expected, libstr_reverse($str));
     }
     public function reverseProvider()
     {
@@ -1641,10 +1638,10 @@ class StrMBTest extends TestCase
      */
     public function testShuffle($str)
     {
-        $result = shuffle($str);
+        $result = libstr_shuffle($str);
 
-        $oldValues = chars($str);
-        $newValues = chars($result);
+        $oldValues = libstr_chars($str);
+        $newValues = libstr_chars($result);
 
         $countOld = array_count_values($oldValues);
         $countNew = array_count_values($newValues);
@@ -1672,7 +1669,7 @@ class StrMBTest extends TestCase
      */
     public function testBetween($expected, $str, $start, $end, $offset = 0)
     {
-        $this->assertEquals($expected, between($str, $start, $end, $offset), $str);
+        $this->assertEquals($expected, libstr_between($str, $start, $end, $offset), $str);
     }
     public function betweenProvider()
     {
@@ -1703,7 +1700,7 @@ class StrMBTest extends TestCase
      */
     public function testCamelize($expected, $str)
     {
-        $this->assertEquals($expected, camelize($str), $str);
+        $this->assertEquals($expected, libstr_camelize($str), $str);
     }
     public function camelizeProvider()
     {
@@ -1737,7 +1734,7 @@ class StrMBTest extends TestCase
      */
     public function testUpperCaseFirst($expected, $str)
     {
-        $this->assertEquals($expected, upperCaseFirst($str), $str);
+        $this->assertEquals($expected, libstr_upperCaseFirst($str), $str);
     }
     public function upperCaseFirstProvider()
     {
@@ -1757,7 +1754,7 @@ class StrMBTest extends TestCase
      */
     public function testLowerCaseFirst($expected, $str)
     {
-        $this->assertEquals($expected, lowerCaseFirst($str), $str);
+        $this->assertEquals($expected, libstr_lowerCaseFirst($str), $str);
     }
     public function lowerCaseFirstProvider()
     {
@@ -1777,7 +1774,7 @@ class StrMBTest extends TestCase
      */
     public function testCollapseWhitespace($expected, $str)
     {
-        $this->assertEquals($expected, collapseWhitespace($str), $str);
+        $this->assertEquals($expected, libstr_collapseWhitespace($str), $str);
     }
     public function collapseWhitespaceProvider()
     {
@@ -1807,7 +1804,7 @@ class StrMBTest extends TestCase
      */
     public function testRegexReplace($expected, $str, $pattern, $replacement, $options = 'msr')
     {
-        $this->assertEquals($expected, regexReplace($str, $pattern, $replacement, $options), $str);
+        $this->assertEquals($expected, libstr_regexReplace($str, $pattern, $replacement, $options), $str);
     }
     public function regexReplaceProvider()
     {
@@ -1831,7 +1828,7 @@ class StrMBTest extends TestCase
      */
     public function testDasherize($expected, $str)
     {
-        $this->assertEquals($expected, dasherize($str), $str);
+        $this->assertEquals($expected, libstr_dasherize($str), $str);
     }
     public function dasherizeProvider()
     {
@@ -1866,7 +1863,7 @@ class StrMBTest extends TestCase
      */
     public function testDelimit($expected, $str, $delimiter)
     {
-        $this->assertEquals($expected, delimit($str, $delimiter), $str);
+        $this->assertEquals($expected, libstr_delimit($str, $delimiter), $str);
     }
     public function delimitProvider()
     {
@@ -1896,7 +1893,7 @@ class StrMBTest extends TestCase
      */
     public function testHtmlEncode($expected, $str, $flags = ENT_COMPAT)
     {
-        $this->assertEquals($expected, htmlEncode($str, $flags), $str);
+        $this->assertEquals($expected, libstr_htmlEncode($str, $flags), $str);
     }
     public function htmlEncodeProvider()
     {
@@ -1917,7 +1914,7 @@ class StrMBTest extends TestCase
      */
     public function testHtmlDecode($expected, $str, $flags = ENT_COMPAT)
     {
-        $this->assertEquals($expected, htmlDecode($str, $flags), $str);
+        $this->assertEquals($expected, libstr_htmlDecode($str, $flags), $str);
     }
     public function htmlDecodeProvider()
     {
@@ -1937,7 +1934,7 @@ class StrMBTest extends TestCase
      */
     public function testHumanize($expected, $str)
     {
-        $this->assertEquals($expected, humanize($str), $str);
+        $this->assertEquals($expected, libstr_humanize($str), $str);
     }
     public function humanizeProvider()
     {
@@ -1955,7 +1952,7 @@ class StrMBTest extends TestCase
      */
     public function testLines($expected, $str)
     {
-        $result = lines($str);
+        $result = libstr_lines($str);
         $expectedCount = count($expected);
 
         if ($expectedCount === 0) { $this->assertEmpty($result); }
@@ -1994,7 +1991,7 @@ class StrMBTest extends TestCase
      */
     public function testSplit($expected, $str, $pattern, $limit = -1)
     {
-        $result = split($str, $pattern, $limit);
+        $result = libstr_split($str, $pattern, $limit);
         $expectedLen = count($expected);
 
         if ($expectedLen === 0) { $this->assertEmpty($result); }
@@ -2036,7 +2033,7 @@ class StrMBTest extends TestCase
      */
     public function testLongestCommonPrefix($expected, $str, $otherStr)
     {
-        $this->assertEquals($expected, longestCommonPrefix($str, $otherStr), $str);
+        $this->assertEquals($expected, libstr_longestCommonPrefix($str, $otherStr), $str);
     }
     public function longestCommonPrefixProvider()
     {
@@ -2062,7 +2059,7 @@ class StrMBTest extends TestCase
      */
     public function testLongestCommonSuffix($expected, $str, $otherStr)
     {
-        $this->assertEquals($expected, longestCommonSuffix($str, $otherStr), $str);
+        $this->assertEquals($expected, libstr_longestCommonSuffix($str, $otherStr), $str);
     }
     public function longestCommonSuffixProvider()
     {
@@ -2088,7 +2085,7 @@ class StrMBTest extends TestCase
      */
     public function testLongestCommonSubstring($expected, $str, $otherStr)
     {
-        $this->assertEquals($expected, longestCommonSubstring($str, $otherStr), $str);
+        $this->assertEquals($expected, libstr_longestCommonSubstring($str, $otherStr), $str);
     }
     public function longestCommonSubstringProvider()
     {
@@ -2115,7 +2112,7 @@ class StrMBTest extends TestCase
      */
     public function testSafeTruncate($expected, $str, $length, $substring = '')
     {
-        $this->assertEquals($expected, safeTruncate($str, $length, $substring), $str);
+        $this->assertEquals($expected, libstr_safeTruncate($str, $length, $substring), $str);
     }
     public function safeTruncateProvider()
     {
@@ -2153,7 +2150,7 @@ class StrMBTest extends TestCase
      */
     public function testSlugify($expected, $str, $replacement = '-')
     {
-        $this->assertEquals($expected, slugify($str, $replacement), $str);
+        $this->assertEquals($expected, libstr_slugify($str, $replacement), $str);
     }
     public function slugifyProvider()
     {
@@ -2186,7 +2183,7 @@ class StrMBTest extends TestCase
      */
     public function testToAscii($expected, $str, $language = 'en', $removeUnsupported = true)
     {
-        $this->assertEquals($expected, toAscii($str, $language, $removeUnsupported), $str);
+        $this->assertEquals($expected, libstr_toAscii($str, $language, $removeUnsupported), $str);
     }
     public function toAsciiProvider()
     {
@@ -2224,7 +2221,7 @@ class StrMBTest extends TestCase
      */
     public function testSlice($expected, $str, $start, $end = null)
     {
-        $this->assertEquals($expected, slice($str, $start, $end), $str);
+        $this->assertEquals($expected, libstr_slice($str, $start, $end), $str);
     }
     public function sliceProvider()
     {
@@ -2255,7 +2252,7 @@ class StrMBTest extends TestCase
      */
     public function testStripWhitespace($expected, $str)
     {
-        $this->assertEquals($expected, stripWhitespace($str), $str);
+        $this->assertEquals($expected, libstr_stripWhitespace($str), $str);
     }
     public function stripWhitespaceProvider()
     {
@@ -2284,7 +2281,7 @@ class StrMBTest extends TestCase
      */
     public function testTruncate($expected, $str, $length, $substring = '')
     {
-        $this->assertEquals($expected, truncate($str, $length, $substring), $str);
+        $this->assertEquals($expected, libstr_truncate($str, $length, $substring), $str);
     }
     public function truncateProvider()
     {
@@ -2321,7 +2318,7 @@ class StrMBTest extends TestCase
      */
     public function testUpperCamelize($expected, $str)
     {
-        $this->assertEquals($expected, upperCamelize($str), $str);
+        $this->assertEquals($expected, libstr_upperCamelize($str), $str);
     }
     public function upperCamelizeProvider()
     {
@@ -2350,7 +2347,7 @@ class StrMBTest extends TestCase
      */
     public function testSurround($expected, $str, $substring)
     {
-        $this->assertEquals($expected, surround($str, $substring), $str);
+        $this->assertEquals($expected, libstr_surround($str, $substring), $str);
     }
     public function surroundProvider()
     {
@@ -2370,7 +2367,7 @@ class StrMBTest extends TestCase
      */
     public function testSwapCase($expected, $str)
     {
-        $this->assertEquals($expected, swapCase($str), $str);
+        $this->assertEquals($expected, libstr_swapCase($str), $str);
     }
     public function swapCaseProvider()
     {
@@ -2389,7 +2386,7 @@ class StrMBTest extends TestCase
      */
     public function testTidy($expected, $str)
     {
-        $this->assertEquals($expected, tidy($str), $str);
+        $this->assertEquals($expected, libstr_tidy($str), $str);
     }
     public function tidyProvider()
     {
@@ -2411,7 +2408,7 @@ class StrMBTest extends TestCase
      */
     public function testTitleize($expected, $str, $ignore = [])
     {
-        $this->assertEquals($expected, titleize($str, $ignore), $str);
+        $this->assertEquals($expected, libstr_titleize($str, $ignore), $str);
     }
     public function titleizeProvider()
     {
@@ -2434,7 +2431,7 @@ class StrMBTest extends TestCase
      */
     public function testToSpaces($expected, $str, $tabLength = 4)
     {
-        $this->assertEquals($expected, toSpaces($str, $tabLength), $str);
+        $this->assertEquals($expected, libstr_toSpaces($str, $tabLength), $str);
     }
     public function toSpacesProvider()
     {
@@ -2456,7 +2453,7 @@ class StrMBTest extends TestCase
      */
     public function testToTabs($expected, $str, $tabLength = 4)
     {
-        $this->assertEquals($expected, toTabs($str, $tabLength), $str);
+        $this->assertEquals($expected, libstr_toTabs($str, $tabLength), $str);
     }
     public function toTabsProvider()
     {
@@ -2476,7 +2473,7 @@ class StrMBTest extends TestCase
      */
     public function testToTitleCase($expected, $str)
     {
-        $this->assertEquals($expected, toTitleCase($str), $str);
+        $this->assertEquals($expected, libstr_toTitleCase($str), $str);
     }
     public function toTitleCaseProvider()
     {
@@ -2496,7 +2493,7 @@ class StrMBTest extends TestCase
      */
     public function testUnderscored($expected, $str)
     {
-        $this->assertEquals($expected, underscored($str), $str);
+        $this->assertEquals($expected, libstr_underscored($str), $str);
     }
     public function underscoredProvider()
     {
