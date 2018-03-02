@@ -10,6 +10,7 @@ use function Str\Lib\libstr_hasPrefix;
 use function Str\Lib\libstr_hasSuffix;
 use function Str\Lib\libstr_contains;
 use function Str\Lib\libstr_move;
+use function Str\Lib\libstr_overwrite;
 use function Str\Lib\libstr_replace;
 use function Str\Lib\libstr_toLowerCase;
 use function Str\Lib\libstr_toUpperCase;
@@ -2536,6 +2537,27 @@ class StrMBTest extends TestCase
             ['stte_case', 'test_case', 0, 2, 4],
             ['Στανιλ case', 'Στανιλ case', 0, 4, 1],
             ['ιλΣταν case', 'Στανιλ case', 0, 4, 6],
+        ];
+    }
+
+    /**
+     * @dataProvider overwriteProvider()
+     * @param $expected
+     * @param $str
+     * @param $start
+     * @param $length
+     * @param $substr
+     */
+    public function testOverwrite($expected, $str, $start, $length, $substr)
+    {
+        $this->assertEquals($expected, libstr_overwrite($str, $start, $length, $substr), $str);
+    }
+    public function overwriteProvider()
+    {
+        return [
+            ['overwrittenst_case', 'test_case', 0, 2, 'overwritten'],
+            ['oh ιλ case', 'Στανιλ case', 0, 4, 'oh '],
+            ['Στανλ case', 'Στανιλ case', 4, 1, ''],
         ];
     }
 }

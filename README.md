@@ -124,9 +124,34 @@ composer require str/str
 - [x] toTabs
 - [x] toTitleCase
 - [x] underscored
+- [x] move
+- [x] overwrite
 
 ### Todo New
-
+- [ ] snakeize
+- [ ] appendUniqueIdentifier
+- [ ] afterFirst
+- [ ] beforeFirst
+- [ ] afterLast
+- [ ] beforeLast
+- [ ] ord
+- [ ] quote
+- [ ] unquote
+- [ ] words
+- [ ] formatNumber
+- [ ] toNumber
+- [ ] toInt
+- [ ] toFloat
+- [ ] join
+- [ ] chop
+- [ ] random
+- [ ] pop
+- [ ] shift
+- [ ] shiftReversed
+- [ ] popReversed
+- [ ] isEmail
+- [ ] isUrl
+- [ ] isIp
 
 ## Optimization
 

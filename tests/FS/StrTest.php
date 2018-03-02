@@ -137,6 +137,7 @@ class StrTest extends TestCase
         $this->assertEquals('strwith tabs', $s->toSpaces(0));
         $this->assertEquals("strwith\ttabs", $s->toTabs(1));
         $this->assertEquals("Strwith\tTabs", $s->toTitleCase());
+        $this->assertEquals("hello with\tTabs", $s->overwrite(0, 3, 'hello '));
     }
 
     public function testTrim()

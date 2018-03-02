@@ -1856,7 +1856,27 @@ function libstr_move(string $str, int $start, int $length, int $destination): st
 
     $substr = libstr_substr($innerStr, $start, $length);
     $result = libstr_insert($innerStr, $substr, $destination);
-    $result = libstr_replace($result, $substr, '', 1);
 
-    return $result;
+    return libstr_replace($result, $substr, '', 1);
+}
+
+/** @noinspection MoreThanThreeArgumentsInspection */
+/**
+ * Replaces substring in the original $str of $length with given $substr.
+ *
+ * @param  string $str
+ * @param  int    $start
+ * @param  int    $length
+ * @param  string $substr
+ * @return string
+ */
+function libstr_overwrite(string $str, int $start, int $length, string $substr): string
+{
+    $innerStr = $str;
+
+    if ($length <= 0) { return $innerStr; }
+
+    $sub = libstr_substr($innerStr, $start, $length);
+
+    return libstr_replace($innerStr, $sub, $substr, 1);
 }
