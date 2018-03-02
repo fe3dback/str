@@ -1836,3 +1836,166 @@ function libstr_underscored(string $str): string
 
     return libstr_delimit($innerStr, '_');
 }
+
+/** @noinspection MoreThanThreeArgumentsInspection */
+/**
+ * Move substring of desired $length to $destination index of the original $str.
+ * In case $destination is less than $length returns $str untouched.
+ *
+ * @param  string $str
+ * @param  int    $start
+ * @param  int    $length
+ * @param  int    $destination
+ * @return string
+ */
+function libstr_move(string $str, int $start, int $length, int $destination): string
+{
+    $innerStr = $str;
+
+    if ($destination <= $length) { return $innerStr; }
+
+    $substr = libstr_substr($innerStr, $start, $length);
+    $result = libstr_insert($innerStr, $substr, $destination);
+
+    return libstr_replace($result, $substr, '', 1);
+}
+
+/** @noinspection MoreThanThreeArgumentsInspection */
+/**
+ * Replaces substring in the original $str of $length with given $substr.
+ *
+ * @param  string $str
+ * @param  int    $start
+ * @param  int    $length
+ * @param  string $substr
+ * @return string
+ */
+function libstr_overwrite(string $str, int $start, int $length, string $substr): string
+{
+    $innerStr = $str;
+
+    if ($length <= 0) { return $innerStr; }
+
+    $sub = libstr_substr($innerStr, $start, $length);
+
+    return libstr_replace($innerStr, $sub, $substr, 1);
+}
+
+/**
+ * Returns a snake_case version of the string.
+ *
+ * @todo refactoring + abbreviations support
+ * @param  string $str
+ * @return string
+ */
+function libstr_snakeize(string $str): string
+{
+    $innerStr = $str;
+
+    $innerStr = \mb_ereg_replace('-', '_', $innerStr);
+    $innerStr = \mb_ereg_replace_callback(
+        '([\d|A-Z])',
+        function ($matches) {
+            $match = $matches[1];
+            $matchInt = (int)$match;
+            if ("$matchInt" === $match) {
+                return '_' . $match . '_';
+            }
+            return '_' . libstr_toLowerCase($match);
+        },
+        $innerStr
+    );
+
+    $innerStr = \mb_ereg_replace('\s+', '_', $innerStr);
+    $innerStr = \mb_ereg_replace('^\s+|\s+$', '', $innerStr);
+    $innerStr = \mb_ereg_replace('_+', '_', $innerStr);
+
+    $innerStr = libstr_trim($innerStr, '_');
+    $innerStr = libstr_toLowerCase($innerStr);
+
+    return $innerStr;
+}
+
+/** @noinspection MoreThanThreeArgumentsInspection */
+/**
+ * Inserts given $substr $times times into the original $str after
+ * the first occurrence of $needle.
+ *
+ * @param  string $str
+ * @param  string $needle
+ * @param  string $substr
+ * @param  int    $times
+ * @return string
+ */
+function libstr_afterFirst(string $str, string $needle, string $substr, int $times = 1): string
+{
+    $innerStr = $str;
+    $idx = libstr_indexOf($innerStr, $needle);
+    $needleLen = \mb_strlen($needle);
+    $idxEnd = $idx + $needleLen;
+    $innerSubstr = libstr_repeat($substr, $times);
+
+    return libstr_insert($innerStr, $innerSubstr, $idxEnd);
+}
+
+/** @noinspection MoreThanThreeArgumentsInspection */
+/**
+ * Inserts given $substr $times times into the original $str before
+ * the first occurrence of $needle.
+ *
+ * @param  string $str
+ * @param  string $needle
+ * @param  string $substr
+ * @param  int    $times
+ * @return string
+ */
+function libstr_beforeFirst(string $str, string $needle, string $substr, int $times = 1): string
+{
+    $innerStr = $str;
+    $idx = libstr_indexOf($innerStr, $needle);
+    $innerSubstr = libstr_repeat($substr, $times);
+
+    return libstr_insert($innerStr, $innerSubstr, $idx);
+}
+
+/** @noinspection MoreThanThreeArgumentsInspection */
+/**
+ * Inserts given $substr $times times into the original $str after
+ * the last occurrence of $needle.
+ *
+ * @param  string $str
+ * @param  string $needle
+ * @param  string $substr
+ * @param  int    $times
+ * @return string
+ */
+function libstr_afterLast(string $str, string $needle, string $substr, int $times = 1): string
+{
+    $innerStr = $str;
+    $idx = libstr_indexOfLast($innerStr, $needle);
+    $needleLen = \mb_strlen($needle);
+    $idxEnd = $idx + $needleLen;
+    $innerSubstr = libstr_repeat($substr, $times);
+
+    return libstr_insert($innerStr, $innerSubstr, $idxEnd);
+}
+
+/** @noinspection MoreThanThreeArgumentsInspection */
+/**
+ * Inserts given $substr $times times into the original $str before
+ * the last occurrence of $needle.
+ *
+ * @param  string $str
+ * @param  string $needle
+ * @param  string $substr
+ * @param  int    $times
+ * @return string
+ */
+function libstr_beforeLast(string $str, string $needle, string $substr, int $times = 1): string
+{
+    $innerStr = $str;
+    $idx = libstr_indexOfLast($innerStr, $needle);
+    $innerSubstr = libstr_repeat($substr, $times);
+
+    return libstr_insert($innerStr, $innerSubstr, $idx);
+}

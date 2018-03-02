@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Str;
 
+use function Str\Lib\libstr_afterFirst;
+use function Str\Lib\libstr_afterLast;
 use function Str\Lib\libstr_at;
 use function Str\Lib\libstr_append;
 use function Str\Lib\libstr_applyPadding;
+use function Str\Lib\libstr_beforeFirst;
+use function Str\Lib\libstr_beforeLast;
 use function Str\Lib\libstr_between;
 use function Str\Lib\libstr_camelize;
 use function Str\Lib\libstr_chars;
@@ -42,6 +46,9 @@ use function Str\Lib\libstr_isUpperCase;
 use function Str\Lib\libstr_isUUIDv4;
 use function Str\Lib\libstr_langSpecificCharsArray;
 use function Str\Lib\libstr_last;
+use function Str\Lib\libstr_move;
+use function Str\Lib\libstr_overwrite;
+use function Str\Lib\libstr_snakeize;
 use function Str\Lib\libstr_split;
 use function Str\Lib\libstr_length;
 use function Str\Lib\libstr_lines;
@@ -1217,6 +1224,106 @@ class Str
     public function underscored(): Str
     {
         $this->str = libstr_underscored($this->str);
+        return $this;
+    }
+
+    /**
+     * Move substring of desired $length to $destination index of the original $str.
+     * In case $destination is less than $length returns $str untouched.
+     *
+     * @param  int $start
+     * @param  int $length
+     * @param  int $destination
+     * @return Str
+     */
+    public function move(int $start, int $length, int $destination): Str
+    {
+        $this->str = libstr_move($this->str, $start, $length, $destination);
+        return $this;
+    }
+
+    /**
+     * Replaces substring in the original $str of $length with given $substr.
+     *
+     * @param  int    $start
+     * @param  int    $length
+     * @param  string $substr
+     * @return Str
+     */
+    public function overwrite(int $start, int $length, string $substr): Str
+    {
+        $this->str = libstr_overwrite($this->str, $start, $length, $substr);
+        return $this;
+    }
+
+    /**
+     * Returns a snake_case version of the string.
+     *
+     * @return Str
+     */
+    public function snakeize(): Str
+    {
+        $this->str = libstr_snakeize($this->str);
+        return $this;
+    }
+
+    /**
+     * Inserts given $substr $times times into the original $str after
+     * the first occurrence of $needle.
+     *
+     * @param  string $needle
+     * @param  string $substr
+     * @param  int    $times
+     * @return Str
+     */
+    public function afterFirst(string $needle, string $substr, int $times = 1): Str
+    {
+        $this->str = libstr_afterFirst($this->str, $needle, $substr, $times);
+        return $this;
+    }
+
+    /**
+     * Inserts given $substr $times times into the original $str before
+     * the first occurrence of $needle.
+     *
+     * @param  string $needle
+     * @param  string $substr
+     * @param  int    $times
+     * @return Str
+     */
+    public function beforeFirst(string $needle, string $substr, int $times = 1): Str
+    {
+        $this->str = libstr_beforeFirst($this->str, $needle, $substr, $times);
+        return $this;
+    }
+
+    /**
+     * Inserts given $substr $times times into the original $str after
+     * the last occurrence of $needle.
+     *
+     * @param  string $needle
+     * @param  string $substr
+     * @param  int    $times
+     * @return Str
+     */
+    public function afterLast(string $needle, string $substr, int $times = 1): Str
+    {
+        $this->str = libstr_afterLast($this->str, $needle, $substr, $times);
+        return $this;
+    }
+
+    /**
+     * Inserts given $substr $times times into the original $str before
+     * the last occurrence of $needle.
+     *
+     * @param  string $needle
+     * @param  string $substr
+     * @param  int $times
+     * @return Str
+     */
+    public function beforeLast(string $needle, string $substr, int $times = 1): Str
+    {
+        $this->str = libstr_beforeLast($this->str, $needle, $substr, $times);
         return $this;
     }
 }
