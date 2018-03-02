@@ -42,6 +42,7 @@ use function Str\Lib\libstr_isUpperCase;
 use function Str\Lib\libstr_isUUIDv4;
 use function Str\Lib\libstr_langSpecificCharsArray;
 use function Str\Lib\libstr_last;
+use function Str\Lib\libstr_move;
 use function Str\Lib\libstr_split;
 use function Str\Lib\libstr_length;
 use function Str\Lib\libstr_lines;
@@ -1217,6 +1218,21 @@ class Str
     public function underscored(): Str
     {
         $this->str = libstr_underscored($this->str);
+        return $this;
+    }
+
+    /**
+     * Move substring of desired $length to $destination index of the original $str.
+     * In case $destination is less than $length returns $str untouched.
+     *
+     * @param  int $start
+     * @param  int $length
+     * @param  int $destination
+     * @return Str
+     */
+    public function move(int $start, int $length, int $destination): Str
+    {
+        $this->str = libstr_move($this->str, $start, $length, $destination);
         return $this;
     }
 }

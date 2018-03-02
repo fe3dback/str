@@ -9,6 +9,7 @@ use function Str\Lib\libstr_ensureRight;
 use function Str\Lib\libstr_hasPrefix;
 use function Str\Lib\libstr_hasSuffix;
 use function Str\Lib\libstr_contains;
+use function Str\Lib\libstr_move;
 use function Str\Lib\libstr_replace;
 use function Str\Lib\libstr_toLowerCase;
 use function Str\Lib\libstr_toUpperCase;
@@ -2514,6 +2515,27 @@ class StrMBTest extends TestCase
             ['test_σase', 'test Σase'],
             ['στανιλ_case', 'Στανιλ case'],
             ['σash_case', 'Σash  Case']
+        ];
+    }
+
+    /**
+     * @dataProvider moveProvider()
+     * @param $expected
+     * @param $str
+     * @param $start
+     * @param $length
+     * @param $destination
+     */
+    public function testMove($expected, $str, $start, $length, $destination)
+    {
+        $this->assertEquals($expected, libstr_move($str, $start, $length, $destination), $str);
+    }
+    public function moveProvider()
+    {
+        return [
+            ['stte_case', 'test_case', 0, 2, 4],
+            ['Στανιλ case', 'Στανιλ case', 0, 4, 1],
+            ['ιλΣταν case', 'Στανιλ case', 0, 4, 6],
         ];
     }
 }

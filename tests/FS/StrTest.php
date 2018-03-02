@@ -127,6 +127,7 @@ class StrTest extends TestCase
         $s = new Str('str with     whitespace ');
         $this->assertEquals('strwithwhitespace', $s->stripWhitespace());
         $this->assertEquals('Strwithwhitespace', $s->upperCamelize());
+        $this->assertEquals('rwStithwhitespace', $s->move(0, 2, 4));
 
         $s = new Str('I see…');
         $this->assertEquals('I see...', $s->tidy());

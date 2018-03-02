@@ -1836,3 +1836,27 @@ function libstr_underscored(string $str): string
 
     return libstr_delimit($innerStr, '_');
 }
+
+/** @noinspection MoreThanThreeArgumentsInspection */
+/**
+ * Move substring of desired $length to $destination index of the original $str.
+ * In case $destination is less than $length returns $str untouched.
+ *
+ * @param  string $str
+ * @param  int    $start
+ * @param  int    $length
+ * @param  int    $destination
+ * @return string
+ */
+function libstr_move(string $str, int $start, int $length, int $destination): string
+{
+    $innerStr = $str;
+
+    if ($destination <= $length) { return $innerStr; }
+
+    $substr = libstr_substr($innerStr, $start, $length);
+    $result = libstr_insert($innerStr, $substr, $destination);
+    $result = libstr_replace($result, $substr, '', 1);
+
+    return $result;
+}
