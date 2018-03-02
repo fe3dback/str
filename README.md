@@ -126,9 +126,9 @@ composer require str/str
 - [x] underscored
 - [x] move
 - [x] overwrite
+- [x] snakeize
 
 ### Todo New
-- [ ] snakeize
 - [ ] appendUniqueIdentifier
 - [ ] afterFirst
 - [ ] beforeFirst

@@ -12,6 +12,7 @@ use function Str\Lib\libstr_contains;
 use function Str\Lib\libstr_move;
 use function Str\Lib\libstr_overwrite;
 use function Str\Lib\libstr_replace;
+use function Str\Lib\libstr_snakeize;
 use function Str\Lib\libstr_toLowerCase;
 use function Str\Lib\libstr_toUpperCase;
 use function Str\Lib\libstr_trim;
@@ -2558,6 +2559,39 @@ class StrMBTest extends TestCase
             ['overwrittenst_case', 'test_case', 0, 2, 'overwritten'],
             ['oh ιλ case', 'Στανιλ case', 0, 4, 'oh '],
             ['Στανλ case', 'Στανιλ case', 4, 1, ''],
+        ];
+    }
+
+    /**
+     * @dataProvider snakeizeProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testSnakeize($expected, $str)
+    {
+        $this->assertEquals($expected, libstr_snakeize($str), $str);
+    }
+    public function snakeizeProvider()
+    {
+        return [
+            ['camel_case', 'CamelCase'],
+            ['camel_case', 'Camel-Case'],
+            ['camel_case', 'camel case'],
+            ['camel_case', 'camel -case'],
+            ['camel_case', 'camel - case'],
+            ['camel_case', 'camel_case'],
+            ['camel_c_test', 'camel c test'],
+            ['string_with_1_number', 'string_with1number'],
+            ['string_with_2_2_numbers', 'string-with-2-2 numbers'],
+            ['data_rate', 'data_rate'],
+            ['background_color', 'background-color'],
+            ['yes_we_can', 'yes_we_can'],
+            ['moz_something', '-moz-something'],
+            ['car_speed', '_car_speed_'],
+            ['1_camel_2_case', '1camel2case'],
+            ['camel_σase', 'camel σase'],
+            ['στανιλ_case', 'Στανιλ case'],
+            ['σamel_case', 'σamel  Case']
         ];
     }
 }

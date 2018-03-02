@@ -1880,3 +1880,38 @@ function libstr_overwrite(string $str, int $start, int $length, string $substr):
 
     return libstr_replace($innerStr, $sub, $substr, 1);
 }
+
+/**
+ * Returns a snake_case version of the string.
+ *
+ * @param  string $str
+ * @return string
+ */
+function libstr_snakeize(string $str): string
+{
+    $innerStr = $str;
+
+    $innerStr = \mb_ereg_replace('-', '_', $innerStr);
+    $innerStr = \mb_ereg_replace_callback(
+        '([\d|A-Z])',
+        function ($matches) {
+            $match = $matches[1];
+            $matchInt = (int)$match;
+            if ("$matchInt" === $match) {
+                return '_' . $match . '_';
+            }
+            return '_' . libstr_toLowerCase($match);
+        },
+        $innerStr
+    );
+
+    $innerStr = \mb_ereg_replace('\s+', '_', $innerStr);
+    $innerStr = \mb_ereg_replace('^\s+|\s+$', '', $innerStr);
+    $innerStr = \mb_ereg_replace('_+', '_', $innerStr);
+
+    $innerStr = libstr_trim($innerStr, '_');
+    $innerStr = libstr_trim($innerStr);
+    $innerStr = libstr_toLowerCase($innerStr);
+
+    return $innerStr;
+}

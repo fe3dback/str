@@ -44,6 +44,7 @@ use function Str\Lib\libstr_langSpecificCharsArray;
 use function Str\Lib\libstr_last;
 use function Str\Lib\libstr_move;
 use function Str\Lib\libstr_overwrite;
+use function Str\Lib\libstr_snakeize;
 use function Str\Lib\libstr_split;
 use function Str\Lib\libstr_length;
 use function Str\Lib\libstr_lines;
@@ -1248,6 +1249,17 @@ class Str
     public function overwrite(int $start, int $length, string $substr): Str
     {
         $this->str = libstr_overwrite($this->str, $start, $length, $substr);
+        return $this;
+    }
+
+    /**
+     * Returns a snake_case version of the string.
+     *
+     * @return Str
+     */
+    public function snakeize(): Str
+    {
+        $this->str = libstr_snakeize($this->str);
         return $this;
     }
 }
