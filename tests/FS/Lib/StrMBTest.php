@@ -2595,7 +2595,8 @@ class StrMBTest extends TestCase
             ['1_camel_2_case', '1camel2case'],
             ['camel_σase', 'camel σase'],
             ['στανιλ_case', 'Στανιλ case'],
-            ['σamel_case', 'σamel  Case']
+            ['σamel_case', 'σamel  Case'],
+            ['serve_http_or_another_abbreviation', 'Serve HTTP or another ABBREVIATION']
         ];
     }
 

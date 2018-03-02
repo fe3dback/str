@@ -1884,7 +1884,7 @@ function libstr_overwrite(string $str, int $start, int $length, string $substr):
 /**
  * Returns a snake_case version of the string.
  *
- * @todo refactoring + abbreviations support
+ * @todo refactoring
  * @param  string $str
  * @return string
  */
@@ -1892,7 +1892,15 @@ function libstr_snakeize(string $str): string
 {
     $innerStr = $str;
 
+    $innerStr = \mb_ereg_replace('::', '/', $innerStr);
+    $innerStr = \mb_ereg_replace('([A-Z]+)([A-Z][a-z])', '\1_\2', $innerStr);
+    $innerStr = \mb_ereg_replace('([a-z\d])([A-Z])', '\1_\2', $innerStr);
+    $innerStr = \mb_ereg_replace('\s+', '_', $innerStr);
+    $innerStr = \mb_ereg_replace('\s+', '_', $innerStr);
+    $innerStr = \mb_ereg_replace('^\s+|\s+$', '', $innerStr);
     $innerStr = \mb_ereg_replace('-', '_', $innerStr);
+    $innerStr = libstr_toLowerCase($innerStr);
+
     $innerStr = \mb_ereg_replace_callback(
         '([\d|A-Z])',
         function ($matches) {
@@ -1901,17 +1909,12 @@ function libstr_snakeize(string $str): string
             if ("$matchInt" === $match) {
                 return '_' . $match . '_';
             }
-            return '_' . libstr_toLowerCase($match);
         },
         $innerStr
     );
 
-    $innerStr = \mb_ereg_replace('\s+', '_', $innerStr);
-    $innerStr = \mb_ereg_replace('^\s+|\s+$', '', $innerStr);
     $innerStr = \mb_ereg_replace('_+', '_', $innerStr);
-
     $innerStr = libstr_trim($innerStr, '_');
-    $innerStr = libstr_toLowerCase($innerStr);
 
     return $innerStr;
 }
