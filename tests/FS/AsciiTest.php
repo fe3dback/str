@@ -15,6 +15,8 @@ class AsciiTest extends TestCase
     public function testCheckWithRegex($expected, $str)
     {
         $this->assertEquals($expected, Ascii::checkWithRegex($str));
+
+
     }
 
     public function CheckWithRegexProvider()
