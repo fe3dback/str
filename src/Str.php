@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Str;
 
+use function Str\Lib\libstr_afterFirst;
+use function Str\Lib\libstr_afterLast;
 use function Str\Lib\libstr_at;
 use function Str\Lib\libstr_append;
 use function Str\Lib\libstr_applyPadding;
+use function Str\Lib\libstr_beforeFirst;
+use function Str\Lib\libstr_beforeLast;
 use function Str\Lib\libstr_between;
 use function Str\Lib\libstr_camelize;
 use function Str\Lib\libstr_chars;
@@ -1260,6 +1264,66 @@ class Str
     public function snakeize(): Str
     {
         $this->str = libstr_snakeize($this->str);
+        return $this;
+    }
+
+    /**
+     * Inserts given $substr $times times into the original $str after
+     * the first occurrence of $needle.
+     *
+     * @param  string $needle
+     * @param  string $substr
+     * @param  int    $times
+     * @return Str
+     */
+    public function afterFirst(string $needle, string $substr, int $times = 1): Str
+    {
+        $this->str = libstr_afterFirst($this->str, $needle, $substr, $times);
+        return $this;
+    }
+
+    /**
+     * Inserts given $substr $times times into the original $str before
+     * the first occurrence of $needle.
+     *
+     * @param  string $needle
+     * @param  string $substr
+     * @param  int    $times
+     * @return Str
+     */
+    public function beforeFirst(string $needle, string $substr, int $times = 1): Str
+    {
+        $this->str = libstr_beforeFirst($this->str, $needle, $substr, $times);
+        return $this;
+    }
+
+    /**
+     * Inserts given $substr $times times into the original $str after
+     * the last occurrence of $needle.
+     *
+     * @param  string $needle
+     * @param  string $substr
+     * @param  int    $times
+     * @return Str
+     */
+    public function afterLast(string $needle, string $substr, int $times = 1): Str
+    {
+        $this->str = libstr_afterLast($this->str, $needle, $substr, $times);
+        return $this;
+    }
+
+    /**
+     * Inserts given $substr $times times into the original $str before
+     * the last occurrence of $needle.
+     *
+     * @param  string $needle
+     * @param  string $substr
+     * @param  int $times
+     * @return Str
+     */
+    public function beforeLast(string $needle, string $substr, int $times = 1): Str
+    {
+        $this->str = libstr_beforeLast($this->str, $needle, $substr, $times);
         return $this;
     }
 }

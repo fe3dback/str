@@ -3,6 +3,10 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
+use function Str\Lib\libstr_afterFirst;
+use function Str\Lib\libstr_afterLast;
+use function Str\Lib\libstr_beforeFirst;
+use function Str\Lib\libstr_beforeLast;
 use function Str\Lib\libstr_matchesPattern;
 use function Str\Lib\libstr_ensureLeft;
 use function Str\Lib\libstr_ensureRight;
@@ -2592,6 +2596,90 @@ class StrMBTest extends TestCase
             ['camel_σase', 'camel σase'],
             ['στανιλ_case', 'Στανιλ case'],
             ['σamel_case', 'σamel  Case']
+        ];
+    }
+
+    /**
+     * @dataProvider afterFirstProvider()
+     * @param $expected
+     * @param $str
+     * @param $needle
+     * @param $substr
+     * @param int $times
+     */
+    public function testAfterFirst($expected, $str, $needle, $substr, $times = 1)
+    {
+        $this->assertEquals($expected, libstr_afterFirst($str, $needle, $substr, $times), $str);
+    }
+    public function afterFirstProvider()
+    {
+        return [
+            ['CameHERE!HERE!lCase', 'CamelCase', 'me', 'HERE!', 2],
+            ['Camel-Case', 'Camel-Case', 'e', 'not gonna happen', 0],
+            ['Στανν_νιλ case', 'Στανιλ case', 'ν', 'ν_ν']
+        ];
+    }
+
+    /**
+     * @dataProvider beforeFirstProvider()
+     * @param $expected
+     * @param $str
+     * @param $needle
+     * @param $substr
+     * @param int $times
+     */
+    public function testBeforeFirst($expected, $str, $needle, $substr, $times = 1)
+    {
+        $this->assertEquals($expected, libstr_beforeFirst($str, $needle, $substr, $times), $str);
+    }
+    public function beforeFirstProvider()
+    {
+        return [
+            ['CaHERE!HERE!melCase', 'CamelCase', 'me', 'HERE!', 2],
+            ['Camel-Case', 'Camel-Case', 'e', 'not gonna happen', 0],
+            ['Σταν_ννιλ case', 'Στανιλ case', 'ν', 'ν_ν']
+        ];
+    }
+
+    /**
+     * @dataProvider afterLastProvider()
+     * @param $expected
+     * @param $str
+     * @param $needle
+     * @param $substr
+     * @param int $times
+     */
+    public function testAfterLast($expected, $str, $needle, $substr, $times = 1)
+    {
+        $this->assertEquals($expected, libstr_afterLast($str, $needle, $substr, $times), $str);
+    }
+    public function afterLastProvider()
+    {
+        return [
+            ['CamelCaHERE!HERE!se', 'CamelCase', 'a', 'HERE!', 2],
+            ['Camel-Case', 'Camel-Case', 'e', 'not gonna happen', 0],
+            ['Στανιλν_ν case', 'Στανιλ case', 'λ', 'ν_ν']
+        ];
+    }
+
+    /**
+     * @dataProvider beforeLastProvider()
+     * @param $expected
+     * @param $str
+     * @param $needle
+     * @param $substr
+     * @param int $times
+     */
+    public function testBeforeLastFirst($expected, $str, $needle, $substr, $times = 1)
+    {
+        $this->assertEquals($expected, libstr_beforeLast($str, $needle, $substr, $times), $str);
+    }
+    public function beforeLastProvider()
+    {
+        return [
+            ['CamelCHERE!HERE!ase', 'CamelCase', 'a', 'HERE!', 2],
+            ['Camel-Case', 'Camel-Case', 'e', 'not gonna happen', 0],
+            ['Στανιν_νλ case', 'Στανιλ case', 'λ', 'ν_ν']
         ];
     }
 }

@@ -1884,6 +1884,7 @@ function libstr_overwrite(string $str, int $start, int $length, string $substr):
 /**
  * Returns a snake_case version of the string.
  *
+ * @todo refactoring + abbreviations support
  * @param  string $str
  * @return string
  */
@@ -1910,8 +1911,91 @@ function libstr_snakeize(string $str): string
     $innerStr = \mb_ereg_replace('_+', '_', $innerStr);
 
     $innerStr = libstr_trim($innerStr, '_');
-    $innerStr = libstr_trim($innerStr);
     $innerStr = libstr_toLowerCase($innerStr);
 
     return $innerStr;
+}
+
+/** @noinspection MoreThanThreeArgumentsInspection */
+/**
+ * Inserts given $substr $times times into the original $str after
+ * the first occurrence of $needle.
+ *
+ * @param  string $str
+ * @param  string $needle
+ * @param  string $substr
+ * @param  int    $times
+ * @return string
+ */
+function libstr_afterFirst(string $str, string $needle, string $substr, int $times = 1): string
+{
+    $innerStr = $str;
+    $idx = libstr_indexOf($innerStr, $needle);
+    $needleLen = \mb_strlen($needle);
+    $idxEnd = $idx + $needleLen;
+    $innerSubstr = libstr_repeat($substr, $times);
+
+    return libstr_insert($innerStr, $innerSubstr, $idxEnd);
+}
+
+/** @noinspection MoreThanThreeArgumentsInspection */
+/**
+ * Inserts given $substr $times times into the original $str before
+ * the first occurrence of $needle.
+ *
+ * @param  string $str
+ * @param  string $needle
+ * @param  string $substr
+ * @param  int    $times
+ * @return string
+ */
+function libstr_beforeFirst(string $str, string $needle, string $substr, int $times = 1): string
+{
+    $innerStr = $str;
+    $idx = libstr_indexOf($innerStr, $needle);
+    $innerSubstr = libstr_repeat($substr, $times);
+
+    return libstr_insert($innerStr, $innerSubstr, $idx);
+}
+
+/** @noinspection MoreThanThreeArgumentsInspection */
+/**
+ * Inserts given $substr $times times into the original $str after
+ * the last occurrence of $needle.
+ *
+ * @param  string $str
+ * @param  string $needle
+ * @param  string $substr
+ * @param  int    $times
+ * @return string
+ */
+function libstr_afterLast(string $str, string $needle, string $substr, int $times = 1): string
+{
+    $innerStr = $str;
+    $idx = libstr_indexOfLast($innerStr, $needle);
+    $needleLen = \mb_strlen($needle);
+    $idxEnd = $idx + $needleLen;
+    $innerSubstr = libstr_repeat($substr, $times);
+
+    return libstr_insert($innerStr, $innerSubstr, $idxEnd);
+}
+
+/** @noinspection MoreThanThreeArgumentsInspection */
+/**
+ * Inserts given $substr $times times into the original $str before
+ * the last occurrence of $needle.
+ *
+ * @param  string $str
+ * @param  string $needle
+ * @param  string $substr
+ * @param  int    $times
+ * @return string
+ */
+function libstr_beforeLast(string $str, string $needle, string $substr, int $times = 1): string
+{
+    $innerStr = $str;
+    $idx = libstr_indexOfLast($innerStr, $needle);
+    $innerSubstr = libstr_repeat($substr, $times);
+
+    return libstr_insert($innerStr, $innerSubstr, $idx);
 }

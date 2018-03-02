@@ -129,6 +129,10 @@ class StrTest extends TestCase
         $this->assertEquals('Strwithwhitespace', $s->upperCamelize());
         $this->assertEquals('rwStithwhitespace', $s->move(0, 2, 4));
         $this->assertEquals('rw_stithwhitespace', $s->snakeize());
+        $this->assertEquals('rw_stit_here!_hwhitespace', $s->afterFirst('it', '_here!_'));
+        $this->assertEquals('rw_stit_h_here!_ere!_hwhitespace', $s->beforeFirst('e', '_here!_'));
+        $this->assertEquals('rw_stit_h_here!_ere!_hwhit_ttt!_espace', $s->afterLast('t', '_ttt!_'));
+        $this->assertEquals('rw_stit_h_here!_ere!_hwhit_tt_morett!_t!_espace', $s->beforeLast('t', '_morett!_'));
 
         $s = new Str('I see…');
         $this->assertEquals('I see...', $s->tidy());
