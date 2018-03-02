@@ -24,7 +24,7 @@ $send($s->getString()); // same
 ```
 
 A fast string manipulation library with multi-byte support. 
-Based on "Stringy" library, with focus on speed.
+Inspired by the ["Stringy"](https://github.com/danielstjules/Stringy) library, with focus on speed.
 
 Lib uses php7 features and does not throw any 
 exceptions (because all input parameters are 
@@ -124,6 +124,8 @@ composer require str/str
 - [x] toTabs
 - [x] toTitleCase
 - [x] underscored
+
+### New Features
 - [x] move
 - [x] overwrite
 - [x] snakeize
