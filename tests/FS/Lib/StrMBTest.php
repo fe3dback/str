@@ -8,9 +8,11 @@ use function Str\Lib\libstr_afterLast;
 use function Str\Lib\libstr_appendUniqueIdentifier;
 use function Str\Lib\libstr_beforeFirst;
 use function Str\Lib\libstr_beforeLast;
+use function Str\Lib\libstr_chop;
 use function Str\Lib\libstr_isEmail;
 use function Str\Lib\libstr_isIpV4;
 use function Str\Lib\libstr_isIpV6;
+use function Str\Lib\libstr_join;
 use function Str\Lib\libstr_matchesPattern;
 use function Str\Lib\libstr_ensureLeft;
 use function Str\Lib\libstr_ensureRight;
@@ -2846,6 +2848,47 @@ class StrMBTest extends TestCase
         return [
             ['Hey, there are your quoted words.', '"Hey," "there" "are" "your" "quoted" "words."'],
             ['Hey, there are your quoted words.', '%$Hey,%$ %$there%$ %$are%$ %$your%$ %$quoted%$ %$words.%$', '%$']
+        ];
+    }
+
+    /**
+     * @dataProvider chopProvider()
+     * @param $expected
+     * @param $str
+     * @param $step
+     */
+    public function testChop($expected, $str, $step = 1)
+    {
+        $this->assertEquals($expected, libstr_chop($str, $step), $str);
+    }
+    public function chopProvider()
+    {
+        return [
+            [[], ''],
+            [[], '  ', -9],
+            [['foo', 'bar'], 'foobar', 3],
+            [['foob', 'ar'], 'foobar', 4],
+            [['fòô', ' bà', 'ř'], 'fòô bàř', 3]
+        ];
+    }
+
+    /**
+     * @dataProvider joinProvider()
+     * @param $expected
+     * @param $str
+     * @param $separator
+     * @param array $otherStrings
+     */
+    public function testJoin($expected, $str, $separator, $otherStrings = [])
+    {
+        $this->assertEquals($expected, libstr_join($str, $separator, $otherStrings), $str);
+    }
+    public function joinProvider()
+    {
+        return [
+            ['', '', '$$', ['']],
+            ['  %sdlkfj%sdlfkjas', '  ', '%', ['sdlkfj', 'sdlfkjas']],
+            ['foobar', 'foobar', '$$']
         ];
     }
 }

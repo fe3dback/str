@@ -141,15 +141,14 @@ composer require str/str
 - [x] quote
 - [x] unquote
 - [x] words
+- [x] chop
+- [x] join
 
 ### Todo New
-- [ ] ord
 - [ ] formatNumber
 - [ ] toNumber
 - [ ] toInt
 - [ ] toFloat
-- [ ] join
-- [ ] chop
 - [ ] pop
 - [ ] shift
 - [ ] shiftReversed

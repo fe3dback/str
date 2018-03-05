@@ -2098,7 +2098,7 @@ function libstr_appendUniqueIdentifier(string $str, int $size = 4, int $sizeMax 
 }
 
 /**
- * Splits whitespace, returning an array of strings corresponding to the lines in the string.
+ * Splits whitespace, returning an array of strings corresponding to the words in the string.
  *
  * @param  string $str
  * @return array of strings
@@ -2150,4 +2150,55 @@ function libstr_unquote(string $str, string $quote = '"'): string
     }
 
     return \implode(' ', $result);
+}
+
+/**
+ * Cuts the given $str in pieces of $step size.
+ *
+ * @param  string $str
+ * @param  int    $step
+ * @return array
+ */
+function libstr_chop(string $str, int $step = 0): array
+{
+    $innerStr = $str;
+    $result = [];
+    $len = \mb_strlen($innerStr);
+
+    if ($innerStr === '' || $step <= 0) { return []; }
+
+    if ($step >= $len) { return [$innerStr]; }
+
+    $startPos = 0;
+
+    for ($i = 0; $i < $len; $i+=$step) {
+        $result[] = libstr_substr($innerStr, $startPos, $step);
+        $startPos += $step;
+    }
+
+    return $result;
+}
+
+/**
+ * Joins the original string with any number of other strings.
+ *
+ * @param string $str
+ * @param string $separator
+ * @param array  $otherStrings
+ *
+ * @return string
+ */
+function libstr_join(string $str, string $separator, array $otherStrings = []): string
+{
+    $innerStr = $str;
+
+    if (empty($otherStrings)) { return $innerStr; }
+
+    foreach ($otherStrings as $otherString) {
+        if ($otherString) {
+            $innerStr .= $separator . $otherString;
+        }
+    }
+
+    return $innerStr;
 }

@@ -16,6 +16,7 @@ use function Str\Lib\libstr_between;
 use function Str\Lib\libstr_camelize;
 use function Str\Lib\libstr_chars;
 use function Str\Lib\libstr_charsArray;
+use function Str\Lib\libstr_chop;
 use function Str\Lib\libstr_collapseWhitespace;
 use function Str\Lib\libstr_containsAll;
 use function Str\Lib\libstr_containsAny;
@@ -48,6 +49,7 @@ use function Str\Lib\libstr_isLowerCase;
 use function Str\Lib\libstr_isSerialized;
 use function Str\Lib\libstr_isUpperCase;
 use function Str\Lib\libstr_isUUIDv4;
+use function Str\Lib\libstr_join;
 use function Str\Lib\libstr_langSpecificCharsArray;
 use function Str\Lib\libstr_last;
 use function Str\Lib\libstr_move;
@@ -1235,7 +1237,7 @@ class Str
     }
 
     /**
-     * Move substring of desired $length to $destination index of the original $str.
+     * Move substring of desired $length to $destination index of the original string.
      * In case $destination is less than $length returns $str untouched.
      *
      * @param  int $start
@@ -1250,7 +1252,7 @@ class Str
     }
 
     /**
-     * Replaces substring in the original $str of $length with given $substr.
+     * Replaces substring in the original string of $length with given $substr.
      *
      * @param  int    $start
      * @param  int    $length
@@ -1275,7 +1277,7 @@ class Str
     }
 
     /**
-     * Inserts given $substr $times times into the original $str after
+     * Inserts given $substr $times times into the original string after
      * the first occurrence of $needle.
      *
      * @param  string $needle
@@ -1290,7 +1292,7 @@ class Str
     }
 
     /**
-     * Inserts given $substr $times times into the original $str before
+     * Inserts given $substr $times times into the original string before
      * the first occurrence of $needle.
      *
      * @param  string $needle
@@ -1305,7 +1307,7 @@ class Str
     }
 
     /**
-     * Inserts given $substr $times times into the original $str after
+     * Inserts given $substr $times times into the original string after
      * the last occurrence of $needle.
      *
      * @param  string $needle
@@ -1320,7 +1322,7 @@ class Str
     }
 
     /**
-     * Inserts given $substr $times times into the original $str before
+     * Inserts given $substr $times times into the original string before
      * the last occurrence of $needle.
      *
      * @param  string $needle
@@ -1335,7 +1337,7 @@ class Str
     }
 
     /**
-     * Splits the given $str in pieces by '@' delimiter and returns
+     * Splits the original string in pieces by '@' delimiter and returns
      * true in case the resulting array consists of 2 parts.
      *
      * @return bool
@@ -1382,7 +1384,7 @@ class Str
 
     /**
      * Appends a random string consisting of $possibleChars, if specified, of given $size or
-     * random length between $size and $sizeMax to the original $str.
+     * random length between $size and $sizeMax to the original string.
      *
      * @param  int    $size          The desired length of the string. Defaults to 4
      * @param  string $possibleChars If given, specifies allowed characters to make the string of
@@ -1397,7 +1399,7 @@ class Str
     }
 
     /**
-     * Splits on whitespace, returning an array of strings corresponding to the lines in the string.
+     * Splits on whitespace, returning an array of strings corresponding to the words in the string.
      *
      * @return array of strings
      */
@@ -1407,7 +1409,7 @@ class Str
     }
 
     /**
-     * Wraps each word in the given $str with specified $quote.
+     * Wraps each word in the original string with specified $quote.
      *
      * @param  string $quote Defaults to ".
      * @return Str
@@ -1419,7 +1421,7 @@ class Str
     }
 
     /**
-     * Unwraps each word in the given $str, deleting the specified $quote.
+     * Unwraps each word in the original string, deleting the specified $quote.
      *
      * @param  string $quote Defaults to ".
      * @return Str
@@ -1427,6 +1429,30 @@ class Str
     public function unquote(string $quote = '"'): Str
     {
         $this->str = libstr_unquote($this->str, $quote);
+        return $this;
+    }
+
+    /**
+     * Cuts the original string in pieces of $step size.
+     *
+     * @param int $step
+     * @return array
+     */
+    public function chop(int $step): array
+    {
+        return libstr_chop($this->str, $step);
+    }
+
+    /**
+     * Joins the original string with any number of other strings.
+     *
+     * @param  string $separator
+     * @param  array  $otherStrings
+     * @return Str
+     */
+    public function join(string $separator, array $otherStrings = []): Str
+    {
+        $this->str = libstr_join($this->str, $separator, $otherStrings);
         return $this;
     }
 }
