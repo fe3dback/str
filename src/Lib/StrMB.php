@@ -2180,11 +2180,11 @@ function libstr_chop(string $str, int $step = 0): array
 }
 
 /**
- * Joins the original string with any number of other strings.
+ * Joins the original string with an array of other strings.
  *
  * @param string $str
- * @param string $separator
- * @param array  $otherStrings
+ * @param  $separator
+ * @param   $otherStrings
  *
  * @return string
  */
@@ -2201,4 +2201,89 @@ function libstr_join(string $str, string $separator, array $otherStrings = []): 
     }
 
     return $innerStr;
+}
+
+/**
+ * Returns the substring of the original string from beginning to
+ * the first occurrence of $delimiter.
+ *
+ * @param  string $str
+ * @param  string $delimiter
+ *
+ * @return string
+ */
+function libstr_shift(string $str, string $delimiter): string
+{
+    if (!$str || !$delimiter) { return ''; }
+
+    $innerStr = $str;
+    $idx = libstr_indexOf($innerStr, $delimiter);
+
+    if ($idx === -1) { return $innerStr; }
+
+    return libstr_substr($innerStr, 0, $idx);
+}
+
+/**
+ * Returns the substring of the original string from the first
+ * occurrence of $delimiter to the end.
+ *
+ * @param  string $str
+ * @param  string $delimiter
+ *
+ * @return string
+ */
+function libstr_shiftReversed(string $str, string $delimiter): string
+{
+    if (!$str || !$delimiter) { return ''; }
+
+    $innerStr = $str;
+    $idx = libstr_indexOf($innerStr, $delimiter) + 1;
+
+    if ($idx === -1) { return $innerStr; }
+
+    return libstr_substr($innerStr, $idx);
+}
+
+/**
+ * Returns the substring of the original string from the last
+ * occurrence of $delimiter to the end.
+ *
+ * @param  string $str
+ * @param  string $delimiter
+ *
+ * @return string
+ */
+function libstr_pop(string $str, string $delimiter): string
+{
+    if (!$str || !$delimiter) { return ''; }
+
+    $innerStr = $str;
+    $idx = libstr_indexOfLast($innerStr, $delimiter) + 1;
+
+    if ($idx === -1) { return $innerStr; }
+
+    return libstr_substr($innerStr, $idx);
+}
+
+
+/**
+ * Returns the substring of the original string from the beginning
+ * to the last occurrence of $delimiter.
+ *
+ * @param  string $str
+ * @param  string $delimiter
+ *
+ * @return string
+ */
+function libstr_popReversed(string $str, string $delimiter): string
+{
+    if (!$str || !$delimiter) { return ''; }
+
+    $innerStr = $str;
+    $idx = libstr_indexOfLast($innerStr, $delimiter);
+
+    if ($idx === -1) { return $innerStr; }
+
+    return libstr_substr($innerStr, 0, $idx);
 }

@@ -54,8 +54,12 @@ use function Str\Lib\libstr_langSpecificCharsArray;
 use function Str\Lib\libstr_last;
 use function Str\Lib\libstr_move;
 use function Str\Lib\libstr_overwrite;
+use function Str\Lib\libstr_pop;
+use function Str\Lib\libstr_popReversed;
 use function Str\Lib\libstr_quote;
 use function Str\Lib\libstr_random;
+use function Str\Lib\libstr_shift;
+use function Str\Lib\libstr_shiftReversed;
 use function Str\Lib\libstr_snakeize;
 use function Str\Lib\libstr_split;
 use function Str\Lib\libstr_length;
@@ -1444,7 +1448,7 @@ class Str
     }
 
     /**
-     * Joins the original string with any number of other strings.
+     * Joins the original string with an array of other strings.
      *
      * @param  string $separator
      * @param  array  $otherStrings
@@ -1453,6 +1457,63 @@ class Str
     public function join(string $separator, array $otherStrings = []): Str
     {
         $this->str = libstr_join($this->str, $separator, $otherStrings);
+        return $this;
+    }
+
+    /**
+     * Returns the substring of the original string from beginning to
+     * the first occurrence of $delimiter.
+     *
+     * @param  string $delimiter
+     *
+     * @return Str
+     */
+    public function shift(string $delimiter): Str
+    {
+        $this->str = libstr_shift($this->str, $delimiter);
+        return $this;
+    }
+
+    /**
+     * Returns the substring of the original string from the first
+     * occurrence of $delimiter to the end.
+     *
+     * @param  string $delimiter
+     *
+     * @return Str
+     */
+    public function shiftReversed(string $delimiter): Str
+    {
+        $this->str = libstr_shiftReversed($this->str, $delimiter);
+        return $this;
+    }
+
+    /**
+     * Returns the substring of the original string from the last
+     * occurrence of $delimiter to the end.
+     *
+     * @param  string $delimiter
+     *
+     * @return Str
+     */
+    public function pop(string $delimiter): Str
+    {
+        $this->str = libstr_pop($this->str, $delimiter);
+        return $this;
+    }
+
+
+    /**
+     * Returns the substring of the original string from the beginning
+     * to the last occurrence of $delimiter.
+     *
+     * @param  string $delimiter
+     *
+     * @return Str
+     */
+    public function popReversed(string $delimiter): Str
+    {
+        $this->str = libstr_popReversed($this->str, $delimiter);
         return $this;
     }
 }

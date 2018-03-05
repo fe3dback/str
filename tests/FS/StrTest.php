@@ -142,6 +142,10 @@ class StrTest extends TestCase
         $this->assertEquals('rw_stit_h_here!_ere!_hwhitespace', $s->beforeFirst('e', '_here!_'));
         $this->assertEquals('rw_stit_h_here!_ere!_hwhit_ttt!_espace', $s->afterLast('t', '_ttt!_'));
         $this->assertEquals('rw_stit_h_here!_ere!_hwhit_tt_morett!_t!_espace', $s->beforeLast('t', '_morett!_'));
+        $this->assertEquals('rw_stit_h_here', $s->shift('!'));
+        $this->assertEquals('_stit_h_here', $s->shiftReversed('w'));
+        $this->assertEquals('_stit_h_he', $s->popReversed('r'));
+        $this->assertEquals('_h_he', $s->pop('t'));
 
         $s = new Str('I see…');
         $this->assertEquals('I see...', $s->tidy());

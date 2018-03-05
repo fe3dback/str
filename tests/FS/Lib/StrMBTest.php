@@ -21,9 +21,13 @@ use function Str\Lib\libstr_hasSuffix;
 use function Str\Lib\libstr_contains;
 use function Str\Lib\libstr_move;
 use function Str\Lib\libstr_overwrite;
+use function Str\Lib\libstr_pop;
+use function Str\Lib\libstr_popReversed;
 use function Str\Lib\libstr_quote;
 use function Str\Lib\libstr_random;
 use function Str\Lib\libstr_replace;
+use function Str\Lib\libstr_shift;
+use function Str\Lib\libstr_shiftReversed;
 use function Str\Lib\libstr_snakeize;
 use function Str\Lib\libstr_toLowerCase;
 use function Str\Lib\libstr_toUpperCase;
@@ -2888,6 +2892,86 @@ class StrMBTest extends TestCase
         return [
             ['', '', '$$', ['']],
             ['  %sdlkfj%sdlfkjas', '  ', '%', ['sdlkfj', 'sdlfkjas']],
+            ['foobar', 'foobar', '$$']
+        ];
+    }
+
+    /**
+     * @dataProvider shiftProvider()
+     *
+     * @param $expected
+     * @param $str
+     * @param $delimiter
+     */
+    public function testShift($expected, $str, $delimiter)
+    {
+        $this->assertEquals($expected, libstr_shift($str, $delimiter), $str);
+    }
+    public function shiftProvider()
+    {
+        return [
+            ['https:', 'https://repl.it/repls/TediousHarmlessGenre', '/'],
+            ['', 'string', ''],
+            ['foobar', 'foobar', '$$']
+        ];
+    }
+
+    /**
+     * @dataProvider shiftReversedProvider()
+     *
+     * @param $expected
+     * @param $str
+     * @param $delimiter
+     */
+    public function testShiftReversed($expected, $str, $delimiter)
+    {
+        $this->assertEquals($expected, libstr_shiftReversed($str, $delimiter), $str);
+    }
+    public function shiftReversedProvider()
+    {
+        return [
+            ['/repl.it/repls/TediousHarmlessGenre', 'https://repl.it/repls/TediousHarmlessGenre', '/'],
+            ['', 'string', ''],
+            ['foobar', 'foobar', '$$']
+        ];
+    }
+
+    /**
+     * @dataProvider popProvider()
+     *
+     * @param $expected
+     * @param $str
+     * @param $delimiter
+     */
+    public function testPop($expected, $str, $delimiter)
+    {
+        $this->assertEquals($expected, libstr_pop($str, $delimiter), $str);
+    }
+    public function popProvider()
+    {
+        return [
+            ['TediousHarmlessGenre', 'https://repl.it/repls/TediousHarmlessGenre', '/'],
+            ['', 'string', ''],
+            ['foobar', 'foobar', '$$']
+        ];
+    }
+
+    /**
+     * @dataProvider popReversedProvider()
+     *
+     * @param $expected
+     * @param $str
+     * @param $delimiter
+     */
+    public function testPopReversed($expected, $str, $delimiter)
+    {
+        $this->assertEquals($expected, libstr_popReversed($str, $delimiter), $str);
+    }
+    public function popReversedProvider()
+    {
+        return [
+            ['https://repl.it/repls', 'https://repl.it/repls/TediousHarmlessGenre', '/'],
+            ['', 'string', ''],
             ['foobar', 'foobar', '$$']
         ];
     }

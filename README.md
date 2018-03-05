@@ -143,16 +143,16 @@ composer require str/str
 - [x] words
 - [x] chop
 - [x] join
+- [x] pop
+- [x] shift
+- [x] shiftReversed
+- [x] popReversed
 
 ### Todo New
 - [ ] formatNumber
 - [ ] toNumber
 - [ ] toInt
 - [ ] toFloat
-- [ ] pop
-- [ ] shift
-- [ ] shiftReversed
-- [ ] popReversed
 
 ## Optimization
 
