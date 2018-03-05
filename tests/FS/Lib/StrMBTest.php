@@ -5,8 +5,14 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 use function Str\Lib\libstr_afterFirst;
 use function Str\Lib\libstr_afterLast;
+use function Str\Lib\libstr_appendUniqueIdentifier;
 use function Str\Lib\libstr_beforeFirst;
 use function Str\Lib\libstr_beforeLast;
+use function Str\Lib\libstr_chop;
+use function Str\Lib\libstr_isEmail;
+use function Str\Lib\libstr_isIpV4;
+use function Str\Lib\libstr_isIpV6;
+use function Str\Lib\libstr_join;
 use function Str\Lib\libstr_matchesPattern;
 use function Str\Lib\libstr_ensureLeft;
 use function Str\Lib\libstr_ensureRight;
@@ -15,7 +21,13 @@ use function Str\Lib\libstr_hasSuffix;
 use function Str\Lib\libstr_contains;
 use function Str\Lib\libstr_move;
 use function Str\Lib\libstr_overwrite;
+use function Str\Lib\libstr_pop;
+use function Str\Lib\libstr_popReversed;
+use function Str\Lib\libstr_quote;
+use function Str\Lib\libstr_random;
 use function Str\Lib\libstr_replace;
+use function Str\Lib\libstr_shift;
+use function Str\Lib\libstr_shiftReversed;
 use function Str\Lib\libstr_snakeize;
 use function Str\Lib\libstr_toLowerCase;
 use function Str\Lib\libstr_toUpperCase;
@@ -56,6 +68,7 @@ use function Str\Lib\libstr_dasherize;
 use function Str\Lib\libstr_delimit;
 use function Str\Lib\libstr_lowerCaseFirst;
 use function Str\Lib\libstr_regexReplace;
+use function Str\Lib\libstr_unquote;
 use function Str\Lib\libstr_upperCaseFirst;
 use function Str\Lib\libstr_isUUIDv4;
 use function Str\Lib\libstr_hasLowerCase;
@@ -93,6 +106,7 @@ use function Str\Lib\libstr_toSpaces;
 use function Str\Lib\libstr_toTabs;
 use function Str\Lib\libstr_toTitleCase;
 use function Str\Lib\libstr_underscored;
+use function Str\Lib\libstr_words;
 
 class StrMBTest extends TestCase
 {
@@ -2595,7 +2609,8 @@ class StrMBTest extends TestCase
             ['1_camel_2_case', '1camel2case'],
             ['camel_σase', 'camel σase'],
             ['στανιλ_case', 'Στανιλ case'],
-            ['σamel_case', 'σamel  Case']
+            ['σamel_case', 'σamel  Case'],
+            ['serve_http_or_another_abbreviation', 'Serve HTTP or another ABBREVIATION']
         ];
     }
 
@@ -2680,6 +2695,284 @@ class StrMBTest extends TestCase
             ['CamelCHERE!HERE!ase', 'CamelCase', 'a', 'HERE!', 2],
             ['Camel-Case', 'Camel-Case', 'e', 'not gonna happen', 0],
             ['Στανιν_νλ case', 'Στανιλ case', 'λ', 'ν_ν']
+        ];
+    }
+
+    /**
+     * @dataProvider isEmailProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testIsEmail($expected, $str)
+    {
+        $this->assertEquals($expected, libstr_isEmail($str), $str);
+    }
+    public function isEmailProvider()
+    {
+        return [
+            [true, 'this.is.a.valid@email.com'],
+            [false, 'this@is/not@a.valid@email.com'],
+            [true, 'validemail22_@localhost']
+        ];
+    }
+
+    /**
+     * @dataProvider isIpV4Provider()
+     * @param $expected
+     * @param $str
+     */
+    public function testIsIpV4($expected, $str)
+    {
+        $this->assertEquals($expected, libstr_isIpV4($str), $str);
+    }
+    public function isIpV4Provider()
+    {
+        return [
+            [true, '192.168.1.1'],
+            [false, '1234.53..1'],
+            [true, '249.212.23.124']
+        ];
+    }
+
+    /**
+     * @dataProvider isIpV6Provider()
+     * @param $expected
+     * @param $str
+     */
+    public function testIsIpV6($expected, $str)
+    {
+        $this->assertEquals($expected, libstr_isIpV6($str), $str);
+    }
+    public function isIpV6Provider()
+    {
+        return [
+            [true, '2001:470:9b36:1::2'],
+            [false, '1200::AB00:1234::2552:7777:1313'],
+            [true, '2001:cdba:0000:0000:0000:0000:3257:9652']
+        ];
+    }
+
+    /**
+     * @dataProvider randomProvider()
+     * @param $expected
+     * @param $size
+     * @param $sizeMax
+     * @param $possibleChars
+     */
+    public function testRandom($expected, $size, $sizeMax = -1, $possibleChars = '')
+    {
+        $this->assertEquals($expected, \mb_strlen(libstr_random($size, $sizeMax, $possibleChars)));
+    }
+    public function randomProvider()
+    {
+        return [
+            [5, 5],
+            [8, 8, -1, 'ФОРЫВДалыдлорафдлуОГР123']
+        ];
+    }
+
+    /**
+     * @dataProvider appendUniqueIdentifierProvider()
+     * @param $expected
+     * @param $str
+     * @param $size
+     * @param int $sizeMax
+     * @param string $possibleChars
+     */
+    public function testAppendUniqueIdentifier($expected, $str, $size = 4, $sizeMax = -1, $possibleChars = '')
+    {
+        $this->assertEquals($expected, \mb_strlen(libstr_appendUniqueIdentifier($str, $size, $sizeMax, $possibleChars)));
+    }
+    public function appendUniqueIdentifierProvider()
+    {
+        return [
+            [5, 'a'],
+            [8, 'afd', 5, -1, 'ФОРЫВДалыдлорафдлуОГР123']
+        ];
+    }
+
+    /**
+     * @dataProvider wordsProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testWords($expected, $str)
+    {
+        $result = libstr_words($str);
+        $expectedCount = count($expected);
+
+        if ($expectedCount === 0) { $this->assertEmpty($result); }
+
+        for ($i = 0; $i < $expectedCount; $i++) {
+            $this->assertEquals($expected[$i], $result[$i]);
+        }
+    }
+    public function wordsProvider()
+    {
+        return [
+            [[], ''],
+            [[''], '  '],
+            [['foo', 'bar'], "foo\nbar"],
+            [['foo', 'bar'], 'foo  bar'],
+            [['foo', 'bar'], 'foo   bar'],
+            [['fòô', 'bàř'], 'fòô bàř']
+        ];
+    }
+
+    /**
+     * @dataProvider quoteProvider()
+     * @param $expected
+     * @param $str
+     * @param string $quote
+     */
+    public function testQuote($expected, $str, $quote = '"')
+    {
+        $this->assertEquals($expected, libstr_quote($str, $quote));
+    }
+    public function quoteProvider()
+    {
+        return [
+            ['"Hey," "there" "are" "your" "quoted" "words."', 'Hey,  there are your     quoted words.'],
+            ['%$Hey,%$ %$there%$ %$are%$ %$your%$ %$quoted%$ %$words.%$', 'Hey,  there are your     quoted words.', '%$']
+        ];
+    }
+
+    /**
+     * @dataProvider unquoteProvider()
+     * @param $expected
+     * @param $str
+     * @param string $quote
+     */
+    public function testUnquote($expected, $str, $quote = '"')
+    {
+        $this->assertEquals($expected, libstr_unquote($str, $quote));
+    }
+    public function unquoteProvider()
+    {
+        return [
+            ['Hey, there are your quoted words.', '"Hey," "there" "are" "your" "quoted" "words."'],
+            ['Hey, there are your quoted words.', '%$Hey,%$ %$there%$ %$are%$ %$your%$ %$quoted%$ %$words.%$', '%$']
+        ];
+    }
+
+    /**
+     * @dataProvider chopProvider()
+     * @param $expected
+     * @param $str
+     * @param $step
+     */
+    public function testChop($expected, $str, $step = 1)
+    {
+        $this->assertEquals($expected, libstr_chop($str, $step), $str);
+    }
+    public function chopProvider()
+    {
+        return [
+            [[], ''],
+            [[], '  ', -9],
+            [['foo', 'bar'], 'foobar', 3],
+            [['foob', 'ar'], 'foobar', 4],
+            [['fòô', ' bà', 'ř'], 'fòô bàř', 3]
+        ];
+    }
+
+    /**
+     * @dataProvider joinProvider()
+     * @param $expected
+     * @param $str
+     * @param $separator
+     * @param array $otherStrings
+     */
+    public function testJoin($expected, $str, $separator, $otherStrings = [])
+    {
+        $this->assertEquals($expected, libstr_join($str, $separator, $otherStrings), $str);
+    }
+    public function joinProvider()
+    {
+        return [
+            ['', '', '$$', ['']],
+            ['  %sdlkfj%sdlfkjas', '  ', '%', ['sdlkfj', 'sdlfkjas']],
+            ['foobar', 'foobar', '$$']
+        ];
+    }
+
+    /**
+     * @dataProvider shiftProvider()
+     *
+     * @param $expected
+     * @param $str
+     * @param $delimiter
+     */
+    public function testShift($expected, $str, $delimiter)
+    {
+        $this->assertEquals($expected, libstr_shift($str, $delimiter), $str);
+    }
+    public function shiftProvider()
+    {
+        return [
+            ['https:', 'https://repl.it/repls/TediousHarmlessGenre', '/'],
+            ['', 'string', ''],
+            ['foobar', 'foobar', '$$']
+        ];
+    }
+
+    /**
+     * @dataProvider shiftReversedProvider()
+     *
+     * @param $expected
+     * @param $str
+     * @param $delimiter
+     */
+    public function testShiftReversed($expected, $str, $delimiter)
+    {
+        $this->assertEquals($expected, libstr_shiftReversed($str, $delimiter), $str);
+    }
+    public function shiftReversedProvider()
+    {
+        return [
+            ['/repl.it/repls/TediousHarmlessGenre', 'https://repl.it/repls/TediousHarmlessGenre', '/'],
+            ['', 'string', ''],
+            ['foobar', 'foobar', '$$']
+        ];
+    }
+
+    /**
+     * @dataProvider popProvider()
+     *
+     * @param $expected
+     * @param $str
+     * @param $delimiter
+     */
+    public function testPop($expected, $str, $delimiter)
+    {
+        $this->assertEquals($expected, libstr_pop($str, $delimiter), $str);
+    }
+    public function popProvider()
+    {
+        return [
+            ['TediousHarmlessGenre', 'https://repl.it/repls/TediousHarmlessGenre', '/'],
+            ['', 'string', ''],
+            ['foobar', 'foobar', '$$']
+        ];
+    }
+
+    /**
+     * @dataProvider popReversedProvider()
+     *
+     * @param $expected
+     * @param $str
+     * @param $delimiter
+     */
+    public function testPopReversed($expected, $str, $delimiter)
+    {
+        $this->assertEquals($expected, libstr_popReversed($str, $delimiter), $str);
+    }
+    public function popReversedProvider()
+    {
+        return [
+            ['https://repl.it/repls', 'https://repl.it/repls/TediousHarmlessGenre', '/'],
+            ['', 'string', ''],
+            ['foobar', 'foobar', '$$']
         ];
     }
 }

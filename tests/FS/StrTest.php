@@ -66,6 +66,15 @@ class StrTest extends TestCase
 
         $s = new Str('no');
         $this->assertFalse($s->toBoolean());
+
+        $s = new Str('email@email.com');
+        $this->assertTrue($s->isEmail());
+
+        $s = new Str('1.0.1.0');
+        $this->assertTrue($s->isIpV4());
+
+        $s = new Str('2001:cdba::3257:9652');
+        $this->assertTrue($s->isIpV6());
     }
 
     public function testModifiers()
@@ -133,6 +142,10 @@ class StrTest extends TestCase
         $this->assertEquals('rw_stit_h_here!_ere!_hwhitespace', $s->beforeFirst('e', '_here!_'));
         $this->assertEquals('rw_stit_h_here!_ere!_hwhit_ttt!_espace', $s->afterLast('t', '_ttt!_'));
         $this->assertEquals('rw_stit_h_here!_ere!_hwhit_tt_morett!_t!_espace', $s->beforeLast('t', '_morett!_'));
+        $this->assertEquals('rw_stit_h_here', $s->shift('!'));
+        $this->assertEquals('_stit_h_here', $s->shiftReversed('w'));
+        $this->assertEquals('_stit_h_he', $s->popReversed('r'));
+        $this->assertEquals('_h_he', $s->pop('t'));
 
         $s = new Str('I see…');
         $this->assertEquals('I see...', $s->tidy());
@@ -143,6 +156,9 @@ class StrTest extends TestCase
         $this->assertEquals("strwith\ttabs", $s->toTabs(1));
         $this->assertEquals("Strwith\tTabs", $s->toTitleCase());
         $this->assertEquals("hello with\tTabs", $s->overwrite(0, 3, 'hello '));
+        $this->assertEquals('"hello" "with" "Tabs"', $s->quote());
+        $this->assertEquals('hello with Tabs', $s->unquote());
+        $this->assertEquals('hello with Tabs@other@oie', $s->join('@', ['other', 'oie']));
     }
 
     public function testTrim()
@@ -201,7 +217,10 @@ class StrTest extends TestCase
     public function testRandomFunctions()
     {
         $s = new Str('HeLlo 世 fòôbàř');
-        $this->assertEquals(\mb_strlen((string)$s), \mb_strlen((string)$s->shuffle()));
+        $len = \mb_strlen((string)$s);
+        $this->assertEquals($len, \mb_strlen((string)$s->shuffle()));
+        $this->assertEquals($len, \mb_strlen($s->random($len, -1, (string)$s)));
+        $this->assertEquals($len * 2, \mb_strlen((string)$s->appendUniqueIdentifier($len, -1, (string)$s)));
     }
 
     public function testRegexFunctions()
@@ -230,6 +249,12 @@ class StrTest extends TestCase
 
         $s = new Str('foo foo foo');
         $this->assertEquals(['foo', 'foo', 'foo'], $s->split(' '));
+
+        $s = new Str('foo   foo foo');
+        $this->assertEquals(['foo', 'foo', 'foo'], $s->words());
+
+        $s = new Str('foo   foo foo');
+        $this->assertEquals(['fo', 'o ', '  ', 'fo', 'o ', 'fo', 'o'], $s->chop(2));
     }
 
     public function testComparingFunctions()

@@ -133,27 +133,22 @@ composer require str/str
 - [x] beforeFirst
 - [x] afterLast
 - [x] beforeLast
+- [x] isEmail
+- [x] isIpV4
+- [x] isIpV6
+- [x] random
+- [x] appendUniqueIdentifier
+- [x] quote
+- [x] unquote
+- [x] words
+- [x] chop
+- [x] join
+- [x] pop
+- [x] shift
+- [x] shiftReversed
+- [x] popReversed
 
 ### Todo New
-- [ ] appendUniqueIdentifier
-- [ ] ord
-- [ ] quote
-- [ ] unquote
-- [ ] words
-- [ ] formatNumber
-- [ ] toNumber
-- [ ] toInt
-- [ ] toFloat
-- [ ] join
-- [ ] chop
-- [ ] random
-- [ ] pop
-- [ ] shift
-- [ ] shiftReversed
-- [ ] popReversed
-- [ ] isEmail
-- [ ] isUrl
-- [ ] isIp
 
 ## Optimization
 

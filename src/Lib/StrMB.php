@@ -1884,7 +1884,7 @@ function libstr_overwrite(string $str, int $start, int $length, string $substr):
 /**
  * Returns a snake_case version of the string.
  *
- * @todo refactoring + abbreviations support
+ * @todo refactoring
  * @param  string $str
  * @return string
  */
@@ -1892,7 +1892,15 @@ function libstr_snakeize(string $str): string
 {
     $innerStr = $str;
 
+    $innerStr = \mb_ereg_replace('::', '/', $innerStr);
+    $innerStr = \mb_ereg_replace('([A-Z]+)([A-Z][a-z])', '\1_\2', $innerStr);
+    $innerStr = \mb_ereg_replace('([a-z\d])([A-Z])', '\1_\2', $innerStr);
+    $innerStr = \mb_ereg_replace('\s+', '_', $innerStr);
+    $innerStr = \mb_ereg_replace('\s+', '_', $innerStr);
+    $innerStr = \mb_ereg_replace('^\s+|\s+$', '', $innerStr);
     $innerStr = \mb_ereg_replace('-', '_', $innerStr);
+    $innerStr = libstr_toLowerCase($innerStr);
+
     $innerStr = \mb_ereg_replace_callback(
         '([\d|A-Z])',
         function ($matches) {
@@ -1901,17 +1909,12 @@ function libstr_snakeize(string $str): string
             if ("$matchInt" === $match) {
                 return '_' . $match . '_';
             }
-            return '_' . libstr_toLowerCase($match);
         },
         $innerStr
     );
 
-    $innerStr = \mb_ereg_replace('\s+', '_', $innerStr);
-    $innerStr = \mb_ereg_replace('^\s+|\s+$', '', $innerStr);
     $innerStr = \mb_ereg_replace('_+', '_', $innerStr);
-
     $innerStr = libstr_trim($innerStr, '_');
-    $innerStr = libstr_toLowerCase($innerStr);
 
     return $innerStr;
 }
@@ -1998,4 +2001,289 @@ function libstr_beforeLast(string $str, string $needle, string $substr, int $tim
     $innerSubstr = libstr_repeat($substr, $times);
 
     return libstr_insert($innerStr, $innerSubstr, $idx);
+}
+
+/**
+ * Splits the given $str in pieces by '@' delimiter and returns
+ * true in case the resulting array consists of 2 parts.
+ *
+ * @param  string $str
+ * @return bool
+ */
+function libstr_isEmail(string $str): bool
+{
+    $innerStr = $str;
+    $split = libstr_split($innerStr, '@');
+
+    return \count($split) === 2;
+}
+
+/**
+ * Checks whether given $str is a valid ip v4.
+ *
+ * @param  string $str
+ * @return bool
+ */
+function libstr_isIpV4(string $str): bool
+{
+    $regex = '\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}\b';
+
+    return libstr_matchesPattern($str, $regex);
+}
+
+/**
+ * Checks whether given $str is a valid ip v6.
+ *
+ * @param  string $str
+ * @return bool
+ */
+function libstr_isIpV6(string $str): bool
+{
+    $regex = '^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$';
+
+    return libstr_matchesPattern($str, $regex);
+}
+
+/**
+ * Generates a random string consisting of $possibleChars, if specified, of given $size or
+ * random length between $size and $sizeMax.
+ *
+ * @param  int    $size          The desired length of the string
+ * @param  string $possibleChars If given, specifies allowed characters to make the string of
+ * @param  int    $sizeMax       If given and is > $size, the generated string will have random length
+ *                               between $size and $sizeMax
+ * @return string
+ */
+function libstr_random(int $size, int $sizeMax = -1, string $possibleChars = ''): string
+{
+    if ($size <= 0 || $sizeMax === 0) { return ''; }
+    if ($sizeMax > 0 && $sizeMax < $size) { return ''; }
+
+    $allowedChars = $possibleChars ?: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    $maxLen = $sizeMax > 0 ? $sizeMax : $size;
+    /** @noinspection RandomApiMigrationInspection */
+    $actualLen = \rand($size, $maxLen);
+    $allowedCharsLen = \mb_strlen($allowedChars) - 1;
+
+    $result = '';
+
+    while ($actualLen--) {
+        /** @noinspection RandomApiMigrationInspection */
+        $char = libstr_substr($allowedChars, \rand(0, $allowedCharsLen), 1);
+        $result .= $char;
+    }
+
+    return $result;
+}
+
+/** @noinspection MoreThanThreeArgumentsInspection */
+/**
+ * Appends a random string consisting of $possibleChars, if specified, of given $size or
+ * random length between $size and $sizeMax to the given $str.
+ *
+ * @param  string $str
+ * @param  int    $size          The desired length of the string. Defaults to 4
+ * @param  string $possibleChars If given, specifies allowed characters to make the string of
+ * @param  int    $sizeMax       If given and is > $size, the generated string will have random length
+ *                               between $size and $sizeMax
+ * @return string
+ */
+function libstr_appendUniqueIdentifier(string $str, int $size = 4, int $sizeMax = -1, string $possibleChars = ''): string
+{
+    $innerStr = $str;
+    $identifier = libstr_random($size, $sizeMax, $possibleChars);
+
+    return $innerStr . $identifier;
+}
+
+/**
+ * Splits whitespace, returning an array of strings corresponding to the words in the string.
+ *
+ * @param  string $str
+ * @return array of strings
+ */
+function libstr_words(string $str): array
+{
+    $innerStr = $str;
+
+    return libstr_split($innerStr, '[[:space:]]+');
+}
+
+/**
+ * Wraps each word in the given $str with specified $quote.
+ *
+ * @param  string $str
+ * @param  string $quote Defaults to ".
+ * @return string
+ */
+function libstr_quote(string $str, string $quote = '"'): string
+{
+    $innerStr = $str;
+
+    $words = libstr_words($innerStr);
+    $result = [];
+
+    foreach ($words as $word) {
+        $result[] = $quote . $word . $quote;
+    }
+
+    return \implode(' ', $result);
+}
+
+/**
+ * Unwraps each word in the given $str, deleting the specified $quote.
+ *
+ * @param  string $str
+ * @param  string $quote Defaults to ".
+ * @return string
+ */
+function libstr_unquote(string $str, string $quote = '"'): string
+{
+    $innerStr = $str;
+
+    $words = libstr_words($innerStr);
+    $result = [];
+
+    foreach ($words as $word) {
+        $result[] = libstr_trim($word, $quote);
+    }
+
+    return \implode(' ', $result);
+}
+
+/**
+ * Cuts the given $str in pieces of $step size.
+ *
+ * @param  string $str
+ * @param  int    $step
+ * @return array
+ */
+function libstr_chop(string $str, int $step = 0): array
+{
+    $innerStr = $str;
+    $result = [];
+    $len = \mb_strlen($innerStr);
+
+    if ($innerStr === '' || $step <= 0) { return []; }
+
+    if ($step >= $len) { return [$innerStr]; }
+
+    $startPos = 0;
+
+    for ($i = 0; $i < $len; $i+=$step) {
+        $result[] = libstr_substr($innerStr, $startPos, $step);
+        $startPos += $step;
+    }
+
+    return $result;
+}
+
+/**
+ * Joins the original string with an array of other strings.
+ *
+ * @param string $str
+ * @param  $separator
+ * @param   $otherStrings
+ *
+ * @return string
+ */
+function libstr_join(string $str, string $separator, array $otherStrings = []): string
+{
+    $innerStr = $str;
+
+    if (empty($otherStrings)) { return $innerStr; }
+
+    foreach ($otherStrings as $otherString) {
+        if ($otherString) {
+            $innerStr .= $separator . $otherString;
+        }
+    }
+
+    return $innerStr;
+}
+
+/**
+ * Returns the substring of the original string from beginning to
+ * the first occurrence of $delimiter.
+ *
+ * @param  string $str
+ * @param  string $delimiter
+ *
+ * @return string
+ */
+function libstr_shift(string $str, string $delimiter): string
+{
+    if (!$str || !$delimiter) { return ''; }
+
+    $innerStr = $str;
+    $idx = libstr_indexOf($innerStr, $delimiter);
+
+    if ($idx === -1) { return $innerStr; }
+
+    return libstr_substr($innerStr, 0, $idx);
+}
+
+/**
+ * Returns the substring of the original string from the first
+ * occurrence of $delimiter to the end.
+ *
+ * @param  string $str
+ * @param  string $delimiter
+ *
+ * @return string
+ */
+function libstr_shiftReversed(string $str, string $delimiter): string
+{
+    if (!$str || !$delimiter) { return ''; }
+
+    $innerStr = $str;
+    $idx = libstr_indexOf($innerStr, $delimiter) + 1;
+
+    if ($idx === -1) { return $innerStr; }
+
+    return libstr_substr($innerStr, $idx);
+}
+
+/**
+ * Returns the substring of the original string from the last
+ * occurrence of $delimiter to the end.
+ *
+ * @param  string $str
+ * @param  string $delimiter
+ *
+ * @return string
+ */
+function libstr_pop(string $str, string $delimiter): string
+{
+    if (!$str || !$delimiter) { return ''; }
+
+    $innerStr = $str;
+    $idx = libstr_indexOfLast($innerStr, $delimiter) + 1;
+
+    if ($idx === -1) { return $innerStr; }
+
+    return libstr_substr($innerStr, $idx);
+}
+
+
+/**
+ * Returns the substring of the original string from the beginning
+ * to the last occurrence of $delimiter.
+ *
+ * @param  string $str
+ * @param  string $delimiter
+ *
+ * @return string
+ */
+function libstr_popReversed(string $str, string $delimiter): string
+{
+    if (!$str || !$delimiter) { return ''; }
+
+    $innerStr = $str;
+    $idx = libstr_indexOfLast($innerStr, $delimiter);
+
+    if ($idx === -1) { return $innerStr; }
+
+    return libstr_substr($innerStr, 0, $idx);
 }

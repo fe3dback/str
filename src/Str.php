@@ -6,6 +6,7 @@ namespace Str;
 
 use function Str\Lib\libstr_afterFirst;
 use function Str\Lib\libstr_afterLast;
+use function Str\Lib\libstr_appendUniqueIdentifier;
 use function Str\Lib\libstr_at;
 use function Str\Lib\libstr_append;
 use function Str\Lib\libstr_applyPadding;
@@ -15,6 +16,7 @@ use function Str\Lib\libstr_between;
 use function Str\Lib\libstr_camelize;
 use function Str\Lib\libstr_chars;
 use function Str\Lib\libstr_charsArray;
+use function Str\Lib\libstr_chop;
 use function Str\Lib\libstr_collapseWhitespace;
 use function Str\Lib\libstr_containsAll;
 use function Str\Lib\libstr_containsAny;
@@ -39,15 +41,25 @@ use function Str\Lib\libstr_isAlpha;
 use function Str\Lib\libstr_isAlphanumeric;
 use function Str\Lib\libstr_isBase64;
 use function Str\Lib\libstr_isBlank;
+use function Str\Lib\libstr_isEmail;
 use function Str\Lib\libstr_isHexadecimal;
+use function Str\Lib\libstr_isIpV4;
+use function Str\Lib\libstr_isIpV6;
 use function Str\Lib\libstr_isLowerCase;
 use function Str\Lib\libstr_isSerialized;
 use function Str\Lib\libstr_isUpperCase;
 use function Str\Lib\libstr_isUUIDv4;
+use function Str\Lib\libstr_join;
 use function Str\Lib\libstr_langSpecificCharsArray;
 use function Str\Lib\libstr_last;
 use function Str\Lib\libstr_move;
 use function Str\Lib\libstr_overwrite;
+use function Str\Lib\libstr_pop;
+use function Str\Lib\libstr_popReversed;
+use function Str\Lib\libstr_quote;
+use function Str\Lib\libstr_random;
+use function Str\Lib\libstr_shift;
+use function Str\Lib\libstr_shiftReversed;
 use function Str\Lib\libstr_snakeize;
 use function Str\Lib\libstr_split;
 use function Str\Lib\libstr_length;
@@ -89,9 +101,11 @@ use function Str\Lib\libstr_trimLeft;
 use function Str\Lib\libstr_trimRight;
 use function Str\Lib\libstr_truncate;
 use function Str\Lib\libstr_underscored;
+use function Str\Lib\libstr_unquote;
 use function Str\Lib\libstr_upperCamelize;
 use function Str\Lib\libstr_upperCaseFirst;
 use function Str\Lib\libstr_isJson;
+use function Str\Lib\libstr_words;
 
 class Str
 {
@@ -916,8 +930,7 @@ class Str
     }
 
     /**
-     * Splits on newlines and carriage returns, returning an array of Stringy
-     * objects corresponding to the lines in the string.
+     * Splits on newlines and carriage returns, returning an array of strings corresponding to the lines in the string.
      *
      * @return array of strings
      */
@@ -928,7 +941,7 @@ class Str
 
     /**
      * Splits the string with the provided regular expression, returning an
-     * array of Stringy objects. An optional integer $limit will truncate the
+     * array of strings. An optional integer $limit will truncate the
      * results.
      *
      * @param  string $pattern The regex with which to split the string
@@ -1228,7 +1241,7 @@ class Str
     }
 
     /**
-     * Move substring of desired $length to $destination index of the original $str.
+     * Move substring of desired $length to $destination index of the original string.
      * In case $destination is less than $length returns $str untouched.
      *
      * @param  int $start
@@ -1243,7 +1256,7 @@ class Str
     }
 
     /**
-     * Replaces substring in the original $str of $length with given $substr.
+     * Replaces substring in the original string of $length with given $substr.
      *
      * @param  int    $start
      * @param  int    $length
@@ -1268,7 +1281,7 @@ class Str
     }
 
     /**
-     * Inserts given $substr $times times into the original $str after
+     * Inserts given $substr $times times into the original string after
      * the first occurrence of $needle.
      *
      * @param  string $needle
@@ -1283,7 +1296,7 @@ class Str
     }
 
     /**
-     * Inserts given $substr $times times into the original $str before
+     * Inserts given $substr $times times into the original string before
      * the first occurrence of $needle.
      *
      * @param  string $needle
@@ -1298,7 +1311,7 @@ class Str
     }
 
     /**
-     * Inserts given $substr $times times into the original $str after
+     * Inserts given $substr $times times into the original string after
      * the last occurrence of $needle.
      *
      * @param  string $needle
@@ -1313,7 +1326,7 @@ class Str
     }
 
     /**
-     * Inserts given $substr $times times into the original $str before
+     * Inserts given $substr $times times into the original string before
      * the last occurrence of $needle.
      *
      * @param  string $needle
@@ -1324,6 +1337,183 @@ class Str
     public function beforeLast(string $needle, string $substr, int $times = 1): Str
     {
         $this->str = libstr_beforeLast($this->str, $needle, $substr, $times);
+        return $this;
+    }
+
+    /**
+     * Splits the original string in pieces by '@' delimiter and returns
+     * true in case the resulting array consists of 2 parts.
+     *
+     * @return bool
+     */
+    public function isEmail(): bool
+    {
+        return libstr_isEmail($this->str);
+    }
+
+    /**
+     * Checks whether given $str is a valid ip v4.
+     *
+     * @return bool
+     */
+    public function isIpV4(): bool
+    {
+        return libstr_isIpV4($this->str);
+    }
+
+    /**
+     * Checks whether given $str is a valid ip v6.
+     *
+     * @return bool
+     */
+    public function isIpV6(): bool
+    {
+        return libstr_isIpV6($this->str);
+    }
+
+    /**
+     * Generates a random string consisting of $possibleChars, if specified, of given $size or
+     * random length between $size and $sizeMax.
+     *
+     * @param  int    $size          The desired length of the string
+     * @param  string $possibleChars If given, specifies allowed characters to make the string of
+     * @param  int    $sizeMax       If given and is > $size, the generated string will have random length
+     *                               between $size and $sizeMax
+     * @return string
+     */
+    public function random(int $size, int $sizeMax = -1, string $possibleChars = ''): string
+    {
+        return libstr_random($size, $sizeMax, $possibleChars);
+    }
+
+    /**
+     * Appends a random string consisting of $possibleChars, if specified, of given $size or
+     * random length between $size and $sizeMax to the original string.
+     *
+     * @param  int    $size          The desired length of the string. Defaults to 4
+     * @param  string $possibleChars If given, specifies allowed characters to make the string of
+     * @param  int    $sizeMax       If given and is > $size, the generated string will have random length
+     *                               between $size and $sizeMax
+     * @return Str
+     */
+    public function appendUniqueIdentifier(int $size = 4, int $sizeMax = -1, string $possibleChars = ''): Str
+    {
+        $this->str = libstr_appendUniqueIdentifier($this->str, $size, $sizeMax, $possibleChars);
+        return $this;
+    }
+
+    /**
+     * Splits on whitespace, returning an array of strings corresponding to the words in the string.
+     *
+     * @return array of strings
+     */
+    public function words(): array
+    {
+        return libstr_words($this->str);
+    }
+
+    /**
+     * Wraps each word in the original string with specified $quote.
+     *
+     * @param  string $quote Defaults to ".
+     * @return Str
+     */
+    public function quote(string $quote = '"'): Str
+    {
+        $this->str = libstr_quote($this->str, $quote);
+        return $this;
+    }
+
+    /**
+     * Unwraps each word in the original string, deleting the specified $quote.
+     *
+     * @param  string $quote Defaults to ".
+     * @return Str
+     */
+    public function unquote(string $quote = '"'): Str
+    {
+        $this->str = libstr_unquote($this->str, $quote);
+        return $this;
+    }
+
+    /**
+     * Cuts the original string in pieces of $step size.
+     *
+     * @param int $step
+     * @return array
+     */
+    public function chop(int $step): array
+    {
+        return libstr_chop($this->str, $step);
+    }
+
+    /**
+     * Joins the original string with an array of other strings.
+     *
+     * @param  string $separator
+     * @param  array  $otherStrings
+     * @return Str
+     */
+    public function join(string $separator, array $otherStrings = []): Str
+    {
+        $this->str = libstr_join($this->str, $separator, $otherStrings);
+        return $this;
+    }
+
+    /**
+     * Returns the substring of the original string from beginning to
+     * the first occurrence of $delimiter.
+     *
+     * @param  string $delimiter
+     *
+     * @return Str
+     */
+    public function shift(string $delimiter): Str
+    {
+        $this->str = libstr_shift($this->str, $delimiter);
+        return $this;
+    }
+
+    /**
+     * Returns the substring of the original string from the first
+     * occurrence of $delimiter to the end.
+     *
+     * @param  string $delimiter
+     *
+     * @return Str
+     */
+    public function shiftReversed(string $delimiter): Str
+    {
+        $this->str = libstr_shiftReversed($this->str, $delimiter);
+        return $this;
+    }
+
+    /**
+     * Returns the substring of the original string from the last
+     * occurrence of $delimiter to the end.
+     *
+     * @param  string $delimiter
+     *
+     * @return Str
+     */
+    public function pop(string $delimiter): Str
+    {
+        $this->str = libstr_pop($this->str, $delimiter);
+        return $this;
+    }
+
+
+    /**
+     * Returns the substring of the original string from the beginning
+     * to the last occurrence of $delimiter.
+     *
+     * @param  string $delimiter
+     *
+     * @return Str
+     */
+    public function popReversed(string $delimiter): Str
+    {
+        $this->str = libstr_popReversed($this->str, $delimiter);
         return $this;
     }
 }
