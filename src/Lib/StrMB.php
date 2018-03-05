@@ -2002,3 +2002,97 @@ function libstr_beforeLast(string $str, string $needle, string $substr, int $tim
 
     return libstr_insert($innerStr, $innerSubstr, $idx);
 }
+
+/**
+ * Splits the given $str in pieces by '@' delimiter and returns
+ * true in case the resulting array consists of 2 parts.
+ *
+ * @param  string $str
+ * @return bool
+ */
+function libstr_isEmail(string $str): bool
+{
+    $innerStr = $str;
+    $split = libstr_split($innerStr, '@');
+
+    return \count($split) === 2;
+}
+
+/**
+ * Checks whether given $str is a valid ip v4.
+ *
+ * @param  string $str
+ * @return bool
+ */
+function libstr_isIpV4(string $str): bool
+{
+    $regex = '\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}\b';
+
+    return libstr_matchesPattern($str, $regex);
+}
+
+/**
+ * Checks whether given $str is a valid ip v6.
+ *
+ * @param  string $str
+ * @return bool
+ */
+function libstr_isIpV6(string $str): bool
+{
+    $regex = '^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$';
+
+    return libstr_matchesPattern($str, $regex);
+}
+
+/**
+ * Generates a random string consisting of $possibleChars, if specified, of given $size or
+ * random length between $size and $sizeMax.
+ *
+ * @param  int    $size          The desired length of the string
+ * @param  string $possibleChars If given, specifies allowed characters to make the string of
+ * @param  int    $sizeMax       If given and is > $size, the generated string will have random length
+ *                               between $size and $sizeMax
+ * @return string
+ */
+function libstr_random(int $size, int $sizeMax = -1, string $possibleChars = ''): string
+{
+    if ($size <= 0 || $sizeMax === 0) { return ''; }
+    if ($sizeMax > 0 && $sizeMax < $size) { return ''; }
+
+    $allowedChars = $possibleChars ?: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    $maxLen = $sizeMax > 0 ? $sizeMax : $size;
+    /** @noinspection RandomApiMigrationInspection */
+    $actualLen = \rand($size, $maxLen);
+    $allowedCharsLen = \mb_strlen($allowedChars) - 1;
+
+    $result = '';
+
+    while ($actualLen--) {
+        /** @noinspection RandomApiMigrationInspection */
+        $char = libstr_substr($allowedChars, \rand(0, $allowedCharsLen), 1);
+        $result .= $char;
+    }
+
+    return $result;
+}
+
+/** @noinspection MoreThanThreeArgumentsInspection */
+/**
+ * Appends a random string consisting of $possibleChars, if specified, of given $size or
+ * random length between $size and $sizeMax to the given $str.
+ *
+ * @param  string $str
+ * @param  int    $size          The desired length of the string. Defaults to 4
+ * @param  string $possibleChars If given, specifies allowed characters to make the string of
+ * @param  int    $sizeMax       If given and is > $size, the generated string will have random length
+ *                               between $size and $sizeMax
+ * @return string
+ */
+function libstr_appendUniqueIdentifier(string $str, int $size = 4, int $sizeMax = -1, string $possibleChars = ''): string
+{
+    $innerStr = $str;
+    $identifier = libstr_random($size, $sizeMax, $possibleChars);
+
+    return $innerStr . $identifier;
+}

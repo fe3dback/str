@@ -6,6 +6,7 @@ namespace Str;
 
 use function Str\Lib\libstr_afterFirst;
 use function Str\Lib\libstr_afterLast;
+use function Str\Lib\libstr_appendUniqueIdentifier;
 use function Str\Lib\libstr_at;
 use function Str\Lib\libstr_append;
 use function Str\Lib\libstr_applyPadding;
@@ -39,7 +40,10 @@ use function Str\Lib\libstr_isAlpha;
 use function Str\Lib\libstr_isAlphanumeric;
 use function Str\Lib\libstr_isBase64;
 use function Str\Lib\libstr_isBlank;
+use function Str\Lib\libstr_isEmail;
 use function Str\Lib\libstr_isHexadecimal;
+use function Str\Lib\libstr_isIpV4;
+use function Str\Lib\libstr_isIpV6;
 use function Str\Lib\libstr_isLowerCase;
 use function Str\Lib\libstr_isSerialized;
 use function Str\Lib\libstr_isUpperCase;
@@ -48,6 +52,7 @@ use function Str\Lib\libstr_langSpecificCharsArray;
 use function Str\Lib\libstr_last;
 use function Str\Lib\libstr_move;
 use function Str\Lib\libstr_overwrite;
+use function Str\Lib\libstr_random;
 use function Str\Lib\libstr_snakeize;
 use function Str\Lib\libstr_split;
 use function Str\Lib\libstr_length;
@@ -1324,6 +1329,68 @@ class Str
     public function beforeLast(string $needle, string $substr, int $times = 1): Str
     {
         $this->str = libstr_beforeLast($this->str, $needle, $substr, $times);
+        return $this;
+    }
+
+    /**
+     * Splits the given $str in pieces by '@' delimiter and returns
+     * true in case the resulting array consists of 2 parts.
+     *
+     * @return bool
+     */
+    public function isEmail(): bool
+    {
+        return libstr_isEmail($this->str);
+    }
+
+    /**
+     * Checks whether given $str is a valid ip v4.
+     *
+     * @return bool
+     */
+    public function isIpV4(): bool
+    {
+        return libstr_isIpV4($this->str);
+    }
+
+    /**
+     * Checks whether given $str is a valid ip v6.
+     *
+     * @return bool
+     */
+    public function isIpV6(): bool
+    {
+        return libstr_isIpV6($this->str);
+    }
+
+    /**
+     * Generates a random string consisting of $possibleChars, if specified, of given $size or
+     * random length between $size and $sizeMax.
+     *
+     * @param  int    $size          The desired length of the string
+     * @param  string $possibleChars If given, specifies allowed characters to make the string of
+     * @param  int    $sizeMax       If given and is > $size, the generated string will have random length
+     *                               between $size and $sizeMax
+     * @return string
+     */
+    public function random(int $size, int $sizeMax = -1, string $possibleChars = ''): string
+    {
+        return libstr_random($size, $sizeMax, $possibleChars);
+    }
+
+    /**
+     * Appends a random string consisting of $possibleChars, if specified, of given $size or
+     * random length between $size and $sizeMax to the original $str.
+     *
+     * @param  int    $size          The desired length of the string. Defaults to 4
+     * @param  string $possibleChars If given, specifies allowed characters to make the string of
+     * @param  int    $sizeMax       If given and is > $size, the generated string will have random length
+     *                               between $size and $sizeMax
+     * @return Str
+     */
+    public function appendUniqueIdentifier(int $size = 4, int $sizeMax = -1, string $possibleChars = ''): Str
+    {
+        $this->str = libstr_appendUniqueIdentifier($this->str, $size, $sizeMax, $possibleChars);
         return $this;
     }
 }

@@ -5,8 +5,12 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 use function Str\Lib\libstr_afterFirst;
 use function Str\Lib\libstr_afterLast;
+use function Str\Lib\libstr_appendUniqueIdentifier;
 use function Str\Lib\libstr_beforeFirst;
 use function Str\Lib\libstr_beforeLast;
+use function Str\Lib\libstr_isEmail;
+use function Str\Lib\libstr_isIpV4;
+use function Str\Lib\libstr_isIpV6;
 use function Str\Lib\libstr_matchesPattern;
 use function Str\Lib\libstr_ensureLeft;
 use function Str\Lib\libstr_ensureRight;
@@ -15,6 +19,7 @@ use function Str\Lib\libstr_hasSuffix;
 use function Str\Lib\libstr_contains;
 use function Str\Lib\libstr_move;
 use function Str\Lib\libstr_overwrite;
+use function Str\Lib\libstr_random;
 use function Str\Lib\libstr_replace;
 use function Str\Lib\libstr_snakeize;
 use function Str\Lib\libstr_toLowerCase;
@@ -2681,6 +2686,99 @@ class StrMBTest extends TestCase
             ['CamelCHERE!HERE!ase', 'CamelCase', 'a', 'HERE!', 2],
             ['Camel-Case', 'Camel-Case', 'e', 'not gonna happen', 0],
             ['Στανιν_νλ case', 'Στανιλ case', 'λ', 'ν_ν']
+        ];
+    }
+
+    /**
+     * @dataProvider isEmailProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testIsEmail($expected, $str)
+    {
+        $this->assertEquals($expected, libstr_isEmail($str), $str);
+    }
+    public function isEmailProvider()
+    {
+        return [
+            [true, 'this.is.a.valid@email.com'],
+            [false, 'this@is/not@a.valid@email.com'],
+            [true, 'validemail22_@localhost']
+        ];
+    }
+
+    /**
+     * @dataProvider isIpV4Provider()
+     * @param $expected
+     * @param $str
+     */
+    public function testIsIpV4($expected, $str)
+    {
+        $this->assertEquals($expected, libstr_isIpV4($str), $str);
+    }
+    public function isIpV4Provider()
+    {
+        return [
+            [true, '192.168.1.1'],
+            [false, '1234.53..1'],
+            [true, '249.212.23.124']
+        ];
+    }
+
+    /**
+     * @dataProvider isIpV6Provider()
+     * @param $expected
+     * @param $str
+     */
+    public function testIsIpV6($expected, $str)
+    {
+        $this->assertEquals($expected, libstr_isIpV6($str), $str);
+    }
+    public function isIpV6Provider()
+    {
+        return [
+            [true, '2001:470:9b36:1::2'],
+            [false, '1200::AB00:1234::2552:7777:1313'],
+            [true, '2001:cdba:0000:0000:0000:0000:3257:9652']
+        ];
+    }
+
+    /**
+     * @dataProvider randomProvider()
+     * @param $expected
+     * @param $size
+     * @param $sizeMax
+     * @param $possibleChars
+     */
+    public function testRandom($expected, $size, $sizeMax = -1, $possibleChars = '')
+    {
+        $this->assertEquals($expected, \mb_strlen(libstr_random($size, $sizeMax, $possibleChars)));
+    }
+    public function randomProvider()
+    {
+        return [
+            [5, 5],
+            [8, 8, -1, 'ФОРЫВДалыдлорафдлуОГР123']
+        ];
+    }
+
+    /**
+     * @dataProvider appendUniqueIdentifierProvider()
+     * @param $expected
+     * @param $str
+     * @param $size
+     * @param int $sizeMax
+     * @param string $possibleChars
+     */
+    public function testAppendUniqueIdentifier($expected, $str, $size = 4, $sizeMax = -1, $possibleChars = '')
+    {
+        $this->assertEquals($expected, \mb_strlen(libstr_appendUniqueIdentifier($str, $size, $sizeMax, $possibleChars)));
+    }
+    public function appendUniqueIdentifierProvider()
+    {
+        return [
+            [5, 'a'],
+            [8, 'afd', 5, -1, 'ФОРЫВДалыдлорафдлуОГР123']
         ];
     }
 }

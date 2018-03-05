@@ -66,6 +66,15 @@ class StrTest extends TestCase
 
         $s = new Str('no');
         $this->assertFalse($s->toBoolean());
+
+        $s = new Str('email@email.com');
+        $this->assertTrue($s->isEmail());
+
+        $s = new Str('1.0.1.0');
+        $this->assertTrue($s->isIpV4());
+
+        $s = new Str('2001:cdba::3257:9652');
+        $this->assertTrue($s->isIpV6());
     }
 
     public function testModifiers()
@@ -201,7 +210,10 @@ class StrTest extends TestCase
     public function testRandomFunctions()
     {
         $s = new Str('HeLlo 世 fòôbàř');
-        $this->assertEquals(\mb_strlen((string)$s), \mb_strlen((string)$s->shuffle()));
+        $len = \mb_strlen((string)$s);
+        $this->assertEquals($len, \mb_strlen((string)$s->shuffle()));
+        $this->assertEquals($len, \mb_strlen($s->random($len, -1, (string)$s)));
+        $this->assertEquals($len * 2, \mb_strlen((string)$s->appendUniqueIdentifier($len, -1, (string)$s)));
     }
 
     public function testRegexFunctions()
