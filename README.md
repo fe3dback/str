@@ -149,10 +149,6 @@ composer require str/str
 - [x] popReversed
 
 ### Todo New
-- [ ] formatNumber
-- [ ] toNumber
-- [ ] toInt
-- [ ] toFloat
 
 ## Optimization
 
