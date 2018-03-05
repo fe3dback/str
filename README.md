@@ -138,12 +138,12 @@ composer require str/str
 - [x] isIpV6
 - [x] random
 - [x] appendUniqueIdentifier
+- [x] quote
+- [x] unquote
+- [x] words
 
 ### Todo New
 - [ ] ord
-- [ ] quote
-- [ ] unquote
-- [ ] words
 - [ ] formatNumber
 - [ ] toNumber
 - [ ] toInt

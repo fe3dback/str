@@ -19,6 +19,7 @@ use function Str\Lib\libstr_hasSuffix;
 use function Str\Lib\libstr_contains;
 use function Str\Lib\libstr_move;
 use function Str\Lib\libstr_overwrite;
+use function Str\Lib\libstr_quote;
 use function Str\Lib\libstr_random;
 use function Str\Lib\libstr_replace;
 use function Str\Lib\libstr_snakeize;
@@ -61,6 +62,7 @@ use function Str\Lib\libstr_dasherize;
 use function Str\Lib\libstr_delimit;
 use function Str\Lib\libstr_lowerCaseFirst;
 use function Str\Lib\libstr_regexReplace;
+use function Str\Lib\libstr_unquote;
 use function Str\Lib\libstr_upperCaseFirst;
 use function Str\Lib\libstr_isUUIDv4;
 use function Str\Lib\libstr_hasLowerCase;
@@ -98,6 +100,7 @@ use function Str\Lib\libstr_toSpaces;
 use function Str\Lib\libstr_toTabs;
 use function Str\Lib\libstr_toTitleCase;
 use function Str\Lib\libstr_underscored;
+use function Str\Lib\libstr_words;
 
 class StrMBTest extends TestCase
 {
@@ -2779,6 +2782,70 @@ class StrMBTest extends TestCase
         return [
             [5, 'a'],
             [8, 'afd', 5, -1, 'ФОРЫВДалыдлорафдлуОГР123']
+        ];
+    }
+
+    /**
+     * @dataProvider wordsProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testWords($expected, $str)
+    {
+        $result = libstr_words($str);
+        $expectedCount = count($expected);
+
+        if ($expectedCount === 0) { $this->assertEmpty($result); }
+
+        for ($i = 0; $i < $expectedCount; $i++) {
+            $this->assertEquals($expected[$i], $result[$i]);
+        }
+    }
+    public function wordsProvider()
+    {
+        return [
+            [[], ''],
+            [[''], '  '],
+            [['foo', 'bar'], "foo\nbar"],
+            [['foo', 'bar'], 'foo  bar'],
+            [['foo', 'bar'], 'foo   bar'],
+            [['fòô', 'bàř'], 'fòô bàř']
+        ];
+    }
+
+    /**
+     * @dataProvider quoteProvider()
+     * @param $expected
+     * @param $str
+     * @param string $quote
+     */
+    public function testQuote($expected, $str, $quote = '"')
+    {
+        $this->assertEquals($expected, libstr_quote($str, $quote));
+    }
+    public function quoteProvider()
+    {
+        return [
+            ['"Hey," "there" "are" "your" "quoted" "words."', 'Hey,  there are your     quoted words.'],
+            ['%$Hey,%$ %$there%$ %$are%$ %$your%$ %$quoted%$ %$words.%$', 'Hey,  there are your     quoted words.', '%$']
+        ];
+    }
+
+    /**
+     * @dataProvider unquoteProvider()
+     * @param $expected
+     * @param $str
+     * @param string $quote
+     */
+    public function testUnquote($expected, $str, $quote = '"')
+    {
+        $this->assertEquals($expected, libstr_unquote($str, $quote));
+    }
+    public function unquoteProvider()
+    {
+        return [
+            ['Hey, there are your quoted words.', '"Hey," "there" "are" "your" "quoted" "words."'],
+            ['Hey, there are your quoted words.', '%$Hey,%$ %$there%$ %$are%$ %$your%$ %$quoted%$ %$words.%$', '%$']
         ];
     }
 }

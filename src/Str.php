@@ -52,6 +52,7 @@ use function Str\Lib\libstr_langSpecificCharsArray;
 use function Str\Lib\libstr_last;
 use function Str\Lib\libstr_move;
 use function Str\Lib\libstr_overwrite;
+use function Str\Lib\libstr_quote;
 use function Str\Lib\libstr_random;
 use function Str\Lib\libstr_snakeize;
 use function Str\Lib\libstr_split;
@@ -94,9 +95,11 @@ use function Str\Lib\libstr_trimLeft;
 use function Str\Lib\libstr_trimRight;
 use function Str\Lib\libstr_truncate;
 use function Str\Lib\libstr_underscored;
+use function Str\Lib\libstr_unquote;
 use function Str\Lib\libstr_upperCamelize;
 use function Str\Lib\libstr_upperCaseFirst;
 use function Str\Lib\libstr_isJson;
+use function Str\Lib\libstr_words;
 
 class Str
 {
@@ -921,8 +924,7 @@ class Str
     }
 
     /**
-     * Splits on newlines and carriage returns, returning an array of Stringy
-     * objects corresponding to the lines in the string.
+     * Splits on newlines and carriage returns, returning an array of strings corresponding to the lines in the string.
      *
      * @return array of strings
      */
@@ -933,7 +935,7 @@ class Str
 
     /**
      * Splits the string with the provided regular expression, returning an
-     * array of Stringy objects. An optional integer $limit will truncate the
+     * array of strings. An optional integer $limit will truncate the
      * results.
      *
      * @param  string $pattern The regex with which to split the string
@@ -1391,6 +1393,40 @@ class Str
     public function appendUniqueIdentifier(int $size = 4, int $sizeMax = -1, string $possibleChars = ''): Str
     {
         $this->str = libstr_appendUniqueIdentifier($this->str, $size, $sizeMax, $possibleChars);
+        return $this;
+    }
+
+    /**
+     * Splits on whitespace, returning an array of strings corresponding to the lines in the string.
+     *
+     * @return array of strings
+     */
+    public function words(): array
+    {
+        return libstr_words($this->str);
+    }
+
+    /**
+     * Wraps each word in the given $str with specified $quote.
+     *
+     * @param  string $quote Defaults to ".
+     * @return Str
+     */
+    public function quote(string $quote = '"'): Str
+    {
+        $this->str = libstr_quote($this->str, $quote);
+        return $this;
+    }
+
+    /**
+     * Unwraps each word in the given $str, deleting the specified $quote.
+     *
+     * @param  string $quote Defaults to ".
+     * @return Str
+     */
+    public function unquote(string $quote = '"'): Str
+    {
+        $this->str = libstr_unquote($this->str, $quote);
         return $this;
     }
 }

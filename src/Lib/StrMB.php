@@ -2096,3 +2096,58 @@ function libstr_appendUniqueIdentifier(string $str, int $size = 4, int $sizeMax 
 
     return $innerStr . $identifier;
 }
+
+/**
+ * Splits whitespace, returning an array of strings corresponding to the lines in the string.
+ *
+ * @param  string $str
+ * @return array of strings
+ */
+function libstr_words(string $str): array
+{
+    $innerStr = $str;
+
+    return libstr_split($innerStr, '[[:space:]]+');
+}
+
+/**
+ * Wraps each word in the given $str with specified $quote.
+ *
+ * @param  string $str
+ * @param  string $quote Defaults to ".
+ * @return string
+ */
+function libstr_quote(string $str, string $quote = '"'): string
+{
+    $innerStr = $str;
+
+    $words = libstr_words($innerStr);
+    $result = [];
+
+    foreach ($words as $word) {
+        $result[] = $quote . $word . $quote;
+    }
+
+    return \implode(' ', $result);
+}
+
+/**
+ * Unwraps each word in the given $str, deleting the specified $quote.
+ *
+ * @param  string $str
+ * @param  string $quote Defaults to ".
+ * @return string
+ */
+function libstr_unquote(string $str, string $quote = '"'): string
+{
+    $innerStr = $str;
+
+    $words = libstr_words($innerStr);
+    $result = [];
+
+    foreach ($words as $word) {
+        $result[] = libstr_trim($word, $quote);
+    }
+
+    return \implode(' ', $result);
+}

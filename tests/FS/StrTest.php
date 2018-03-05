@@ -152,6 +152,8 @@ class StrTest extends TestCase
         $this->assertEquals("strwith\ttabs", $s->toTabs(1));
         $this->assertEquals("Strwith\tTabs", $s->toTitleCase());
         $this->assertEquals("hello with\tTabs", $s->overwrite(0, 3, 'hello '));
+        $this->assertEquals('"hello" "with" "Tabs"', $s->quote());
+        $this->assertEquals('hello with Tabs', $s->unquote());
     }
 
     public function testTrim()
@@ -242,6 +244,9 @@ class StrTest extends TestCase
 
         $s = new Str('foo foo foo');
         $this->assertEquals(['foo', 'foo', 'foo'], $s->split(' '));
+
+        $s = new Str('foo   foo foo');
+        $this->assertEquals(['foo', 'foo', 'foo'], $s->words());
     }
 
     public function testComparingFunctions()
