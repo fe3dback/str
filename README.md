@@ -187,14 +187,29 @@ lib code tests (versus):
 ./vendor/bin/phpbench run --config=bench_lib.json --report=str
 ```
 
+how to get total RANK:
+```bash
+./vendor/bin/phpbench run --config=bench_lib.json --report=str | php benchmarks/score.php
+```
+
 generate md:
 ```bash
-./vendor/bin/phpbench run -o markdown --report=str
+./vendor/bin/phpbench run --config=bench_lib.json --report=str -o markdown > benchmark.md
 ```
 
 Test subjects:
 - FS ([str/str](https://github.com/fe3dback/str))
 - Stringy ([danielstjules/Stringy](https://github.com/danielstjules/Stringy))
+
+----
+
+RANK (sum time of all benchmarks): 
+__smaller - is better!__
+
+Target | Total Time | Diff
+--- | --- | ---
+Str | 32.767 s. | 1x
+Stringy | 75.786 s. | 2.3x
 
 ----
 

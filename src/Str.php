@@ -9,7 +9,6 @@ use function Str\Lib\libstr_afterLast;
 use function Str\Lib\libstr_appendUniqueIdentifier;
 use function Str\Lib\libstr_at;
 use function Str\Lib\libstr_append;
-use function Str\Lib\libstr_applyPadding;
 use function Str\Lib\libstr_beforeFirst;
 use function Str\Lib\libstr_beforeLast;
 use function Str\Lib\libstr_between;
@@ -54,6 +53,9 @@ use function Str\Lib\libstr_langSpecificCharsArray;
 use function Str\Lib\libstr_last;
 use function Str\Lib\libstr_move;
 use function Str\Lib\libstr_overwrite;
+use function Str\Lib\libstr_padBoth;
+use function Str\Lib\libstr_padLeft;
+use function Str\Lib\libstr_padRight;
 use function Str\Lib\libstr_pop;
 use function Str\Lib\libstr_popReversed;
 use function Str\Lib\libstr_quote;
@@ -69,7 +71,6 @@ use function Str\Lib\libstr_longestCommonSubstring;
 use function Str\Lib\libstr_longestCommonSuffix;
 use function Str\Lib\libstr_lowerCaseFirst;
 use function Str\Lib\libstr_matchesPattern;
-use function Str\Lib\libstr_pad;
 use function Str\Lib\libstr_prepend;
 use function Str\Lib\libstr_regexReplace;
 use function Str\Lib\libstr_removeLeft;
@@ -510,25 +511,8 @@ class Str
     }
 
     /**
-     * Pads the string to a given length with $padStr. If length is less than
-     * or equal to the length of the string, no padding takes places. The
-     * default string used for padding is a space, and the default type (one of
-     * 'left', 'right', 'both') is 'right'.
-     *
-     * @param  int    $length  Desired string length after padding
-     * @param  string $padStr  String used to pad, defaults to space
-     * @param  string $padType One of 'left', 'right', 'both'
-     * @return Str
-     */
-    public function pad(int $length, string $padStr = ' ', string $padType = 'right'): Str
-    {
-        $this->str = libstr_pad($this->str, $length, $padStr, $padType);
-        return $this;
-    }
-
-    /**
      * Returns a new string of a given length such that both sides of the
-     * string are padded. Alias for pad() with a $padType of 'both'.
+     * string are padded.
      *
      * @param  int    $length Desired string length after padding
      * @param  string $padStr String used to pad, defaults to space
@@ -536,17 +520,13 @@ class Str
      */
     public function padBoth(int $length, string $padStr = ' '): Str
     {
-        $padding = $length - \mb_strlen($this->str);
-
-        $this->str = libstr_applyPadding($this->str, (int)floor($padding / 2), (int)ceil($padding / 2),
-            $padStr);
-
+        $this->str = libstr_padBoth($this->str, $length, $padStr);
         return $this;
     }
 
     /**
      * Returns a new string of a given length such that the beginning of the
-     * string is padded. Alias for pad() with a $padType of 'left'.
+     * string is padded.
      *
      * @param  int    $length Desired string length after padding
      * @param  string $padStr String used to pad, defaults to space
@@ -554,13 +534,13 @@ class Str
      */
     public function padLeft(int $length, string $padStr = ' '): Str
     {
-        $this->str = libstr_applyPadding($this->str, $length - \mb_strlen($this->str), 0, $padStr);
+        $this->str = libstr_padLeft($this->str, $length, $padStr);
         return $this;
     }
 
     /**
      * Returns a new string of a given length such that the end of the string
-     * is padded. Alias for pad() with a $padType of 'right'.
+     * is padded.
      *
      * @param  int    $length Desired string length after padding
      * @param  string $padStr String used to pad, defaults to space
@@ -568,7 +548,7 @@ class Str
      */
     public function padRight(int $length, string $padStr = ' '): Str
     {
-        $this->str = libstr_applyPadding($this->str, 0, $length - \mb_strlen($this->str), $padStr);
+        $this->str = libstr_padRight($this->str, $length, $padStr);
         return $this;
     }
 

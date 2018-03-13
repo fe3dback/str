@@ -102,7 +102,7 @@ class StrTest extends TestCase
         $this->assertEquals('', $s->last(-1));
 
         $s = new Str('fòô');
-        $this->assertEquals('   fòô   ', $s->pad(9, ' ', 'both'));
+        $this->assertEquals('   fòô   ', $s->padBoth(9, ' '));
         $this->assertEquals('bàř   fòô   ', $s->padLeft(12, 'bàř'));
         $this->assertEquals('bàř   fòô   bàř', $s->padRight(15, 'bàř'));
         $this->assertEquals('bàbàř   fòô   bàřbà', $s->padBoth(19, 'bàř'));

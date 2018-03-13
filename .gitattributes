@@ -1,0 +1,22 @@
+# common
+* text=auto
+
+# git
+.editorconfig export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
+_config.yml
+
+# ci
+.travis.yml export-ignore
+.coveralls.yml export-ignore
+.bettercodehub.yml export-ignore
+
+# unit
+phpunit.xml export-ignore
+tests export-ignore
+
+# benchmarks
+benchmarks export-ignore
+bench_internal.json
+bench_lib.json

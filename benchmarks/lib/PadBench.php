@@ -7,14 +7,6 @@ use Stringy\Stringy;
 
 class PadBench
 {
-    public function bench_pad_Str() {
-        (new Str(' hello world '))->pad(3);
-    }
-
-    public function bench_pad_Stringy() {
-        (new Stringy(' hello world '))->pad(3);
-    }
-
     public function bench_pad_both_Str() {
         (new Str(' hello world '))->padBoth(3);
     }

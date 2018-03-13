@@ -55,57 +55,52 @@ function libstr_charsArray(): array
         '8'     => ['⁸', '₈', '۸', '８'],
         '9'     => ['⁹', '₉', '۹', '９'],
         'a'     => ['à', 'á', 'ả', 'ã', 'ạ', 'ă', 'ắ', 'ằ', 'ẳ', 'ẵ',
-            'ặ', 'â', 'ấ', 'ầ', 'ẩ', 'ẫ', 'ậ', 'ā', 'ą', 'å',
-            'α', 'ά', 'ἀ', 'ἁ', 'ἂ', 'ἃ', 'ἄ', 'ἅ', 'ἆ', 'ἇ',
-            'ᾀ', 'ᾁ', 'ᾂ', 'ᾃ', 'ᾄ', 'ᾅ', 'ᾆ', 'ᾇ', 'ὰ', 'ά',
-            'ᾰ', 'ᾱ', 'ᾲ', 'ᾳ', 'ᾴ', 'ᾶ', 'ᾷ', 'а', 'أ', 'အ',
-            'ာ', 'ါ', 'ǻ', 'ǎ', 'ª', 'ა', 'अ', 'ا', 'ａ', 'ä'],
+                    'ặ', 'â', 'ấ', 'ầ', 'ẩ', 'ẫ', 'ậ', 'ā', 'ą', 'å',
+                    'α', 'ά', 'ἀ', 'ἁ', 'ἂ', 'ἃ', 'ἄ', 'ἅ', 'ἆ', 'ἇ',
+                    'ᾀ', 'ᾁ', 'ᾂ', 'ᾃ', 'ᾄ', 'ᾅ', 'ᾆ', 'ᾇ', 'ὰ', 'ά',
+                    'ᾰ', 'ᾱ', 'ᾲ', 'ᾳ', 'ᾴ', 'ᾶ', 'ᾷ', 'а', 'أ', 'အ',
+                    'ာ', 'ါ', 'ǻ', 'ǎ', 'ª', 'ა', 'अ', 'ا', 'ａ', 'ä'],
         'b'     => ['б', 'β', 'ب', 'ဗ', 'ბ', 'ｂ'],
         'c'     => ['ç', 'ć', 'č', 'ĉ', 'ċ', 'ｃ'],
         'd'     => ['ď', 'ð', 'đ', 'ƌ', 'ȡ', 'ɖ', 'ɗ', 'ᵭ', 'ᶁ', 'ᶑ',
-            'д', 'δ', 'د', 'ض', 'ဍ', 'ဒ', 'დ', 'ｄ'],
+                    'д', 'δ', 'د', 'ض', 'ဍ', 'ဒ', 'დ', 'ｄ'],
         'e'     => ['é', 'è', 'ẻ', 'ẽ', 'ẹ', 'ê', 'ế', 'ề', 'ể', 'ễ',
-            'ệ', 'ë', 'ē', 'ę', 'ě', 'ĕ', 'ė', 'ε', 'έ', 'ἐ',
-            'ἑ', 'ἒ', 'ἓ', 'ἔ', 'ἕ', 'ὲ', 'έ', 'е', 'ё', 'э',
-            'є', 'ə', 'ဧ', 'ေ', 'ဲ', 'ე', 'ए', 'إ', 'ئ', 'ｅ'],
+                    'ệ', 'ë', 'ē', 'ę', 'ě', 'ĕ', 'ė', 'ε', 'έ', 'ἐ',
+                    'ἑ', 'ἒ', 'ἓ', 'ἔ', 'ἕ', 'ὲ', 'έ', 'е', 'ё', 'э',
+                    'є', 'ə', 'ဧ', 'ေ', 'ဲ', 'ე', 'ए', 'إ', 'ئ', 'ｅ'],
         'f'     => ['ф', 'φ', 'ف', 'ƒ', 'ფ', 'ｆ'],
-        'g'     => ['ĝ', 'ğ', 'ġ', 'ģ', 'г', 'ґ', 'γ', 'ဂ', 'გ', 'گ',
-            'ｇ'],
+        'g'     => ['ĝ', 'ğ', 'ġ', 'ģ', 'г', 'ґ', 'γ', 'ဂ', 'გ', 'گ', 'ｇ'],
         'h'     => ['ĥ', 'ħ', 'η', 'ή', 'ح', 'ه', 'ဟ', 'ှ', 'ჰ', 'ｈ'],
         'i'     => ['í', 'ì', 'ỉ', 'ĩ', 'ị', 'î', 'ï', 'ī', 'ĭ', 'į',
-            'ı', 'ι', 'ί', 'ϊ', 'ΐ', 'ἰ', 'ἱ', 'ἲ', 'ἳ', 'ἴ',
-            'ἵ', 'ἶ', 'ἷ', 'ὶ', 'ί', 'ῐ', 'ῑ', 'ῒ', 'ΐ', 'ῖ',
-            'ῗ', 'і', 'ї', 'и', 'ဣ', 'ိ', 'ီ', 'ည်', 'ǐ', 'ი',
-            'इ', 'ی', 'ｉ'],
+                    'ı', 'ι', 'ί', 'ϊ', 'ΐ', 'ἰ', 'ἱ', 'ἲ', 'ἳ', 'ἴ',
+                    'ἵ', 'ἶ', 'ἷ', 'ὶ', 'ί', 'ῐ', 'ῑ', 'ῒ', 'ΐ', 'ῖ',
+                    'ῗ', 'і', 'ї', 'и', 'ဣ', 'ိ', 'ီ', 'ည်', 'ǐ', 'ი',
+                    'इ', 'ی', 'ｉ'],
         'j'     => ['ĵ', 'ј', 'Ј', 'ჯ', 'ج', 'ｊ'],
         'k'     => ['ķ', 'ĸ', 'к', 'κ', 'Ķ', 'ق', 'ك', 'က', 'კ', 'ქ',
-            'ک', 'ｋ'],
-        'l'     => ['ł', 'ľ', 'ĺ', 'ļ', 'ŀ', 'л', 'λ', 'ل', 'လ', 'ლ',
-            'ｌ'],
+                    'ک', 'ｋ'],
+        'l'     => ['ł', 'ľ', 'ĺ', 'ļ', 'ŀ', 'л', 'λ', 'ل', 'လ', 'ლ', 'ｌ'],
         'm'     => ['м', 'μ', 'م', 'မ', 'მ', 'ｍ'],
-        'n'     => ['ñ', 'ń', 'ň', 'ņ', 'ŉ', 'ŋ', 'ν', 'н', 'ن', 'န',
-            'ნ', 'ｎ'],
+        'n'     => ['ñ', 'ń', 'ň', 'ņ', 'ŉ', 'ŋ', 'ν', 'н', 'ن', 'န', 'ნ', 'ｎ'],
         'o'     => ['ó', 'ò', 'ỏ', 'õ', 'ọ', 'ô', 'ố', 'ồ', 'ổ', 'ỗ',
-            'ộ', 'ơ', 'ớ', 'ờ', 'ở', 'ỡ', 'ợ', 'ø', 'ō', 'ő',
-            'ŏ', 'ο', 'ὀ', 'ὁ', 'ὂ', 'ὃ', 'ὄ', 'ὅ', 'ὸ', 'ό',
-            'о', 'و', 'θ', 'ို', 'ǒ', 'ǿ', 'º', 'ო', 'ओ', 'ｏ',
-            'ö'],
+                    'ộ', 'ơ', 'ớ', 'ờ', 'ở', 'ỡ', 'ợ', 'ø', 'ō', 'ő',
+                    'ŏ', 'ο', 'ὀ', 'ὁ', 'ὂ', 'ὃ', 'ὄ', 'ὅ', 'ὸ', 'ό',
+                    'о', 'و', 'θ', 'ို', 'ǒ', 'ǿ', 'º', 'ო', 'ओ', 'ｏ',
+                    'ö'],
         'p'     => ['п', 'π', 'ပ', 'პ', 'پ', 'ｐ'],
         'q'     => ['ყ', 'ｑ'],
         'r'     => ['ŕ', 'ř', 'ŗ', 'р', 'ρ', 'ر', 'რ', 'ｒ'],
-        's'     => ['ś', 'š', 'ş', 'с', 'σ', 'ș', 'ς', 'س', 'ص', 'စ',
-            'ſ', 'ს', 'ｓ'],
-        't'     => ['ť', 'ţ', 'т', 'τ', 'ț', 'ت', 'ط', 'ဋ', 'တ', 'ŧ',
-            'თ', 'ტ', 'ｔ'],
+        's'     => ['ś', 'š', 'ş', 'с', 'σ', 'ș', 'ς', 'س', 'ص', 'စ', 'ſ', 'ს', 'ｓ'],
+        't'     => ['ť', 'ţ', 'т', 'τ', 'ț', 'ت', 'ط', 'ဋ', 'တ', 'ŧ', 'თ', 'ტ', 'ｔ'],
         'u'     => ['ú', 'ù', 'ủ', 'ũ', 'ụ', 'ư', 'ứ', 'ừ', 'ử', 'ữ',
-            'ự', 'û', 'ū', 'ů', 'ű', 'ŭ', 'ų', 'µ', 'у', 'ဉ',
-            'ု', 'ူ', 'ǔ', 'ǖ', 'ǘ', 'ǚ', 'ǜ', 'უ', 'उ', 'ｕ',
-            'ў', 'ü'],
+                    'ự', 'û', 'ū', 'ů', 'ű', 'ŭ', 'ų', 'µ', 'у', 'ဉ',
+                    'ု', 'ူ', 'ǔ', 'ǖ', 'ǘ', 'ǚ', 'ǜ', 'უ', 'उ', 'ｕ',
+                    'ў', 'ü'],
         'v'     => ['в', 'ვ', 'ϐ', 'ｖ'],
         'w'     => ['ŵ', 'ω', 'ώ', 'ဝ', 'ွ', 'ｗ'],
         'x'     => ['χ', 'ξ', 'ｘ'],
         'y'     => ['ý', 'ỳ', 'ỷ', 'ỹ', 'ỵ', 'ÿ', 'ŷ', 'й', 'ы', 'υ',
-            'ϋ', 'ύ', 'ΰ', 'ي', 'ယ', 'ｙ'],
+                    'ϋ', 'ύ', 'ΰ', 'ي', 'ယ', 'ｙ'],
         'z'     => ['ź', 'ž', 'ż', 'з', 'ζ', 'ز', 'ဇ', 'ზ', 'ｚ'],
         'aa'    => ['ع', 'आ', 'آ'],
         'ae'    => ['æ', 'ǽ'],
@@ -136,47 +131,46 @@ function libstr_charsArray(): array
         'zh'    => ['ж', 'ჟ', 'ژ'],
         '(c)'   => ['©'],
         'A'     => ['Á', 'À', 'Ả', 'Ã', 'Ạ', 'Ă', 'Ắ', 'Ằ', 'Ẳ', 'Ẵ',
-            'Ặ', 'Â', 'Ấ', 'Ầ', 'Ẩ', 'Ẫ', 'Ậ', 'Å', 'Ā', 'Ą',
-            'Α', 'Ά', 'Ἀ', 'Ἁ', 'Ἂ', 'Ἃ', 'Ἄ', 'Ἅ', 'Ἆ', 'Ἇ',
-            'ᾈ', 'ᾉ', 'ᾊ', 'ᾋ', 'ᾌ', 'ᾍ', 'ᾎ', 'ᾏ', 'Ᾰ', 'Ᾱ',
-            'Ὰ', 'Ά', 'ᾼ', 'А', 'Ǻ', 'Ǎ', 'Ａ', 'Ä'],
+                    'Ặ', 'Â', 'Ấ', 'Ầ', 'Ẩ', 'Ẫ', 'Ậ', 'Å', 'Ā', 'Ą',
+                    'Α', 'Ά', 'Ἀ', 'Ἁ', 'Ἂ', 'Ἃ', 'Ἄ', 'Ἅ', 'Ἆ', 'Ἇ',
+                    'ᾈ', 'ᾉ', 'ᾊ', 'ᾋ', 'ᾌ', 'ᾍ', 'ᾎ', 'ᾏ', 'Ᾰ', 'Ᾱ',
+                    'Ὰ', 'Ά', 'ᾼ', 'А', 'Ǻ', 'Ǎ', 'Ａ', 'Ä'],
         'B'     => ['Б', 'Β', 'ब', 'Ｂ'],
         'C'     => ['Ç','Ć', 'Č', 'Ĉ', 'Ċ', 'Ｃ'],
-        'D'     => ['Ď', 'Ð', 'Đ', 'Ɖ', 'Ɗ', 'Ƌ', 'ᴅ', 'ᴆ', 'Д', 'Δ',
-            'Ｄ'],
+        'D'     => ['Ď', 'Ð', 'Đ', 'Ɖ', 'Ɗ', 'Ƌ', 'ᴅ', 'ᴆ', 'Д', 'Δ', 'Ｄ'],
         'E'     => ['É', 'È', 'Ẻ', 'Ẽ', 'Ẹ', 'Ê', 'Ế', 'Ề', 'Ể', 'Ễ',
-            'Ệ', 'Ë', 'Ē', 'Ę', 'Ě', 'Ĕ', 'Ė', 'Ε', 'Έ', 'Ἐ',
-            'Ἑ', 'Ἒ', 'Ἓ', 'Ἔ', 'Ἕ', 'Έ', 'Ὲ', 'Е', 'Ё', 'Э',
-            'Є', 'Ə', 'Ｅ'],
+                    'Ệ', 'Ë', 'Ē', 'Ę', 'Ě', 'Ĕ', 'Ė', 'Ε', 'Έ', 'Ἐ',
+                    'Ἑ', 'Ἒ', 'Ἓ', 'Ἔ', 'Ἕ', 'Έ', 'Ὲ', 'Е', 'Ё', 'Э',
+                    'Є', 'Ə', 'Ｅ'],
         'F'     => ['Ф', 'Φ', 'Ｆ'],
         'G'     => ['Ğ', 'Ġ', 'Ģ', 'Г', 'Ґ', 'Γ', 'Ｇ'],
         'H'     => ['Η', 'Ή', 'Ħ', 'Ｈ'],
         'I'     => ['Í', 'Ì', 'Ỉ', 'Ĩ', 'Ị', 'Î', 'Ï', 'Ī', 'Ĭ', 'Į',
-            'İ', 'Ι', 'Ί', 'Ϊ', 'Ἰ', 'Ἱ', 'Ἳ', 'Ἴ', 'Ἵ', 'Ἶ',
-            'Ἷ', 'Ῐ', 'Ῑ', 'Ὶ', 'Ί', 'И', 'І', 'Ї', 'Ǐ', 'ϒ',
-            'Ｉ'],
+                    'İ', 'Ι', 'Ί', 'Ϊ', 'Ἰ', 'Ἱ', 'Ἳ', 'Ἴ', 'Ἵ', 'Ἶ',
+                    'Ἷ', 'Ῐ', 'Ῑ', 'Ὶ', 'Ί', 'И', 'І', 'Ї', 'Ǐ', 'ϒ',
+                    'Ｉ'],
         'J'     => ['Ｊ'],
         'K'     => ['К', 'Κ', 'Ｋ'],
         'L'     => ['Ĺ', 'Ł', 'Л', 'Λ', 'Ļ', 'Ľ', 'Ŀ', 'ल', 'Ｌ'],
         'M'     => ['М', 'Μ', 'Ｍ'],
         'N'     => ['Ń', 'Ñ', 'Ň', 'Ņ', 'Ŋ', 'Н', 'Ν', 'Ｎ'],
         'O'     => ['Ó', 'Ò', 'Ỏ', 'Õ', 'Ọ', 'Ô', 'Ố', 'Ồ', 'Ổ', 'Ỗ',
-            'Ộ', 'Ơ', 'Ớ', 'Ờ', 'Ở', 'Ỡ', 'Ợ', 'Ø', 'Ō', 'Ő',
-            'Ŏ', 'Ο', 'Ό', 'Ὀ', 'Ὁ', 'Ὂ', 'Ὃ', 'Ὄ', 'Ὅ', 'Ὸ',
-            'Ό', 'О', 'Θ', 'Ө', 'Ǒ', 'Ǿ', 'Ｏ', 'Ö'],
+                    'Ộ', 'Ơ', 'Ớ', 'Ờ', 'Ở', 'Ỡ', 'Ợ', 'Ø', 'Ō', 'Ő',
+                    'Ŏ', 'Ο', 'Ό', 'Ὀ', 'Ὁ', 'Ὂ', 'Ὃ', 'Ὄ', 'Ὅ', 'Ὸ',
+                    'Ό', 'О', 'Θ', 'Ө', 'Ǒ', 'Ǿ', 'Ｏ', 'Ö'],
         'P'     => ['П', 'Π', 'Ｐ'],
         'Q'     => ['Ｑ'],
         'R'     => ['Ř', 'Ŕ', 'Р', 'Ρ', 'Ŗ', 'Ｒ'],
         'S'     => ['Ş', 'Ŝ', 'Ș', 'Š', 'Ś', 'С', 'Σ', 'Ｓ'],
         'T'     => ['Ť', 'Ţ', 'Ŧ', 'Ț', 'Т', 'Τ', 'Ｔ'],
         'U'     => ['Ú', 'Ù', 'Ủ', 'Ũ', 'Ụ', 'Ư', 'Ứ', 'Ừ', 'Ử', 'Ữ',
-            'Ự', 'Û', 'Ū', 'Ů', 'Ű', 'Ŭ', 'Ų', 'У', 'Ǔ', 'Ǖ',
-            'Ǘ', 'Ǚ', 'Ǜ', 'Ｕ', 'Ў', 'Ü'],
+                    'Ự', 'Û', 'Ū', 'Ů', 'Ű', 'Ŭ', 'Ų', 'У', 'Ǔ', 'Ǖ',
+                    'Ǘ', 'Ǚ', 'Ǜ', 'Ｕ', 'Ў', 'Ü'],
         'V'     => ['В', 'Ｖ'],
         'W'     => ['Ω', 'Ώ', 'Ŵ', 'Ｗ'],
         'X'     => ['Χ', 'Ξ', 'Ｘ'],
         'Y'     => ['Ý', 'Ỳ', 'Ỷ', 'Ỹ', 'Ỵ', 'Ÿ', 'Ῠ', 'Ῡ', 'Ὺ', 'Ύ',
-            'Ы', 'Й', 'Υ', 'Ϋ', 'Ŷ', 'Ｙ'],
+                    'Ы', 'Й', 'Υ', 'Ϋ', 'Ŷ', 'Ｙ'],
         'Z'     => ['Ź', 'Ž', 'Ż', 'З', 'Ζ', 'Ｚ'],
         'AE'    => ['Æ', 'Ǽ'],
         'Ch'    => ['Ч'],
@@ -200,11 +194,11 @@ function libstr_charsArray(): array
         'Yu'    => ['Ю'],
         'Zh'    => ['Ж'],
         ' '     => ["\xC2\xA0", "\xE2\x80\x80", "\xE2\x80\x81",
-            "\xE2\x80\x82", "\xE2\x80\x83", "\xE2\x80\x84",
-            "\xE2\x80\x85", "\xE2\x80\x86", "\xE2\x80\x87",
-            "\xE2\x80\x88", "\xE2\x80\x89", "\xE2\x80\x8A",
-            "\xE2\x80\xAF", "\xE2\x81\x9F", "\xE3\x80\x80",
-            "\xEF\xBE\xA0"],
+                    "\xE2\x80\x82", "\xE2\x80\x83", "\xE2\x80\x84",
+                    "\xE2\x80\x85", "\xE2\x80\x86", "\xE2\x80\x87",
+                    "\xE2\x80\x88", "\xE2\x80\x89", "\xE2\x80\x8A",
+                    "\xE2\x80\xAF", "\xE2\x81\x9F", "\xE3\x80\x80",
+                    "\xEF\xBE\xA0"],
     ];
 }
 
@@ -257,7 +251,7 @@ function libstr_length(string $str): int
  */
 function libstr_contains(string $haystack, string $needle, bool $caseSensitive = true): bool
 {
-    if ($haystack === '' || $needle === '') { return true; }
+    if ($haystack === '' || $needle === '') { return false; }
 
     if ($caseSensitive) {
         return false !== \mb_strpos($haystack, $needle);
@@ -268,7 +262,7 @@ function libstr_contains(string $haystack, string $needle, bool $caseSensitive =
 
 /**
  * Returns the index of the first occurrence of $needle in the string,
- * and false if not found. Accepts an optional offset from which to begin
+ * and -1 if not found. Accepts an optional offset from which to begin
  * the search.
  *
  * @param  string $haystack
@@ -297,7 +291,7 @@ function libstr_indexOf(string $haystack, string $needle, int $offset = 0): int
 
 /**
  * Returns the index of the last occurrence of $needle in the string,
- * and false if not found. Accepts an optional offset from which to begin
+ * and -1 if not found. Accepts an optional offset from which to begin
  * the search. Offsets may be negative to count from the last character
  * in the string.
  *
@@ -320,7 +314,7 @@ function libstr_indexOfLast(string $haystack, string $needle, int $offset = 0): 
 
     if ($offset < 0) { return -1; }
 
-    $pos = \mb_strrpos($haystack, $needle, $offset) ?: -1;
+    $pos = \mb_strrpos($haystack, $needle, $offset);
 
     return false === $pos ? -1 : $pos;
 }
@@ -341,8 +335,8 @@ function libstr_countSubstr(string $haystack, string $needle, bool $caseSensitiv
         return \mb_substr_count($haystack, $needle);
     }
 
-    $haystack = (string)\mb_strtoupper($haystack);
-    $needle = (string)\mb_strtoupper($needle);
+    $haystack = \mb_strtoupper($haystack);
+    $needle = \mb_strtoupper($needle);
 
     return \mb_substr_count($haystack, $needle);
 }
@@ -401,17 +395,11 @@ function libstr_containsAny(string $str, array $needles, bool $caseSensitive = t
  */
 function libstr_startsWith(string $str, string $substring, bool $caseSensitive = true): bool
 {
-    if ('' === $str && '' !== $substring) { return false; }
-
-    $substringLength = \mb_strlen($substring);
-    $startOfStr = \mb_substr($str, 0, $substringLength);
-
-    if (!$caseSensitive) {
-        $substring = (string)\mb_strtolower($substring);
-        $startOfStr = \mb_strtolower($startOfStr);
+    if ($caseSensitive) {
+        return libstr_hasPrefix($str, $substring);
     }
 
-    return $substring === $startOfStr;
+    return libstr_hasPrefix(\mb_strtoupper($str), \mb_strtoupper($substring));
 }
 
 /**
@@ -447,17 +435,11 @@ function libstr_startsWithAny(string $str, array $substrings, bool $caseSensitiv
  */
 function libstr_endsWith(string $str, string $substring, bool $caseSensitive = true): bool
 {
-    $substringLength = \mb_strlen($substring);
-    $strLength = \mb_strlen($str);
-
-    $endOfStr = \mb_substr($str, $strLength - $substringLength, $substringLength);
-
-    if (!$caseSensitive) {
-        $substring = (string)\mb_strtolower($substring);
-        $endOfStr = \mb_strtolower($endOfStr);
+    if ($caseSensitive) {
+        return libstr_hasSuffix($str, $substring);
     }
 
-    return $substring === $endOfStr;
+    return libstr_hasSuffix(\mb_strtoupper($str), \mb_strtoupper($substring));
 }
 
 /**
@@ -492,12 +474,12 @@ function libstr_isUUIDv4(string $str): bool
 {
     $l = '[a-f0-9]';
     $pattern = "/^{$l}{8}-?{$l}{4}-?4{$l}{3}-?[89ab]{$l}{3}-?{$l}{12}\Z/";
-
-    return (bool) \preg_match($pattern, $str);
+    return (bool)\preg_match($pattern, $str);
 }
 
 /**
  * Returns true if the string contains a lower case char, false otherwise.
+ * This function check only ascii [a-z] chars.
  *
  * @param  string $str
  * @return bool
@@ -509,6 +491,7 @@ function libstr_hasLowerCase(string $str): bool
 
 /**
  * Returns true if the string contains an upper case char, false otherwise.
+ * This function check only ascii [A-Z] chars.
  *
  * @param  string $str
  * @return bool
@@ -532,6 +515,7 @@ function libstr_matchesPattern(string $str, string $pattern): bool
 
 /**
  * Returns true if the string contains only alphabetic chars, false otherwise.
+ * This function check only ascii [a-zA-Z] chars.
  *
  * @param  string $str
  * @return bool   Whether or not $str contains only alphabetic chars
@@ -543,6 +527,7 @@ function libstr_isAlpha(string $str): bool
 
 /**
  * Returns true if the string contains only alphabetic and numeric chars, false otherwise.
+ * This function check only ascii [a-zA-Z0-9] chars.
  *
  * @param  string $str
  * @return bool   Whether or not $str contains only alphanumeric chars
@@ -550,17 +535,6 @@ function libstr_isAlpha(string $str): bool
 function libstr_isAlphanumeric(string $str): bool
 {
     return libstr_matchesPattern($str,'^[[:alnum:]]*$');
-}
-
-/**
- * Returns true if the string is base64 encoded, false otherwise.
- *
- * @param  string $str
- * @return bool   Whether or not $str is base64 encoded
- */
-function libstr_isBase64(string $str): bool
-{
-    return (base64_encode(base64_decode($str)) === $str);
 }
 
 /**
@@ -575,7 +549,19 @@ function libstr_isBlank(string $str): bool
 }
 
 /**
+ * Returns true if the string is base64 encoded, false otherwise.
+ *
+ * @param  string $str
+ * @return bool   Whether or not $str is base64 encoded
+ */
+function libstr_isBase64(string $str): bool
+{
+    return (base64_encode(base64_decode($str)) === $str);
+}
+
+/**
  * Returns true if the string contains only hexadecimal chars, false otherwise.
+ * This function check only ascii [A-Fa-f0-9] chars.
  *
  * @param  string $str
  * @return bool   Whether or not $str contains only hexadecimal chars
@@ -598,12 +584,12 @@ function libstr_isJson(string $str): bool
     if ('' === $str) { return false; }
 
     json_decode($str);
-
-    return (json_last_error() === JSON_ERROR_NONE);
+    return json_last_error() === JSON_ERROR_NONE;
 }
 
 /**
  * Returns true if the string contains only lower case chars, false  otherwise.
+ * This function check only ascii [a-z] chars.
  *
  * @param  string $str
  * @return bool   Whether or not $str contains only lower case characters
@@ -611,6 +597,18 @@ function libstr_isJson(string $str): bool
 function libstr_isLowerCase(string $str): bool
 {
     return libstr_matchesPattern($str, '^[[:lower:]]*$');
+}
+
+/**
+ * Returns true if the string contains only lower case chars, false otherwise.
+ * This function check only ascii [A-Z] chars.
+ *
+ * @param  string $str
+ * @return bool   Whether or not $str contains only lower case characters
+ */
+function libstr_isUpperCase(string $str): bool
+{
+    return libstr_matchesPattern($str,'^[[:upper:]]*$');
 }
 
 /**
@@ -622,17 +620,6 @@ function libstr_isLowerCase(string $str): bool
 function libstr_isSerialized(string $str): bool
 {
     return $str === 'b:0;' || @unserialize($str, []) !== false;
-}
-
-/**
- * Returns true if the string contains only lower case chars, false otherwise.
- *
- * @param  string $str
- * @return bool   Whether or not $str contains only lower case characters
- */
-function libstr_isUpperCase(string $str): bool
-{
-    return libstr_matchesPattern($str,'^[[:upper:]]*$');
 }
 
 /**
@@ -649,10 +636,7 @@ function libstr_isUpperCase(string $str): bool
  */
 function libstr_toBoolean(string $str): bool
 {
-    $innerStr = $str;
-    $key = $str;
-    $key = libstr_toLowerCase($key);
-
+    $key = libstr_toLowerCase($str);
     $map = [
         'true'  => true,
         '1'     => true,
@@ -667,12 +651,12 @@ function libstr_toBoolean(string $str): bool
     if (\array_key_exists($key, $map)) {
         return $map[$key];
     }
-    /** @noinspection RedundantElseClauseInspection */
-    elseif (\is_numeric($innerStr)) {
-        return ((int)$innerStr > 0);
+
+    if (\is_numeric($str)) {
+        return ((int)$str > 0);
     }
 
-    return (bool) libstr_regexReplace($innerStr,'[[:space:]]', '');
+    return (bool)libstr_regexReplace($str,'[[:space:]]', '');
 }
 
 /**
@@ -687,7 +671,10 @@ function libstr_toBoolean(string $str): bool
  */
 function libstr_substr(string $s, int $start = 0, int $length = 0): string
 {
-    $length = !$length ? \mb_strlen($s) : $length;
+    if ($length === 0) {
+        $length = libstr_length($s);
+    }
+
     return \mb_substr($s, $start, $length);
 }
 
@@ -711,10 +698,14 @@ function libstr_at(string $s, int $pos): string
  */
 function libstr_chars(string $s): array
 {
+    if ($s === '') {
+        return [];
+    }
+
     $chars = [];
 
-    for ($i = 0, $iMax = \mb_strlen($s); $i < $iMax; $i++) {
-        $chars[] = \mb_substr($s, $i, 1);
+    for ($i = 0, $iMax = libstr_length($s); $i < $iMax; $i++) {
+        $chars[] = libstr_at($s, $i);
     }
 
     return $chars;
@@ -767,7 +758,7 @@ function libstr_replace(string $str, string $old, string $new, int $limit = -1):
 {
     if ($old === $new || $limit === 0) { return $str; }
 
-    $oldCount = \mb_substr_count($str, $old);
+    $oldCount = libstr_countSubstr($str, $old);
 
     if ($oldCount === 0) { return $str; }
 
@@ -799,7 +790,7 @@ function libstr_replace(string $str, string $old, string $new, int $limit = -1):
 function libstr_trim(string $str, string $chars = ''): string
 {
     $chars = $chars ? \preg_quote($chars, '/') : '\s';
-    return (string)\mb_ereg_replace("^[$chars]+|[$chars]+\$", '', $str);
+    return \mb_ereg_replace("^[$chars]+|[$chars]+\$", '', $str);
 }
 
 /**
@@ -814,7 +805,7 @@ function libstr_trim(string $str, string $chars = ''): string
 function libstr_trimLeft(string $str, string $chars = ''): string
 {
     $chars = $chars ? \preg_quote($chars, '/') : '\s';
-    return (string)\mb_ereg_replace("^[$chars]+", '', $str);
+    return \mb_ereg_replace("^[$chars]+", '', $str);
 }
 
 /**
@@ -829,7 +820,7 @@ function libstr_trimLeft(string $str, string $chars = ''): string
 function libstr_trimRight(string $str, string $chars = ''): string
 {
     $chars = $chars ? \preg_quote($chars, '/') : '\s';
-    return (string)\mb_ereg_replace("[$chars]+\$", '', $str);
+    return \mb_ereg_replace("[$chars]+\$", '', $str);
 }
 
 /**
@@ -841,8 +832,7 @@ function libstr_trimRight(string $str, string $chars = ''): string
  */
 function libstr_append(string $str, string $sub): string
 {
-    $result = $str;
-    return $result . $sub;
+    return $str . $sub;
 }
 
 /**
@@ -854,8 +844,7 @@ function libstr_append(string $str, string $sub): string
  */
 function libstr_prepend(string $str, string $sub): string
 {
-    $result = $str;
-    return $sub . $result;
+    return $sub . $str;
 }
 
 /**
@@ -869,8 +858,7 @@ function libstr_prepend(string $str, string $sub): string
 function libstr_ensureLeft(string $str, string $check): string
 {
     if (libstr_hasPrefix($str, $check)) { return $str; }
-
-    return $check . $str;
+    return libstr_prepend($str, $check);
 }
 
 /**
@@ -884,35 +872,7 @@ function libstr_ensureLeft(string $str, string $check): string
 function libstr_ensureRight(string $str, string $check): string
 {
     if (libstr_hasSuffix($str, $check)) { return $str; }
-
-    return $str . $check;
-}
-
-/** @noinspection MoreThanThreeArgumentsInspection */
-/**
- * Pads the string to a given length with $padStr. If length is less than
- * or equal to the length of the string, no padding takes places. The
- * default string used for padding is a space, and the default type (one of
- * 'left', 'right', 'both') is 'right'.
- *
- * @param  string $str
- * @param  int    $length  Desired string length after padding
- * @param  string $padStr  String used to pad, defaults to space
- * @param  string $padType One of 'left', 'right', 'both'
- * @return string
- */
-function libstr_pad(string $str, int $length, string $padStr = ' ', string $padType = 'right'): string
-{
-    if (!\in_array($padType, ['left', 'right', 'both'], true)) { return $str; }
-
-    switch ($padType) {
-        case 'left':
-            return libstr_padLeft($str, $length, $padStr);
-        case 'right':
-            return libstr_padRight($str, $length, $padStr);
-        default:
-            return libstr_padBoth($str, $length, $padStr);
-    }
+    return libstr_append($str, $check);
 }
 
 /**
@@ -927,7 +887,6 @@ function libstr_pad(string $str, int $length, string $padStr = ' ', string $padT
 function libstr_padBoth(string $str, int $length, string $padStr = ' '): string
 {
     $padding = $length - \mb_strlen($str);
-
     return libstr_applyPadding($str, (int)floor($padding / 2), (int)ceil($padding / 2), $padStr);
 }
 
@@ -969,23 +928,21 @@ function libstr_padRight(string $str, int $length, string $padStr = ' '): string
  * @param  int    $right  Length of right padding
  * @param  string $padStr String used to pad
  * @return string
+ *
+ * @internal
  */
 function libstr_applyPadding(string $str, int $left = 0, int $right = 0, string $padStr = ' '): string
 {
-    $result = $str;
-    $length = \mb_strlen($padStr);
+    if ($right + $left <= 0) { return $str; }
+    if ('' === $padStr) { return $str;}
 
-    $strLength = \mb_strlen($result);
-    $paddedLength = $strLength + $left + $right;
+    if (1 === \mb_strlen($padStr)) {
+        return str_repeat($padStr, $left) . $str . str_repeat($padStr, $right);
+    }
 
-    if (!$length || $paddedLength <= $strLength) { return $result; }
-
-    $leftPadding = \mb_substr(str_repeat($padStr, (int)ceil($left / $length)), 0, $left);
-    $rightPadding = \mb_substr(str_repeat($padStr, (int)ceil($right / $length)), 0, $right);
-
-    $result = $leftPadding . $result . $rightPadding;
-
-    return $result;
+    $leftPadding = \mb_substr(str_repeat($padStr, $left), 0, $left);
+    $rightPadding = \mb_substr(str_repeat($padStr, $right), 0, $right);
+    return $leftPadding . $str . $rightPadding;
 }
 
 /**
@@ -998,16 +955,9 @@ function libstr_applyPadding(string $str, int $left = 0, int $right = 0, string 
  */
 function libstr_insert(string $str, string $substring, int $index): string
 {
-    $result = $str;
-
-    if ($index > \mb_strlen($result)) { return $result; }
-
-    $start = \mb_substr($result, 0, $index);
-    $end = \mb_substr($result, $index, \mb_strlen($result));
-
-    $result = $start . $substring . $end;
-
-    return $result;
+    if (0 === $index) { return $substring . $str; }
+    if ($substring === '') { return $str; }
+    return \mb_substr($str, 0, $index) . $substring . \mb_substr($str, $index);
 }
 
 /**
@@ -1019,14 +969,11 @@ function libstr_insert(string $str, string $substring, int $index): string
  */
 function libstr_removeLeft(string $str, string $substring): string
 {
-    $result = $str;
-
-    if (libstr_startsWith($result, $substring)) {
-        $substringLength = \mb_strlen($substring);
-        return libstr_substr($result, $substringLength);
+    if ('' !== $substring && libstr_hasPrefix($str, $substring)) {
+        return \mb_substr($str, \mb_strlen($substring));
     }
 
-    return $result;
+    return $str;
 }
 
 /**
@@ -1038,13 +985,11 @@ function libstr_removeLeft(string $str, string $substring): string
  */
 function libstr_removeRight(string $str, string $substring): string
 {
-    $result = $str;
-
-    if (libstr_endsWith($result, $substring)) {
-        return libstr_substr($result, 0, \mb_strlen($result) - \mb_strlen($substring));
+    if ('' !== $substring && libstr_hasSuffix($str, $substring)) {
+        return \mb_substr($str, 0, \mb_strlen($str) - \mb_strlen($substring));
     }
 
-    return $result;
+    return $str;
 }
 
 /**
@@ -1067,11 +1012,15 @@ function libstr_repeat(string $str, int $multiplier): string
  */
 function libstr_reverse(string $str): string
 {
-    $strLength = \mb_strlen($str);
+    if ('' === $str) {
+        return '';
+    }
+
     $reversed = '';
 
     // Loop from last index of string to first
-    for ($i = $strLength - 1; $i >= 0; $i--) {
+    $i = \mb_strlen($str);
+    while ($i--) {
         $reversed .= \mb_substr($str, $i, 1);
     }
 
@@ -1112,19 +1061,16 @@ function libstr_shuffle(string $str): string
  */
 function libstr_between(string $str, string $start, string $end, int $offset = 0): string
 {
-    $string = $str;
-    $startIndex = libstr_indexOf($string, $start, $offset);
-
+    $startIndex = libstr_indexOf($str, $start, $offset);
     if ($startIndex === -1) { return ''; }
 
     $substrIndex = $startIndex + \mb_strlen($start);
-    $endIndex = libstr_indexOf($string, $end, $substrIndex);
+    $endIndex = libstr_indexOf($str, $end, $substrIndex);
 
     if ($endIndex === -1) { return ''; }
-
     if ($endIndex === $substrIndex) { return ''; }
 
-    return libstr_substr($string, $substrIndex, $endIndex - $substrIndex);
+    return libstr_substr($str, $substrIndex, $endIndex - $substrIndex);
 }
 
 /**
@@ -1137,33 +1083,17 @@ function libstr_between(string $str, string $start, string $end, int $offset = 0
  */
 function libstr_camelize(string $str): string
 {
-    $string = $str;
-    $string = trim($string);
-    $string = libstr_lowerCaseFirst($string);
-    $result = $string;
-    $result = preg_replace('/^[-_]+/', '', $result);
-
-    $result = preg_replace_callback(
-        '/[-_\s]+(.)?/u',
-        function ($match) {
-            if (isset($match[1])) {
-                return \mb_strtoupper($match[1]);
-            }
-
-            return '';
-        },
-        $result
-    );
-
-    $result = preg_replace_callback(
-        '/[\d]+(.)?/u',
-        function ($match) {
-            return \mb_strtoupper($match[0]);
-        },
-        $result
-    );
-
-    return $result;
+    $str = libstr_lowerCaseFirst(libstr_trim($str));
+    $str = preg_replace('/^[-_]+/', '', $str);
+    $str = preg_replace_callback('/[-_\s]+(.)?/u', function ($match)
+    {
+        if (isset($match[1])) { return \mb_strtoupper($match[1]); }
+        return '';
+    }, $str);
+    $str = preg_replace_callback('/[\d]+(.)?/u', function ($match) {
+        return \mb_strtoupper($match[0]);
+    }, $str);
+    return $str;
 }
 
 /**
@@ -1174,8 +1104,7 @@ function libstr_camelize(string $str): string
  */
 function libstr_toLowerCase(string $str): string
 {
-    $result = $str;
-    return \mb_strtolower($result);
+    return \mb_strtolower($str);
 }
 
 /**
@@ -1186,8 +1115,7 @@ function libstr_toLowerCase(string $str): string
  */
 function libstr_toUpperCase(string $str): string
 {
-    $result = $str;
-    return \mb_strtoupper($result);
+    return \mb_strtoupper($str);
 }
 
 /**
@@ -1198,9 +1126,12 @@ function libstr_toUpperCase(string $str): string
  */
 function libstr_lowerCaseFirst(string $str): string
 {
+    if ('' === $str) {
+        return '';
+    }
+
     $first = \mb_substr($str, 0, 1);
     $rest = \mb_substr($str, 1);
-
     return \mb_strtolower($first) . $rest;
 }
 
@@ -1212,9 +1143,12 @@ function libstr_lowerCaseFirst(string $str): string
  */
 function libstr_upperCaseFirst(string $str): string
 {
+    if ('' === $str) {
+        return '';
+    }
+
     $first = \mb_substr($str, 0, 1);
     $rest = \mb_substr($str, 1);
-
     return \mb_strtoupper($first) . $rest;
 }
 
@@ -1228,10 +1162,8 @@ function libstr_upperCaseFirst(string $str): string
  */
 function libstr_collapseWhitespace(string $str): string
 {
-    $result = $str;
-    $result = libstr_regexReplace($result, '[[:space:]]+', ' ');
-
-    return libstr_trim($result);
+    $str = libstr_regexReplace($str, '[[:space:]]+', ' ');
+    return libstr_trim($str);
 }
 
 /** @noinspection MoreThanThreeArgumentsInspection */
@@ -1250,8 +1182,7 @@ function libstr_collapseWhitespace(string $str): string
  */
 function libstr_regexReplace(string $str, string $pattern, string $replacement, string $options = 'msr'): string
 {
-    $result = $str;
-    return \mb_ereg_replace($pattern, $replacement, $result, $options);
+    return \mb_ereg_replace($pattern, $replacement, $str, $options);
 }
 
 /**
@@ -1279,12 +1210,10 @@ function libstr_dasherize(string $str): string
  */
 function libstr_delimit(string $str, string $delimiter): string
 {
-    $result = $str;
-    $result = trim($result);
-    $result = libstr_regexReplace($result, '\B([A-Z])', '-\1');
-    $result = libstr_toLowerCase($result);
-
-    return libstr_regexReplace($result, '[-_\s]+', $delimiter);
+    $str = libstr_trim($str);
+    $str = libstr_regexReplace($str, '\B([A-Z])', '-\1');
+    $str = libstr_toLowerCase($str);
+    return libstr_regexReplace($str, '[-_\s]+', $delimiter);
 }
 
 /**
@@ -1296,11 +1225,9 @@ function libstr_delimit(string $str, string $delimiter): string
  * @param  int    $flags Optional flags
  * @return string
  */
-function libstr_htmlDecode(string $str, int $flags = ENT_COMPAT): string
+function libstr_htmlDecode(string $str, int $flags = ENT_QUOTES): string
 {
-    $result = $str;
-
-    return \html_entity_decode($result, $flags);
+    return \html_entity_decode($str, $flags);
 }
 
 /**
@@ -1312,11 +1239,9 @@ function libstr_htmlDecode(string $str, int $flags = ENT_COMPAT): string
  * @param  int    $flags Optional flags
  * @return string
  */
-function libstr_htmlEncode(string $str, int $flags = ENT_COMPAT): string
+function libstr_htmlEncode(string $str, int $flags = ENT_QUOTES): string
 {
-    $result = $str;
-
-    return \htmlentities($result, $flags);
+    return \htmlentities($str, $flags);
 }
 
 /**
@@ -1328,11 +1253,9 @@ function libstr_htmlEncode(string $str, int $flags = ENT_COMPAT): string
  */
 function libstr_humanize(string $str): string
 {
-    $result = $str;
-    $result = \str_replace(['_id', '_'], ['', ' '], $result);
-    $result = libstr_trim($result);
-
-    return libstr_upperCaseFirst($result);
+    $str = \str_replace(['_id', '_'], ['', ' '], $str);
+    $str = libstr_trim($str);
+    return libstr_upperCaseFirst($str);
 }
 
 /**
@@ -1344,9 +1267,7 @@ function libstr_humanize(string $str): string
  */
 function libstr_lines(string $str): array
 {
-    $result = $str;
-
-    return libstr_split($result, '[\r\n]{1,2}');
+    return libstr_split($str, '[\r\n]{1,2}');
 }
 
 /**
@@ -1361,21 +1282,15 @@ function libstr_lines(string $str): array
  */
 function libstr_split(string $str, string $pattern, int $limit = -1): array
 {
-    $innerStr = $str;
-    if (0 === $limit || '' === $innerStr) { return []; }
-
-    // mb_split errors when supplied an empty pattern in < PHP 5.4.13
-    // and HHVM < 3.8
-    if ($pattern === '') { return [$innerStr]; }
+    if (0 === $limit || '' === $str) { return []; }
+    if ($pattern === '') { return [$str]; }
 
     // mb_split returns the remaining unsplit string in the last index when
     // supplying a limit
     $limit = ($limit > 0) ? $limit + 1 : -1;
 
-    $array = \mb_split($pattern, $innerStr, $limit);
-    $arrLen = \count($array);
-
-    if ($limit > 0 && $arrLen === $limit) {
+    $array = \mb_split($pattern, $str, $limit);
+    if ($limit > 0 && \count($array) === $limit) {
         array_pop($array);
     }
 
@@ -1386,6 +1301,11 @@ function libstr_split(string $str, string $pattern, int $limit = -1): array
 
     return $result;
 }
+
+// @todo Optimize all below this line:
+// ----------------------------------------------------------
+// @todo
+// - remove all $innerStr variables. This is not needed, function params is immutable
 
 /**
  * Returns the longest common prefix between the string and $otherStr.
@@ -1905,10 +1825,10 @@ function libstr_snakeize(string $str): string
         '([\d|A-Z])',
         function ($matches) {
             $match = $matches[1];
-            $matchInt = (int)$match;
-            if ("$matchInt" === $match) {
+            if ((string)(int)$match === $match) {
                 return '_' . $match . '_';
             }
+            return null;
         },
         $innerStr
     );

@@ -51,7 +51,6 @@ use function Str\Lib\libstr_startsWith;
 use function Str\Lib\libstr_startsWithAny;
 use function Str\Lib\libstr_endsWith;
 use function Str\Lib\libstr_endsWithAny;
-use function Str\Lib\libstr_pad;
 use function Str\Lib\libstr_padBoth;
 use function Str\Lib\libstr_padLeft;
 use function Str\Lib\libstr_padRight;
@@ -265,11 +264,16 @@ class StrMBTest extends TestCase
         );
     }
 
-    public function ContainsProvider()
+    /**
+     * @return array
+     */
+    public function ContainsProvider(): array
     {
         return [
-            [true, '', ''],
-            [true, 'Str contains foo bar', 'foo bar'],
+            [false, '', ''],
+            [false, 'ewew', ''],
+            [false, '', 'ewew'],
+            [true, 'Str contains foo bar 6', 'foo bar'],
             [true, '12398!@(*%!@# @!%#*&^%',  ' @!%#*&^%'],
             [true, 'Ο συγγραφέας είπε', 'συγγραφέας'],
             [true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'å´¥©', true],
@@ -603,6 +607,16 @@ class StrMBTest extends TestCase
         ];
     }
 
+    /**
+     * real uuid4 generator test
+     */
+    public function testIsUUIDv4_Real()
+    {
+        for ($i=0;$i<=255;$i++) {
+            $uuid = (string)\Ramsey\Uuid\Uuid::uuid4();
+            $this->assertEquals(true, libstr_isUUIDv4($uuid), $uuid);
+        }
+    }
     /**
      * @dataProvider isUUIDv4Provider()
      * @param $expected
@@ -1416,42 +1430,6 @@ class StrMBTest extends TestCase
     }
 
     /**
-     * @dataProvider padProvider()
-     * @param $expected
-     * @param $str
-     * @param $length
-     * @param $padStr
-     * @param $padType
-     */
-    public function testPad($expected, $str, $length, $padStr = ' ', $padType = 'right')
-    {
-        $this->assertEquals($expected, libstr_pad($str, $length, $padStr, $padType));
-    }
-    public function padProvider()
-    {
-        return [
-            // length <= str
-            ['foo bar', 'foo bar', -1],
-            ['foo bar', 'foo bar', 7],
-            ['fòô bàř', 'fòô bàř', 7, ' ', 'right'],
-            // right
-            ['foo bar  ', 'foo bar', 9],
-            ['foo bar_*', 'foo bar', 9, '_*', 'right'],
-            ['fòô bàř¬ø¬', 'fòô bàř', 10, '¬ø', 'right'],
-            // left
-            ['  foo bar', 'foo bar', 9, ' ', 'left'],
-            ['_*foo bar', 'foo bar', 9, '_*', 'left'],
-            ['¬ø¬fòô bàř', 'fòô bàř', 10, '¬ø', 'left'],
-            // both
-            ['foo bar ', 'foo bar', 8, ' ', 'both'],
-            ['¬fòô bàř¬ø', 'fòô bàř', 10, '¬ø', 'both'],
-            ['¬øfòô bàř¬øÿ', 'fòô bàř', 12, '¬øÿ', 'both'],
-            // wrong pad type
-            ['foo bar', 'foo bar', 8, ' ', 'wrong']
-        ];
-    }
-
-    /**
      * @dataProvider padLeftProvider()
      * @param $expected
      * @param $str
@@ -1543,7 +1521,7 @@ class StrMBTest extends TestCase
         return [
             ['foo bar', 'oo bar', 'f', 0],
             ['foo bar', 'f bar', 'oo', 1],
-            ['f bar', 'f bar', 'oo', 20],
+            ['f baroo', 'f bar', 'oo', 20],
             ['foo bar', 'foo ba', 'r', 6],
             ['fòôbàř', 'fòôbř', 'à', 4],
             ['fòô bàř', 'òô bàř', 'f', 0],
