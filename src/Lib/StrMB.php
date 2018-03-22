@@ -1767,6 +1767,7 @@ function libstr_overwrite(string $str, int $start, int $length, string $substr):
  * Returns a snake_case version of the string.
  *
  * @todo refactoring
+ * @todo cover null in tests
  * @param  string $str
  * @return string
  */

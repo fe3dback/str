@@ -1739,6 +1739,7 @@ class StrMBTest extends TestCase
     {
         return [
             ['Test', 'Test'],
+            ['', ''],
             ['Test', 'test'],
             ['1a', '1a'],
             ['Σ test', 'σ test'],
@@ -1759,6 +1760,7 @@ class StrMBTest extends TestCase
     {
         return [
             ['test', 'Test'],
+            ['', ''],
             ['test', 'test'],
             ['1a', '1a'],
             ['σ test', 'Σ test'],
