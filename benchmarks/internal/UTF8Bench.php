@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use function Str\Lib\libstr_replace;
+
 class UTF8Bench
 {
     const ASCII_STR = 'Hello world, this some kind of valid ascii string. 1239450 $#(%)...';
@@ -20,8 +22,8 @@ class UTF8Bench
         mb_strlen($a = mb_strtolower(mb_strtoupper(self::ASCII_STR)));
         mb_strpos($a, '#');
         mb_strrpos($a, 'old');
-        Str\Lib\StrModifiers::replace($a, 'valid', 'invalid');
-        Str\Lib\StrModifiers::replace($a, '##UNKNOWN##', 'ABC');
+        libstr_replace($a, 'valid', 'invalid');
+        libstr_replace($a, '##UNKNOWN##', 'ABC');
     }
 
     public function bench_UTF8_ForceEncoding()
@@ -29,8 +31,8 @@ class UTF8Bench
         mb_strlen($a = mb_strtolower(mb_strtoupper(self::ASCII_STR)));
         mb_strpos($a, '#', 0);
         mb_strrpos($a, 'old');
-        Str\Lib\StrModifiers::replace($a, 'valid', 'invalid');
-        Str\Lib\StrModifiers::replace($a, '##UNKNOWN##', 'ABC');
+        libstr_replace($a, 'valid', 'invalid');
+        libstr_replace($a, '##UNKNOWN##', 'ABC');
     }
 
     public function bench_UTF8_DefaultEncoding()
@@ -39,7 +41,7 @@ class UTF8Bench
         mb_strlen($a = mb_strtolower(mb_strtoupper(self::ASCII_STR)));
         mb_strpos($a, '#');
         mb_strrpos($a, 'old');
-        Str\Lib\StrModifiers::replace($a, 'valid', 'invalid');
-        Str\Lib\StrModifiers::replace($a, '##UNKNOWN##', 'ABC');
+        libstr_replace($a, 'valid', 'invalid');
+        libstr_replace($a, '##UNKNOWN##', 'ABC');
     }
 }
