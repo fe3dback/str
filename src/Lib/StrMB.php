@@ -479,7 +479,7 @@ function libstr_isUUIDv4(string $str): bool
 
 /**
  * Returns true if the string contains a lower case char, false otherwise.
- * This function check only ascii [a-z] chars.
+ * This function checks for ascii [a-z] chars.
  *
  * @param  string $str
  * @return bool
@@ -491,7 +491,7 @@ function libstr_hasLowerCase(string $str): bool
 
 /**
  * Returns true if the string contains an upper case char, false otherwise.
- * This function check only ascii [A-Z] chars.
+ * This function checks for ascii [A-Z] chars.
  *
  * @param  string $str
  * @return bool
@@ -515,7 +515,7 @@ function libstr_matchesPattern(string $str, string $pattern): bool
 
 /**
  * Returns true if the string contains only alphabetic chars, false otherwise.
- * This function check only ascii [a-zA-Z] chars.
+ * This function checks for ascii [a-zA-Z] chars.
  *
  * @param  string $str
  * @return bool   Whether or not $str contains only alphabetic chars
@@ -527,7 +527,7 @@ function libstr_isAlpha(string $str): bool
 
 /**
  * Returns true if the string contains only alphabetic and numeric chars, false otherwise.
- * This function check only ascii [a-zA-Z0-9] chars.
+ * This function checks for ascii [a-zA-Z0-9] chars.
  *
  * @param  string $str
  * @return bool   Whether or not $str contains only alphanumeric chars
@@ -561,7 +561,7 @@ function libstr_isBase64(string $str): bool
 
 /**
  * Returns true if the string contains only hexadecimal chars, false otherwise.
- * This function check only ascii [A-Fa-f0-9] chars.
+ * This function checks for ascii [A-Fa-f0-9] chars.
  *
  * @param  string $str
  * @return bool   Whether or not $str contains only hexadecimal chars
@@ -589,7 +589,7 @@ function libstr_isJson(string $str): bool
 
 /**
  * Returns true if the string contains only lower case chars, false  otherwise.
- * This function check only ascii [a-z] chars.
+ * This function checks for ascii [a-z] chars.
  *
  * @param  string $str
  * @return bool   Whether or not $str contains only lower case characters
@@ -601,7 +601,7 @@ function libstr_isLowerCase(string $str): bool
 
 /**
  * Returns true if the string contains only lower case chars, false otherwise.
- * This function check only ascii [A-Z] chars.
+ * This function checks for ascii [A-Z] chars.
  *
  * @param  string $str
  * @return bool   Whether or not $str contains only lower case characters
@@ -1649,7 +1649,7 @@ function libstr_tidy(string $str): string
  */
 function libstr_titleize(string $str, array $ignore = []): string
 {
-    $str = trim($str);
+    $str = libstr_trim($str);
 
     return preg_replace_callback(
         '/([\S]+)/u',
@@ -1767,7 +1767,6 @@ function libstr_overwrite(string $str, int $start, int $length, string $substr):
  * Returns a snake_case version of the string.
  *
  * @todo refactoring
- * @todo cover null in tests
  * @param  string $str
  * @return string
  */

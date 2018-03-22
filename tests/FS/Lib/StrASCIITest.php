@@ -3,111 +3,106 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use function Str\Lib\libstr_afterFirst;
-use function Str\Lib\libstr_afterLast;
-use function Str\Lib\libstr_appendUniqueIdentifier;
-use function Str\Lib\libstr_beforeFirst;
-use function Str\Lib\libstr_beforeLast;
-use function Str\Lib\libstr_chop;
-use function Str\Lib\libstr_isEmail;
-use function Str\Lib\libstr_isIpV4;
-use function Str\Lib\libstr_isIpV6;
-use function Str\Lib\libstr_join;
-use function Str\Lib\libstr_matchesPattern;
-use function Str\Lib\libstr_ensureLeft;
-use function Str\Lib\libstr_ensureRight;
-use function Str\Lib\libstr_hasPrefix;
-use function Str\Lib\libstr_hasSuffix;
-use function Str\Lib\libstr_contains;
-use function Str\Lib\libstr_move;
-use function Str\Lib\libstr_overwrite;
-use function Str\Lib\libstr_pop;
-use function Str\Lib\libstr_popReversed;
-use function Str\Lib\libstr_quote;
-use function Str\Lib\libstr_random;
-use function Str\Lib\libstr_replace;
-use function Str\Lib\libstr_shift;
-use function Str\Lib\libstr_shiftReversed;
-use function Str\Lib\libstr_snakeize;
-use function Str\Lib\libstr_toLowerCase;
-use function Str\Lib\libstr_toUpperCase;
-use function Str\Lib\libstr_trim;
-use function Str\Lib\libstr_trimLeft;
-use function Str\Lib\libstr_trimRight;
-use function Str\Lib\libstr_append;
-use function Str\Lib\libstr_prepend;
-use function Str\Lib\libstr_at;
-use function Str\Lib\libstr_substr;
-use function Str\Lib\libstr_chars;
-use function Str\Lib\libstr_first;
-use function Str\Lib\libstr_last;
-use function Str\Lib\libstr_length;
-use function Str\Lib\libstr_indexOf;
-use function Str\Lib\libstr_indexOfLast;
-use function Str\Lib\libstr_countSubstr;
-use function Str\Lib\libstr_containsAll;
-use function Str\Lib\libstr_containsAny;
-use function Str\Lib\libstr_startsWith;
-use function Str\Lib\libstr_startsWithAny;
-use function Str\Lib\libstr_endsWith;
-use function Str\Lib\libstr_endsWithAny;
-use function Str\Lib\libstr_padBoth;
-use function Str\Lib\libstr_padLeft;
-use function Str\Lib\libstr_padRight;
-use function Str\Lib\libstr_insert;
-use function Str\Lib\libstr_removeLeft;
-use function Str\Lib\libstr_removeRight;
-use function Str\Lib\libstr_repeat;
-use function Str\Lib\libstr_reverse;
-use function Str\Lib\libstr_shuffle;
-use function Str\Lib\libstr_between;
-use function Str\Lib\libstr_camelize;
-use function Str\Lib\libstr_collapseWhitespace;
-use function Str\Lib\libstr_dasherize;
-use function Str\Lib\libstr_delimit;
-use function Str\Lib\libstr_lowerCaseFirst;
-use function Str\Lib\libstr_regexReplace;
-use function Str\Lib\libstr_unquote;
-use function Str\Lib\libstr_upperCaseFirst;
-use function Str\Lib\libstr_isUUIDv4;
-use function Str\Lib\libstr_hasLowerCase;
-use function Str\Lib\libstr_hasUpperCase;
-use function Str\Lib\libstr_htmlDecode;
-use function Str\Lib\libstr_htmlEncode;
-use function Str\Lib\libstr_humanize;
-use function Str\Lib\libstr_isAlpha;
-use function Str\Lib\libstr_isAlphanumeric;
-use function Str\Lib\libstr_isBase64;
-use function Str\Lib\libstr_isBlank;
-use function Str\Lib\libstr_isHexadecimal;
-use function Str\Lib\libstr_isJson;
-use function Str\Lib\libstr_isLowerCase;
-use function Str\Lib\libstr_isSerialized;
-use function Str\Lib\libstr_isUpperCase;
-use function Str\Lib\libstr_lines;
-use function Str\Lib\libstr_split;
-use function Str\Lib\libstr_longestCommonPrefix;
-use function Str\Lib\libstr_longestCommonSuffix;
-use function Str\Lib\libstr_longestCommonSubstring;
-use function Str\Lib\libstr_safeTruncate;
-use function Str\Lib\libstr_slugify;
-use function Str\Lib\libstr_toAscii;
-use function Str\Lib\libstr_slice;
-use function Str\Lib\libstr_stripWhitespace;
-use function Str\Lib\libstr_truncate;
-use function Str\Lib\libstr_upperCamelize;
-use function Str\Lib\libstr_surround;
-use function Str\Lib\libstr_swapCase;
-use function Str\Lib\libstr_tidy;
-use function Str\Lib\libstr_titleize;
-use function Str\Lib\libstr_toBoolean;
-use function Str\Lib\libstr_toSpaces;
-use function Str\Lib\libstr_toTabs;
-use function Str\Lib\libstr_toTitleCase;
-use function Str\Lib\libstr_underscored;
-use function Str\Lib\libstr_words;
+use function Str\Lib\libstr_ascii_afterFirst;
+use function Str\Lib\libstr_ascii_afterLast;
+use function Str\Lib\libstr_ascii_appendUniqueIdentifier;
+use function Str\Lib\libstr_ascii_beforeFirst;
+use function Str\Lib\libstr_ascii_beforeLast;
+use function Str\Lib\libstr_ascii_chop;
+use function Str\Lib\libstr_ascii_isEmail;
+use function Str\Lib\libstr_ascii_join;
+use function Str\Lib\libstr_ascii_matchesPattern;
+use function Str\Lib\libstr_ascii_ensureLeft;
+use function Str\Lib\libstr_ascii_ensureRight;
+use function Str\Lib\libstr_ascii_hasPrefix;
+use function Str\Lib\libstr_ascii_hasSuffix;
+use function Str\Lib\libstr_ascii_contains;
+use function Str\Lib\libstr_ascii_move;
+use function Str\Lib\libstr_ascii_overwrite;
+use function Str\Lib\libstr_ascii_pop;
+use function Str\Lib\libstr_ascii_popReversed;
+use function Str\Lib\libstr_ascii_quote;
+use function Str\Lib\libstr_ascii_random;
+use function Str\Lib\libstr_ascii_replace;
+use function Str\Lib\libstr_ascii_shift;
+use function Str\Lib\libstr_ascii_shiftReversed;
+use function Str\Lib\libstr_ascii_snakeize;
+use function Str\Lib\libstr_ascii_toLowerCase;
+use function Str\Lib\libstr_ascii_toUpperCase;
+use function Str\Lib\libstr_ascii_trim;
+use function Str\Lib\libstr_ascii_trimLeft;
+use function Str\Lib\libstr_ascii_trimRight;
+use function Str\Lib\libstr_ascii_append;
+use function Str\Lib\libstr_ascii_prepend;
+use function Str\Lib\libstr_ascii_at;
+use function Str\Lib\libstr_ascii_substr;
+use function Str\Lib\libstr_ascii_chars;
+use function Str\Lib\libstr_ascii_first;
+use function Str\Lib\libstr_ascii_last;
+use function Str\Lib\libstr_ascii_length;
+use function Str\Lib\libstr_ascii_indexOf;
+use function Str\Lib\libstr_ascii_indexOfLast;
+use function Str\Lib\libstr_ascii_countSubstr;
+use function Str\Lib\libstr_ascii_containsAll;
+use function Str\Lib\libstr_ascii_containsAny;
+use function Str\Lib\libstr_ascii_startsWith;
+use function Str\Lib\libstr_ascii_startsWithAny;
+use function Str\Lib\libstr_ascii_endsWith;
+use function Str\Lib\libstr_ascii_endsWithAny;
+use function Str\Lib\libstr_ascii_padBoth;
+use function Str\Lib\libstr_ascii_padLeft;
+use function Str\Lib\libstr_ascii_padRight;
+use function Str\Lib\libstr_ascii_insert;
+use function Str\Lib\libstr_ascii_removeLeft;
+use function Str\Lib\libstr_ascii_removeRight;
+use function Str\Lib\libstr_ascii_repeat;
+use function Str\Lib\libstr_ascii_reverse;
+use function Str\Lib\libstr_ascii_shuffle;
+use function Str\Lib\libstr_ascii_between;
+use function Str\Lib\libstr_ascii_camelize;
+use function Str\Lib\libstr_ascii_collapseWhitespace;
+use function Str\Lib\libstr_ascii_dasherize;
+use function Str\Lib\libstr_ascii_delimit;
+use function Str\Lib\libstr_ascii_lowerCaseFirst;
+use function Str\Lib\libstr_ascii_regexReplace;
+use function Str\Lib\libstr_ascii_unquote;
+use function Str\Lib\libstr_ascii_upperCaseFirst;
+use function Str\Lib\libstr_ascii_hasLowerCase;
+use function Str\Lib\libstr_ascii_hasUpperCase;
+use function Str\Lib\libstr_ascii_htmlDecode;
+use function Str\Lib\libstr_ascii_htmlEncode;
+use function Str\Lib\libstr_ascii_humanize;
+use function Str\Lib\libstr_ascii_isAlpha;
+use function Str\Lib\libstr_ascii_isAlphanumeric;
+use function Str\Lib\libstr_ascii_isBase64;
+use function Str\Lib\libstr_ascii_isBlank;
+use function Str\Lib\libstr_ascii_isHexadecimal;
+use function Str\Lib\libstr_ascii_isJson;
+use function Str\Lib\libstr_ascii_isLowerCase;
+use function Str\Lib\libstr_ascii_isSerialized;
+use function Str\Lib\libstr_ascii_isUpperCase;
+use function Str\Lib\libstr_ascii_lines;
+use function Str\Lib\libstr_ascii_split;
+use function Str\Lib\libstr_ascii_longestCommonPrefix;
+use function Str\Lib\libstr_ascii_longestCommonSuffix;
+use function Str\Lib\libstr_ascii_longestCommonSubstring;
+use function Str\Lib\libstr_ascii_safeTruncate;
+use function Str\Lib\libstr_ascii_slugify;
+use function Str\Lib\libstr_ascii_slice;
+use function Str\Lib\libstr_ascii_stripWhitespace;
+use function Str\Lib\libstr_ascii_truncate;
+use function Str\Lib\libstr_ascii_upperCamelize;
+use function Str\Lib\libstr_ascii_surround;
+use function Str\Lib\libstr_ascii_swapCase;
+use function Str\Lib\libstr_ascii_tidy;
+use function Str\Lib\libstr_ascii_titleize;
+use function Str\Lib\libstr_ascii_toBoolean;
+use function Str\Lib\libstr_ascii_toSpaces;
+use function Str\Lib\libstr_ascii_toTabs;
+use function Str\Lib\libstr_ascii_underscored;
+use function Str\Lib\libstr_ascii_words;
 
-class StrMBTest extends TestCase
+class StrASCIITest extends TestCase
 {
     /**
      * @dataProvider HasPrefixProvider
@@ -116,7 +111,7 @@ class StrMBTest extends TestCase
      */
     public function testHasPrefix(array $inp, bool $result)
     {
-        $this->assertEquals($result, libstr_hasPrefix(
+        $this->assertEquals($result, libstr_ascii_hasPrefix(
             array_shift($inp),
             array_shift($inp)
         ));
@@ -132,18 +127,6 @@ class StrMBTest extends TestCase
                 ],
                 [
                     ['Hello world', 'ell'],
-                    false
-                ],
-                [
-                    ['世Hello world', '世'],
-                    true
-                ],
-                [
-                    ['世H世ello world世', '世H世'],
-                    true
-                ],
-                [
-                    ['世h世ello world世', '世H'],
                     false
                 ],
                 [
@@ -176,7 +159,7 @@ class StrMBTest extends TestCase
      */
     public function testHasSuffix(array $inp, bool $result)
     {
-        $this->assertEquals($result, libstr_hasSuffix(
+        $this->assertEquals($result, libstr_ascii_hasSuffix(
             array_shift($inp),
             array_shift($inp)
         ));
@@ -192,18 +175,6 @@ class StrMBTest extends TestCase
                 ],
                 [
                     ['Hello world', 'orl'],
-                    false
-                ],
-                [
-                    ['Hello world世', '世'],
-                    true
-                ],
-                [
-                    ['世H世ello worl世d世', '世d世'],
-                    true
-                ],
-                [
-                    ['世h世ello world世', 'D世'],
                     false
                 ],
                 [
@@ -236,7 +207,7 @@ class StrMBTest extends TestCase
      */
     public function testLength($expected, $str)
     {
-        $this->assertEquals($expected, libstr_length($str));
+        $this->assertEquals($expected, libstr_ascii_length($str));
     }
     public function lengthProvider()
     {
@@ -244,7 +215,6 @@ class StrMBTest extends TestCase
             [11, '  foo bar  '],
             [1, 'f'],
             [0, ''],
-            [7, 'fòô bàř']
         ];
     }
 
@@ -259,7 +229,7 @@ class StrMBTest extends TestCase
     {
         $this->assertEquals(
             $expected,
-            libstr_contains($haystack, $needle, $caseSensitive),
+            libstr_ascii_contains($haystack, $needle, $caseSensitive),
             sprintf('%s - %s', $haystack, $needle)
         );
     }
@@ -275,25 +245,11 @@ class StrMBTest extends TestCase
             [false, '', 'ewew'],
             [true, 'Str contains foo bar 6', 'foo bar'],
             [true, '12398!@(*%!@# @!%#*&^%',  ' @!%#*&^%'],
-            [true, 'Ο συγγραφέας είπε', 'συγγραφέας'],
-            [true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'å´¥©', true],
-            [true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'å˚ ∆', true],
-            [true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'øœ¬', true],
             [false, 'Str contains foo bar', 'Foo bar'],
             [false, 'Str contains foo bar', 'foobar'],
             [false, 'Str contains foo bar', 'foo bar '],
-            [false, 'Ο συγγραφέας είπε', '  συγγραφέας ', true],
-            [false, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ' ßå˚', true],
-            [true, 'Str contains foo bar', 'Foo bar', false],
-            [true, '12398!@(*%!@# @!%#*&^%',  ' @!%#*&^%', false],
-            [true, 'Ο συγγραφέας είπε', 'ΣΥΓΓΡΑΦΈΑΣ', false],
-            [true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'Å´¥©', false],
-            [true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'Å˚ ∆', false],
-            [true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'ØŒ¬', false],
             [false, 'Str contains foo bar', 'foobar', false],
             [false, 'Str contains foo bar', 'foo bar ', false],
-            [false, 'Ο συγγραφέας είπε', '  συγγραφέας ', false],
-            [false, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ' ßÅ˚', false]
         ];
     }
 
@@ -306,7 +262,7 @@ class StrMBTest extends TestCase
      */
     public function testIndexOf($expected, $haystack, $needle, $offset = 0)
     {
-        $this->assertEquals($expected, libstr_indexOf($haystack, $needle, $offset));
+        $this->assertEquals($expected, libstr_ascii_indexOf($haystack, $needle, $offset));
     }
 
     public function indexOfProvider()
@@ -319,11 +275,6 @@ class StrMBTest extends TestCase
             [0, 'foo & bar & foo', 'foo', 0],
             [12, 'foo & bar & foo', 'foo', 5],
             [12, 'foo & bar & foo', 'foo', -5],
-            [6, 'fòô & bàř', 'bàř', 0],
-            [-1, 'fòô & bàř', 'baz', 0],
-            [0, 'fòô & bàř & fòô', 'fòô', 0],
-            [12, 'fòô & bàř & fòô', 'fòô', 5],
-            [12, 'fòô & bàř & fòô', 'fòô', -5],
             [-1, 'q', 'q', -5],
             [-1, '', '', 0],
             [-1, 'q', '', 0],
@@ -341,7 +292,7 @@ class StrMBTest extends TestCase
      */
     public function testIndexOfLast($expected, $haystack, $needle, $offset = 0)
     {
-        $this->assertEquals($expected, libstr_indexOfLast($haystack, $needle, $offset));
+        $this->assertEquals($expected, libstr_ascii_indexOfLast($haystack, $needle, $offset));
     }
 
     public function indexOfLastProvider()
@@ -353,10 +304,6 @@ class StrMBTest extends TestCase
             [-1, 'foo & bar', 'baz', 0],
             [12, 'foo & bar & foo', 'foo', 0],
             [12, 'foo & bar & foo', 'foo', -5],
-            [6, 'fòô & bàř', 'bàř', 0],
-            [-1, 'fòô & bàř', 'baz', 0],
-            [12, 'fòô & bàř & fòô', 'fòô', 0],
-            [12, 'fòô & bàř & fòô', 'fòô', -5],
             [-1, 'q', 'q', -5],
             [-1, '', '', 0],
             [-1, 'q', '', 0],
@@ -374,7 +321,7 @@ class StrMBTest extends TestCase
      */
     public function testCountSubstr($expected, $str, $substring, $caseSensitive = true)
     {
-        $this->assertEquals($expected, libstr_countSubstr($str, $substring, $caseSensitive));
+        $this->assertEquals($expected, libstr_ascii_countSubstr($str, $substring, $caseSensitive));
     }
 
     public function countSubstrProvider()
@@ -384,17 +331,9 @@ class StrMBTest extends TestCase
             [0, 'foo', 'bar'],
             [1, 'foo bar', 'foo'],
             [2, 'foo bar', 'o'],
-            [0, '', 'fòô'],
-            [0, 'fòô', 'bàř'],
-            [1, 'fòô bàř', 'fòô'],
-            [2, 'fôòô bàř', 'ô'],
-            [0, 'fÔÒÔ bàř', 'ô'],
             [0, 'foo', 'BAR', false],
             [1, 'foo bar', 'FOo', false],
             [2, 'foo bar', 'O', false],
-            [1, 'fòô bàř', 'fÒÔ', false],
-            [2, 'fôòô bàř', 'Ô', false],
-            [2, 'συγγραφέας', 'Σ', false]
         ];
     }
 
@@ -407,7 +346,7 @@ class StrMBTest extends TestCase
      */
     public function testContainsAll($expected, $haystack, $needles, $caseSensitive = true)
     {
-        $this->assertEquals($expected, libstr_containsAll($haystack, $needles, $caseSensitive), $haystack);
+        $this->assertEquals($expected, libstr_ascii_containsAll($haystack, $needles, $caseSensitive), $haystack);
     }
 
     public function containsAllProvider()
@@ -423,25 +362,11 @@ class StrMBTest extends TestCase
             // Multiple needles
             [true, 'Str contains foo bar', ['foo', 'bar']],
             [true, '12398!@(*%!@# @!%#*&^%', [' @!%#*', '&^%']],
-            [true, 'Ο συγγραφέας είπε', ['συγγρ', 'αφέας']],
-            [true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ['å´¥', '©'], true],
-            [true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ['å˚ ', '∆'], true],
-            [true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ['øœ', '¬'], true],
             [false, 'Str contains foo bar', ['Foo', 'bar']],
             [false, 'Str contains foo bar', ['foobar', 'bar']],
             [false, 'Str contains foo bar', ['foo bar ', 'bar']],
-            [false, 'Ο συγγραφέας είπε', ['  συγγραφέας ', '  συγγραφ '], true],
-            [false, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', [' ßå˚', ' ß '], true],
-            [true, 'Str contains foo bar', ['Foo bar', 'bar'], false],
-            [true, '12398!@(*%!@# @!%#*&^%', [' @!%#*&^%', '*&^%'], false],
-            [true, 'Ο συγγραφέας είπε', ['ΣΥΓΓΡΑΦΈΑΣ', 'ΑΦΈΑ'], false],
-            [true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ['Å´¥©', '¥©'], false],
-            [true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ['Å˚ ∆', ' ∆'], false],
-            [true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ['ØŒ¬', 'Œ'], false],
             [false, 'Str contains foo bar', ['foobar', 'none'], false],
             [false, 'Str contains foo bar', ['foo bar ', ' ba'], false],
-            [false, 'Ο συγγραφέας είπε', ['  συγγραφέας ', ' ραφέ '], false],
-            [false, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', [' ßÅ˚', ' Å˚ '], false],
         ];
         return array_merge($singleNeedle, $provider);
     }
@@ -455,7 +380,7 @@ class StrMBTest extends TestCase
      */
     public function testContainsAny($expected, $haystack, $needles, $caseSensitive = true)
     {
-        $this->assertEquals($expected, libstr_containsAny($haystack, $needles, $caseSensitive), $haystack);
+        $this->assertEquals($expected, libstr_ascii_containsAny($haystack, $needles, $caseSensitive), $haystack);
     }
     public function containsAnyProvider()
     {
@@ -470,25 +395,11 @@ class StrMBTest extends TestCase
             // Multiple needles
             [true, 'Str contains foo bar', ['foo', 'bar']],
             [true, '12398!@(*%!@# @!%#*&^%', [' @!%#*', '&^%']],
-            [true, 'Ο συγγραφέας είπε', ['συγγρ', 'αφέας']],
-            [true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ['å´¥', '©'], true],
-            [true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ['å˚ ', '∆'], true],
-            [true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ['øœ', '¬'], true],
             [false, 'Str contains foo bar', ['Foo', 'Bar']],
             [false, 'Str contains foo bar', ['foobar', 'bar ']],
             [false, 'Str contains foo bar', ['foo bar ', '  foo']],
-            [false, 'Ο συγγραφέας είπε', ['  συγγραφέας ', '  συγγραφ '], true],
-            [false, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', [' ßå˚', ' ß '], true],
-            [true, 'Str contains foo bar', ['Foo bar', 'bar'], false],
-            [true, '12398!@(*%!@# @!%#*&^%', [' @!%#*&^%', '*&^%'], false],
-            [true, 'Ο συγγραφέας είπε', ['ΣΥΓΓΡΑΦΈΑΣ', 'ΑΦΈΑ'], false],
-            [true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ['Å´¥©', '¥©'], false],
-            [true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ['Å˚ ∆', ' ∆'], false],
-            [true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ['ØŒ¬', 'Œ'], false],
             [false, 'Str contains foo bar', ['foobar', 'none'], false],
             [false, 'Str contains foo bar', ['foo bar ', ' ba '], false],
-            [false, 'Ο συγγραφέας είπε', ['  συγγραφέας ', ' ραφέ '], false],
-            [false, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', [' ßÅ˚', ' Å˚ '], false],
         ];
         return array_merge($singleNeedle, $provider);
     }
@@ -502,7 +413,7 @@ class StrMBTest extends TestCase
      */
     public function testStartsWith($expected, $str, $substring, $caseSensitive = true)
     {
-        $this->assertEquals($expected, libstr_startsWith($str, $substring, $caseSensitive), $str);
+        $this->assertEquals($expected, libstr_ascii_startsWith($str, $substring, $caseSensitive), $str);
     }
     public function startsWithProvider()
     {
@@ -510,14 +421,10 @@ class StrMBTest extends TestCase
             [true, 'foo bars', 'foo bar'],
             [true, 'FOO bars', 'foo bar', false],
             [true, 'FOO bars', 'foo BAR', false],
-            [true, 'FÒÔ bàřs', 'fòô bàř', false],
-            [true, 'fòô bàřs', 'fòô BÀŘ', false],
             [false, 'foo bar', 'bar'],
             [false, 'foo bar', 'foo bars'],
             [false, 'FOO bar', 'foo bars'],
             [false, 'FOO bars', 'foo BAR'],
-            [false, 'FÒÔ bàřs', 'fòô bàř', true],
-            [false, 'fòô bàřs', 'fòô BÀŘ', true],
         ];
     }
 
@@ -530,7 +437,7 @@ class StrMBTest extends TestCase
      */
     public function testStartsWithAny($expected, $str, $substrings, $caseSensitive = true)
     {
-        $this->assertEquals($expected, libstr_startsWithAny($str, $substrings, $caseSensitive), $str);
+        $this->assertEquals($expected, libstr_ascii_startsWithAny($str, $substrings, $caseSensitive), $str);
     }
     public function startsWithProviderAny()
     {
@@ -538,14 +445,10 @@ class StrMBTest extends TestCase
             [true, 'foo bars', ['foo bar']],
             [true, 'FOO bars', ['foo bar'], false],
             [true, 'FOO bars', ['foo bar', 'foo BAR'], false],
-            [true, 'FÒÔ bàřs', ['foo bar', 'fòô bàř'], false],
-            [true, 'fòô bàřs', ['foo bar', 'fòô BÀŘ'], false],
             [false, 'foo bar', ['bar']],
             [false, 'foo bar', ['foo bars']],
             [false, 'FOO bar', ['foo bars']],
             [false, 'FOO bars', ['foo BAR']],
-            [false, 'FÒÔ bàřs', ['fòô bàř'], true],
-            [false, 'fòô bàřs', ['fòô BÀŘ'], true],
             [false, 'anything', []]
         ];
     }
@@ -559,7 +462,7 @@ class StrMBTest extends TestCase
      */
     public function testEndsWith($expected, $str, $substring, $caseSensitive = true)
     {
-        $this->assertEquals($expected, libstr_endsWith($str, $substring, $caseSensitive), $str);
+        $this->assertEquals($expected, libstr_ascii_endsWith($str, $substring, $caseSensitive), $str);
     }
     public function endsWithProvider()
     {
@@ -567,14 +470,10 @@ class StrMBTest extends TestCase
             [true, 'foo bars', 'o bars'],
             [true, 'FOO bars', 'o bars', false],
             [true, 'FOO bars', 'o BARs', false],
-            [true, 'FÒÔ bàřs', 'ô bàřs', false],
-            [true, 'fòô bàřs', 'ô BÀŘs', false],
             [false, 'foo bar', 'foo'],
             [false, 'foo bar', 'foo bars'],
             [false, 'FOO bar', 'foo bars'],
             [false, 'FOO bars', 'foo BARS'],
-            [false, 'FÒÔ bàřs', 'fòô bàřs', true],
-            [false, 'fòô bàřs', 'fòô BÀŘS', true],
         ];
     }
 
@@ -587,7 +486,7 @@ class StrMBTest extends TestCase
      */
     public function testEndsWithAny($expected, $str, $substrings, $caseSensitive = true)
     {
-        $this->assertEquals($expected, libstr_endsWithAny($str, $substrings, $caseSensitive), $str);
+        $this->assertEquals($expected, libstr_ascii_endsWithAny($str, $substrings, $caseSensitive), $str);
     }
     public function endsWithAnyProvider()
     {
@@ -595,46 +494,11 @@ class StrMBTest extends TestCase
             [true, 'foo bars', ['foo', 'o bars']],
             [true, 'FOO bars', ['foo', 'o bars'], false],
             [true, 'FOO bars', ['foo', 'o BARs'], false],
-            [true, 'FÒÔ bàřs', ['foo', 'ô bàřs'], false],
-            [true, 'fòô bàřs', ['foo', 'ô BÀŘs'], false],
             [false, 'foo bar', ['foo']],
             [false, 'foo bar', ['foo', 'foo bars']],
             [false, 'FOO bar', ['foo', 'foo bars']],
             [false, 'FOO bars', ['foo', 'foo BARS']],
-            [false, 'FÒÔ bàřs', ['fòô', 'fòô bàřs'], true],
-            [false, 'fòô bàřs', ['fòô', 'fòô BÀŘS'], true],
             [false, 'anything', []]
-        ];
-    }
-
-    /**
-     * real uuid4 generator test
-     */
-    public function testIsUUIDv4_Real()
-    {
-        for ($i=0;$i<=255;$i++) {
-            $uuid = (string)\Ramsey\Uuid\Uuid::uuid4();
-            $this->assertEquals(true, libstr_isUUIDv4($uuid), $uuid);
-        }
-    }
-    /**
-     * @dataProvider isUUIDv4Provider()
-     * @param $expected
-     * @param $str
-     */
-    public function testIsUUIDv4($expected, $str)
-    {
-        $this->assertEquals($expected, libstr_isUUIDv4($str), $str);
-    }
-    public function isUUIDv4Provider()
-    {
-        return [
-            [true, 'ae815123-537f-4eb3-a9b8-35881c29e1ac'],
-            [true, '4724393e-b496-4d94-bdae-96004abbc5e4'],
-            [true, '9c360134-770d-4284-abab-6e1257dee973'],
-            [false, '76d7cac8-1bd7-11e8-accf-0ed5f89f718b'],
-            [false, 'f89cdf3a-1bd7-11e8-accf-0ed5f89f718b'],
-            [false, 'b3467be4-1bd7-11e8-accf-0ed5f89f718b'],
         ];
     }
 
@@ -645,7 +509,7 @@ class StrMBTest extends TestCase
      */
     public function testHasLowerCase($expected, $str)
     {
-        $this->assertEquals($expected, libstr_hasLowerCase($str), $str);
+        $this->assertEquals($expected, libstr_ascii_hasLowerCase($str), $str);
     }
     public function hasLowerCaseProvider()
     {
@@ -657,11 +521,6 @@ class StrMBTest extends TestCase
             [true, 'foO BAR'],
             [true, 'FOO BAr'],
             [true, 'Foobar'],
-            [false, 'FÒÔBÀŘ'],
-            [true, 'fòôbàř'],
-            [true, 'fòôbàř2'],
-            [true, 'Fòô bàř'],
-            [true, 'fòôbÀŘ'],
         ];
     }
 
@@ -672,7 +531,7 @@ class StrMBTest extends TestCase
      */
     public function testHasUpperCase($expected, $str)
     {
-        $this->assertEquals($expected, libstr_hasUpperCase($str), $str);
+        $this->assertEquals($expected, libstr_ascii_hasUpperCase($str), $str);
     }
     public function hasUpperCaseProvider()
     {
@@ -684,11 +543,6 @@ class StrMBTest extends TestCase
             [true, 'FOo bar'],
             [true, 'foo baR'],
             [true, 'fOOBAR'],
-            [false, 'fòôbàř'],
-            [true, 'FÒÔBÀŘ'],
-            [true, 'FÒÔBÀŘ2'],
-            [true, 'fÒÔ BÀŘ'],
-            [true, 'FÒÔBàř'],
         ];
     }
 
@@ -700,18 +554,17 @@ class StrMBTest extends TestCase
      */
     public function testMatchesPattern($expected, $str, $pattern)
     {
-        $this->assertEquals($expected, libstr_matchesPattern($str, $pattern), $str);
+        $this->assertEquals($expected, libstr_ascii_matchesPattern($str, $pattern), $str);
     }
     public function matchesPatternProvider()
     {
         return [
-            [true, 'FOOBAR', '.*FOO'],
-            [false, 'foo bar', '.*  bar'],
-            [true, 'Foo bar', '.* ba'],
-            [true, 'FOo bar', '.*Oo'],
-            [true, 'foo baR', '.*aR'],
-            [true, 'fOOBAR', '.*OBA'],
-            [false, 'fòôbàř', '.*foo'],
+            [true, 'FOOBAR', '/.*FOO/'],
+            [false, 'foo bar', '/.*  bar/'],
+            [true, 'Foo bar', '/.* ba/'],
+            [true, 'FOo bar', '/.*Oo/'],
+            [true, 'foo baR', '/.*aR/'],
+            [true, 'fOOBAR', '/.*OBA/'],
         ];
     }
 
@@ -722,7 +575,7 @@ class StrMBTest extends TestCase
      */
     public function testIsAlpha($expected, $str)
     {
-        $this->assertEquals($expected, libstr_isAlpha($str), $str);
+        $this->assertEquals($expected, libstr_ascii_isAlpha($str), $str);
     }
     public function isAlphaProvider()
     {
@@ -731,12 +584,6 @@ class StrMBTest extends TestCase
             [true, 'foobar'],
             [false, 'foo bar'],
             [false, 'foobar2'],
-            [true, 'fòôbàř'],
-            [false, 'fòô bàř'],
-            [false, 'fòôbàř2'],
-            [true, 'ҠѨњфгШ'],
-            [false, 'ҠѨњ¨ˆфгШ'],
-            [true, '丹尼爾']
         ];
     }
 
@@ -747,7 +594,7 @@ class StrMBTest extends TestCase
      */
     public function testIsAlphanumeric($expected, $str)
     {
-        $this->assertEquals($expected, libstr_isAlphanumeric($str), $str);
+        $this->assertEquals($expected, libstr_ascii_isAlphanumeric($str), $str);
     }
     public function isAlphanumericProvider()
     {
@@ -757,14 +604,6 @@ class StrMBTest extends TestCase
             [false, 'foo bar'],
             [false, 'foobar2"'],
             [false, "\nfoobar\n"],
-            [true, 'fòôbàř1'],
-            [false, 'fòô bàř'],
-            [false, 'fòôbàř2"'],
-            [true, 'ҠѨњфгШ'],
-            [false, 'ҠѨњ¨ˆфгШ'],
-            [true, '丹尼爾111'],
-            [true, 'دانيال1'],
-            [false, 'دانيال1 ']
         ];
     }
 
@@ -775,7 +614,7 @@ class StrMBTest extends TestCase
      */
     public function testIsBase64($expected, $str)
     {
-        $this->assertEquals($expected, libstr_isBase64($str), $str);
+        $this->assertEquals($expected, libstr_ascii_isBase64($str), $str);
     }
     public function isBase64Provider()
     {
@@ -784,8 +623,6 @@ class StrMBTest extends TestCase
             [true, ''],
             [true, base64_encode('FooBar') ],
             [true, base64_encode(' ') ],
-            [true, base64_encode('FÒÔBÀŘ') ],
-            [true, base64_encode('συγγραφέας') ],
             [false, 'Foobar'],
         ];
     }
@@ -797,7 +634,7 @@ class StrMBTest extends TestCase
      */
     public function testIsBlank($expected, $str)
     {
-        $this->assertEquals($expected, libstr_isBlank($str), $str);
+        $this->assertEquals($expected, libstr_ascii_isBlank($str), $str);
     }
     public function isBlankProvider()
     {
@@ -810,11 +647,6 @@ class StrMBTest extends TestCase
             [false, "\n\t ' \v\f"],
             [false, "\n\t 2 \v\f"],
             [true, ''],
-            [true, ' '], // no-break space (U+00A0)
-            [true, '           '], // spaces U+2000 to U+200A
-            [true, ' '], // narrow no-break space (U+202F)
-            [true, ' '], // medium mathematical space (U+205F)
-            [true, '　'], // ideographic space (U+3000)
             [false, '　z'],
             [false, '　1'],
         ];
@@ -827,7 +659,7 @@ class StrMBTest extends TestCase
      */
     public function testIsHexadecimal($expected, $str)
     {
-        $this->assertEquals($expected, libstr_isHexadecimal($str), $str);
+        $this->assertEquals($expected, libstr_ascii_isHexadecimal($str), $str);
     }
     public function isHexadecimalProvider()
     {
@@ -855,7 +687,7 @@ class StrMBTest extends TestCase
      */
     public function testIsJson($expected, $str)
     {
-        $this->assertEquals($expected, libstr_isJson($str), $str);
+        $this->assertEquals($expected, libstr_ascii_isJson($str), $str);
     }
     public function isJsonProvider()
     {
@@ -874,12 +706,6 @@ class StrMBTest extends TestCase
             [true, '["foo"]'],
             [false, '{"foo": "bar"]'],
             [true, '123'],
-            [true, '{"fòô": "bàř"}'],
-            [false, '{"fòô":"bàř",}'],
-            [false, '{"fòô"}'],
-            [false, '["fòô": "bàř"]'],
-            [true, '["fòô"]'],
-            [false, '{"fòô": "bàř"]'],
         ];
     }
 
@@ -890,7 +716,7 @@ class StrMBTest extends TestCase
      */
     public function testIsLowerCase($expected, $str)
     {
-        $this->assertEquals($expected, libstr_isLowerCase($str), $str);
+        $this->assertEquals($expected, libstr_ascii_isLowerCase($str), $str);
     }
     public function isLowerCaseProvider()
     {
@@ -899,10 +725,6 @@ class StrMBTest extends TestCase
             [true, 'foobar'],
             [false, 'foo bar'],
             [false, 'Foobar'],
-            [true, 'fòôbàř'],
-            [false, 'fòôbàř2'],
-            [false, 'fòô bàř'],
-            [false, 'fòôbÀŘ'],
         ];
     }
 
@@ -913,7 +735,7 @@ class StrMBTest extends TestCase
      */
     public function testIsSerialized($expected, $str)
     {
-        $this->assertEquals($expected, libstr_isSerialized($str), $str);
+        $this->assertEquals($expected, libstr_ascii_isSerialized($str), $str);
     }
     public function isSerializedProvider()
     {
@@ -922,9 +744,6 @@ class StrMBTest extends TestCase
             [true, 'a:1:{s:3:"foo";s:3:"bar";}'],
             [false, 'a:1:{s:3:"foo";s:3:"bar"}'],
             [true, serialize(['foo' => 'bar'])],
-            [true, 'a:1:{s:5:"fòô";s:5:"bàř";}'],
-            [false, 'a:1:{s:5:"fòô";s:5:"bàř"}'],
-            [true, serialize(['fòô' => 'bár'])],
         ];
     }
 
@@ -935,7 +754,7 @@ class StrMBTest extends TestCase
      */
     public function testIsUpperCase($expected, $str)
     {
-        $this->assertEquals($expected, libstr_isUpperCase($str), $str);
+        $this->assertEquals($expected, libstr_ascii_isUpperCase($str), $str);
     }
     public function isUpperCaseProvider()
     {
@@ -944,10 +763,6 @@ class StrMBTest extends TestCase
             [true, 'FOOBAR'],
             [false, 'FOO BAR'],
             [false, 'fOOBAR'],
-            [true, 'FÒÔBÀŘ'],
-            [false, 'FÒÔBÀŘ2'],
-            [false, 'FÒÔ BÀŘ'],
-            [false, 'FÒÔBàř'],
         ];
     }
 
@@ -958,7 +773,7 @@ class StrMBTest extends TestCase
      */
     public function testToBoolean($expected, $str)
     {
-        $this->assertEquals($expected, libstr_toBoolean($str), $str);
+        $this->assertEquals($expected, libstr_ascii_toBoolean($str), $str);
     }
     public function toBooleanProvider()
     {
@@ -977,10 +792,9 @@ class StrMBTest extends TestCase
             [false, '-999'],
             [false, ''],
             [false, ' '],
-            [false, '  '] // narrow no-break space (U+202F)
         ];
     }
-    
+
     /**
      * @dataProvider SubstrProvider
      * @param $expected
@@ -990,15 +804,13 @@ class StrMBTest extends TestCase
      */
     public function testSubstr($expected, $str, $start = 0, $length = 1)
     {
-        $this->assertEquals($expected, libstr_substr($str, $start, $length));
+        $this->assertEquals($expected, libstr_ascii_substr($str, $start, $length));
     }
 
     public function SubstrProvider()
     {
         return [
             ['Hel', 'Hello world', 0, 3],
-            ['H世', 'H世ello world', 0, 2],
-            [' H世', '  H世', 1, 4],
             ['123', '000123000', 3, 3],
         ];
     }
@@ -1010,7 +822,7 @@ class StrMBTest extends TestCase
      */
     public function testEnsureRight(array $inp, string $out)
     {
-        $this->assertEquals($out, libstr_ensureRight(
+        $this->assertEquals($out, libstr_ascii_ensureRight(
             array_shift($inp),
             array_shift($inp)
         ));
@@ -1036,18 +848,6 @@ class StrMBTest extends TestCase
                     ['qq', 'q'],
                     'qq',
                 ],
-                [
-                    ['Hello, 世界', '世'],
-                    'Hello, 世界世',
-                ],
-                [
-                    ['Hello, 世界界', '界'],
-                    'Hello, 世界界',
-                ],
-                [
-                    ['世', '世'],
-                    '世',
-                ],
             ];
     }
 
@@ -1058,7 +858,7 @@ class StrMBTest extends TestCase
      */
     public function testEnsureLeft(array $inp, string $out)
     {
-        $this->assertEquals($out, libstr_ensureLeft(
+        $this->assertEquals($out, libstr_ascii_ensureLeft(
             array_shift($inp),
             array_shift($inp)
         ));
@@ -1084,18 +884,6 @@ class StrMBTest extends TestCase
                     ['qq', 'q'],
                     'qq',
                 ],
-                [
-                    ['Hello, 世界', '界'],
-                    '界Hello, 世界',
-                ],
-                [
-                    ['界Hello, 世界', '界'],
-                    '界Hello, 世界',
-                ],
-                [
-                    ['世', '世'],
-                    '世',
-                ],
             ];
     }
 
@@ -1107,7 +895,7 @@ class StrMBTest extends TestCase
      */
     public function testAt($expected, $str, $pos)
     {
-        $this->assertEquals($expected, libstr_at($str, $pos));
+        $this->assertEquals($expected, libstr_ascii_at($str, $pos));
     }
 
     public function AtProvider()
@@ -1116,11 +904,7 @@ class StrMBTest extends TestCase
             ['H', 'Hello world', 0],
             ['e', 'Hello world', 1],
             ['d', 'Hello world', -1],
-            ['世', '世', -1],
-            ['世', '世', 0],
             ['', '', 0],
-            ['', '', -1],
-            ['', '', 1],
         ];
     }
 
@@ -1132,7 +916,7 @@ class StrMBTest extends TestCase
     public function testChars($expected, $str)
     {
         $this->assertInternalType('array', $expected);
-        $this->assertEquals($expected, libstr_chars($str));
+        $this->assertEquals($expected, libstr_ascii_chars($str));
     }
 
     public function charsProvider()
@@ -1140,7 +924,6 @@ class StrMBTest extends TestCase
         return [
             [[], ''],
             [['T', 'e', 's', 't'], 'Test'],
-            [['F', 'ò', 'ô', ' ', 'B', 'à', 'ř'], 'Fòô Bàř']
         ];
     }
 
@@ -1152,7 +935,7 @@ class StrMBTest extends TestCase
      */
     public function testFirst($expected, $str, $n)
     {
-        $this->assertEquals($expected, libstr_first($str, $n));
+        $this->assertEquals($expected, libstr_ascii_first($str, $n));
     }
 
     public function firstProvider()
@@ -1164,12 +947,6 @@ class StrMBTest extends TestCase
             ['foo', 'foo bar', 3],
             ['foo bar', 'foo bar', 7],
             ['foo bar', 'foo bar', 8],
-            ['', 'fòô bàř', -5],
-            ['', 'fòô bàř', 0],
-            ['f', 'fòô bàř', 1],
-            ['fòô', 'fòô bàř', 3],
-            ['fòô bàř', 'fòô bàř', 7],
-            ['fòô bàř', 'fòô bàř', 8],
         ];
     }
 
@@ -1181,7 +958,7 @@ class StrMBTest extends TestCase
      */
     public function testLast($expected, $str, $n)
     {
-        $this->assertEquals($expected, libstr_last($str, $n));
+        $this->assertEquals($expected, libstr_ascii_last($str, $n));
     }
 
     public function lastProvider()
@@ -1193,12 +970,6 @@ class StrMBTest extends TestCase
             ['bar', 'foo bar', 3],
             ['foo bar', 'foo bar', 7],
             ['foo bar', 'foo bar', 8],
-            ['', 'fòô bàř', -5],
-            ['', 'fòô bàř', 0],
-            ['ř', 'fòô bàř', 1],
-            ['bàř', 'fòô bàř', 3],
-            ['fòô bàř', 'fòô bàř', 7],
-            ['fòô bàř', 'fòô bàř', 8],
         ];
     }
 
@@ -1209,16 +980,13 @@ class StrMBTest extends TestCase
      */
     public function testToLowerCase($expected, $str)
     {
-        $this->assertEquals($expected, libstr_toLowerCase($str));
+        $this->assertEquals($expected, libstr_ascii_toLowerCase($str));
     }
     public function toLowerCaseProvider()
     {
         return [
             ['foo bar', 'FOO BAR'],
             [' foo_bar ', ' FOO_bar '],
-            ['fòô bàř', 'FÒÔ BÀŘ'],
-            [' fòô_bàř ', ' FÒÔ_bàř '],
-            ['αυτοκίνητο', 'ΑΥΤΟΚΊΝΗΤΟ'],
         ];
     }
 
@@ -1229,16 +997,13 @@ class StrMBTest extends TestCase
      */
     public function testToUpperCase($expected, $str)
     {
-        $this->assertEquals($expected, libstr_toUpperCase($str));
+        $this->assertEquals($expected, libstr_ascii_toUpperCase($str));
     }
     public function toUpperCaseProvider()
     {
         return [
             ['FOO BAR', 'foo bar'],
             [' FOO_BAR ', ' FOO_bar '],
-            ['FÒÔ BÀŘ', 'fòô bàř'],
-            [' FÒÔ_BÀŘ ', ' FÒÔ_bàř '],
-            ['ΑΥΤΟΚΊΝΗΤΟ', 'αυτοκίνητο'],
         ];
     }
 
@@ -1250,13 +1015,12 @@ class StrMBTest extends TestCase
      */
     public function testAppend($expected, $str, $string)
     {
-        $this->assertEquals($expected, libstr_append($str, $string));
+        $this->assertEquals($expected, libstr_ascii_append($str, $string));
     }
     public function appendProvider()
     {
         return [
             ['foobar', 'foo', 'bar'],
-            ['fòôbàř', 'fòô', 'bàř']
         ];
     }
 
@@ -1268,13 +1032,12 @@ class StrMBTest extends TestCase
      */
     public function testPrepend($expected, $str, $string)
     {
-        $this->assertEquals($expected, libstr_prepend($str, $string));
+        $this->assertEquals($expected, libstr_ascii_prepend($str, $string));
     }
     public function prependProvider()
     {
         return [
             ['foobar', 'bar', 'foo'],
-            ['fòôbàř', 'bàř', 'fòô']
         ];
     }
 
@@ -1285,7 +1048,7 @@ class StrMBTest extends TestCase
      */
     public function testReplace($params, $expected)
     {
-        $this->assertEquals($expected, libstr_replace(
+        $this->assertEquals($expected, libstr_ascii_replace(
             array_shift($params), // s
             array_shift($params), // old
             array_shift($params), // new
@@ -1309,32 +1072,8 @@ class StrMBTest extends TestCase
                     'moo moo moo'
                 ],
                 [
-                    ['hello world, hello universe', 'hello', 'привет', 1],
-                    'привет world, hello universe'
-                ],
-                [
                     ['banana', 'a', 'e', 4],
                     'benene'
-                ],
-                [
-                    ['ban 世 a!', ' 世', ' foo', -1],
-                    'ban foo a!'
-                ],
-                [
-                    ['世世世世世', '世', '界', 2],
-                    '界界世世世'
-                ],
-                [
-                    ['世世世世世', '世', '界', 0],
-                    '世世世世世'
-                ],
-                [
-                    ['世q世q世', 'q', 'q', 5],
-                    '世q世q世'
-                ],
-                [
-                    ['世q世q世', 'z', 'zz', 2],
-                    '世q世q世'
                 ],
                 [
                     ['', 'a', 'b', -1],
@@ -1351,7 +1090,7 @@ class StrMBTest extends TestCase
      */
     public function testTrim($expected, $str, $chars = '')
     {
-        $this->assertEquals($expected, libstr_trim($str, $chars));
+        $this->assertEquals($expected, libstr_ascii_trim($str, $chars));
     }
     public function trimProvider()
     {
@@ -1360,14 +1099,8 @@ class StrMBTest extends TestCase
             ['foo bar', ' foo bar'],
             ['foo bar', 'foo bar '],
             ['foo bar', "\n\t foo bar \n\t"],
-            ['fòô   bàř', '  fòô   bàř  '],
-            ['fòô bàř', ' fòô bàř'],
-            ['fòô bàř', 'fòô bàř '],
             [' foo bar ', "\n\t foo bar \n\t", "\n\t"],
-            ['fòô bàř', "\n\t fòô bàř \n\t", ''],
-            ['fòô', ' fòô ', ''], // narrow no-break space (U+202F)
-            ['fòô', '  fòô  ', ''], // medium mathematical space (U+205F)
-            ['fòô', '           fòô', ''] // spaces U+2000 to U+200A
+            ['foo boo', "\n\t foo boo \n\t", ''],
         ];
     }
 
@@ -1379,7 +1112,7 @@ class StrMBTest extends TestCase
      */
     public function testTrimLeft($expected, $str, $chars = '')
     {
-        $this->assertEquals($expected, libstr_trimLeft($str, $chars));
+        $this->assertEquals($expected, libstr_ascii_trimLeft($str, $chars));
     }
     public function trimLeftProvider()
     {
@@ -1388,15 +1121,8 @@ class StrMBTest extends TestCase
             ['foo bar', ' foo bar'],
             ['foo bar ', 'foo bar '],
             ["foo bar \n\t", "\n\t foo bar \n\t"],
-            ['fòô   bàř  ', '  fòô   bàř  '],
-            ['fòô bàř', ' fòô bàř'],
-            ['fòô bàř ', 'fòô bàř '],
             ['foo bar', '--foo bar', '-'],
-            ['fòô bàř', 'òòfòô bàř', 'ò'],
-            ["fòô bàř \n\t", "\n\t fòô bàř \n\t", ''],
-            ['fòô ', ' fòô ', ''], // narrow no-break space (U+202F)
-            ['fòô  ', '  fòô  ', ''], // medium mathematical space (U+205F)
-            ['fòô', '           fòô', ''] // spaces U+2000 to U+200A
+            ["foo boo \n\t", "\n\t foo boo \n\t", ''],
         ];
     }
 
@@ -1408,7 +1134,7 @@ class StrMBTest extends TestCase
      */
     public function testTrimRight($expected, $str, $chars = '')
     {
-        $this->assertEquals($expected, libstr_trimRight($str, $chars));
+        $this->assertEquals($expected, libstr_ascii_trimRight($str, $chars));
     }
     public function trimRightProvider()
     {
@@ -1417,15 +1143,9 @@ class StrMBTest extends TestCase
             ['foo bar', 'foo bar '],
             [' foo bar', ' foo bar'],
             ["\n\t foo bar", "\n\t foo bar \n\t"],
-            ['  fòô   bàř', '  fòô   bàř  '],
-            ['fòô bàř', 'fòô bàř '],
-            [' fòô bàř', ' fòô bàř'],
             ['foo bar', 'foo bar--', '-'],
-            ['fòô bàř', 'fòô bàřòò', 'ò'],
-            ["\n\t fòô bàř", "\n\t fòô bàř \n\t", ''],
-            [' fòô', ' fòô ', ''], // narrow no-break space (U+202F)
-            ['  fòô', '  fòô  ', ''], // medium mathematical space (U+205F)
-            ['fòô', 'fòô           ', ''] // spaces U+2000 to U+200A
+            ['foo b', 'foo boooo', 'o'],
+            ["\n\t foo boo", "\n\t foo boo \n\t", ''],
         ];
     }
 
@@ -1438,7 +1158,7 @@ class StrMBTest extends TestCase
      */
     public function testPadLeft($expected, $str, $length, $padStr = ' ')
     {
-        $this->assertEquals($expected, libstr_padLeft($str, $length, $padStr));
+        $this->assertEquals($expected, libstr_ascii_padLeft($str, $length, $padStr));
     }
     public function padLeftProvider()
     {
@@ -1446,10 +1166,6 @@ class StrMBTest extends TestCase
             ['  foo bar', 'foo bar', 9],
             ['_*foo bar', 'foo bar', 9, '_*'],
             ['_*_foo bar', 'foo bar', 10, '_*'],
-            ['  fòô bàř', 'fòô bàř', 9, ' '],
-            ['¬øfòô bàř', 'fòô bàř', 9, '¬ø'],
-            ['¬ø¬fòô bàř', 'fòô bàř', 10, '¬ø'],
-            ['¬ø¬øfòô bàř', 'fòô bàř', 11, '¬ø'],
         ];
     }
 
@@ -1462,7 +1178,7 @@ class StrMBTest extends TestCase
      */
     public function testPadRight($expected, $str, $length, $padStr = ' ')
     {
-        $this->assertEquals($expected, libstr_padRight($str, $length, $padStr));
+        $this->assertEquals($expected, libstr_ascii_padRight($str, $length, $padStr));
     }
     public function padRightProvider()
     {
@@ -1470,10 +1186,6 @@ class StrMBTest extends TestCase
             ['foo bar  ', 'foo bar', 9],
             ['foo bar_*', 'foo bar', 9, '_*'],
             ['foo bar_*_', 'foo bar', 10, '_*'],
-            ['fòô bàř  ', 'fòô bàř', 9, ' '],
-            ['fòô bàř¬ø', 'fòô bàř', 9, '¬ø'],
-            ['fòô bàř¬ø¬', 'fòô bàř', 10, '¬ø'],
-            ['fòô bàř¬ø¬ø', 'fòô bàř', 11, '¬ø'],
         ];
     }
 
@@ -1486,22 +1198,13 @@ class StrMBTest extends TestCase
      */
     public function testPadBoth($expected, $str, $length, $padStr = ' ')
     {
-        $this->assertEquals($expected, libstr_padBoth($str, $length, $padStr));
+        $this->assertEquals($expected, libstr_ascii_padBoth($str, $length, $padStr));
     }
     public function padBothProvider()
     {
         return [
             ['foo bar ', 'foo bar', 8],
             [' foo bar ', 'foo bar', 9, ' '],
-            ['fòô bàř ', 'fòô bàř', 8, ' '],
-            [' fòô bàř ', 'fòô bàř', 9, ' '],
-            ['fòô bàř¬', 'fòô bàř', 8, '¬ø'],
-            ['¬fòô bàř¬', 'fòô bàř', 9, '¬ø'],
-            ['¬fòô bàř¬ø', 'fòô bàř', 10, '¬ø'],
-            ['¬øfòô bàř¬ø', 'fòô bàř', 11, '¬ø'],
-            ['¬fòô bàř¬ø', 'fòô bàř', 10, '¬øÿ'],
-            ['¬øfòô bàř¬ø', 'fòô bàř', 11, '¬øÿ'],
-            ['¬øfòô bàř¬øÿ', 'fòô bàř', 12, '¬øÿ']
         ];
     }
 
@@ -1514,7 +1217,7 @@ class StrMBTest extends TestCase
      */
     public function testInsert($expected, $str, $substring, $index)
     {
-        $this->assertEquals($expected, libstr_insert($str, $substring, $index));
+        $this->assertEquals($expected, libstr_ascii_insert($str, $substring, $index));
     }
     public function insertProvider()
     {
@@ -1523,10 +1226,6 @@ class StrMBTest extends TestCase
             ['foo bar', 'f bar', 'oo', 1],
             ['f baroo', 'f bar', 'oo', 20],
             ['foo bar', 'foo ba', 'r', 6],
-            ['fòôbàř', 'fòôbř', 'à', 4],
-            ['fòô bàř', 'òô bàř', 'f', 0],
-            ['fòô bàř', 'f bàř', 'òô', 1],
-            ['fòô bàř', 'fòô bà', 'ř', 6]
         ];
     }
 
@@ -1538,7 +1237,7 @@ class StrMBTest extends TestCase
      */
     public function testRemoveLeft($expected, $str, $substring)
     {
-        $this->assertEquals($expected, libstr_removeLeft($str, $substring));
+        $this->assertEquals($expected, libstr_ascii_removeLeft($str, $substring));
     }
     public function removeLeftProvider()
     {
@@ -1549,13 +1248,8 @@ class StrMBTest extends TestCase
             ['bar', 'foo bar', 'foo '],
             ['foo bar', 'foo bar', 'oo'],
             ['foo bar', 'foo bar', 'oo bar'],
-            ['oo bar', 'foo bar', libstr_first($s)],
-            ['oo bar', 'foo bar', libstr_at($s,0)],
-            ['fòô bàř', 'fòô bàř', ''],
-            ['òô bàř', 'fòô bàř', 'f'],
-            ['bàř', 'fòô bàř', 'fòô '],
-            ['fòô bàř', 'fòô bàř', 'òô'],
-            ['fòô bàř', 'fòô bàř', 'òô bàř']
+            ['oo bar', 'foo bar', libstr_ascii_first($s)],
+            ['oo bar', 'foo bar', libstr_ascii_at($s,0)],
         ];
     }
 
@@ -1567,7 +1261,7 @@ class StrMBTest extends TestCase
      */
     public function testRemoveRight($expected, $str, $substring)
     {
-        $this->assertEquals($expected, libstr_removeRight($str, $substring));
+        $this->assertEquals($expected, libstr_ascii_removeRight($str, $substring));
     }
     public function removeRightProvider()
     {
@@ -1578,13 +1272,8 @@ class StrMBTest extends TestCase
             ['foo', 'foo bar', ' bar'],
             ['foo bar', 'foo bar', 'ba'],
             ['foo bar', 'foo bar', 'foo ba'],
-            ['foo ba', 'foo bar', libstr_last($s)],
-            ['foo ba', 'foo bar', libstr_at($s,6)],
-            ['fòô bàř', 'fòô bàř', ''],
-            ['fòô bà', 'fòô bàř', 'ř'],
-            ['fòô', 'fòô bàř', ' bàř'],
-            ['fòô bàř', 'fòô bàř', 'bà'],
-            ['fòô bàř', 'fòô bàř', 'fòô bà']
+            ['foo ba', 'foo bar', libstr_ascii_last($s)],
+            ['foo ba', 'foo bar', libstr_ascii_at($s,6)],
         ];
     }
 
@@ -1596,7 +1285,7 @@ class StrMBTest extends TestCase
      */
     public function testRepeat($expected, $str, $multiplier)
     {
-        $this->assertEquals($expected, libstr_repeat($str, $multiplier));
+        $this->assertEquals($expected, libstr_ascii_repeat($str, $multiplier));
     }
     public function repeatProvider()
     {
@@ -1605,9 +1294,6 @@ class StrMBTest extends TestCase
             ['foo', 'foo', 1],
             ['foofoo', 'foo', 2],
             ['foofoofoo', 'foo', 3],
-            ['fòô', 'fòô', 1],
-            ['fòôfòô', 'fòô', 2],
-            ['fòôfòôfòô', 'fòô', 3]
         ];
     }
 
@@ -1618,16 +1304,13 @@ class StrMBTest extends TestCase
      */
     public function testReverse($expected, $str)
     {
-        $this->assertEquals($expected, libstr_reverse($str));
+        $this->assertEquals($expected, libstr_ascii_reverse($str));
     }
     public function reverseProvider()
     {
         return [
             ['', ''],
             ['raboof', 'foobar'],
-            ['řàbôòf', 'fòôbàř'],
-            ['řàb ôòf', 'fòô bàř'],
-            ['∂∆ ˚åß', 'ßå˚ ∆∂']
         ];
     }
 
@@ -1637,10 +1320,10 @@ class StrMBTest extends TestCase
      */
     public function testShuffle($str)
     {
-        $result = libstr_shuffle($str);
+        $result = libstr_ascii_shuffle($str);
 
-        $oldValues = libstr_chars($str);
-        $newValues = libstr_chars($result);
+        $oldValues = libstr_ascii_chars($str);
+        $newValues = libstr_ascii_chars($result);
 
         $countOld = array_count_values($oldValues);
         $countNew = array_count_values($newValues);
@@ -1653,8 +1336,6 @@ class StrMBTest extends TestCase
     {
         return [
             ['foo bar'],
-            ['∂∆ ˚åß'],
-            ['å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬']
         ];
     }
 
@@ -1668,7 +1349,7 @@ class StrMBTest extends TestCase
      */
     public function testBetween($expected, $str, $start, $end, $offset = 0)
     {
-        $this->assertEquals($expected, libstr_between($str, $start, $end, $offset), $str);
+        $this->assertEquals($expected, libstr_ascii_between($str, $start, $end, $offset), $str);
     }
     public function betweenProvider()
     {
@@ -1681,14 +1362,6 @@ class StrMBTest extends TestCase
             ['foo', '}{foo}', '{', '}'],
             ['foo', 'A description of {foo} goes here', '{', '}'],
             ['bar', '{foo} and {bar}', '{', '}', 1],
-            ['', 'fòô', '{', '}', 0],
-            ['', '{fòô', '{', '}', 0],
-            ['fòô', '{fòô}', '{', '}', 0],
-            ['{fòô', '{{fòô}', '{', '}', 0],
-            ['', '{}fòô}', '{', '}', 0],
-            ['fòô', '}{fòô}', '{', '}', 0],
-            ['fòô', 'A description of {fòô} goes here', '{', '}', 0],
-            ['bàř', '{fòô} and {bàř}', '{', '}', 1]
         ];
     }
 
@@ -1699,7 +1372,7 @@ class StrMBTest extends TestCase
      */
     public function testCamelize($expected, $str)
     {
-        $this->assertEquals($expected, libstr_camelize($str), $str);
+        $this->assertEquals($expected, libstr_ascii_camelize($str), $str);
     }
     public function camelizeProvider()
     {
@@ -1720,9 +1393,6 @@ class StrMBTest extends TestCase
             ['carSpeed', '_car_speed_'],
             ['serveHTTP', 'ServeHTTP'],
             ['1Camel2Case', '1camel2case'],
-            ['camelΣase', 'camel σase'],
-            ['στανιλCase', 'Στανιλ case'],
-            ['σamelCase', 'σamel  Case']
         ];
     }
 
@@ -1733,7 +1403,7 @@ class StrMBTest extends TestCase
      */
     public function testUpperCaseFirst($expected, $str)
     {
-        $this->assertEquals($expected, libstr_upperCaseFirst($str), $str);
+        $this->assertEquals($expected, libstr_ascii_upperCaseFirst($str), $str);
     }
     public function upperCaseFirstProvider()
     {
@@ -1741,8 +1411,6 @@ class StrMBTest extends TestCase
             ['Test', 'Test'],
             ['Test', 'test'],
             ['1a', '1a'],
-            ['Σ test', 'σ test'],
-            [' σ test', ' σ test']
         ];
     }
 
@@ -1753,7 +1421,7 @@ class StrMBTest extends TestCase
      */
     public function testLowerCaseFirst($expected, $str)
     {
-        $this->assertEquals($expected, libstr_lowerCaseFirst($str), $str);
+        $this->assertEquals($expected, libstr_ascii_lowerCaseFirst($str), $str);
     }
     public function lowerCaseFirstProvider()
     {
@@ -1761,8 +1429,6 @@ class StrMBTest extends TestCase
             ['test', 'Test'],
             ['test', 'test'],
             ['1a', '1a'],
-            ['σ test', 'Σ test'],
-            [' Σ test', ' Σ test']
         ];
     }
 
@@ -1773,20 +1439,14 @@ class StrMBTest extends TestCase
      */
     public function testCollapseWhitespace($expected, $str)
     {
-        $this->assertEquals($expected, libstr_collapseWhitespace($str), $str);
+        $this->assertEquals($expected, libstr_ascii_collapseWhitespace($str), $str);
     }
     public function collapseWhitespaceProvider()
     {
         return [
             ['foo bar', '  foo   bar  '],
             ['test string', 'test string'],
-            ['Ο συγγραφέας', '   Ο     συγγραφέας  '],
             ['123', ' 123 '],
-            ['', ' '], // no-break space (U+00A0)
-            ['', '           '], // spaces U+2000 to U+200A
-            ['', ' '], // narrow no-break space (U+202F)
-            ['', ' '], // medium mathematical space (U+205F)
-            ['', '　'], // ideographic space (U+3000)
             ['1 2 3', '  1  2  3　　'],
             ['', ' '],
             ['', ''],
@@ -1801,9 +1461,9 @@ class StrMBTest extends TestCase
      * @param $replacement
      * @param string $options
      */
-    public function testRegexReplace($expected, $str, $pattern, $replacement, $options = 'msr')
+    public function testRegexReplace($expected, $str, $pattern, $replacement, $options = 'ms')
     {
-        $this->assertEquals($expected, libstr_regexReplace($str, $pattern, $replacement, $options), $str);
+        $this->assertEquals($expected, libstr_ascii_regexReplace($str, $pattern, $replacement, $options), $str);
     }
     public function regexReplaceProvider()
     {
@@ -1813,10 +1473,7 @@ class StrMBTest extends TestCase
             ['o bar', 'foo bar', 'f(o)o', '\1'],
             ['bar', 'foo bar', 'f[O]+\s', '', 'i'],
             ['foo', 'bar', '[[:alpha:]]{3}', 'foo'],
-            ['', '', '', '', 'msr'],
-            ['bàř', 'fòô ', 'f[òô]+\s', 'bàř', 'msr'],
-            ['fòô', 'fò', '(ò)', '\\1ô', 'msr'],
-            ['fòô', 'bàř', '[[:alpha:]]{3}', 'fòô', 'msr']
+            ['', '', '', '', 'ms'],
         ];
     }
 
@@ -1827,7 +1484,7 @@ class StrMBTest extends TestCase
      */
     public function testDasherize($expected, $str)
     {
-        $this->assertEquals($expected, libstr_dasherize($str), $str);
+        $this->assertEquals($expected, libstr_ascii_dasherize($str), $str);
     }
     public function dasherizeProvider()
     {
@@ -1848,9 +1505,6 @@ class StrMBTest extends TestCase
             ['car-speed', 'CarSpeed'],
             ['yes-we-can', 'yesWeCan'],
             ['background-color', 'backgroundColor'],
-            ['dash-σase', 'dash Σase'],
-            ['στανιλ-case', 'Στανιλ case'],
-            ['σash-case', 'Σash  Case']
         ];
     }
 
@@ -1862,7 +1516,7 @@ class StrMBTest extends TestCase
      */
     public function testDelimit($expected, $str, $delimiter)
     {
-        $this->assertEquals($expected, libstr_delimit($str, $delimiter), $str);
+        $this->assertEquals($expected, libstr_ascii_delimit($str, $delimiter), $str);
     }
     public function delimitProvider()
     {
@@ -1878,9 +1532,6 @@ class StrMBTest extends TestCase
             ['test=c=c=test', 'TestCCTest', '='],
             ['string#>with1number', 'string_with1number', '#>'],
             ['1test2case', '1test2case', '*'],
-            ['test ύα σase', 'test Σase', ' ύα ',],
-            ['στανιλαcase', 'Στανιλ case', 'α',],
-            ['σashΘcase', 'Σash  Case', 'Θ']
         ];
     }
 
@@ -1892,7 +1543,7 @@ class StrMBTest extends TestCase
      */
     public function testHtmlEncode($expected, $str, $flags = ENT_COMPAT)
     {
-        $this->assertEquals($expected, libstr_htmlEncode($str, $flags), $str);
+        $this->assertEquals($expected, libstr_ascii_htmlEncode($str, $flags), $str);
     }
     public function htmlEncodeProvider()
     {
@@ -1913,7 +1564,7 @@ class StrMBTest extends TestCase
      */
     public function testHtmlDecode($expected, $str, $flags = ENT_COMPAT)
     {
-        $this->assertEquals($expected, libstr_htmlDecode($str, $flags), $str);
+        $this->assertEquals($expected, libstr_ascii_htmlDecode($str, $flags), $str);
     }
     public function htmlDecodeProvider()
     {
@@ -1933,14 +1584,13 @@ class StrMBTest extends TestCase
      */
     public function testHumanize($expected, $str)
     {
-        $this->assertEquals($expected, libstr_humanize($str), $str);
+        $this->assertEquals($expected, libstr_ascii_humanize($str), $str);
     }
     public function humanizeProvider()
     {
         return [
             ['Author', 'author_id'],
             ['Test user', ' _test_user_'],
-            ['Συγγραφέας', ' συγγραφέας_id ']
         ];
     }
 
@@ -1951,12 +1601,13 @@ class StrMBTest extends TestCase
      */
     public function testLines($expected, $str)
     {
-        $result = libstr_lines($str);
+        $result = libstr_ascii_lines($str);
         $expectedCount = count($expected);
 
         if ($expectedCount === 0) { $this->assertEmpty($result); }
+        if ($expectedCount === 1) { $this->assertEquals($expected, $result); }
 
-        for ($i = 0; $i < $expectedCount; $i++) {
+        for ($i = 0; $i < $expectedCount - 1; $i++) {
             $this->assertEquals($expected[$i], $result[$i]);
         }
     }
@@ -1971,13 +1622,6 @@ class StrMBTest extends TestCase
             [['foo', '', 'bar'], "foo\r\n\r\nbar"],
             [['foo', 'bar', ''], "foo\r\nbar\r\n"],
             [['', 'foo', 'bar'], "\r\nfoo\r\nbar"],
-            [['fòô', 'bàř'], "fòô\nbàř"],
-            [['fòô', 'bàř'], "fòô\rbàř"],
-            [['fòô', 'bàř'], "fòô\n\rbàř"],
-            [['fòô', 'bàř'], "fòô\r\nbàř"],
-            [['fòô', '', 'bàř'], "fòô\r\n\r\nbàř"],
-            [['fòô', 'bàř', ''], "fòô\r\nbàř\r\n"],
-            [['', 'fòô', 'bàř'], "\r\nfòô\r\nbàř"],
         ];
     }
 
@@ -1990,12 +1634,13 @@ class StrMBTest extends TestCase
      */
     public function testSplit($expected, $str, $pattern, $limit = -1)
     {
-        $result = libstr_split($str, $pattern, $limit);
+        $result = libstr_ascii_split($str, $pattern, $limit);
         $expectedLen = count($expected);
 
         if ($expectedLen === 0) { $this->assertEmpty($result); }
+        if ($expectedLen === 1) { $this->assertEquals($expected, $result); }
 
-        for ($i = 0; $i < $expectedLen; $i++) {
+        for ($i = 0; $i < $expectedLen - 1; $i++) {
             $this->assertEquals($expected[$i], $result[$i]);
         }
     }
@@ -2012,15 +1657,6 @@ class StrMBTest extends TestCase
             [['foo', 'bar'], 'foo,bar,baz', ',', 2],
             [['foo', 'bar', 'baz'], 'foo,bar,baz', ',', 3],
             [['foo', 'bar', 'baz'], 'foo,bar,baz', ',', 10],
-            [['fòô,bàř,baz'], 'fòô,bàř,baz', '-', -1],
-            [['fòô', 'bàř', 'baz'], 'fòô,bàř,baz', ',', -1],
-            [['fòô', 'bàř', 'baz'], 'fòô,bàř,baz', ',', -1],
-            [['fòô', 'bàř', 'baz'], 'fòô,bàř,baz', ',', -1],
-            [[], 'fòô,bàř,baz', ',', 0],
-            [['fòô'], 'fòô,bàř,baz', ',', 1],
-            [['fòô', 'bàř'], 'fòô,bàř,baz', ',', 2],
-            [['fòô', 'bàř', 'baz'], 'fòô,bàř,baz', ',', 3],
-            [['fòô', 'bàř', 'baz'], 'fòô,bàř,baz', ',', 10]
         ];
     }
 
@@ -2032,7 +1668,7 @@ class StrMBTest extends TestCase
      */
     public function testLongestCommonPrefix($expected, $str, $otherStr)
     {
-        $this->assertEquals($expected, libstr_longestCommonPrefix($str, $otherStr), $str);
+        $this->assertEquals($expected, libstr_ascii_longestCommonPrefix($str, $otherStr), $str);
     }
     public function longestCommonPrefixProvider()
     {
@@ -2042,11 +1678,6 @@ class StrMBTest extends TestCase
             ['f', 'foo bar', 'far boo'],
             ['', 'toy car', 'foo bar'],
             ['', 'foo bar', ''],
-            ['fòô', 'fòôbar', 'fòô bar'],
-            ['fòô bar', 'fòô bar', 'fòô bar'],
-            ['fò', 'fòô bar', 'fòr bar'],
-            ['', 'toy car', 'fòô bar'],
-            ['', 'fòô bar', ''],
         ];
     }
 
@@ -2058,7 +1689,7 @@ class StrMBTest extends TestCase
      */
     public function testLongestCommonSuffix($expected, $str, $otherStr)
     {
-        $this->assertEquals($expected, libstr_longestCommonSuffix($str, $otherStr), $str);
+        $this->assertEquals($expected, libstr_ascii_longestCommonSuffix($str, $otherStr), $str);
     }
     public function longestCommonSuffixProvider()
     {
@@ -2068,11 +1699,6 @@ class StrMBTest extends TestCase
             ['ar', 'foo bar', 'boo far'],
             ['', 'foo bad', 'foo bar'],
             ['', 'foo bar', ''],
-            ['bàř', 'fòôbàř', 'fòô bàř'],
-            ['fòô bàř', 'fòô bàř', 'fòô bàř'],
-            [' bàř', 'fòô bàř', 'fòr bàř'],
-            ['', 'toy car', 'fòô bàř'],
-            ['', 'fòô bàř', ''],
         ];
     }
 
@@ -2084,7 +1710,7 @@ class StrMBTest extends TestCase
      */
     public function testLongestCommonSubstring($expected, $str, $otherStr)
     {
-        $this->assertEquals($expected, libstr_longestCommonSubstring($str, $otherStr), $str);
+        $this->assertEquals($expected, libstr_ascii_longestCommonSubstring($str, $otherStr), $str);
     }
     public function longestCommonSubstringProvider()
     {
@@ -2094,11 +1720,6 @@ class StrMBTest extends TestCase
             ['oo ', 'foo bar', 'boo far'],
             ['foo ba', 'foo bad', 'foo bar'],
             ['', 'foo bar', ''],
-            ['fòô', 'fòôbàř', 'fòô bàř'],
-            ['fòô bàř', 'fòô bàř', 'fòô bàř'],
-            [' bàř', 'fòô bàř', 'fòr bàř'],
-            [' ', 'toy car', 'fòô bàř'],
-            ['', 'fòô bàř', ''],
         ];
     }
 
@@ -2111,7 +1732,7 @@ class StrMBTest extends TestCase
      */
     public function testSafeTruncate($expected, $str, $length, $substring = '')
     {
-        $this->assertEquals($expected, libstr_safeTruncate($str, $length, $substring), $str);
+        $this->assertEquals($expected, libstr_ascii_safeTruncate($str, $length, $substring), $str);
     }
     public function safeTruncateProvider()
     {
@@ -2127,16 +1748,6 @@ class StrMBTest extends TestCase
             ['Test...', 'Test foo bar', 7, '...'],
             ['T...', 'Test foo bar', 4, '...'],
             ['Test....', 'Test foo bar', 11, '....'],
-            ['Tëst fòô bàř', 'Tëst fòô bàř', 12, ''],
-            ['Tëst fòô', 'Tëst fòô bàř', 11, ''],
-            ['Tëst fòô', 'Tëst fòô bàř', 8, ''],
-            ['Tëst', 'Tëst fòô bàř', 7, ''],
-            ['Tëst', 'Tëst fòô bàř', 4, ''],
-            ['Tëst fòô bàř', 'Tëst fòô bàř', 12, 'ϰϰ'],
-            ['Tëst fòôϰϰ', 'Tëst fòô bàř', 11, 'ϰϰ'],
-            ['Tëstϰϰ', 'Tëst fòô bàř', 8, 'ϰϰ'],
-            ['Tëstϰϰ', 'Tëst fòô bàř', 7, 'ϰϰ'],
-            ['Tëϰϰ', 'Tëst fòô bàř', 4, 'ϰϰ'],
             ['What are your plans...', 'What are your plans today?', 22, '...']
         ];
     }
@@ -2149,7 +1760,7 @@ class StrMBTest extends TestCase
      */
     public function testSlugify($expected, $str, $replacement = '-')
     {
-        $this->assertEquals($expected, libstr_slugify($str, $replacement), $str);
+        $this->assertEquals($expected, libstr_ascii_slugify($str, $replacement), $str);
     }
     public function slugifyProvider()
     {
@@ -2160,54 +1771,12 @@ class StrMBTest extends TestCase
             ['foo-dbar', " Foo d'Bar "],
             ['a-string-with-dashes', 'A string-with-dashes'],
             ['user-host', 'user@host'],
-            ['using-strings-like-foo-bar', 'Using strings like fòô bàř'],
             ['numbers-1234', 'numbers 1234'],
-            ['perevirka-ryadka', 'перевірка рядка'],
-            ['bukvar-s-bukvoy-y', 'букварь с буквой ы'],
-            ['podekhal-k-podezdu-moego-doma', 'подъехал к подъезду моего дома'],
             ['foo:bar:baz', 'Foo bar baz', ':'],
             ['a_string_with_underscores', 'A_string with_underscores', '_'],
             ['a_string_with_dashes', 'A string-with-dashes', '_'],
             ['a\string\with\dashes', 'A string-with-dashes', '\\'],
             ['an_odd_string', '--   An odd__   string-_', '_']
-        ];
-    }
-
-    /**
-     * @dataProvider toAsciiProvider()
-     * @param $expected
-     * @param $str
-     * @param string $language
-     * @param bool $removeUnsupported
-     */
-    public function testToAscii($expected, $str, $language = 'en', $removeUnsupported = true)
-    {
-        $this->assertEquals($expected, libstr_toAscii($str, $language, $removeUnsupported), $str);
-    }
-    public function toAsciiProvider()
-    {
-        return [
-            ['foo bar', 'fòô bàř'],
-            [' TEST ', ' ŤÉŚŢ '],
-            ['f = z = 3', 'φ = ź = 3'],
-            ['perevirka', 'перевірка'],
-            ['lysaya gora', 'лысая гора'],
-            ['user@host', 'user@host'],
-            ['shchuka', 'щука'],
-            ['', '漢字'],
-            ['xin chao the gioi', 'xin chào thế giới'],
-            ['XIN CHAO THE GIOI', 'XIN CHÀO THẾ GIỚI'],
-            ['dam phat chet luon', 'đấm phát chết luôn'],
-            [' ', ' '], // no-break space (U+00A0)
-            ['           ', '           '], // spaces U+2000 to U+200A
-            [' ', ' '], // narrow no-break space (U+202F)
-            [' ', ' '], // medium mathematical space (U+205F)
-            [' ', '　'], // ideographic space (U+3000)
-            ['', '𐍉'], // some uncommon, unsupported character (U+10349)
-            ['𐍉', '𐍉', 'en', false],
-            ['aouAOU', 'äöüÄÖÜ'],
-            ['aeoeueAEOEUE', 'äöüÄÖÜ', 'de'],
-            ['aeoeueAEOEUE', 'äöüÄÖÜ', 'de_DE']
         ];
     }
 
@@ -2220,7 +1789,7 @@ class StrMBTest extends TestCase
      */
     public function testSlice($expected, $str, $start, $end = null)
     {
-        $this->assertEquals($expected, libstr_slice($str, $start, $end), $str);
+        $this->assertEquals($expected, libstr_ascii_slice($str, $start, $end), $str);
     }
     public function sliceProvider()
     {
@@ -2233,14 +1802,6 @@ class StrMBTest extends TestCase
             ['', 'foobar', 3, 2],
             ['ba', 'foobar', 3, 5],
             ['ba', 'foobar', 3, -1],
-            ['fòôbàř', 'fòôbàř', 0, null],
-            ['fòôbàř', 'fòôbàř', 0, null],
-            ['fòôbàř', 'fòôbàř', 0, 6],
-            ['fòôbà', 'fòôbàř', 0, 5],
-            ['', 'fòôbàř', 3, 0],
-            ['', 'fòôbàř', 3, 2],
-            ['bà', 'fòôbàř', 3, 5],
-            ['bà', 'fòôbàř', 3, -1]
         ];
     }
 
@@ -2251,20 +1812,14 @@ class StrMBTest extends TestCase
      */
     public function testStripWhitespace($expected, $str)
     {
-        $this->assertEquals($expected, libstr_stripWhitespace($str), $str);
+        $this->assertEquals($expected, libstr_ascii_stripWhitespace($str), $str);
     }
     public function stripWhitespaceProvider()
     {
         return [
             ['foobar', '  foo   bar  '],
             ['teststring', 'test string'],
-            ['Οσυγγραφέας', '   Ο     συγγραφέας  '],
             ['123', ' 123 '],
-            ['', ' '], // no-break space (U+00A0)
-            ['', '           '], // spaces U+2000 to U+200A
-            ['', ' '], // narrow no-break space (U+202F)
-            ['', ' '], // medium mathematical space (U+205F)
-            ['', '　'], // ideographic space (U+3000)
             ['123', '  1  2  3　　'],
             ['', ' '],
             ['', ''],
@@ -2280,7 +1835,7 @@ class StrMBTest extends TestCase
      */
     public function testTruncate($expected, $str, $length, $substring = '')
     {
-        $this->assertEquals($expected, libstr_truncate($str, $length, $substring), $str);
+        $this->assertEquals($expected, libstr_ascii_truncate($str, $length, $substring), $str);
     }
     public function truncateProvider()
     {
@@ -2295,17 +1850,6 @@ class StrMBTest extends TestCase
             ['Test ...', 'Test foo bar', 8, '...'],
             ['Test...', 'Test foo bar', 7, '...'],
             ['T...', 'Test foo bar', 4, '...'],
-            ['Test fo....', 'Test foo bar', 11, '....'],
-            ['Test fòô bàř', 'Test fòô bàř', 12, ''],
-            ['Test fòô bà', 'Test fòô bàř', 11, ''],
-            ['Test fòô', 'Test fòô bàř', 8, ''],
-            ['Test fò', 'Test fòô bàř', 7, ''],
-            ['Test', 'Test fòô bàř', 4, ''],
-            ['Test fòô bàř', 'Test fòô bàř', 12, 'ϰϰ'],
-            ['Test fòô ϰϰ', 'Test fòô bàř', 11, 'ϰϰ'],
-            ['Test fϰϰ', 'Test fòô bàř', 8, 'ϰϰ'],
-            ['Test ϰϰ', 'Test fòô bàř', 7, 'ϰϰ'],
-            ['Teϰϰ', 'Test fòô bàř', 4, 'ϰϰ'],
             ['What are your pl...', 'What are your plans today?', 19, '...']
         ];
     }
@@ -2317,7 +1861,7 @@ class StrMBTest extends TestCase
      */
     public function testUpperCamelize($expected, $str)
     {
-        $this->assertEquals($expected, libstr_upperCamelize($str), $str);
+        $this->assertEquals($expected, libstr_ascii_upperCamelize($str), $str);
     }
     public function upperCamelizeProvider()
     {
@@ -2332,9 +1876,6 @@ class StrMBTest extends TestCase
             ['StringWith1Number', 'string_with1number'],
             ['StringWith22Numbers', 'string-with-2-2 numbers'],
             ['1Camel2Case', '1camel2case'],
-            ['CamelΣase', 'camel σase'],
-            ['ΣτανιλCase', 'στανιλ case'],
-            ['ΣamelCase', 'Σamel  Case']
         ];
     }
 
@@ -2346,7 +1887,7 @@ class StrMBTest extends TestCase
      */
     public function testSurround($expected, $str, $substring)
     {
-        $this->assertEquals($expected, libstr_surround($str, $substring), $str);
+        $this->assertEquals($expected, libstr_ascii_surround($str, $substring), $str);
     }
     public function surroundProvider()
     {
@@ -2354,8 +1895,6 @@ class StrMBTest extends TestCase
             ['__foobar__', 'foobar', '__'],
             ['test', 'test', ''],
             ['**', '', '*'],
-            ['¬fòô bàř¬', 'fòô bàř', '¬'],
-            ['ßå∆˚ test ßå∆˚', ' test ', 'ßå∆˚']
         ];
     }
 
@@ -2366,15 +1905,13 @@ class StrMBTest extends TestCase
      */
     public function testSwapCase($expected, $str)
     {
-        $this->assertEquals($expected, libstr_swapCase($str), $str);
+        $this->assertEquals($expected, libstr_ascii_swapCase($str), $str);
     }
     public function swapCaseProvider()
     {
         return [
             ['TESTcASE', 'testCase'],
             ['tEST-cASE', 'Test-Case'],
-            [' - σASH  cASE', ' - Σash  Case'],
-            ['νΤΑΝΙΛ', 'Ντανιλ']
         ];
     }
 
@@ -2385,7 +1922,7 @@ class StrMBTest extends TestCase
      */
     public function testTidy($expected, $str)
     {
-        $this->assertEquals($expected, libstr_tidy($str), $str);
+        $this->assertEquals($expected, libstr_ascii_tidy($str), $str);
     }
     public function tidyProvider()
     {
@@ -2394,7 +1931,6 @@ class StrMBTest extends TestCase
             ['"I see..."', '“I see…”'],
             ["'This too'", "‘This too’"],
             ['test-dash', 'test—dash'],
-            ['Ο συγγραφέας είπε...', 'Ο συγγραφέας είπε…']
         ];
     }
 
@@ -2407,7 +1943,7 @@ class StrMBTest extends TestCase
      */
     public function testTitleize($expected, $str, $ignore = [])
     {
-        $this->assertEquals($expected, libstr_titleize($str, $ignore), $str);
+        $this->assertEquals($expected, libstr_ascii_titleize($str, $ignore), $str);
     }
     public function titleizeProvider()
     {
@@ -2418,7 +1954,6 @@ class StrMBTest extends TestCase
             ['Testing the Method', 'testing the method', $ignore],
             ['I Like to Watch Dvds at Home', 'i like to watch DVDs at home',
                 $ignore],
-            ['Θα Ήθελα Να Φύγει', '  Θα ήθελα να φύγει  ', []]
         ];
     }
 
@@ -2430,7 +1965,7 @@ class StrMBTest extends TestCase
      */
     public function testToSpaces($expected, $str, $tabLength = 4)
     {
-        $this->assertEquals($expected, libstr_toSpaces($str, $tabLength), $str);
+        $this->assertEquals($expected, libstr_ascii_toSpaces($str, $tabLength), $str);
     }
     public function toSpacesProvider()
     {
@@ -2439,8 +1974,6 @@ class StrMBTest extends TestCase
             ['     foo     bar     ', '	foo	bar	', 5],
             ['    foo  bar  ', '		foo	bar	', 2],
             ['foobar', '	foo	bar	', 0],
-            ["    foo\n    bar", "	foo\n	bar"],
-            ["    fòô\n    bàř", "	fòô\n	bàř"]
         ];
     }
 
@@ -2452,7 +1985,7 @@ class StrMBTest extends TestCase
      */
     public function testToTabs($expected, $str, $tabLength = 4)
     {
-        $this->assertEquals($expected, libstr_toTabs($str, $tabLength), $str);
+        $this->assertEquals($expected, libstr_ascii_toTabs($str, $tabLength), $str);
     }
     public function toTabsProvider()
     {
@@ -2460,28 +1993,6 @@ class StrMBTest extends TestCase
             ['	foo	bar	', '    foo    bar    '],
             ['	foo	bar	', '     foo     bar     ', 5],
             ['		foo	bar	', '    foo  bar  ', 2],
-            ["	foo\n	bar", "    foo\n    bar"],
-            ["	fòô\n	bàř", "    fòô\n    bàř"]
-        ];
-    }
-
-    /**
-     * @dataProvider toTitleCaseProvider()
-     * @param $expected
-     * @param $str
-     */
-    public function testToTitleCase($expected, $str)
-    {
-        $this->assertEquals($expected, libstr_toTitleCase($str), $str);
-    }
-    public function toTitleCaseProvider()
-    {
-        return [
-            ['Foo Bar', 'foo bar'],
-            [' Foo_Bar ', ' foo_bar '],
-            ['Fòô Bàř', 'fòô bàř'],
-            [' Fòô_Bàř ', ' fòô_bàř '],
-            ['Αυτοκίνητο Αυτοκίνητο', 'αυτοκίνητο αυτοκίνητο'],
         ];
     }
 
@@ -2492,7 +2003,7 @@ class StrMBTest extends TestCase
      */
     public function testUnderscored($expected, $str)
     {
-        $this->assertEquals($expected, libstr_underscored($str), $str);
+        $this->assertEquals($expected, libstr_ascii_underscored($str), $str);
     }
     public function underscoredProvider()
     {
@@ -2510,9 +2021,6 @@ class StrMBTest extends TestCase
             ['string_with_2_2_numbers', 'String-with_2_2 numbers'],
             ['1test2case', '1test2case'],
             ['yes_we_can', 'yesWeCan'],
-            ['test_σase', 'test Σase'],
-            ['στανιλ_case', 'Στανιλ case'],
-            ['σash_case', 'Σash  Case']
         ];
     }
 
@@ -2526,14 +2034,12 @@ class StrMBTest extends TestCase
      */
     public function testMove($expected, $str, $start, $length, $destination)
     {
-        $this->assertEquals($expected, libstr_move($str, $start, $length, $destination), $str);
+        $this->assertEquals($expected, libstr_ascii_move($str, $start, $length, $destination), $str);
     }
     public function moveProvider()
     {
         return [
             ['stte_case', 'test_case', 0, 2, 4],
-            ['Στανιλ case', 'Στανιλ case', 0, 4, 1],
-            ['ιλΣταν case', 'Στανιλ case', 0, 4, 6],
         ];
     }
 
@@ -2547,14 +2053,12 @@ class StrMBTest extends TestCase
      */
     public function testOverwrite($expected, $str, $start, $length, $substr)
     {
-        $this->assertEquals($expected, libstr_overwrite($str, $start, $length, $substr), $str);
+        $this->assertEquals($expected, libstr_ascii_overwrite($str, $start, $length, $substr), $str);
     }
     public function overwriteProvider()
     {
         return [
             ['overwrittenst_case', 'test_case', 0, 2, 'overwritten'],
-            ['oh ιλ case', 'Στανιλ case', 0, 4, 'oh '],
-            ['Στανλ case', 'Στανιλ case', 4, 1, ''],
         ];
     }
 
@@ -2565,7 +2069,7 @@ class StrMBTest extends TestCase
      */
     public function testSnakeize($expected, $str)
     {
-        $this->assertEquals($expected, libstr_snakeize($str), $str);
+        $this->assertEquals($expected, libstr_ascii_snakeize($str), $str);
     }
     public function snakeizeProvider()
     {
@@ -2585,9 +2089,6 @@ class StrMBTest extends TestCase
             ['moz_something', '-moz-something'],
             ['car_speed', '_car_speed_'],
             ['1_camel_2_case', '1camel2case'],
-            ['camel_σase', 'camel σase'],
-            ['στανιλ_case', 'Στανιλ case'],
-            ['σamel_case', 'σamel  Case'],
             ['serve_http_or_another_abbreviation', 'Serve HTTP or another ABBREVIATION']
         ];
     }
@@ -2602,14 +2103,13 @@ class StrMBTest extends TestCase
      */
     public function testAfterFirst($expected, $str, $needle, $substr, $times = 1)
     {
-        $this->assertEquals($expected, libstr_afterFirst($str, $needle, $substr, $times), $str);
+        $this->assertEquals($expected, libstr_ascii_afterFirst($str, $needle, $substr, $times), $str);
     }
     public function afterFirstProvider()
     {
         return [
             ['CameHERE!HERE!lCase', 'CamelCase', 'me', 'HERE!', 2],
             ['Camel-Case', 'Camel-Case', 'e', 'not gonna happen', 0],
-            ['Στανν_νιλ case', 'Στανιλ case', 'ν', 'ν_ν']
         ];
     }
 
@@ -2623,14 +2123,13 @@ class StrMBTest extends TestCase
      */
     public function testBeforeFirst($expected, $str, $needle, $substr, $times = 1)
     {
-        $this->assertEquals($expected, libstr_beforeFirst($str, $needle, $substr, $times), $str);
+        $this->assertEquals($expected, libstr_ascii_beforeFirst($str, $needle, $substr, $times), $str);
     }
     public function beforeFirstProvider()
     {
         return [
             ['CaHERE!HERE!melCase', 'CamelCase', 'me', 'HERE!', 2],
             ['Camel-Case', 'Camel-Case', 'e', 'not gonna happen', 0],
-            ['Σταν_ννιλ case', 'Στανιλ case', 'ν', 'ν_ν']
         ];
     }
 
@@ -2644,14 +2143,13 @@ class StrMBTest extends TestCase
      */
     public function testAfterLast($expected, $str, $needle, $substr, $times = 1)
     {
-        $this->assertEquals($expected, libstr_afterLast($str, $needle, $substr, $times), $str);
+        $this->assertEquals($expected, libstr_ascii_afterLast($str, $needle, $substr, $times), $str);
     }
     public function afterLastProvider()
     {
         return [
             ['CamelCaHERE!HERE!se', 'CamelCase', 'a', 'HERE!', 2],
             ['Camel-Case', 'Camel-Case', 'e', 'not gonna happen', 0],
-            ['Στανιλν_ν case', 'Στανιλ case', 'λ', 'ν_ν']
         ];
     }
 
@@ -2665,14 +2163,13 @@ class StrMBTest extends TestCase
      */
     public function testBeforeLastFirst($expected, $str, $needle, $substr, $times = 1)
     {
-        $this->assertEquals($expected, libstr_beforeLast($str, $needle, $substr, $times), $str);
+        $this->assertEquals($expected, libstr_ascii_beforeLast($str, $needle, $substr, $times), $str);
     }
     public function beforeLastProvider()
     {
         return [
             ['CamelCHERE!HERE!ase', 'CamelCase', 'a', 'HERE!', 2],
             ['Camel-Case', 'Camel-Case', 'e', 'not gonna happen', 0],
-            ['Στανιν_νλ case', 'Στανιλ case', 'λ', 'ν_ν']
         ];
     }
 
@@ -2683,7 +2180,7 @@ class StrMBTest extends TestCase
      */
     public function testIsEmail($expected, $str)
     {
-        $this->assertEquals($expected, libstr_isEmail($str), $str);
+        $this->assertEquals($expected, libstr_ascii_isEmail($str), $str);
     }
     public function isEmailProvider()
     {
@@ -2691,42 +2188,6 @@ class StrMBTest extends TestCase
             [true, 'this.is.a.valid@email.com'],
             [false, 'this@is/not@a.valid@email.com'],
             [true, 'validemail22_@localhost']
-        ];
-    }
-
-    /**
-     * @dataProvider isIpV4Provider()
-     * @param $expected
-     * @param $str
-     */
-    public function testIsIpV4($expected, $str)
-    {
-        $this->assertEquals($expected, libstr_isIpV4($str), $str);
-    }
-    public function isIpV4Provider()
-    {
-        return [
-            [true, '192.168.1.1'],
-            [false, '1234.53..1'],
-            [true, '249.212.23.124']
-        ];
-    }
-
-    /**
-     * @dataProvider isIpV6Provider()
-     * @param $expected
-     * @param $str
-     */
-    public function testIsIpV6($expected, $str)
-    {
-        $this->assertEquals($expected, libstr_isIpV6($str), $str);
-    }
-    public function isIpV6Provider()
-    {
-        return [
-            [true, '2001:470:9b36:1::2'],
-            [false, '1200::AB00:1234::2552:7777:1313'],
-            [true, '2001:cdba:0000:0000:0000:0000:3257:9652']
         ];
     }
 
@@ -2739,13 +2200,13 @@ class StrMBTest extends TestCase
      */
     public function testRandom($expected, $size, $sizeMax = -1, $possibleChars = '')
     {
-        $this->assertEquals($expected, \mb_strlen(libstr_random($size, $sizeMax, $possibleChars)));
+        $this->assertEquals($expected, \strlen(libstr_ascii_random($size, $sizeMax, $possibleChars)));
     }
     public function randomProvider()
     {
         return [
             [5, 5],
-            [8, 8, -1, 'ФОРЫВДалыдлорафдлуОГР123']
+            [8, 8, -1, 'a;sdfskdhfwjqlkjweksrhesrtwerfsdfew']
         ];
     }
 
@@ -2759,13 +2220,13 @@ class StrMBTest extends TestCase
      */
     public function testAppendUniqueIdentifier($expected, $str, $size = 4, $sizeMax = -1, $possibleChars = '')
     {
-        $this->assertEquals($expected, \mb_strlen(libstr_appendUniqueIdentifier($str, $size, $sizeMax, $possibleChars)));
+        $this->assertEquals($expected, \strlen(libstr_ascii_appendUniqueIdentifier($str, $size, $sizeMax, $possibleChars)));
     }
     public function appendUniqueIdentifierProvider()
     {
         return [
             [5, 'a'],
-            [8, 'afd', 5, -1, 'ФОРЫВДалыдлорафдлуОГР123']
+            [8, 'afd', 5, -1, 'sdfskdhfwjqlkjweksrhesrtwerfsdfew']
         ];
     }
 
@@ -2776,7 +2237,7 @@ class StrMBTest extends TestCase
      */
     public function testWords($expected, $str)
     {
-        $result = libstr_words($str);
+        $result = libstr_ascii_words($str);
         $expectedCount = count($expected);
 
         if ($expectedCount === 0) { $this->assertEmpty($result); }
@@ -2793,7 +2254,6 @@ class StrMBTest extends TestCase
             [['foo', 'bar'], "foo\nbar"],
             [['foo', 'bar'], 'foo  bar'],
             [['foo', 'bar'], 'foo   bar'],
-            [['fòô', 'bàř'], 'fòô bàř']
         ];
     }
 
@@ -2805,7 +2265,7 @@ class StrMBTest extends TestCase
      */
     public function testQuote($expected, $str, $quote = '"')
     {
-        $this->assertEquals($expected, libstr_quote($str, $quote));
+        $this->assertEquals($expected, libstr_ascii_quote($str, $quote));
     }
     public function quoteProvider()
     {
@@ -2823,7 +2283,7 @@ class StrMBTest extends TestCase
      */
     public function testUnquote($expected, $str, $quote = '"')
     {
-        $this->assertEquals($expected, libstr_unquote($str, $quote));
+        $this->assertEquals($expected, libstr_ascii_unquote($str, $quote));
     }
     public function unquoteProvider()
     {
@@ -2841,7 +2301,7 @@ class StrMBTest extends TestCase
      */
     public function testChop($expected, $str, $step = 1)
     {
-        $this->assertEquals($expected, libstr_chop($str, $step), $str);
+        $this->assertEquals($expected, libstr_ascii_chop($str, $step), $str);
     }
     public function chopProvider()
     {
@@ -2850,7 +2310,6 @@ class StrMBTest extends TestCase
             [[], '  ', -9],
             [['foo', 'bar'], 'foobar', 3],
             [['foob', 'ar'], 'foobar', 4],
-            [['fòô', ' bà', 'ř'], 'fòô bàř', 3]
         ];
     }
 
@@ -2863,7 +2322,7 @@ class StrMBTest extends TestCase
      */
     public function testJoin($expected, $str, $separator, $otherStrings = [])
     {
-        $this->assertEquals($expected, libstr_join($str, $separator, $otherStrings), $str);
+        $this->assertEquals($expected, libstr_ascii_join($str, $separator, $otherStrings), $str);
     }
     public function joinProvider()
     {
@@ -2883,7 +2342,7 @@ class StrMBTest extends TestCase
      */
     public function testShift($expected, $str, $delimiter)
     {
-        $this->assertEquals($expected, libstr_shift($str, $delimiter), $str);
+        $this->assertEquals($expected, libstr_ascii_shift($str, $delimiter), $str);
     }
     public function shiftProvider()
     {
@@ -2903,7 +2362,7 @@ class StrMBTest extends TestCase
      */
     public function testShiftReversed($expected, $str, $delimiter)
     {
-        $this->assertEquals($expected, libstr_shiftReversed($str, $delimiter), $str);
+        $this->assertEquals($expected, libstr_ascii_shiftReversed($str, $delimiter), $str);
     }
     public function shiftReversedProvider()
     {
@@ -2923,7 +2382,7 @@ class StrMBTest extends TestCase
      */
     public function testPop($expected, $str, $delimiter)
     {
-        $this->assertEquals($expected, libstr_pop($str, $delimiter), $str);
+        $this->assertEquals($expected, libstr_ascii_pop($str, $delimiter), $str);
     }
     public function popProvider()
     {
@@ -2943,7 +2402,7 @@ class StrMBTest extends TestCase
      */
     public function testPopReversed($expected, $str, $delimiter)
     {
-        $this->assertEquals($expected, libstr_popReversed($str, $delimiter), $str);
+        $this->assertEquals($expected, libstr_ascii_popReversed($str, $delimiter), $str);
     }
     public function popReversedProvider()
     {

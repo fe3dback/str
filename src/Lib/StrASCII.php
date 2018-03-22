@@ -266,41 +266,27 @@ function libstr_ascii_endsWithAny(string $str, array $substrings, bool $caseSens
 }
 
 /**
- * Checks if the given string is a valid UUID v.4.
- * It doesn't matter whether the given UUID has dashes.
- *
- * @param  string $str
- * @return bool
- */
-function libstr_ascii_isUUIDv4(string $str): bool
-{
-    $l = '[a-f0-9]';
-    $pattern = "/^{$l}{8}-?{$l}{4}-?4{$l}{3}-?[89ab]{$l}{3}-?{$l}{12}\Z/";
-    return (bool)\preg_match($pattern, $str);
-}
-
-/**
  * Returns true if the string contains a lower case char, false otherwise.
- * This function check only ascii [a-z] chars.
+ * This function checks for ascii [a-z] chars.
  *
  * @param  string $str
  * @return bool
  */
 function libstr_ascii_hasLowerCase(string $str): bool
 {
-    return libstr_ascii_matchesPattern($str, '.*[[:lower:]]');
+    return libstr_ascii_matchesPattern($str, '/.*[[:lower:]]/');
 }
 
 /**
  * Returns true if the string contains an upper case char, false otherwise.
- * This function check only ascii [A-Z] chars.
+ * This function checks for ascii [A-Z] chars.
  *
  * @param  string $str
  * @return bool
  */
 function libstr_ascii_hasUpperCase(string $str): bool
 {
-    return libstr_ascii_matchesPattern($str, '.*[[:upper:]]');
+    return libstr_ascii_matchesPattern($str, '/.*[[:upper:]]/');
 }
 
 /**
@@ -317,26 +303,26 @@ function libstr_ascii_matchesPattern(string $str, string $pattern): bool
 
 /**
  * Returns true if the string contains only alphabetic chars, false otherwise.
- * This function check only ascii [a-zA-Z] chars.
+ * This function checks for ascii [a-zA-Z] chars.
  *
  * @param  string $str
  * @return bool   Whether or not $str contains only alphabetic chars
  */
 function libstr_ascii_isAlpha(string $str): bool
 {
-    return libstr_ascii_matchesPattern($str,'^[[:alpha:]]*$');
+    return libstr_ascii_matchesPattern($str,'/^[[:alpha:]]*$/');
 }
 
 /**
  * Returns true if the string contains only alphabetic and numeric chars, false otherwise.
- * This function check only ascii [a-zA-Z0-9] chars.
+ * This function checks for ascii [a-zA-Z0-9] chars.
  *
  * @param  string $str
  * @return bool   Whether or not $str contains only alphanumeric chars
  */
 function libstr_ascii_isAlphanumeric(string $str): bool
 {
-    return libstr_ascii_matchesPattern($str,'^[[:alnum:]]*$');
+    return libstr_ascii_matchesPattern($str,'/^[[:alnum:]]*$/');
 }
 
 /**
@@ -347,7 +333,7 @@ function libstr_ascii_isAlphanumeric(string $str): bool
  */
 function libstr_ascii_isBlank(string $str): bool
 {
-    return libstr_ascii_matchesPattern($str,'^[[:space:]]*$');
+    return libstr_ascii_matchesPattern($str,'/^[[:space:]]*$/');
 }
 
 /**
@@ -363,14 +349,14 @@ function libstr_ascii_isBase64(string $str): bool
 
 /**
  * Returns true if the string contains only hexadecimal chars, false otherwise.
- * This function check only ascii [A-Fa-f0-9] chars.
+ * This function checks for ascii [A-Fa-f0-9] chars.
  *
  * @param  string $str
  * @return bool   Whether or not $str contains only hexadecimal chars
  */
 function libstr_ascii_isHexadecimal(string $str): bool
 {
-    return libstr_ascii_matchesPattern($str,'^[[:xdigit:]]*$');
+    return libstr_ascii_matchesPattern($str,'/^[[:xdigit:]]*$/');
 }
 
 /**
@@ -391,26 +377,26 @@ function libstr_ascii_isJson(string $str): bool
 
 /**
  * Returns true if the string contains only lower case chars, false  otherwise.
- * This function check only ascii [a-z] chars.
+ * This function checks for ascii [a-z] chars.
  *
  * @param  string $str
  * @return bool   Whether or not $str contains only lower case characters
  */
 function libstr_ascii_isLowerCase(string $str): bool
 {
-    return libstr_ascii_matchesPattern($str, '^[[:lower:]]*$');
+    return libstr_ascii_matchesPattern($str, '/^[[:lower:]]*$/');
 }
 
 /**
  * Returns true if the string contains only lower case chars, false otherwise.
- * This function check only ascii [A-Z] chars.
+ * This function checks for ascii [A-Z] chars.
  *
  * @param  string $str
  * @return bool   Whether or not $str contains only lower case characters
  */
 function libstr_ascii_isUpperCase(string $str): bool
 {
-    return libstr_ascii_matchesPattern($str,'^[[:upper:]]*$');
+    return libstr_ascii_matchesPattern($str,'/^[[:upper:]]*$/');
 }
 
 /**
@@ -463,7 +449,7 @@ function libstr_ascii_toBoolean(string $str): bool
 
 /**
  * Returns the substring beginning at $start with the specified $length.
- * It differs from the mb_substr() function in that providing a $length of 0
+ * It differs from the substr() function in that providing a $length of 0
  * will return the rest of the string, rather than an empty string.
  *
  * @param  string $s
@@ -550,6 +536,8 @@ function libstr_ascii_last(string $s, int $length = 1): string
  * for a k-rune string. If n < 0,
  * there is no limit on the number of replacements.
  *
+ * @todo check doc and refactor! str_replace might be just enough
+ *
  * @param  string $str
  * @param  string $old
  * @param  string $new
@@ -582,8 +570,7 @@ function libstr_ascii_replace(string $str, string $old, string $new, int $limit 
 
 /**
  * Returns a string with whitespace removed from the start and end of the
- * string. Supports the removal of unicode whitespace. Accepts an optional
- * string of characters to strip instead of the defaults.
+ * string. Accepts an optional string of characters to strip instead of the defaults.
  *
  * @param  string $str
  * @param  string $chars Optional string of characters to strip
@@ -592,37 +579,37 @@ function libstr_ascii_replace(string $str, string $old, string $new, int $limit 
 function libstr_ascii_trim(string $str, string $chars = ''): string
 {
     $chars = $chars ? \preg_quote($chars, '/') : '\s';
-    return \preg_replace("^[$chars]+|[$chars]+\$", '', $str);
+    return \preg_replace("/^[$chars]+|[$chars]+\$/", '', $str);
 }
 
 /**
  * Returns a string with whitespace removed from the start of the string.
- * Supports the removal of unicode whitespace. Accepts an optional
- * string of characters to strip instead of the defaults.
+ * Accepts an optional string of characters to strip instead of the defaults.
  *
  * @param  string $str
  * @param  string $chars Optional string of characters to strip
+ *
  * @return string
  */
 function libstr_ascii_trimLeft(string $str, string $chars = ''): string
 {
     $chars = $chars ? \preg_quote($chars, '/') : '\s';
-    return \preg_replace("^[$chars]+", '', $str);
+    return \preg_replace("/^[$chars]+/", '', $str);
 }
 
 /**
  * Returns a string with whitespace removed from the end of the string.
- * Supports the removal of unicode whitespace. Accepts an optional
- * string of characters to strip instead of the defaults.
+ * Accepts an optional string of characters to strip instead of the defaults.
  *
  * @param  string $str
  * @param  string $chars Optional string of characters to strip
+ *
  * @return string
  */
 function libstr_ascii_trimRight(string $str, string $chars = ''): string
 {
     $chars = $chars ? \preg_quote($chars, '/') : '\s';
-    return \preg_replace("[$chars]+\$", '', $str);
+    return \preg_replace("/[$chars]+\$/", '', $str);
 }
 
 /**
@@ -810,6 +797,8 @@ function libstr_ascii_repeat(string $str, int $multiplier): string
 /**
  * Returns a reversed string. A multi-byte version of strrev().
  *
+ * @todo check doc and refactor. strrev() might be enough
+ *
  * @param  string $str
  * @return string
  */
@@ -831,6 +820,8 @@ function libstr_ascii_reverse(string $str): string
 /**
  * A multi-byte str_shuffle() function. It returns a string with its
  * characters in random order.
+ *
+ * @todo check doc and refactor. str_shuffle() might be enough
  *
  * @param  string $str
  * @return string
@@ -967,10 +958,7 @@ function libstr_ascii_collapseWhitespace(string $str): string
 /** @noinspection MoreThanThreeArgumentsInspection */
 /**
  * Replaces all occurrences of $pattern in $str by $replacement. An alias
- * for mb_ereg_replace(). Note that the 'i' option with multi-byte patterns
- * in mb_ereg_replace() requires PHP 5.6+ for correct results. This is due
- * to a lack of support in the bundled version of Oniguruma in PHP < 5.6,
- * and current versions of HHVM (3.8 and below).
+ * for preg_replace().
  *
  * @param  string $str
  * @param  string $pattern     The regular expression pattern
@@ -978,9 +966,10 @@ function libstr_ascii_collapseWhitespace(string $str): string
  * @param  string $options     Matching conditions to be used
  * @return string
  */
-function libstr_ascii_regexReplace(string $str, string $pattern, string $replacement, string $options = 'msr'): string
+function libstr_ascii_regexReplace(string $str, string $pattern, string $replacement, string $options = 'ms'): string
 {
-    return \preg_replace($pattern, $replacement, $str, $options);
+    $pattern = '/' . $pattern . '/' . $options;
+    return \preg_replace($pattern, $replacement, $str);
 }
 
 /**
@@ -1073,6 +1062,8 @@ function libstr_ascii_lines(string $str): array
  * array of strings. An optional integer $limit will truncate the
  * results.
  *
+ * @todo this doesn't work correctly.
+ *
  * @param  string $str
  * @param  string $pattern The regex with which to split the string
  * @param  int    $limit   Optional maximum number of results to return
@@ -1083,18 +1074,16 @@ function libstr_ascii_split(string $str, string $pattern, int $limit = -1): arra
     if (0 === $limit || '' === $str) { return []; }
     if ($pattern === '') { return [$str]; }
 
-    // mb_split returns the remaining unsplit string in the last index when
-    // supplying a limit
-    $limit = ($limit > 0) ? $limit + 1 : -1;
+    $pattern = '/' . $pattern . '/';
 
-    $array = \preg_split($pattern, $str, $limit);
-    if ($limit > 0 && \count($array) === $limit) {
-        array_pop($array);
-    }
+    $array = \preg_split($pattern, $str);
 
     $result = [];
-    foreach ($array as $string) {
-        $result[] = $string;
+
+    if ($limit) {
+        for ($i = 0; $i < $limit; $i++) {
+            $result[] = $array[$i];
+        }
     }
 
     return $result;
@@ -1112,15 +1101,14 @@ function libstr_ascii_split(string $str, string $pattern, int $limit = -1): arra
  */
 function libstr_ascii_longestCommonPrefix(string $str, string $otherStr): string
 {
-    $innerStr = $str;
-    $maxLength = min(\mb_strlen($innerStr), \mb_strlen($otherStr));
+    $maxLength = min(\strlen($str), \strlen($otherStr));
 
     $longestCommonPrefix = '';
 
     for ($i = 0; $i < $maxLength; $i++) {
-        $char = \mb_substr($innerStr, $i, 1);
+        $char = $str[$i];
 
-        if ($char === \mb_substr($otherStr, $i, 1)) {
+        if ($char === $otherStr[$i]) {
             $longestCommonPrefix .= $char;
         } else { break; }
     }
@@ -1137,15 +1125,16 @@ function libstr_ascii_longestCommonPrefix(string $str, string $otherStr): string
  */
 function libstr_ascii_longestCommonSuffix(string $str, string $otherStr): string
 {
-    $innerStr = $str;
-    $maxLength = min(\mb_strlen($innerStr), \mb_strlen($otherStr));
+    $strLen = \strlen($str);
+    $otherStrLen = \strlen($otherStr);
+    $maxLength = min($strLen, $otherStrLen);
 
     $longestCommonSuffix = '';
 
     for ($i = 1; $i <= $maxLength; $i++) {
-        $char = \mb_substr($innerStr, -$i, 1);
+        $char = $str[$strLen - $i];
 
-        if ($char === \mb_substr($otherStr, -$i, 1)) {
+        if ($char === $otherStr[$otherStrLen - $i]) {
             $longestCommonSuffix = $char . $longestCommonSuffix;
         } else { break; }
     }
@@ -1163,17 +1152,15 @@ function libstr_ascii_longestCommonSuffix(string $str, string $otherStr): string
  */
 function libstr_ascii_longestCommonSubstring(string $str, string $otherStr): string
 {
-    $innerStr = $str;
-
     // Uses dynamic programming to solve
     // http://en.wikipedia.org/wiki/Longest_common_substring_problem
-    $strLength = \mb_strlen($innerStr);
-    $otherLength = \mb_strlen($otherStr);
+    $strLength = \strlen($str);
+    $otherLength = \strlen($otherStr);
 
     // Return if either string is empty
     if ($strLength === 0 || $otherLength === 0) {
-        $innerStr = '';
-        return $innerStr;
+        $str = '';
+        return $str;
     }
 
     $len = 0;
@@ -1183,8 +1170,8 @@ function libstr_ascii_longestCommonSubstring(string $str, string $otherStr): str
 
     for ($i = 1; $i <= $strLength; $i++) {
         for ($j = 1; $j <= $otherLength; $j++) {
-            $strChar = \mb_substr($innerStr, $i - 1, 1);
-            $otherChar = \mb_substr($otherStr, $j - 1, 1);
+            $strChar = $str[$i - 1];
+            $otherChar = $otherStr[$j - 1];
 
             if ($strChar === $otherChar) {
                 $table[$i][$j] = $table[$i - 1][$j - 1] + 1;
@@ -1198,9 +1185,9 @@ function libstr_ascii_longestCommonSubstring(string $str, string $otherStr): str
         }
     }
 
-    $innerStr = \mb_substr($innerStr, $end - $len, $len);
+    $str = \substr($str, $end - $len, $len);
 
-    return $innerStr;
+    return $str;
 }
 
 /**
@@ -1216,29 +1203,28 @@ function libstr_ascii_longestCommonSubstring(string $str, string $otherStr): str
  */
 function libstr_ascii_safeTruncate(string $str, int $length, string $substring = ''): string
 {
-    $innerStr = $str;
-    if ($length >= \mb_strlen($innerStr)) {
-        return $innerStr;
+    if ($length >= \strlen($str)) {
+        return $str;
     }
 
     // Need to further trim the string so we can append the substring
-    $substringLength = \mb_strlen($substring);
+    $substringLength = \strlen($substring);
     $length -= $substringLength;
 
-    $truncated = \mb_substr($innerStr, 0, $length);
+    $truncated = \substr($str, 0, $length);
 
     // If the last word was truncated
-    if (\mb_strpos($innerStr, ' ', $length - 1) !== $length) {
+    if (\strpos($str, ' ', $length - 1) !== $length) {
         // Find pos of the last occurrence of a space, get up to that
-        $lastPos = \mb_strrpos($truncated, ' ', 0);
+        $lastPos = \strrpos($truncated, ' ', 0);
         if ($lastPos !== false) {
-            $truncated = \mb_substr($truncated, 0, $lastPos);
+            $truncated = \substr($truncated, 0, $lastPos);
         }
     }
 
-    $innerStr = $truncated . $substring;
+    $str = $truncated . $substring;
 
-    return $innerStr;
+    return $str;
 }
 
 /**
@@ -1256,56 +1242,16 @@ function libstr_ascii_safeTruncate(string $str, int $length, string $substring =
  */
 function libstr_ascii_slugify(string $str, string $replacement = '-', string $language = 'en'): string
 {
-    $innerStr = libstr_ascii_toAscii($str, $language);
-
-    $innerStr = \str_replace('@', $replacement, $innerStr);
+    $str = \str_replace('@', $replacement, $str);
     $quotedReplacement = \preg_quote($replacement, '');
     $pattern = "/[^a-zA-Z\d\s-_$quotedReplacement]/u";
-    $innerStr = \preg_replace($pattern, '', $innerStr);
+    $str = \preg_replace($pattern, '', $str);
 
-    $innerStr = libstr_ascii_toLowerCase($innerStr);
-    $innerStr = libstr_ascii_delimit($innerStr, $replacement);
-    $innerStr = libstr_ascii_removeLeft($innerStr, $replacement);
+    $str = libstr_ascii_toLowerCase($str);
+    $str = libstr_ascii_delimit($str, $replacement);
+    $str = libstr_ascii_removeLeft($str, $replacement);
 
-    return libstr_ascii_removeRight($innerStr, $replacement);
-}
-
-/**
- * Returns an ASCII version of the string. A set of non-ASCII characters are
- * replaced with their closest ASCII counterparts, and the rest are removed
- * by default. The language or locale of the source string can be supplied
- * for language-specific transliteration in any of the following formats:
- * en, en_GB, or en-GB. For example, passing "de" results in "äöü" mapping
- * to "aeoeue" rather than "aou" as in other languages.
- *
- * @param  string $str
- * @param  string $language          Language of the source string
- * @param  bool   $removeUnsupported Whether or not to remove the unsupported characters
- * @return string
- */
-function libstr_ascii_toAscii(string $str, string $language = 'en', bool $removeUnsupported = true): string
-{
-    $innerStr = $str;
-
-    $langSpecific = libstr_ascii_langSpecificCharsArray($language);
-
-    if (!empty($langSpecific)) {
-        $innerStr = \str_replace($langSpecific[0], $langSpecific[1], $innerStr);
-    }
-
-    // @todo optimize
-    foreach (libstr_ascii_charsArray() as $key => $value) {
-        /** @noinspection ForeachSourceInspection */
-        foreach ($value as $item) {
-            $innerStr = libstr_ascii_replace($innerStr, $item, (string)$key);
-        }
-    }
-
-    if ($removeUnsupported) {
-        $innerStr = \preg_replace('/[^\x20-\x7E]/', '', $innerStr);
-    }
-
-    return $innerStr;
+    return libstr_ascii_removeRight($str, $replacement);
 }
 
 /**
@@ -1321,22 +1267,20 @@ function libstr_ascii_toAscii(string $str, string $language = 'en', bool $remove
  */
 function libstr_ascii_slice(string $str, int $start, int $end = null): string
 {
-    $innerStr = $str;
-
     if ($end === null) {
-        $length = \mb_strlen($innerStr);
+        $length = \strlen($str);
     }
     elseif ($end >= 0 && $end <= $start) {
         return '';
     }
     elseif ($end < 0) {
-        $length = \mb_strlen($innerStr) + $end - $start;
+        $length = \strlen($str) + $end - $start;
     }
     else {
         $length = $end - $start;
     }
 
-    return libstr_ascii_substr($innerStr, $start, $length);
+    return libstr_ascii_substr($str, $start, $length);
 }
 
 /**
@@ -1349,8 +1293,7 @@ function libstr_ascii_slice(string $str, int $start, int $end = null): string
  */
 function libstr_ascii_stripWhitespace(string $str): string
 {
-    $innerStr = $str;
-    return libstr_ascii_regexReplace($innerStr, '[[:space:]]+', '');
+    return libstr_ascii_regexReplace($str, '[[:space:]]+', '');
 }
 
 /**
@@ -1365,19 +1308,16 @@ function libstr_ascii_stripWhitespace(string $str): string
  */
 function libstr_ascii_truncate(string $str, int $length, string $substring = ''): string
 {
-    $innerStr = $str;
-    if ($length >= \mb_strlen($innerStr)) {
-        return $innerStr;
-    }
+    if ($length >= \strlen($str)) { return $str; }
 
     // Need to further trim the string so we can append the substring
-    $substringLength = \mb_strlen($substring);
+    $substringLength = \strlen($substring);
     $length -= $substringLength;
 
-    $truncated = \mb_substr($innerStr, 0, $length);
-    $innerStr = $truncated . $substring;
+    $truncated = \substr($str, 0, $length);
+    $str = $truncated . $substring;
 
-    return $innerStr;
+    return $str;
 }
 
 /**
@@ -1390,10 +1330,7 @@ function libstr_ascii_truncate(string $str, int $length, string $substring = '')
  */
 function libstr_ascii_upperCamelize(string $str): string
 {
-    $innerStr = $str;
-    $innerStr = libstr_ascii_camelize($innerStr);
-
-    return libstr_ascii_upperCaseFirst($innerStr);
+    return libstr_ascii_upperCaseFirst(libstr_ascii_camelize($str));
 }
 
 /**
@@ -1405,9 +1342,7 @@ function libstr_ascii_upperCamelize(string $str): string
  */
 function libstr_ascii_surround(string $str, string $substring): string
 {
-    $innerStr = $str;
-
-    return implode('', [$substring, $innerStr, $substring]);
+    return implode('', [$substring, $str, $substring]);
 }
 
 /**
@@ -1418,21 +1353,17 @@ function libstr_ascii_surround(string $str, string $substring): string
  */
 function libstr_ascii_swapCase(string $str): string
 {
-    $innerStr = $str;
-
-    $innerStr = preg_replace_callback(
+    return preg_replace_callback(
         '/[\S]/u',
         function ($match) {
-            if ($match[0] === \mb_strtoupper($match[0])) {
-                return \mb_strtolower($match[0]);
+            if ($match[0] === \strtoupper($match[0])) {
+                return \strtolower($match[0]);
             }
 
-            return \mb_strtoupper($match[0]);
+            return \strtoupper($match[0]);
         },
-        $innerStr
+        $str
     );
-
-    return $innerStr;
 }
 
 /**
@@ -1445,7 +1376,6 @@ function libstr_ascii_swapCase(string $str): string
  */
 function libstr_ascii_tidy(string $str): string
 {
-    $innerStr = $str;
     return preg_replace([
         '/\x{2026}/u',
         '/[\x{201C}\x{201D}]/u',
@@ -1456,7 +1386,7 @@ function libstr_ascii_tidy(string $str): string
         '"',
         "'",
         '-',
-    ], $innerStr);
+    ], $str);
 }
 
 /**
@@ -1470,25 +1400,22 @@ function libstr_ascii_tidy(string $str): string
  */
 function libstr_ascii_titleize(string $str, array $ignore = []): string
 {
-    $innerStr = $str;
-    $innerStr = trim($innerStr);
+    $str = libstr_ascii_trim($str);
 
-    $innerStr = preg_replace_callback(
+    return preg_replace_callback(
         '/([\S]+)/u',
         function ($match) use ($ignore) {
             if ($ignore && \in_array($match[0], $ignore, true)) {
                 return $match[0];
             }
 
-            $innerStr = $match[0];
-            $innerStr = libstr_ascii_toLowerCase($innerStr);
+            $str = $match[0];
+            $str = libstr_ascii_toLowerCase($str);
 
-            return libstr_ascii_upperCaseFirst($innerStr);
+            return libstr_ascii_upperCaseFirst($str);
         },
-        $innerStr
+        $str
     );
-
-    return $innerStr;
 }
 
 /**
@@ -1501,10 +1428,9 @@ function libstr_ascii_titleize(string $str, array $ignore = []): string
  */
 function libstr_ascii_toSpaces(string $str, int $tabLength = 4): string
 {
-    $innerStr = $str;
     $spaces = \str_repeat(' ', $tabLength);
 
-    return \str_replace("\t", $spaces, $innerStr);
+    return \str_replace("\t", $spaces, $str);
 }
 
 /**
@@ -1518,23 +1444,9 @@ function libstr_ascii_toSpaces(string $str, int $tabLength = 4): string
  */
 function libstr_ascii_toTabs(string $str, int $tabLength = 4): string
 {
-    $innerStr = $str;
     $spaces = \str_repeat(' ', $tabLength);
 
-    return \str_replace($spaces, "\t", $innerStr);
-}
-
-/**
- * Converts the first character of each word in the string to uppercase.
- *
- * @param  string $str
- * @return string
- */
-function libstr_ascii_toTitleCase(string $str): string
-{
-    $innerStr = $str;
-
-    return \mb_convert_case($innerStr, \MB_CASE_TITLE);
+    return \str_replace($spaces, "\t", $str);
 }
 
 /**
@@ -1548,9 +1460,7 @@ function libstr_ascii_toTitleCase(string $str): string
  */
 function libstr_ascii_underscored(string $str): string
 {
-    $innerStr = $str;
-
-    return libstr_ascii_delimit($innerStr, '_');
+    return libstr_ascii_delimit($str, '_');
 }
 
 /** @noinspection MoreThanThreeArgumentsInspection */
@@ -1566,12 +1476,10 @@ function libstr_ascii_underscored(string $str): string
  */
 function libstr_ascii_move(string $str, int $start, int $length, int $destination): string
 {
-    $innerStr = $str;
+    if ($destination <= $length) { return $str; }
 
-    if ($destination <= $length) { return $innerStr; }
-
-    $substr = libstr_ascii_substr($innerStr, $start, $length);
-    $result = libstr_ascii_insert($innerStr, $substr, $destination);
+    $substr = libstr_ascii_substr($str, $start, $length);
+    $result = libstr_ascii_insert($str, $substr, $destination);
 
     return libstr_ascii_replace($result, $substr, '', 1);
 }
@@ -1588,13 +1496,11 @@ function libstr_ascii_move(string $str, int $start, int $length, int $destinatio
  */
 function libstr_ascii_overwrite(string $str, int $start, int $length, string $substr): string
 {
-    $innerStr = $str;
+    if ($length <= 0) { return $str; }
 
-    if ($length <= 0) { return $innerStr; }
+    $sub = libstr_ascii_substr($str, $start, $length);
 
-    $sub = libstr_ascii_substr($innerStr, $start, $length);
-
-    return libstr_ascii_replace($innerStr, $sub, $substr, 1);
+    return libstr_ascii_replace($str, $sub, $substr, 1);
 }
 
 /**
@@ -1606,33 +1512,30 @@ function libstr_ascii_overwrite(string $str, int $start, int $length, string $su
  */
 function libstr_ascii_snakeize(string $str): string
 {
-    $innerStr = $str;
+    $str = \preg_replace('/::/', '\/', $str);
+    $str = \preg_replace('/([A-Z]+)([A-Z][a-z])/', '\1_\2', $str);
+    $str = \preg_replace('/([a-z\d])([A-Z])/', '\1_\2', $str);
+    $str = \preg_replace('/\s+/', '_', $str);
+    $str = \preg_replace('/\s+/', '_', $str);
+    $str = \preg_replace('/^\s+|\s+$/', '', $str);
+    $str = \preg_replace('/-/', '_', $str);
+    $str = libstr_ascii_toLowerCase($str);
 
-    $innerStr = \mb_ereg_replace('::', '/', $innerStr);
-    $innerStr = \mb_ereg_replace('([A-Z]+)([A-Z][a-z])', '\1_\2', $innerStr);
-    $innerStr = \mb_ereg_replace('([a-z\d])([A-Z])', '\1_\2', $innerStr);
-    $innerStr = \mb_ereg_replace('\s+', '_', $innerStr);
-    $innerStr = \mb_ereg_replace('\s+', '_', $innerStr);
-    $innerStr = \mb_ereg_replace('^\s+|\s+$', '', $innerStr);
-    $innerStr = \mb_ereg_replace('-', '_', $innerStr);
-    $innerStr = libstr_ascii_toLowerCase($innerStr);
-
-    $innerStr = \mb_ereg_replace_callback(
-        '([\d|A-Z])',
+    $str = \preg_replace_callback(
+        '/([\d|A-Z])/',
         function ($matches) {
             $match = $matches[1];
             if ((string)(int)$match === $match) {
                 return '_' . $match . '_';
             }
-            return null;
         },
-        $innerStr
+        $str
     );
 
-    $innerStr = \mb_ereg_replace('_+', '_', $innerStr);
-    $innerStr = libstr_ascii_trim($innerStr, '_');
+    $str = \preg_replace('/_+/', '_', $str);
+    $str = libstr_ascii_trim($str, '_');
 
-    return $innerStr;
+    return $str;
 }
 
 /** @noinspection MoreThanThreeArgumentsInspection */
@@ -1648,13 +1551,12 @@ function libstr_ascii_snakeize(string $str): string
  */
 function libstr_ascii_afterFirst(string $str, string $needle, string $substr, int $times = 1): string
 {
-    $innerStr = $str;
-    $idx = libstr_ascii_indexOf($innerStr, $needle);
-    $needleLen = \mb_strlen($needle);
+    $idx = libstr_ascii_indexOf($str, $needle);
+    $needleLen = \strlen($needle);
     $idxEnd = $idx + $needleLen;
     $innerSubstr = libstr_ascii_repeat($substr, $times);
 
-    return libstr_ascii_insert($innerStr, $innerSubstr, $idxEnd);
+    return libstr_ascii_insert($str, $innerSubstr, $idxEnd);
 }
 
 /** @noinspection MoreThanThreeArgumentsInspection */
@@ -1670,11 +1572,10 @@ function libstr_ascii_afterFirst(string $str, string $needle, string $substr, in
  */
 function libstr_ascii_beforeFirst(string $str, string $needle, string $substr, int $times = 1): string
 {
-    $innerStr = $str;
-    $idx = libstr_ascii_indexOf($innerStr, $needle);
+    $idx = libstr_ascii_indexOf($str, $needle);
     $innerSubstr = libstr_ascii_repeat($substr, $times);
 
-    return libstr_ascii_insert($innerStr, $innerSubstr, $idx);
+    return libstr_ascii_insert($str, $innerSubstr, $idx);
 }
 
 /** @noinspection MoreThanThreeArgumentsInspection */
@@ -1690,13 +1591,12 @@ function libstr_ascii_beforeFirst(string $str, string $needle, string $substr, i
  */
 function libstr_ascii_afterLast(string $str, string $needle, string $substr, int $times = 1): string
 {
-    $innerStr = $str;
-    $idx = libstr_ascii_indexOfLast($innerStr, $needle);
-    $needleLen = \mb_strlen($needle);
+    $idx = libstr_ascii_indexOfLast($str, $needle);
+    $needleLen = \strlen($needle);
     $idxEnd = $idx + $needleLen;
     $innerSubstr = libstr_ascii_repeat($substr, $times);
 
-    return libstr_ascii_insert($innerStr, $innerSubstr, $idxEnd);
+    return libstr_ascii_insert($str, $innerSubstr, $idxEnd);
 }
 
 /** @noinspection MoreThanThreeArgumentsInspection */
@@ -1712,11 +1612,10 @@ function libstr_ascii_afterLast(string $str, string $needle, string $substr, int
  */
 function libstr_ascii_beforeLast(string $str, string $needle, string $substr, int $times = 1): string
 {
-    $innerStr = $str;
-    $idx = libstr_ascii_indexOfLast($innerStr, $needle);
+    $idx = libstr_ascii_indexOfLast($str, $needle);
     $innerSubstr = libstr_ascii_repeat($substr, $times);
 
-    return libstr_ascii_insert($innerStr, $innerSubstr, $idx);
+    return libstr_ascii_insert($str, $innerSubstr, $idx);
 }
 
 /**
@@ -1728,36 +1627,9 @@ function libstr_ascii_beforeLast(string $str, string $needle, string $substr, in
  */
 function libstr_ascii_isEmail(string $str): bool
 {
-    $innerStr = $str;
-    $split = libstr_ascii_split($innerStr, '@');
+    $split = libstr_ascii_split($str, '@');
 
     return \count($split) === 2;
-}
-
-/**
- * Checks whether given $str is a valid ip v4.
- *
- * @param  string $str
- * @return bool
- */
-function libstr_ascii_isIpV4(string $str): bool
-{
-    $regex = '\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}\b';
-
-    return libstr_ascii_matchesPattern($str, $regex);
-}
-
-/**
- * Checks whether given $str is a valid ip v6.
- *
- * @param  string $str
- * @return bool
- */
-function libstr_ascii_isIpV6(string $str): bool
-{
-    $regex = '^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$';
-
-    return libstr_ascii_matchesPattern($str, $regex);
 }
 
 /**
@@ -1780,7 +1652,7 @@ function libstr_ascii_random(int $size, int $sizeMax = -1, string $possibleChars
     $maxLen = $sizeMax > 0 ? $sizeMax : $size;
     /** @noinspection RandomApiMigrationInspection */
     $actualLen = \rand($size, $maxLen);
-    $allowedCharsLen = \mb_strlen($allowedChars) - 1;
+    $allowedCharsLen = \strlen($allowedChars) - 1;
 
     $result = '';
 
@@ -1807,10 +1679,9 @@ function libstr_ascii_random(int $size, int $sizeMax = -1, string $possibleChars
  */
 function libstr_ascii_appendUniqueIdentifier(string $str, int $size = 4, int $sizeMax = -1, string $possibleChars = ''): string
 {
-    $innerStr = $str;
     $identifier = libstr_ascii_random($size, $sizeMax, $possibleChars);
 
-    return $innerStr . $identifier;
+    return $str . $identifier;
 }
 
 /**
@@ -1821,9 +1692,7 @@ function libstr_ascii_appendUniqueIdentifier(string $str, int $size = 4, int $si
  */
 function libstr_ascii_words(string $str): array
 {
-    $innerStr = $str;
-
-    return libstr_ascii_split($innerStr, '[[:space:]]+');
+    return libstr_ascii_split($str, '[[:space:]]+');
 }
 
 /**
@@ -1835,9 +1704,7 @@ function libstr_ascii_words(string $str): array
  */
 function libstr_ascii_quote(string $str, string $quote = '"'): string
 {
-    $innerStr = $str;
-
-    $words = libstr_ascii_words($innerStr);
+    $words = libstr_ascii_words($str);
     $result = [];
 
     foreach ($words as $word) {
@@ -1856,9 +1723,7 @@ function libstr_ascii_quote(string $str, string $quote = '"'): string
  */
 function libstr_ascii_unquote(string $str, string $quote = '"'): string
 {
-    $innerStr = $str;
-
-    $words = libstr_ascii_words($innerStr);
+    $words = libstr_ascii_words($str);
     $result = [];
 
     foreach ($words as $word) {
@@ -1877,18 +1742,17 @@ function libstr_ascii_unquote(string $str, string $quote = '"'): string
  */
 function libstr_ascii_chop(string $str, int $step = 0): array
 {
-    $innerStr = $str;
     $result = [];
-    $len = \mb_strlen($innerStr);
+    $len = \strlen($str);
 
-    if ($innerStr === '' || $step <= 0) { return []; }
+    if ($str === '' || $step <= 0) { return []; }
 
-    if ($step >= $len) { return [$innerStr]; }
+    if ($step >= $len) { return [$str]; }
 
     $startPos = 0;
 
     for ($i = 0; $i < $len; $i+=$step) {
-        $result[] = libstr_ascii_substr($innerStr, $startPos, $step);
+        $result[] = libstr_ascii_substr($str, $startPos, $step);
         $startPos += $step;
     }
 
@@ -1906,17 +1770,15 @@ function libstr_ascii_chop(string $str, int $step = 0): array
  */
 function libstr_ascii_join(string $str, string $separator, array $otherStrings = []): string
 {
-    $innerStr = $str;
-
-    if (empty($otherStrings)) { return $innerStr; }
+    if (empty($otherStrings)) { return $str; }
 
     foreach ($otherStrings as $otherString) {
         if ($otherString) {
-            $innerStr .= $separator . $otherString;
+            $str .= $separator . $otherString;
         }
     }
 
-    return $innerStr;
+    return $str;
 }
 
 /**
@@ -1932,12 +1794,11 @@ function libstr_ascii_shift(string $str, string $delimiter): string
 {
     if (!$str || !$delimiter) { return ''; }
 
-    $innerStr = $str;
-    $idx = libstr_ascii_indexOf($innerStr, $delimiter);
+    $idx = libstr_ascii_indexOf($str, $delimiter);
 
-    if ($idx === -1) { return $innerStr; }
+    if ($idx === -1) { return $str; }
 
-    return libstr_ascii_substr($innerStr, 0, $idx);
+    return libstr_ascii_substr($str, 0, $idx);
 }
 
 /**
@@ -1953,12 +1814,11 @@ function libstr_ascii_shiftReversed(string $str, string $delimiter): string
 {
     if (!$str || !$delimiter) { return ''; }
 
-    $innerStr = $str;
-    $idx = libstr_ascii_indexOf($innerStr, $delimiter) + 1;
+    $idx = libstr_ascii_indexOf($str, $delimiter) + 1;
 
-    if ($idx === -1) { return $innerStr; }
+    if ($idx === -1) { return $str; }
 
-    return libstr_ascii_substr($innerStr, $idx);
+    return libstr_ascii_substr($str, $idx);
 }
 
 /**
@@ -1974,12 +1834,11 @@ function libstr_ascii_pop(string $str, string $delimiter): string
 {
     if (!$str || !$delimiter) { return ''; }
 
-    $innerStr = $str;
-    $idx = libstr_ascii_indexOfLast($innerStr, $delimiter) + 1;
+    $idx = libstr_ascii_indexOfLast($str, $delimiter) + 1;
 
-    if ($idx === -1) { return $innerStr; }
+    if ($idx === -1) { return $str; }
 
-    return libstr_ascii_substr($innerStr, $idx);
+    return libstr_ascii_substr($str, $idx);
 }
 
 
@@ -1996,10 +1855,9 @@ function libstr_ascii_popReversed(string $str, string $delimiter): string
 {
     if (!$str || !$delimiter) { return ''; }
 
-    $innerStr = $str;
-    $idx = libstr_ascii_indexOfLast($innerStr, $delimiter);
+    $idx = libstr_ascii_indexOfLast($str, $delimiter);
 
-    if ($idx === -1) { return $innerStr; }
+    if ($idx === -1) { return $str; }
 
-    return libstr_ascii_substr($innerStr, 0, $idx);
+    return libstr_ascii_substr($str, 0, $idx);
 }

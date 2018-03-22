@@ -26,7 +26,10 @@
         "source": "https://github.com/fe3dback/str"
     },
     "autoload": {
-        "files": ["src/Lib/StrMB.php"],
+        "files": [
+            "src/Lib/StrMB.php",
+            "src/Lib/StrASCII.php"
+        ],
         "psr-4": {
             "Str\\": "src/"
         }
