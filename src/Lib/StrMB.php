@@ -1304,8 +1304,6 @@ function libstr_split(string $str, string $pattern, int $limit = -1): array
 
 // @todo Optimize all below this line:
 // ----------------------------------------------------------
-// @todo
-// - remove all $innerStr variables. This is not needed, function params is immutable
 
 /**
  * Returns the longest common prefix between the string and $otherStr.
@@ -1316,13 +1314,12 @@ function libstr_split(string $str, string $pattern, int $limit = -1): array
  */
 function libstr_longestCommonPrefix(string $str, string $otherStr): string
 {
-    $innerStr = $str;
-    $maxLength = min(\mb_strlen($innerStr), \mb_strlen($otherStr));
+    $maxLength = min(\mb_strlen($str), \mb_strlen($otherStr));
 
     $longestCommonPrefix = '';
 
     for ($i = 0; $i < $maxLength; $i++) {
-        $char = \mb_substr($innerStr, $i, 1);
+        $char = \mb_substr($str, $i, 1);
 
         if ($char === \mb_substr($otherStr, $i, 1)) {
             $longestCommonPrefix .= $char;
@@ -1341,13 +1338,12 @@ function libstr_longestCommonPrefix(string $str, string $otherStr): string
  */
 function libstr_longestCommonSuffix(string $str, string $otherStr): string
 {
-    $innerStr = $str;
-    $maxLength = min(\mb_strlen($innerStr), \mb_strlen($otherStr));
+    $maxLength = min(\mb_strlen($str), \mb_strlen($otherStr));
 
     $longestCommonSuffix = '';
 
     for ($i = 1; $i <= $maxLength; $i++) {
-        $char = \mb_substr($innerStr, -$i, 1);
+        $char = \mb_substr($str, -$i, 1);
 
         if ($char === \mb_substr($otherStr, -$i, 1)) {
             $longestCommonSuffix = $char . $longestCommonSuffix;
@@ -1367,17 +1363,15 @@ function libstr_longestCommonSuffix(string $str, string $otherStr): string
  */
 function libstr_longestCommonSubstring(string $str, string $otherStr): string
 {
-    $innerStr = $str;
-
     // Uses dynamic programming to solve
     // http://en.wikipedia.org/wiki/Longest_common_substring_problem
-    $strLength = \mb_strlen($innerStr);
+    $strLength = \mb_strlen($str);
     $otherLength = \mb_strlen($otherStr);
 
     // Return if either string is empty
     if ($strLength === 0 || $otherLength === 0) {
-        $innerStr = '';
-        return $innerStr;
+        $str = '';
+        return $str;
     }
 
     $len = 0;
@@ -1387,7 +1381,7 @@ function libstr_longestCommonSubstring(string $str, string $otherStr): string
 
     for ($i = 1; $i <= $strLength; $i++) {
         for ($j = 1; $j <= $otherLength; $j++) {
-            $strChar = \mb_substr($innerStr, $i - 1, 1);
+            $strChar = \mb_substr($str, $i - 1, 1);
             $otherChar = \mb_substr($otherStr, $j - 1, 1);
 
             if ($strChar === $otherChar) {
@@ -1402,9 +1396,9 @@ function libstr_longestCommonSubstring(string $str, string $otherStr): string
         }
     }
 
-    $innerStr = \mb_substr($innerStr, $end - $len, $len);
+    $str = \mb_substr($str, $end - $len, $len);
 
-    return $innerStr;
+    return $str;
 }
 
 /**
@@ -1420,19 +1414,18 @@ function libstr_longestCommonSubstring(string $str, string $otherStr): string
  */
 function libstr_safeTruncate(string $str, int $length, string $substring = ''): string
 {
-    $innerStr = $str;
-    if ($length >= \mb_strlen($innerStr)) {
-        return $innerStr;
+    if ($length >= \mb_strlen($str)) {
+        return $str;
     }
 
     // Need to further trim the string so we can append the substring
     $substringLength = \mb_strlen($substring);
     $length -= $substringLength;
 
-    $truncated = \mb_substr($innerStr, 0, $length);
+    $truncated = \mb_substr($str, 0, $length);
 
     // If the last word was truncated
-    if (\mb_strpos($innerStr, ' ', $length - 1) !== $length) {
+    if (\mb_strpos($str, ' ', $length - 1) !== $length) {
         // Find pos of the last occurrence of a space, get up to that
         $lastPos = \mb_strrpos($truncated, ' ', 0);
         if ($lastPos !== false) {
@@ -1440,9 +1433,9 @@ function libstr_safeTruncate(string $str, int $length, string $substring = ''): 
         }
     }
 
-    $innerStr = $truncated . $substring;
+    $str = $truncated . $substring;
 
-    return $innerStr;
+    return $str;
 }
 
 /**
@@ -1460,18 +1453,18 @@ function libstr_safeTruncate(string $str, int $length, string $substring = ''): 
  */
 function libstr_slugify(string $str, string $replacement = '-', string $language = 'en'): string
 {
-    $innerStr = libstr_toAscii($str, $language);
+    $str = libstr_toAscii($str, $language);
 
-    $innerStr = \str_replace('@', $replacement, $innerStr);
+    $str = \str_replace('@', $replacement, $str);
     $quotedReplacement = \preg_quote($replacement, '');
     $pattern = "/[^a-zA-Z\d\s-_$quotedReplacement]/u";
-    $innerStr = \preg_replace($pattern, '', $innerStr);
+    $str = \preg_replace($pattern, '', $str);
 
-    $innerStr = libstr_toLowerCase($innerStr);
-    $innerStr = libstr_delimit($innerStr, $replacement);
-    $innerStr = libstr_removeLeft($innerStr, $replacement);
+    $str = libstr_toLowerCase($str);
+    $str = libstr_delimit($str, $replacement);
+    $str = libstr_removeLeft($str, $replacement);
 
-    return libstr_removeRight($innerStr, $replacement);
+    return libstr_removeRight($str, $replacement);
 }
 
 /**
@@ -1489,27 +1482,25 @@ function libstr_slugify(string $str, string $replacement = '-', string $language
  */
 function libstr_toAscii(string $str, string $language = 'en', bool $removeUnsupported = true): string
 {
-    $innerStr = $str;
-
     $langSpecific = libstr_langSpecificCharsArray($language);
 
     if (!empty($langSpecific)) {
-        $innerStr = \str_replace($langSpecific[0], $langSpecific[1], $innerStr);
+        $str = \str_replace($langSpecific[0], $langSpecific[1], $str);
     }
 
     // @todo optimize
     foreach (libstr_charsArray() as $key => $value) {
         /** @noinspection ForeachSourceInspection */
         foreach ($value as $item) {
-            $innerStr = libstr_replace($innerStr, $item, (string)$key);
+            $str = libstr_replace($str, $item, (string)$key);
         }
     }
 
     if ($removeUnsupported) {
-        $innerStr = \preg_replace('/[^\x20-\x7E]/', '', $innerStr);
+        $str = \preg_replace('/[^\x20-\x7E]/', '', $str);
     }
 
-    return $innerStr;
+    return $str;
 }
 
 /**
@@ -1525,22 +1516,20 @@ function libstr_toAscii(string $str, string $language = 'en', bool $removeUnsupp
  */
 function libstr_slice(string $str, int $start, int $end = null): string
 {
-    $innerStr = $str;
-
     if ($end === null) {
-        $length = \mb_strlen($innerStr);
+        $length = \mb_strlen($str);
     }
     elseif ($end >= 0 && $end <= $start) {
         return '';
     }
     elseif ($end < 0) {
-        $length = \mb_strlen($innerStr) + $end - $start;
+        $length = \mb_strlen($str) + $end - $start;
     }
     else {
         $length = $end - $start;
     }
 
-    return libstr_substr($innerStr, $start, $length);
+    return libstr_substr($str, $start, $length);
 }
 
 /**
@@ -1553,8 +1542,7 @@ function libstr_slice(string $str, int $start, int $end = null): string
  */
 function libstr_stripWhitespace(string $str): string
 {
-    $innerStr = $str;
-    return libstr_regexReplace($innerStr, '[[:space:]]+', '');
+    return libstr_regexReplace($str, '[[:space:]]+', '');
 }
 
 /**
@@ -1569,19 +1557,16 @@ function libstr_stripWhitespace(string $str): string
  */
 function libstr_truncate(string $str, int $length, string $substring = ''): string
 {
-    $innerStr = $str;
-    if ($length >= \mb_strlen($innerStr)) {
-        return $innerStr;
-    }
+    if ($length >= \mb_strlen($str)) { return $str; }
 
     // Need to further trim the string so we can append the substring
     $substringLength = \mb_strlen($substring);
     $length -= $substringLength;
 
-    $truncated = \mb_substr($innerStr, 0, $length);
-    $innerStr = $truncated . $substring;
+    $truncated = \mb_substr($str, 0, $length);
+    $str = $truncated . $substring;
 
-    return $innerStr;
+    return $str;
 }
 
 /**
@@ -1594,10 +1579,7 @@ function libstr_truncate(string $str, int $length, string $substring = ''): stri
  */
 function libstr_upperCamelize(string $str): string
 {
-    $innerStr = $str;
-    $innerStr = libstr_camelize($innerStr);
-
-    return libstr_upperCaseFirst($innerStr);
+    return libstr_upperCaseFirst(libstr_camelize($str));
 }
 
 /**
@@ -1609,9 +1591,7 @@ function libstr_upperCamelize(string $str): string
  */
 function libstr_surround(string $str, string $substring): string
 {
-    $innerStr = $str;
-
-    return implode('', [$substring, $innerStr, $substring]);
+    return implode('', [$substring, $str, $substring]);
 }
 
 /**
@@ -1622,9 +1602,7 @@ function libstr_surround(string $str, string $substring): string
  */
 function libstr_swapCase(string $str): string
 {
-    $innerStr = $str;
-
-    $innerStr = preg_replace_callback(
+    return preg_replace_callback(
         '/[\S]/u',
         function ($match) {
             if ($match[0] === \mb_strtoupper($match[0])) {
@@ -1633,10 +1611,8 @@ function libstr_swapCase(string $str): string
 
             return \mb_strtoupper($match[0]);
         },
-        $innerStr
+        $str
     );
-
-    return $innerStr;
 }
 
 /**
@@ -1649,7 +1625,6 @@ function libstr_swapCase(string $str): string
  */
 function libstr_tidy(string $str): string
 {
-    $innerStr = $str;
     return preg_replace([
         '/\x{2026}/u',
         '/[\x{201C}\x{201D}]/u',
@@ -1660,7 +1635,7 @@ function libstr_tidy(string $str): string
         '"',
         "'",
         '-',
-    ], $innerStr);
+    ], $str);
 }
 
 /**
@@ -1674,25 +1649,22 @@ function libstr_tidy(string $str): string
  */
 function libstr_titleize(string $str, array $ignore = []): string
 {
-    $innerStr = $str;
-    $innerStr = trim($innerStr);
+    $str = trim($str);
 
-    $innerStr = preg_replace_callback(
+    return preg_replace_callback(
         '/([\S]+)/u',
         function ($match) use ($ignore) {
             if ($ignore && \in_array($match[0], $ignore, true)) {
                 return $match[0];
             }
 
-            $innerStr = $match[0];
-            $innerStr = libstr_toLowerCase($innerStr);
+            $str = $match[0];
+            $str = libstr_toLowerCase($str);
 
-            return libstr_upperCaseFirst($innerStr);
+            return libstr_upperCaseFirst($str);
         },
-        $innerStr
+        $str
     );
-
-    return $innerStr;
 }
 
 /**
@@ -1705,10 +1677,9 @@ function libstr_titleize(string $str, array $ignore = []): string
  */
 function libstr_toSpaces(string $str, int $tabLength = 4): string
 {
-    $innerStr = $str;
     $spaces = \str_repeat(' ', $tabLength);
 
-    return \str_replace("\t", $spaces, $innerStr);
+    return \str_replace("\t", $spaces, $str);
 }
 
 /**
@@ -1722,10 +1693,9 @@ function libstr_toSpaces(string $str, int $tabLength = 4): string
  */
 function libstr_toTabs(string $str, int $tabLength = 4): string
 {
-    $innerStr = $str;
     $spaces = \str_repeat(' ', $tabLength);
 
-    return \str_replace($spaces, "\t", $innerStr);
+    return \str_replace($spaces, "\t", $str);
 }
 
 /**
@@ -1736,9 +1706,7 @@ function libstr_toTabs(string $str, int $tabLength = 4): string
  */
 function libstr_toTitleCase(string $str): string
 {
-    $innerStr = $str;
-
-    return \mb_convert_case($innerStr, \MB_CASE_TITLE);
+    return \mb_convert_case($str, \MB_CASE_TITLE);
 }
 
 /**
@@ -1752,9 +1720,7 @@ function libstr_toTitleCase(string $str): string
  */
 function libstr_underscored(string $str): string
 {
-    $innerStr = $str;
-
-    return libstr_delimit($innerStr, '_');
+    return libstr_delimit($str, '_');
 }
 
 /** @noinspection MoreThanThreeArgumentsInspection */
@@ -1770,12 +1736,10 @@ function libstr_underscored(string $str): string
  */
 function libstr_move(string $str, int $start, int $length, int $destination): string
 {
-    $innerStr = $str;
+    if ($destination <= $length) { return $str; }
 
-    if ($destination <= $length) { return $innerStr; }
-
-    $substr = libstr_substr($innerStr, $start, $length);
-    $result = libstr_insert($innerStr, $substr, $destination);
+    $substr = libstr_substr($str, $start, $length);
+    $result = libstr_insert($str, $substr, $destination);
 
     return libstr_replace($result, $substr, '', 1);
 }
@@ -1792,13 +1756,11 @@ function libstr_move(string $str, int $start, int $length, int $destination): st
  */
 function libstr_overwrite(string $str, int $start, int $length, string $substr): string
 {
-    $innerStr = $str;
+    if ($length <= 0) { return $str; }
 
-    if ($length <= 0) { return $innerStr; }
+    $sub = libstr_substr($str, $start, $length);
 
-    $sub = libstr_substr($innerStr, $start, $length);
-
-    return libstr_replace($innerStr, $sub, $substr, 1);
+    return libstr_replace($str, $sub, $substr, 1);
 }
 
 /**
@@ -1810,18 +1772,16 @@ function libstr_overwrite(string $str, int $start, int $length, string $substr):
  */
 function libstr_snakeize(string $str): string
 {
-    $innerStr = $str;
+    $str = \mb_ereg_replace('::', '/', $str);
+    $str = \mb_ereg_replace('([A-Z]+)([A-Z][a-z])', '\1_\2', $str);
+    $str = \mb_ereg_replace('([a-z\d])([A-Z])', '\1_\2', $str);
+    $str = \mb_ereg_replace('\s+', '_', $str);
+    $str = \mb_ereg_replace('\s+', '_', $str);
+    $str = \mb_ereg_replace('^\s+|\s+$', '', $str);
+    $str = \mb_ereg_replace('-', '_', $str);
+    $str = libstr_toLowerCase($str);
 
-    $innerStr = \mb_ereg_replace('::', '/', $innerStr);
-    $innerStr = \mb_ereg_replace('([A-Z]+)([A-Z][a-z])', '\1_\2', $innerStr);
-    $innerStr = \mb_ereg_replace('([a-z\d])([A-Z])', '\1_\2', $innerStr);
-    $innerStr = \mb_ereg_replace('\s+', '_', $innerStr);
-    $innerStr = \mb_ereg_replace('\s+', '_', $innerStr);
-    $innerStr = \mb_ereg_replace('^\s+|\s+$', '', $innerStr);
-    $innerStr = \mb_ereg_replace('-', '_', $innerStr);
-    $innerStr = libstr_toLowerCase($innerStr);
-
-    $innerStr = \mb_ereg_replace_callback(
+    $str = \mb_ereg_replace_callback(
         '([\d|A-Z])',
         function ($matches) {
             $match = $matches[1];
@@ -1830,13 +1790,13 @@ function libstr_snakeize(string $str): string
             }
             return null;
         },
-        $innerStr
+        $str
     );
 
-    $innerStr = \mb_ereg_replace('_+', '_', $innerStr);
-    $innerStr = libstr_trim($innerStr, '_');
+    $str = \mb_ereg_replace('_+', '_', $str);
+    $str = libstr_trim($str, '_');
 
-    return $innerStr;
+    return $str;
 }
 
 /** @noinspection MoreThanThreeArgumentsInspection */
@@ -1852,13 +1812,12 @@ function libstr_snakeize(string $str): string
  */
 function libstr_afterFirst(string $str, string $needle, string $substr, int $times = 1): string
 {
-    $innerStr = $str;
-    $idx = libstr_indexOf($innerStr, $needle);
+    $idx = libstr_indexOf($str, $needle);
     $needleLen = \mb_strlen($needle);
     $idxEnd = $idx + $needleLen;
     $innerSubstr = libstr_repeat($substr, $times);
 
-    return libstr_insert($innerStr, $innerSubstr, $idxEnd);
+    return libstr_insert($str, $innerSubstr, $idxEnd);
 }
 
 /** @noinspection MoreThanThreeArgumentsInspection */
@@ -1874,11 +1833,10 @@ function libstr_afterFirst(string $str, string $needle, string $substr, int $tim
  */
 function libstr_beforeFirst(string $str, string $needle, string $substr, int $times = 1): string
 {
-    $innerStr = $str;
-    $idx = libstr_indexOf($innerStr, $needle);
+    $idx = libstr_indexOf($str, $needle);
     $innerSubstr = libstr_repeat($substr, $times);
 
-    return libstr_insert($innerStr, $innerSubstr, $idx);
+    return libstr_insert($str, $innerSubstr, $idx);
 }
 
 /** @noinspection MoreThanThreeArgumentsInspection */
@@ -1894,13 +1852,12 @@ function libstr_beforeFirst(string $str, string $needle, string $substr, int $ti
  */
 function libstr_afterLast(string $str, string $needle, string $substr, int $times = 1): string
 {
-    $innerStr = $str;
-    $idx = libstr_indexOfLast($innerStr, $needle);
+    $idx = libstr_indexOfLast($str, $needle);
     $needleLen = \mb_strlen($needle);
     $idxEnd = $idx + $needleLen;
     $innerSubstr = libstr_repeat($substr, $times);
 
-    return libstr_insert($innerStr, $innerSubstr, $idxEnd);
+    return libstr_insert($str, $innerSubstr, $idxEnd);
 }
 
 /** @noinspection MoreThanThreeArgumentsInspection */
@@ -1916,11 +1873,10 @@ function libstr_afterLast(string $str, string $needle, string $substr, int $time
  */
 function libstr_beforeLast(string $str, string $needle, string $substr, int $times = 1): string
 {
-    $innerStr = $str;
-    $idx = libstr_indexOfLast($innerStr, $needle);
+    $idx = libstr_indexOfLast($str, $needle);
     $innerSubstr = libstr_repeat($substr, $times);
 
-    return libstr_insert($innerStr, $innerSubstr, $idx);
+    return libstr_insert($str, $innerSubstr, $idx);
 }
 
 /**
@@ -1932,8 +1888,7 @@ function libstr_beforeLast(string $str, string $needle, string $substr, int $tim
  */
 function libstr_isEmail(string $str): bool
 {
-    $innerStr = $str;
-    $split = libstr_split($innerStr, '@');
+    $split = libstr_split($str, '@');
 
     return \count($split) === 2;
 }
@@ -2011,10 +1966,9 @@ function libstr_random(int $size, int $sizeMax = -1, string $possibleChars = '')
  */
 function libstr_appendUniqueIdentifier(string $str, int $size = 4, int $sizeMax = -1, string $possibleChars = ''): string
 {
-    $innerStr = $str;
     $identifier = libstr_random($size, $sizeMax, $possibleChars);
 
-    return $innerStr . $identifier;
+    return $str . $identifier;
 }
 
 /**
@@ -2025,9 +1979,7 @@ function libstr_appendUniqueIdentifier(string $str, int $size = 4, int $sizeMax 
  */
 function libstr_words(string $str): array
 {
-    $innerStr = $str;
-
-    return libstr_split($innerStr, '[[:space:]]+');
+    return libstr_split($str, '[[:space:]]+');
 }
 
 /**
@@ -2039,9 +1991,7 @@ function libstr_words(string $str): array
  */
 function libstr_quote(string $str, string $quote = '"'): string
 {
-    $innerStr = $str;
-
-    $words = libstr_words($innerStr);
+    $words = libstr_words($str);
     $result = [];
 
     foreach ($words as $word) {
@@ -2060,9 +2010,7 @@ function libstr_quote(string $str, string $quote = '"'): string
  */
 function libstr_unquote(string $str, string $quote = '"'): string
 {
-    $innerStr = $str;
-
-    $words = libstr_words($innerStr);
+    $words = libstr_words($str);
     $result = [];
 
     foreach ($words as $word) {
@@ -2081,18 +2029,17 @@ function libstr_unquote(string $str, string $quote = '"'): string
  */
 function libstr_chop(string $str, int $step = 0): array
 {
-    $innerStr = $str;
     $result = [];
-    $len = \mb_strlen($innerStr);
+    $len = \mb_strlen($str);
 
-    if ($innerStr === '' || $step <= 0) { return []; }
+    if ($str === '' || $step <= 0) { return []; }
 
-    if ($step >= $len) { return [$innerStr]; }
+    if ($step >= $len) { return [$str]; }
 
     $startPos = 0;
 
     for ($i = 0; $i < $len; $i+=$step) {
-        $result[] = libstr_substr($innerStr, $startPos, $step);
+        $result[] = libstr_substr($str, $startPos, $step);
         $startPos += $step;
     }
 
@@ -2110,17 +2057,15 @@ function libstr_chop(string $str, int $step = 0): array
  */
 function libstr_join(string $str, string $separator, array $otherStrings = []): string
 {
-    $innerStr = $str;
-
-    if (empty($otherStrings)) { return $innerStr; }
+    if (empty($otherStrings)) { return $str; }
 
     foreach ($otherStrings as $otherString) {
         if ($otherString) {
-            $innerStr .= $separator . $otherString;
+            $str .= $separator . $otherString;
         }
     }
 
-    return $innerStr;
+    return $str;
 }
 
 /**
@@ -2136,12 +2081,11 @@ function libstr_shift(string $str, string $delimiter): string
 {
     if (!$str || !$delimiter) { return ''; }
 
-    $innerStr = $str;
-    $idx = libstr_indexOf($innerStr, $delimiter);
+    $idx = libstr_indexOf($str, $delimiter);
 
-    if ($idx === -1) { return $innerStr; }
+    if ($idx === -1) { return $str; }
 
-    return libstr_substr($innerStr, 0, $idx);
+    return libstr_substr($str, 0, $idx);
 }
 
 /**
@@ -2157,12 +2101,11 @@ function libstr_shiftReversed(string $str, string $delimiter): string
 {
     if (!$str || !$delimiter) { return ''; }
 
-    $innerStr = $str;
-    $idx = libstr_indexOf($innerStr, $delimiter) + 1;
+    $idx = libstr_indexOf($str, $delimiter) + 1;
 
-    if ($idx === -1) { return $innerStr; }
+    if ($idx === -1) { return $str; }
 
-    return libstr_substr($innerStr, $idx);
+    return libstr_substr($str, $idx);
 }
 
 /**
@@ -2178,12 +2121,11 @@ function libstr_pop(string $str, string $delimiter): string
 {
     if (!$str || !$delimiter) { return ''; }
 
-    $innerStr = $str;
-    $idx = libstr_indexOfLast($innerStr, $delimiter) + 1;
+    $idx = libstr_indexOfLast($str, $delimiter) + 1;
 
-    if ($idx === -1) { return $innerStr; }
+    if ($idx === -1) { return $str; }
 
-    return libstr_substr($innerStr, $idx);
+    return libstr_substr($str, $idx);
 }
 
 
@@ -2200,10 +2142,9 @@ function libstr_popReversed(string $str, string $delimiter): string
 {
     if (!$str || !$delimiter) { return ''; }
 
-    $innerStr = $str;
-    $idx = libstr_indexOfLast($innerStr, $delimiter);
+    $idx = libstr_indexOfLast($str, $delimiter);
 
-    if ($idx === -1) { return $innerStr; }
+    if ($idx === -1) { return $str; }
 
-    return libstr_substr($innerStr, 0, $idx);
+    return libstr_substr($str, 0, $idx);
 }
