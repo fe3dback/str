@@ -155,7 +155,6 @@ class Str
 
     public function setString(string $str)
     {
-        // @todo check ascii
         $this->__str_buffer = $str;
         $this->__is_ascii = Ascii::checkWithCType($str);
     }
@@ -171,7 +170,11 @@ class Str
      */
     public function substr(int $start = 0, int $length = 0): Str
     {
-        $this->setString(libstr_substr($this->getString(), $start, $length));
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_substr());
+        } else {
+            $this->setString(libstr_substr($this->getString(), $start, $length));
+        }
         return $this;
     }
 
