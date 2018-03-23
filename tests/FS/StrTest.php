@@ -12,11 +12,8 @@ class StrTest extends TestCase
     {
         $s = new Str('Hello world');
         $this->assertEquals($s->getString(), 'Hello world');
-        $this->assertEquals($s->getString(), $s->toString());
         $this->assertEquals($s->getString(), $s);
-        $this->assertEquals($s->toString(), $s);
         $this->assertEquals((string)$s, 'Hello world');
-        $this->assertEquals($s, 'Hello world');
     }
 
     public function testPrefixSuffix()
@@ -25,7 +22,7 @@ class StrTest extends TestCase
             ->ensureLeft('>>')
             ->ensureRight('<<');
 
-        $this->assertEquals((string)$s, '>>世<<');
+        $this->assertEquals($s->getString(), '>>世<<');
         $this->assertTrue($s->hasPrefix('>>'));
         $this->assertTrue($s->hasSuffix('<<'));
     }
@@ -330,16 +327,10 @@ class StrTest extends TestCase
     public function testRandomFunctions()
     {
         $s = new Str('HeLlo 世 fòôbàř');
-        $len = \mb_strlen((string)$s);
-        $this->assertEquals($len, \mb_strlen((string)$s->shuffle()));
-        $this->assertEquals($len, \mb_strlen($s->random($len, -1, (string)$s)));
-        $this->assertEquals($len * 2, \mb_strlen((string)$s->appendUniqueIdentifier($len, -1, (string)$s)));
-
-        $s = new Str('HeLlo there');
-        $len = \strlen((string)$s);
-        $this->assertEquals($len, \strlen((string)$s->shuffle()));
-        $this->assertEquals($len, \strlen($s->random($len, -1, (string)$s)));
-        $this->assertEquals($len * 2, \strlen((string)$s->appendUniqueIdentifier($len, -1, (string)$s)));
+        $len = \mb_strlen($s->getString());
+        $this->assertEquals($len, \mb_strlen($s->shuffle()->getString()));
+        $this->assertEquals($len, \mb_strlen($s->random($len, -1, $s->getString())));
+        $this->assertEquals($len * 2, \mb_strlen($s->appendUniqueIdentifier($len, -1, $s->getString())->getString()));
     }
 
     public function testRegexFunctions()
