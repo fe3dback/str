@@ -107,15 +107,116 @@ use function Str\Lib\libstr_upperCamelize;
 use function Str\Lib\libstr_upperCaseFirst;
 use function Str\Lib\libstr_isJson;
 use function Str\Lib\libstr_words;
+use function Str\Lib\libstr_ascii_afterFirst;
+use function Str\Lib\libstr_ascii_afterLast;
+use function Str\Lib\libstr_ascii_appendUniqueIdentifier;
+use function Str\Lib\libstr_ascii_at;
+use function Str\Lib\libstr_ascii_append;
+use function Str\Lib\libstr_ascii_beforeFirst;
+use function Str\Lib\libstr_ascii_beforeLast;
+use function Str\Lib\libstr_ascii_between;
+use function Str\Lib\libstr_ascii_camelize;
+use function Str\Lib\libstr_ascii_chars;
+use function Str\Lib\libstr_ascii_chop;
+use function Str\Lib\libstr_ascii_collapseWhitespace;
+use function Str\Lib\libstr_ascii_containsAll;
+use function Str\Lib\libstr_ascii_containsAny;
+use function Str\Lib\libstr_ascii_contains;
+use function Str\Lib\libstr_ascii_countSubstr;
+use function Str\Lib\libstr_ascii_dasherize;
+use function Str\Lib\libstr_ascii_delimit;
+use function Str\Lib\libstr_ascii_endsWith;
+use function Str\Lib\libstr_ascii_endsWithAny;
+use function Str\Lib\libstr_ascii_ensureLeft;
+use function Str\Lib\libstr_ascii_ensureRight;
+use function Str\Lib\libstr_ascii_first;
+use function Str\Lib\libstr_ascii_hasPrefix;
+use function Str\Lib\libstr_ascii_hasSuffix;
+use function Str\Lib\libstr_ascii_htmlDecode;
+use function Str\Lib\libstr_ascii_htmlEncode;
+use function Str\Lib\libstr_ascii_humanize;
+use function Str\Lib\libstr_ascii_indexOf;
+use function Str\Lib\libstr_ascii_indexOfLast;
+use function Str\Lib\libstr_ascii_insert;
+use function Str\Lib\libstr_ascii_isAlpha;
+use function Str\Lib\libstr_ascii_isAlphanumeric;
+use function Str\Lib\libstr_ascii_isBase64;
+use function Str\Lib\libstr_ascii_isBlank;
+use function Str\Lib\libstr_ascii_isEmail;
+use function Str\Lib\libstr_ascii_isHexadecimal;
+use function Str\Lib\libstr_ascii_isLowerCase;
+use function Str\Lib\libstr_ascii_isSerialized;
+use function Str\Lib\libstr_ascii_isUpperCase;
+use function Str\Lib\libstr_ascii_join;
+use function Str\Lib\libstr_ascii_last;
+use function Str\Lib\libstr_ascii_move;
+use function Str\Lib\libstr_ascii_overwrite;
+use function Str\Lib\libstr_ascii_padBoth;
+use function Str\Lib\libstr_ascii_padLeft;
+use function Str\Lib\libstr_ascii_padRight;
+use function Str\Lib\libstr_ascii_pop;
+use function Str\Lib\libstr_ascii_popReversed;
+use function Str\Lib\libstr_ascii_quote;
+use function Str\Lib\libstr_ascii_random;
+use function Str\Lib\libstr_ascii_shift;
+use function Str\Lib\libstr_ascii_shiftReversed;
+use function Str\Lib\libstr_ascii_snakeize;
+use function Str\Lib\libstr_ascii_split;
+use function Str\Lib\libstr_ascii_length;
+use function Str\Lib\libstr_ascii_longestCommonPrefix;
+use function Str\Lib\libstr_ascii_longestCommonSubstring;
+use function Str\Lib\libstr_ascii_longestCommonSuffix;
+use function Str\Lib\libstr_ascii_lowerCaseFirst;
+use function Str\Lib\libstr_ascii_matchesPattern;
+use function Str\Lib\libstr_ascii_prepend;
+use function Str\Lib\libstr_ascii_regexReplace;
+use function Str\Lib\libstr_ascii_removeLeft;
+use function Str\Lib\libstr_ascii_removeRight;
+use function Str\Lib\libstr_ascii_repeat;
+use function Str\Lib\libstr_ascii_replace;
+use function Str\Lib\libstr_ascii_reverse;
+use function Str\Lib\libstr_ascii_safeTruncate;
+use function Str\Lib\libstr_ascii_shuffle;
+use function Str\Lib\libstr_ascii_slice;
+use function Str\Lib\libstr_ascii_slugify;
+use function Str\Lib\libstr_ascii_startsWith;
+use function Str\Lib\libstr_ascii_startsWithAny;
+use function Str\Lib\libstr_ascii_stripWhitespace;
+use function Str\Lib\libstr_ascii_substr;
+use function Str\Lib\libstr_ascii_surround;
+use function Str\Lib\libstr_ascii_swapCase;
+use function Str\Lib\libstr_ascii_tidy;
+use function Str\Lib\libstr_ascii_titleize;
+use function Str\Lib\libstr_ascii_toBoolean;
+use function Str\Lib\libstr_ascii_toLowerCase;
+use function Str\Lib\libstr_ascii_toTabs;
+use function Str\Lib\libstr_ascii_toUpperCase;
+use function Str\Lib\libstr_ascii_trim;
+use function Str\Lib\libstr_ascii_trimLeft;
+use function Str\Lib\libstr_ascii_trimRight;
+use function Str\Lib\libstr_ascii_truncate;
+use function Str\Lib\libstr_ascii_underscored;
+use function Str\Lib\libstr_ascii_unquote;
+use function Str\Lib\libstr_ascii_upperCamelize;
+use function Str\Lib\libstr_ascii_upperCaseFirst;
+use function Str\Lib\libstr_ascii_isJson;
+use function Str\Lib\libstr_ascii_words;
 
 class Str
 {
-    /** @var string */
-    private $str;
+    /**
+     * @var string
+     * @internal
+     */
+    private $__str_buffer;
+
+    /** @var bool */
+    private $__is_ascii;
 
     public function __construct(string $str)
     {
-        $this->str = $str;
+        $this->__is_ascii = false;
+        $this->setString($str);
     }
 
     /**
@@ -125,7 +226,7 @@ class Str
      */
     public function getString(): string
     {
-        return $this->str;
+        return $this->__str_buffer;
     }
 
     /**
@@ -135,7 +236,7 @@ class Str
      */
     public function toString(): string
     {
-        return $this->str;
+        return $this->getString();
     }
 
     /**
@@ -143,7 +244,13 @@ class Str
      */
     public function __toString(): string
     {
-        return $this->str;
+        return $this->getString();
+    }
+
+    public function setString(string $str)
+    {
+        $this->__str_buffer = $str;
+        $this->__is_ascii = Ascii::checkWithCType($str);
     }
 
     /**
@@ -157,7 +264,11 @@ class Str
      */
     public function substr(int $start = 0, int $length = 0): Str
     {
-        $this->str = libstr_substr($this->str, $start, $length);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_substr($this->getString(), $start, $length));
+        } else {
+            $this->setString(libstr_substr($this->getString(), $start, $length));
+        }
         return $this;
     }
 
@@ -169,7 +280,10 @@ class Str
      */
     public function hasPrefix(string $prefix): bool
     {
-        return libstr_hasPrefix($this->str, $prefix);
+        if ($this->__is_ascii) {
+            return libstr_ascii_hasPrefix($this->getString(), $prefix);
+        }
+        return libstr_hasPrefix($this->getString(), $prefix);
     }
 
     /**
@@ -180,7 +294,10 @@ class Str
      */
     public function hasSuffix(string $suffix): bool
     {
-        return libstr_hasSuffix($this->str, $suffix);
+        if ($this->__is_ascii) {
+            return libstr_ascii_hasSuffix($this->getString(), $suffix);
+        }
+        return libstr_hasSuffix($this->getString(), $suffix);
     }
 
     /**
@@ -192,7 +309,11 @@ class Str
      */
     public function ensureLeft(string $check): Str
     {
-        $this->str = libstr_ensureLeft($this->str, $check);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_ensureLeft($this->getString(), $check));
+        } else {
+            $this->setString(libstr_ensureLeft($this->getString(), $check));
+        }
         return $this;
     }
 
@@ -205,7 +326,11 @@ class Str
      */
     public function ensureRight(string $check): Str
     {
-        $this->str = libstr_ensureRight($this->str, $check);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_ensureRight($this->getString(), $check));
+        } else {
+            $this->setString(libstr_ensureRight($this->getString(), $check));
+        }
         return $this;
     }
 
@@ -217,7 +342,10 @@ class Str
      */
     public function contains(string $sub): bool
     {
-        return libstr_contains($this->str, $sub);
+        if ($this->__is_ascii) {
+            return libstr_ascii_contains($this->getString(), $sub);
+        }
+        return libstr_contains($this->getString(), $sub);
     }
 
     /**
@@ -235,7 +363,11 @@ class Str
      */
     public function replace(string $old, string $new, int $times = -1): Str
     {
-        $this->str = libstr_replace($this->str, $old, $new, $times);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_replace($this->getString(), $old, $new, $times));
+        } else {
+            $this->setString(libstr_replace($this->getString(), $old, $new, $times));
+        }
         return $this;
     }
 
@@ -246,7 +378,11 @@ class Str
      */
     public function toLowerCase(): Str
     {
-        $this->str = libstr_toLowerCase($this->str);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_toLowerCase($this->getString()));
+        } else {
+            $this->setString(libstr_toLowerCase($this->getString()));
+        }
         return $this;
     }
 
@@ -257,7 +393,11 @@ class Str
      */
     public function toUpperCase(): Str
     {
-        $this->str = libstr_toUpperCase($this->str);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_toUpperCase($this->getString()));
+        } else {
+            $this->setString(libstr_toUpperCase($this->getString()));
+        }
         return $this;
     }
 
@@ -271,7 +411,11 @@ class Str
      */
     public function trim(string $chars = ''): Str
     {
-        $this->str = libstr_trim($this->str, $chars);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_trim($this->getString(), $chars));
+        } else {
+            $this->setString(libstr_trim($this->getString(), $chars));
+        }
         return $this;
     }
 
@@ -285,7 +429,11 @@ class Str
      */
     public function trimLeft(string $chars = ''): Str
     {
-        $this->str = libstr_trimLeft($this->str, $chars);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_trimLeft($this->getString(), $chars));
+        } else {
+            $this->setString(libstr_trimLeft($this->getString(), $chars));
+        }
         return $this;
     }
 
@@ -299,7 +447,11 @@ class Str
      */
     public function trimRight(string $chars = ''): Str
     {
-        $this->str = libstr_trimRight($this->str, $chars);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_trimRight($this->getString(), $chars));
+        } else {
+            $this->setString(libstr_trimRight($this->getString(), $chars));
+        }
         return $this;
     }
 
@@ -311,7 +463,11 @@ class Str
      */
     public function append(string $sub): Str
     {
-        $this->str = libstr_append($this->str, $sub);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_append($this->getString(), $sub));
+        } else {
+            $this->setString(libstr_append($this->getString(), $sub));
+        }
         return $this;
     }
 
@@ -323,7 +479,11 @@ class Str
      */
     public function prepend(string $sub): Str
     {
-        $this->str = libstr_prepend($this->str, $sub);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_prepend($this->getString(), $sub));
+        } else {
+            $this->setString(libstr_prepend($this->getString(), $sub));
+        }
         return $this;
     }
 
@@ -335,7 +495,11 @@ class Str
      */
     public function at(int $pos): Str
     {
-        $this->str = libstr_at($this->str, $pos);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_at($this->getString(), $pos));
+        } else {
+            $this->setString(libstr_at($this->getString(), $pos));
+        }
         return $this;
     }
 
@@ -346,7 +510,10 @@ class Str
      */
     public function chars(): array
     {
-        return libstr_chars($this->str);
+        if ($this->__is_ascii) {
+            return libstr_ascii_chars($this->getString());
+        }
+        return libstr_chars($this->getString());
     }
 
     /**
@@ -356,7 +523,10 @@ class Str
      */
     public function length(): int
     {
-        return libstr_length($this->str);
+        if ($this->__is_ascii) {
+            return libstr_ascii_length($this->getString());
+        }
+        return libstr_length($this->getString());
     }
 
     /**
@@ -367,7 +537,11 @@ class Str
      */
     public function first(int $length = 1): Str
     {
-        $this->str = libstr_first($this->str, $length);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_first($this->getString(), $length));
+        } else {
+            $this->setString(libstr_first($this->getString(), $length));
+        }
         return $this;
     }
 
@@ -379,7 +553,11 @@ class Str
      */
     public function last(int $length = 1): Str
     {
-        $this->str = libstr_last($this->str, $length);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_last($this->getString(), $length));
+        } else {
+            $this->setString(libstr_last($this->getString(), $length));
+        }
         return $this;
     }
 
@@ -394,7 +572,10 @@ class Str
      */
     public function indexOf(string $needle, int $offset = 0): int
     {
-        return libstr_indexOf($this->str, $needle, $offset);
+        if ($this->__is_ascii) {
+            return libstr_ascii_indexOf($this->getString(), $needle, $offset);
+        }
+        return libstr_indexOf($this->getString(), $needle, $offset);
     }
 
     /**
@@ -409,7 +590,10 @@ class Str
      */
     public function indexOfLast(string $needle, int $offset = 0): int
     {
-        return libstr_indexOfLast($this->str, $needle, $offset);
+        if ($this->__is_ascii) {
+            return libstr_ascii_indexOfLast($this->getString(), $needle, $offset);
+        }
+        return libstr_indexOfLast($this->getString(), $needle, $offset);
     }
 
     /**
@@ -423,7 +607,10 @@ class Str
      */
     public function countSubstr(string $needle, bool $caseSensitive = true): int
     {
-        return libstr_countSubstr($this->str, $needle, $caseSensitive);
+        if ($this->__is_ascii) {
+            return libstr_ascii_countSubstr($this->getString(), $needle, $caseSensitive);
+        }
+        return libstr_countSubstr($this->getString(), $needle, $caseSensitive);
     }
 
     /**
@@ -437,7 +624,10 @@ class Str
      */
     public function containsAll(array $needles, bool $caseSensitive = true): bool
     {
-        return libstr_containsAll($this->str, $needles, $caseSensitive);
+        if ($this->__is_ascii) {
+            return libstr_ascii_containsAll($this->getString(), $needles, $caseSensitive);
+        }
+        return libstr_containsAll($this->getString(), $needles, $caseSensitive);
     }
 
     /**
@@ -451,7 +641,10 @@ class Str
      */
     public function containsAny(array $needles, bool $caseSensitive = true): bool
     {
-        return libstr_containsAny($this->str, $needles, $caseSensitive);
+        if ($this->__is_ascii) {
+            return libstr_ascii_containsAny($this->getString(), $needles, $caseSensitive);
+        }
+        return libstr_containsAny($this->getString(), $needles, $caseSensitive);
     }
 
     /**
@@ -465,7 +658,10 @@ class Str
      */
     public function startsWith(string $substring, bool $caseSensitive = true): bool
     {
-        return libstr_startsWith($this->str, $substring, $caseSensitive);
+        if ($this->__is_ascii) {
+            return libstr_ascii_startsWith($this->getString(), $substring, $caseSensitive);
+        }
+        return libstr_startsWith($this->getString(), $substring, $caseSensitive);
     }
 
     /**
@@ -479,7 +675,10 @@ class Str
      */
     public function startsWithAny(array $substrings, bool $caseSensitive = true): bool
     {
-        return libstr_startsWithAny($this->str, $substrings, $caseSensitive);
+        if ($this->__is_ascii) {
+            return libstr_ascii_startsWithAny($this->getString(), $substrings, $caseSensitive);
+        }
+        return libstr_startsWithAny($this->getString(), $substrings, $caseSensitive);
     }
 
     /**
@@ -493,7 +692,10 @@ class Str
      */
     public function endsWith(string $substring, bool $caseSensitive = true): bool
     {
-        return libstr_endsWith($this->str, $substring, $caseSensitive);
+        if ($this->__is_ascii) {
+            return libstr_ascii_endsWith($this->getString(), $substring, $caseSensitive);
+        }
+        return libstr_endsWith($this->getString(), $substring, $caseSensitive);
     }
 
     /**
@@ -507,7 +709,10 @@ class Str
      */
     public function endsWithAny(array $substrings, bool $caseSensitive = true): bool
     {
-        return libstr_endsWithAny($this->str, $substrings, $caseSensitive);
+        if ($this->__is_ascii) {
+            return libstr_ascii_endsWithAny($this->getString(), $substrings, $caseSensitive);
+        }
+        return libstr_endsWithAny($this->getString(), $substrings, $caseSensitive);
     }
 
     /**
@@ -520,7 +725,11 @@ class Str
      */
     public function padBoth(int $length, string $padStr = ' '): Str
     {
-        $this->str = libstr_padBoth($this->str, $length, $padStr);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_padBoth($this->getString(), $length, $padStr));
+        } else {
+            $this->setString(libstr_padBoth($this->getString(), $length, $padStr));
+        }
         return $this;
     }
 
@@ -534,7 +743,11 @@ class Str
      */
     public function padLeft(int $length, string $padStr = ' '): Str
     {
-        $this->str = libstr_padLeft($this->str, $length, $padStr);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_padLeft($this->getString(), $length, $padStr));
+        } else {
+            $this->setString(libstr_padLeft($this->getString(), $length, $padStr));
+        }
         return $this;
     }
 
@@ -548,7 +761,11 @@ class Str
      */
     public function padRight(int $length, string $padStr = ' '): Str
     {
-        $this->str = libstr_padRight($this->str, $length, $padStr);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_padRight($this->getString(), $length, $padStr));
+        } else {
+            $this->setString(libstr_padRight($this->getString(), $length, $padStr));
+        }
         return $this;
     }
 
@@ -561,7 +778,11 @@ class Str
      */
     public function insert(string $substring, int $index): Str
     {
-        $this->str = libstr_insert($this->str, $substring, $index);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_insert($this->getString(), $substring, $index));
+        } else {
+            $this->setString(libstr_insert($this->getString(), $substring, $index));
+        }
         return $this;
     }
 
@@ -573,7 +794,11 @@ class Str
      */
     public function removeLeft(string $substring): Str
     {
-        $this->str = libstr_removeLeft($this->str, $substring);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_removeLeft($this->getString(), $substring));
+        } else {
+            $this->setString(libstr_removeLeft($this->getString(), $substring));
+        }
         return $this;
     }
 
@@ -585,7 +810,11 @@ class Str
      */
     public function removeRight(string $substring): Str
     {
-        $this->str = libstr_removeRight($this->str, $substring);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_removeRight($this->getString(), $substring));
+        } else {
+            $this->setString(libstr_removeRight($this->getString(), $substring));
+        }
         return $this;
     }
 
@@ -597,7 +826,11 @@ class Str
      */
     public function repeat(int $multiplier): Str
     {
-        $this->str = libstr_repeat($this->str, $multiplier);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_repeat($this->getString(), $multiplier));
+        } else {
+            $this->setString(libstr_repeat($this->getString(), $multiplier));
+        }
         return $this;
     }
 
@@ -608,7 +841,11 @@ class Str
      */
     public function reverse(): Str
     {
-        $this->str = libstr_reverse($this->str);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_reverse($this->getString()));
+        } else {
+            $this->setString(libstr_reverse($this->getString()));
+        }
         return $this;
     }
 
@@ -620,7 +857,11 @@ class Str
      */
     public function shuffle(): Str
     {
-        $this->str = libstr_shuffle($this->str);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_shuffle($this->getString()));
+        } else {
+            $this->setString(libstr_shuffle($this->getString()));
+        }
         return $this;
     }
 
@@ -636,7 +877,11 @@ class Str
      */
     public function between(string $start, string $end, int $offset = 0): Str
     {
-        $this->str = libstr_between($this->str, $start, $end, $offset);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_between($this->getString(), $start, $end, $offset));
+        } else {
+            $this->setString(libstr_between($this->getString(), $start, $end, $offset));
+        }
         return $this;
     }
 
@@ -649,7 +894,11 @@ class Str
      */
     public function camelize(): Str
     {
-        $this->str = libstr_camelize($this->str);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_camelize($this->getString()));
+        } else {
+            $this->setString(libstr_camelize($this->getString()));
+        }
         return $this;
     }
 
@@ -660,7 +909,11 @@ class Str
      */
     public function lowerCaseFirst(): Str
     {
-        $this->str = libstr_lowerCaseFirst($this->str);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_lowerCaseFirst($this->getString()));
+        } else {
+            $this->setString(libstr_lowerCaseFirst($this->getString()));
+        }
         return $this;
     }
 
@@ -671,7 +924,11 @@ class Str
      */
     public function upperCaseFirst(): Str
     {
-        $this->str = libstr_upperCaseFirst($this->str);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_upperCaseFirst($this->getString()));
+        } else {
+            $this->setString(libstr_upperCaseFirst($this->getString()));
+        }
         return $this;
     }
 
@@ -684,7 +941,11 @@ class Str
      */
     public function collapseWhitespace(): Str
     {
-        $this->str = libstr_collapseWhitespace($this->str);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_collapseWhitespace($this->getString()));
+        } else {
+            $this->setString(libstr_collapseWhitespace($this->getString()));
+        }
         return $this;
     }
 
@@ -700,9 +961,13 @@ class Str
      * @param  string $options     Matching conditions to be used
      * @return Str
      */
-    public function regexReplace(string $pattern, string $replacement, string $options = 'msr'): Str
+    public function regexReplace(string $pattern, string $replacement, string $options = 'ms'): Str
     {
-        $this->str = libstr_regexReplace($this->str, $pattern, $replacement, $options);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_regexReplace($this->getString(), $pattern, $replacement, $options));
+        } else {
+            $this->setString(libstr_regexReplace($this->getString(), $pattern, $replacement, $options));
+        }
         return $this;
     }
 
@@ -715,7 +980,11 @@ class Str
      */
     public function dasherize(): Str
     {
-        $this->str = libstr_dasherize($this->str);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_dasherize($this->getString()));
+        } else {
+            $this->setString(libstr_dasherize($this->getString()));
+        }
         return $this;
     }
 
@@ -730,7 +999,11 @@ class Str
      */
     public function delimit($delimiter): Str
     {
-        $this->str = libstr_delimit($this->str, $delimiter);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_delimit($this->getString(), $delimiter));
+        } else {
+            $this->setString(libstr_delimit($this->getString(), $delimiter));
+        }
         return $this;
     }
 
@@ -742,7 +1015,7 @@ class Str
      */
     public function isUUIDv4(): bool
     {
-        return libstr_isUUIDv4($this->str);
+        return libstr_isUUIDv4($this->getString());
     }
 
     /**
@@ -752,7 +1025,10 @@ class Str
      */
     public function hasLowerCase(): bool
     {
-        return libstr_matchesPattern($this->str, '.*[[:lower:]]');
+        if ($this->__is_ascii) {
+            return libstr_ascii_matchesPattern($this->getString(), '.*[[:lower:]]');
+        }
+        return libstr_matchesPattern($this->getString(), '.*[[:lower:]]');
     }
 
     /**
@@ -762,7 +1038,10 @@ class Str
      */
     public function hasUpperCase(): bool
     {
-        return libstr_matchesPattern($this->str, '.*[[:upper:]]');
+        if ($this->__is_ascii) {
+            return libstr_ascii_matchesPattern($this->getString(), '.*[[:upper:]]');
+        }
+        return libstr_matchesPattern($this->getString(), '.*[[:upper:]]');
     }
 
     /**
@@ -773,7 +1052,10 @@ class Str
      */
     public function matchesPattern(string $pattern): bool
     {
-        return libstr_matchesPattern($this->str, $pattern);
+        if ($this->__is_ascii) {
+            return libstr_ascii_matchesPattern($this->getString(), $pattern);
+        }
+        return libstr_matchesPattern($this->getString(), $pattern);
     }
 
     /**
@@ -786,7 +1068,11 @@ class Str
      */
     public function htmlDecode(int $flags = ENT_COMPAT): Str
     {
-        $this->str = libstr_htmlDecode($this->str, $flags);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_htmlDecode($this->getString(), $flags));
+        } else {
+            $this->setString(libstr_htmlDecode($this->getString(), $flags));
+        }
         return $this;
     }
 
@@ -800,7 +1086,11 @@ class Str
      */
     public function htmlEncode(int $flags = ENT_COMPAT): Str
     {
-        $this->str = libstr_htmlEncode($this->str, $flags);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_htmlEncode($this->getString(), $flags));
+        } else {
+            $this->setString(libstr_htmlEncode($this->getString(), $flags));
+        }
         return $this;
     }
 
@@ -812,7 +1102,11 @@ class Str
      */
     public function humanize(): Str
     {
-        $this->str = libstr_humanize($this->str);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_humanize($this->getString()));
+        } else {
+            $this->setString(libstr_humanize($this->getString()));
+        }
         return $this;
     }
 
@@ -823,7 +1117,10 @@ class Str
      */
     public function isAlpha(): bool
     {
-        return libstr_isAlpha($this->str);
+        if ($this->__is_ascii) {
+            return libstr_ascii_isAlpha($this->getString());
+        }
+        return libstr_isAlpha($this->getString());
     }
 
     /**
@@ -834,7 +1131,10 @@ class Str
      */
     public function isAlphanumeric(): bool
     {
-        return libstr_isAlphanumeric($this->str);
+        if ($this->__is_ascii) {
+            return libstr_ascii_isAlphanumeric($this->getString());
+        }
+        return libstr_isAlphanumeric($this->getString());
     }
 
     /**
@@ -844,7 +1144,10 @@ class Str
      */
     public function isBase64(): bool
     {
-        return libstr_isBase64($this->str);
+        if ($this->__is_ascii) {
+            return libstr_ascii_isBase64($this->getString());
+        }
+        return libstr_isBase64($this->getString());
     }
 
     /**
@@ -854,7 +1157,10 @@ class Str
      */
     public function isBlank(): bool
     {
-        return libstr_isBlank($this->str);
+        if ($this->__is_ascii) {
+            return libstr_ascii_isBlank($this->getString());
+        }
+        return libstr_isBlank($this->getString());
     }
 
     /**
@@ -864,7 +1170,10 @@ class Str
      */
     public function isHexadecimal(): bool
     {
-        return libstr_isHexadecimal($this->str);
+        if ($this->__is_ascii) {
+            return libstr_ascii_isHexadecimal($this->getString());
+        }
+        return libstr_isHexadecimal($this->getString());
     }
 
     /**
@@ -876,7 +1185,10 @@ class Str
      */
     public function isJson(): bool
     {
-        return libstr_isJson($this->str);
+        if ($this->__is_ascii) {
+            return libstr_ascii_isJson($this->getString());
+        }
+        return libstr_isJson($this->getString());
     }
 
     /**
@@ -886,7 +1198,10 @@ class Str
      */
     public function isLowerCase(): bool
     {
-        return libstr_isLowerCase($this->str);
+        if ($this->__is_ascii) {
+            return libstr_ascii_isLowerCase($this->getString());
+        }
+        return libstr_isLowerCase($this->getString());
     }
 
     /**
@@ -896,7 +1211,10 @@ class Str
      */
     public function isSerialized(): bool
     {
-        return libstr_isSerialized($this->str);
+        if ($this->__is_ascii) {
+            return libstr_ascii_isSerialized($this->getString());
+        }
+        return libstr_isSerialized($this->getString());
     }
 
     /**
@@ -906,17 +1224,22 @@ class Str
      */
     public function isUpperCase(): bool
     {
-        return libstr_isUpperCase($this->str);
+        if ($this->__is_ascii) {
+            return libstr_ascii_isUpperCase($this->getString());
+        }
+        return libstr_isUpperCase($this->getString());
     }
 
     /**
      * Splits on newlines and carriage returns, returning an array of strings corresponding to the lines in the string.
      *
+     * We don't check for ascii here.
+     *
      * @return array of strings
      */
     public function lines(): array
     {
-        return libstr_lines($this->str);
+        return libstr_lines($this->getString());
     }
 
     /**
@@ -930,7 +1253,10 @@ class Str
      */
     public function split(string $pattern, int $limit = -1): array
     {
-        return libstr_split($this->str, $pattern, $limit);
+        if ($this->__is_ascii) {
+            return libstr_ascii_split($this->getString(), $pattern, $limit);
+        }
+        return libstr_split($this->getString(), $pattern, $limit);
     }
 
     /**
@@ -941,7 +1267,11 @@ class Str
      */
     public function longestCommonPrefix(string $otherStr): Str
     {
-        $this->str = libstr_longestCommonPrefix($this->str, $otherStr);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_longestCommonPrefix($this->getString(), $otherStr));
+        } else {
+            $this->setString(libstr_longestCommonPrefix($this->getString(), $otherStr));
+        }
         return $this;
     }
 
@@ -953,7 +1283,11 @@ class Str
      */
     public function longestCommonSuffix(string $otherStr): Str
     {
-        $this->str = libstr_longestCommonSuffix($this->str, $otherStr);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_longestCommonSuffix($this->getString(), $otherStr));
+        } else {
+            $this->setString(libstr_longestCommonSuffix($this->getString(), $otherStr));
+        }
         return $this;
     }
 
@@ -966,7 +1300,11 @@ class Str
      */
     public function longestCommonSubstring(string $otherStr): Str
     {
-        $this->str = libstr_longestCommonSubstring($this->str, $otherStr);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_longestCommonSubstring($this->getString(), $otherStr));
+        } else {
+            $this->setString(libstr_longestCommonSubstring($this->getString(), $otherStr));
+        }
         return $this;
     }
 
@@ -982,7 +1320,11 @@ class Str
      */
     public function safeTruncate(int $length, string $substring = ''): Str
     {
-        $this->str = libstr_safeTruncate($this->str, $length, $substring);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_safeTruncate($this->getString(), $length, $substring));
+        } else {
+            $this->setString(libstr_safeTruncate($this->getString(), $length, $substring));
+        }
         return $this;
     }
 
@@ -1000,7 +1342,11 @@ class Str
      */
     public function slugify(string $replacement = '-', string $language = 'en'): Str
     {
-        $this->str = libstr_slugify($this->str, $replacement, $language);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_slugify($this->getString(), $replacement, $language));
+        } else {
+            $this->setString(libstr_slugify($this->getString(), $replacement, $language));
+        }
         return $this;
     }
 
@@ -1018,7 +1364,7 @@ class Str
      */
     public function toAscii(string $language = 'en', bool $removeUnsupported = true): Str
     {
-        $this->str = libstr_toAscii($this->str, $language, $removeUnsupported);
+        $this->setString(libstr_toAscii($this->getString(), $language, $removeUnsupported));
         return $this;
     }
 
@@ -1057,7 +1403,11 @@ class Str
      */
     public function slice(int $start, int $end = null): Str
     {
-        $this->str = libstr_slice($this->str, $start, $end);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_slice($this->getString(), $start, $end));
+        } else {
+            $this->setString(libstr_slice($this->getString(), $start, $end));
+        }
         return $this;
     }
 
@@ -1070,7 +1420,11 @@ class Str
      */
     public function stripWhitespace(): Str
     {
-        $this->str = libstr_stripWhitespace($this->str);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_stripWhitespace($this->getString()));
+        } else {
+            $this->setString(libstr_stripWhitespace($this->getString()));
+        }
         return $this;
     }
 
@@ -1085,7 +1439,11 @@ class Str
      */
     public function truncate(int $length, string $substring = ''): Str
     {
-        $this->str = libstr_truncate($this->str, $length, $substring);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_truncate($this->getString(), $length, $substring));
+        } else {
+            $this->setString(libstr_truncate($this->getString(), $length, $substring));
+        }
         return $this;
     }
 
@@ -1098,7 +1456,11 @@ class Str
      */
     public function upperCamelize(): Str
     {
-        $this->str = libstr_upperCamelize($this->str);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_upperCamelize($this->getString()));
+        } else {
+            $this->setString(libstr_upperCamelize($this->getString()));
+        }
         return $this;
     }
 
@@ -1110,7 +1472,11 @@ class Str
      */
     public function surround(string $substring): Str
     {
-        $this->str = libstr_surround($this->str, $substring);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_surround($this->getString(), $substring));
+        } else {
+            $this->setString(libstr_surround($this->getString(), $substring));
+        }
         return $this;
     }
 
@@ -1121,7 +1487,11 @@ class Str
      */
     public function swapCase(): Str
     {
-        $this->str = libstr_swapCase($this->str);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_swapCase($this->getString()));
+        } else {
+            $this->setString(libstr_swapCase($this->getString()));
+        }
         return $this;
     }
 
@@ -1134,7 +1504,11 @@ class Str
      */
     public function tidy(): Str
     {
-        $this->str = libstr_tidy($this->str);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_tidy($this->getString()));
+        } else {
+            $this->setString(libstr_tidy($this->getString()));
+        }
         return $this;
     }
 
@@ -1148,7 +1522,11 @@ class Str
      */
     public function titleize(array $ignore = []): Str
     {
-        $this->str = libstr_titleize($this->str, $ignore);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_titleize($this->getString(), $ignore));
+        } else {
+            $this->setString(libstr_titleize($this->getString(), $ignore));
+        }
         return $this;
     }
 
@@ -1165,19 +1543,24 @@ class Str
      */
     public function toBoolean(): bool
     {
-        return libstr_toBoolean($this->str);
+        if ($this->__is_ascii) {
+            return libstr_ascii_toBoolean($this->getString());
+        }
+        return libstr_toBoolean($this->getString());
     }
 
     /**
      * Converts each tab in the string to some number of spaces, as defined by
      * $tabLength. By default, each tab is converted to 4 consecutive spaces.
      *
+     * We don't check for ascii here.
+     *
      * @param  int $tabLength Number of spaces to replace each tab with
      * @return Str
      */
     public function toSpaces(int $tabLength = 4): Str
     {
-        $this->str = libstr_toSpaces($this->str, $tabLength);
+        $this->setString(libstr_toSpaces($this->getString(), $tabLength));
         return $this;
     }
 
@@ -1191,18 +1574,24 @@ class Str
      */
     public function toTabs(int $tabLength = 4): Str
     {
-        $this->str = libstr_toTabs($this->str, $tabLength);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_toTabs($this->getString(), $tabLength));
+        } else {
+            $this->setString(libstr_toTabs($this->getString(), $tabLength));
+        }
         return $this;
     }
 
     /**
      * Converts the first character of each word in the string to uppercase.
      *
+     * NB! In this function we don't check if the string is ascii.
+     *
      * @return Str
      */
     public function toTitleCase(): Str
     {
-        $this->str = libstr_toTitleCase($this->str);
+        $this->setString(libstr_toTitleCase($this->getString()));
         return $this;
     }
 
@@ -1216,7 +1605,11 @@ class Str
      */
     public function underscored(): Str
     {
-        $this->str = libstr_underscored($this->str);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_underscored($this->getString()));
+        } else {
+            $this->setString(libstr_underscored($this->getString()));
+        }
         return $this;
     }
 
@@ -1231,7 +1624,11 @@ class Str
      */
     public function move(int $start, int $length, int $destination): Str
     {
-        $this->str = libstr_move($this->str, $start, $length, $destination);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_move($this->getString(), $start, $length, $destination));
+        } else {
+            $this->setString(libstr_move($this->getString(), $start, $length, $destination));
+        }
         return $this;
     }
 
@@ -1245,7 +1642,11 @@ class Str
      */
     public function overwrite(int $start, int $length, string $substr): Str
     {
-        $this->str = libstr_overwrite($this->str, $start, $length, $substr);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_overwrite($this->getString(), $start, $length, $substr));
+        } else {
+            $this->setString(libstr_overwrite($this->getString(), $start, $length, $substr));
+        }
         return $this;
     }
 
@@ -1256,7 +1657,11 @@ class Str
      */
     public function snakeize(): Str
     {
-        $this->str = libstr_snakeize($this->str);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_snakeize($this->getString()));
+        } else {
+            $this->setString(libstr_snakeize($this->getString()));
+        }
         return $this;
     }
 
@@ -1271,7 +1676,11 @@ class Str
      */
     public function afterFirst(string $needle, string $substr, int $times = 1): Str
     {
-        $this->str = libstr_afterFirst($this->str, $needle, $substr, $times);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_afterFirst($this->getString(), $needle, $substr, $times));
+        } else {
+            $this->setString(libstr_afterFirst($this->getString(), $needle, $substr, $times));
+        }
         return $this;
     }
 
@@ -1286,7 +1695,11 @@ class Str
      */
     public function beforeFirst(string $needle, string $substr, int $times = 1): Str
     {
-        $this->str = libstr_beforeFirst($this->str, $needle, $substr, $times);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_beforeFirst($this->getString(), $needle, $substr, $times));
+        } else {
+            $this->setString(libstr_beforeFirst($this->getString(), $needle, $substr, $times));
+        }
         return $this;
     }
 
@@ -1301,7 +1714,11 @@ class Str
      */
     public function afterLast(string $needle, string $substr, int $times = 1): Str
     {
-        $this->str = libstr_afterLast($this->str, $needle, $substr, $times);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_afterLast($this->getString(), $needle, $substr, $times));
+        } else {
+            $this->setString(libstr_afterLast($this->getString(), $needle, $substr, $times));
+        }
         return $this;
     }
 
@@ -1316,7 +1733,11 @@ class Str
      */
     public function beforeLast(string $needle, string $substr, int $times = 1): Str
     {
-        $this->str = libstr_beforeLast($this->str, $needle, $substr, $times);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_beforeLast($this->getString(), $needle, $substr, $times));
+        } else {
+            $this->setString(libstr_beforeLast($this->getString(), $needle, $substr, $times));
+        }
         return $this;
     }
 
@@ -1328,7 +1749,10 @@ class Str
      */
     public function isEmail(): bool
     {
-        return libstr_isEmail($this->str);
+        if ($this->__is_ascii) {
+            return libstr_ascii_isEmail($this->getString());
+        }
+        return libstr_isEmail($this->getString());
     }
 
     /**
@@ -1338,7 +1762,7 @@ class Str
      */
     public function isIpV4(): bool
     {
-        return libstr_isIpV4($this->str);
+        return libstr_isIpV4($this->getString());
     }
 
     /**
@@ -1348,7 +1772,7 @@ class Str
      */
     public function isIpV6(): bool
     {
-        return libstr_isIpV6($this->str);
+        return libstr_isIpV6($this->getString());
     }
 
     /**
@@ -1363,6 +1787,9 @@ class Str
      */
     public function random(int $size, int $sizeMax = -1, string $possibleChars = ''): string
     {
+        if ($this->__is_ascii) {
+            return libstr_ascii_random($size, $sizeMax, $possibleChars);
+        }
         return libstr_random($size, $sizeMax, $possibleChars);
     }
 
@@ -1378,7 +1805,11 @@ class Str
      */
     public function appendUniqueIdentifier(int $size = 4, int $sizeMax = -1, string $possibleChars = ''): Str
     {
-        $this->str = libstr_appendUniqueIdentifier($this->str, $size, $sizeMax, $possibleChars);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_appendUniqueIdentifier($this->getString(), $size, $sizeMax, $possibleChars));
+        } else {
+            $this->setString(libstr_appendUniqueIdentifier($this->getString(), $size, $sizeMax, $possibleChars));
+        }
         return $this;
     }
 
@@ -1389,7 +1820,10 @@ class Str
      */
     public function words(): array
     {
-        return libstr_words($this->str);
+        if ($this->__is_ascii) {
+            return libstr_ascii_words($this->getString());
+        }
+        return libstr_words($this->getString());
     }
 
     /**
@@ -1400,7 +1834,11 @@ class Str
      */
     public function quote(string $quote = '"'): Str
     {
-        $this->str = libstr_quote($this->str, $quote);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_quote($this->getString(), $quote));
+        } else {
+            $this->setString(libstr_quote($this->getString(), $quote));
+        }
         return $this;
     }
 
@@ -1412,7 +1850,11 @@ class Str
      */
     public function unquote(string $quote = '"'): Str
     {
-        $this->str = libstr_unquote($this->str, $quote);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_unquote($this->getString(), $quote));
+        } else {
+            $this->setString(libstr_unquote($this->getString(), $quote));
+        }
         return $this;
     }
 
@@ -1424,7 +1866,10 @@ class Str
      */
     public function chop(int $step): array
     {
-        return libstr_chop($this->str, $step);
+        if ($this->__is_ascii) {
+            return libstr_ascii_chop($this->getString(), $step);
+        }
+        return libstr_chop($this->getString(), $step);
     }
 
     /**
@@ -1436,7 +1881,11 @@ class Str
      */
     public function join(string $separator, array $otherStrings = []): Str
     {
-        $this->str = libstr_join($this->str, $separator, $otherStrings);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_join($this->getString(), $separator, $otherStrings));
+        } else {
+            $this->setString(libstr_join($this->getString(), $separator, $otherStrings));
+        }
         return $this;
     }
 
@@ -1450,7 +1899,11 @@ class Str
      */
     public function shift(string $delimiter): Str
     {
-        $this->str = libstr_shift($this->str, $delimiter);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_shift($this->getString(), $delimiter));
+        } else {
+            $this->setString(libstr_shift($this->getString(), $delimiter));
+        }
         return $this;
     }
 
@@ -1464,7 +1917,11 @@ class Str
      */
     public function shiftReversed(string $delimiter): Str
     {
-        $this->str = libstr_shiftReversed($this->str, $delimiter);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_shiftReversed($this->getString(), $delimiter));
+        } else {
+            $this->setString(libstr_shiftReversed($this->getString(), $delimiter));
+        }
         return $this;
     }
 
@@ -1478,7 +1935,11 @@ class Str
      */
     public function pop(string $delimiter): Str
     {
-        $this->str = libstr_pop($this->str, $delimiter);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_pop($this->getString(), $delimiter));
+        } else {
+            $this->setString(libstr_pop($this->getString(), $delimiter));
+        }
         return $this;
     }
 
@@ -1493,7 +1954,11 @@ class Str
      */
     public function popReversed(string $delimiter): Str
     {
-        $this->str = libstr_popReversed($this->str, $delimiter);
+        if ($this->__is_ascii) {
+            $this->setString(libstr_ascii_popReversed($this->getString(), $delimiter));
+        } else {
+            $this->setString(libstr_popReversed($this->getString(), $delimiter));
+        }
         return $this;
     }
 }

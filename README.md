@@ -179,22 +179,22 @@ bench_UTF8_DefaultEncoding | 229.000μs | 1,326,248b | 15.27x
 
 internal tests:
 ```bash
-./vendor/bin/phpbench run --config=bench_internal.json --report=str
+make internal-tests
 ```
 
 lib code tests (versus):
 ```bash
-./vendor/bin/phpbench run --config=bench_lib.json --report=str
+make lib-code-tests
 ```
 
 how to get total RANK:
 ```bash
-./vendor/bin/phpbench run --config=bench_lib.json --report=str | php benchmarks/score.php
+make rank
 ```
 
 generate md:
 ```bash
-./vendor/bin/phpbench run --config=bench_lib.json --report=str -o markdown > benchmark.md
+make md
 ```
 
 Test subjects:
