@@ -163,7 +163,6 @@ use function Str\Lib\libstr_ascii_shiftReversed;
 use function Str\Lib\libstr_ascii_snakeize;
 use function Str\Lib\libstr_ascii_split;
 use function Str\Lib\libstr_ascii_length;
-use function Str\Lib\libstr_ascii_lines;
 use function Str\Lib\libstr_ascii_longestCommonPrefix;
 use function Str\Lib\libstr_ascii_longestCommonSubstring;
 use function Str\Lib\libstr_ascii_longestCommonSuffix;
@@ -190,7 +189,6 @@ use function Str\Lib\libstr_ascii_tidy;
 use function Str\Lib\libstr_ascii_titleize;
 use function Str\Lib\libstr_ascii_toBoolean;
 use function Str\Lib\libstr_ascii_toLowerCase;
-use function Str\Lib\libstr_ascii_toSpaces;
 use function Str\Lib\libstr_ascii_toTabs;
 use function Str\Lib\libstr_ascii_toUpperCase;
 use function Str\Lib\libstr_ascii_trim;
@@ -963,7 +961,7 @@ class Str
      * @param  string $options     Matching conditions to be used
      * @return Str
      */
-    public function regexReplace(string $pattern, string $replacement, string $options = 'msr'): Str
+    public function regexReplace(string $pattern, string $replacement, string $options = 'ms'): Str
     {
         if ($this->__is_ascii) {
             $this->setString(libstr_ascii_regexReplace($this->getString(), $pattern, $replacement, $options));
@@ -1235,13 +1233,12 @@ class Str
     /**
      * Splits on newlines and carriage returns, returning an array of strings corresponding to the lines in the string.
      *
+     * We don't check for ascii here.
+     *
      * @return array of strings
      */
     public function lines(): array
     {
-        if ($this->__is_ascii) {
-            return libstr_ascii_lines($this->getString());
-        }
         return libstr_lines($this->getString());
     }
 
@@ -1556,16 +1553,14 @@ class Str
      * Converts each tab in the string to some number of spaces, as defined by
      * $tabLength. By default, each tab is converted to 4 consecutive spaces.
      *
+     * We don't check for ascii here.
+     *
      * @param  int $tabLength Number of spaces to replace each tab with
      * @return Str
      */
     public function toSpaces(int $tabLength = 4): Str
     {
-        if ($this->__is_ascii) {
-            $this->setString(libstr_ascii_toSpaces($this->getString(), $tabLength));
-        } else {
-            $this->setString(libstr_toSpaces($this->getString(), $tabLength));
-        }
+        $this->setString(libstr_toSpaces($this->getString(), $tabLength));
         return $this;
     }
 

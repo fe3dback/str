@@ -81,7 +81,6 @@ use function Str\Lib\libstr_ascii_isJson;
 use function Str\Lib\libstr_ascii_isLowerCase;
 use function Str\Lib\libstr_ascii_isSerialized;
 use function Str\Lib\libstr_ascii_isUpperCase;
-use function Str\Lib\libstr_ascii_lines;
 use function Str\Lib\libstr_ascii_split;
 use function Str\Lib\libstr_ascii_longestCommonPrefix;
 use function Str\Lib\libstr_ascii_longestCommonSuffix;
@@ -97,7 +96,6 @@ use function Str\Lib\libstr_ascii_swapCase;
 use function Str\Lib\libstr_ascii_tidy;
 use function Str\Lib\libstr_ascii_titleize;
 use function Str\Lib\libstr_ascii_toBoolean;
-use function Str\Lib\libstr_ascii_toSpaces;
 use function Str\Lib\libstr_ascii_toTabs;
 use function Str\Lib\libstr_ascii_underscored;
 use function Str\Lib\libstr_ascii_words;
@@ -559,12 +557,12 @@ class StrASCIITest extends TestCase
     public function matchesPatternProvider()
     {
         return [
-            [true, 'FOOBAR', '/.*FOO/'],
-            [false, 'foo bar', '/.*  bar/'],
-            [true, 'Foo bar', '/.* ba/'],
-            [true, 'FOo bar', '/.*Oo/'],
-            [true, 'foo baR', '/.*aR/'],
-            [true, 'fOOBAR', '/.*OBA/'],
+            [true, 'FOOBAR', '.*FOO'],
+            [false, 'foo bar', '.*  bar'],
+            [true, 'Foo bar', '.* ba'],
+            [true, 'FOo bar', '.*Oo'],
+            [true, 'foo baR', '.*aR'],
+            [true, 'fOOBAR', '.*OBA'],
         ];
     }
 
@@ -1595,37 +1593,6 @@ class StrASCIITest extends TestCase
     }
 
     /**
-     * @dataProvider linesProvider()
-     * @param $expected
-     * @param $str
-     */
-    public function testLines($expected, $str)
-    {
-        $result = libstr_ascii_lines($str);
-        $expectedCount = count($expected);
-
-        if ($expectedCount === 0) { $this->assertEmpty($result); }
-        if ($expectedCount === 1) { $this->assertEquals($expected[0], $result[0]); }
-
-        for ($i = 0; $i < $expectedCount - 1; $i++) {
-            $this->assertEquals($expected[$i], $result[$i]);
-        }
-    }
-    public function linesProvider()
-    {
-        return [
-            [[], ''],
-            [[''], "\r\n"],
-            [['foo', 'bar'], "foo\nbar"],
-            [['foo', 'bar'], "foo\rbar"],
-            [['foo', 'bar'], "foo\r\nbar"],
-            [['foo', '', 'bar'], "foo\r\n\r\nbar"],
-            [['foo', 'bar', ''], "foo\r\nbar\r\n"],
-            [['', 'foo', 'bar'], "\r\nfoo\r\nbar"],
-        ];
-    }
-
-    /**
      * @dataProvider splitProvider()
      * @param $expected
      * @param $str
@@ -1954,26 +1921,6 @@ class StrASCIITest extends TestCase
             ['Testing the Method', 'testing the method', $ignore],
             ['I Like to Watch Dvds at Home', 'i like to watch DVDs at home',
                 $ignore],
-        ];
-    }
-
-    /**
-     * @dataProvider toSpacesProvider()
-     * @param $expected
-     * @param $str
-     * @param int $tabLength
-     */
-    public function testToSpaces($expected, $str, $tabLength = 4)
-    {
-        $this->assertEquals($expected, libstr_ascii_toSpaces($str, $tabLength), $str);
-    }
-    public function toSpacesProvider()
-    {
-        return [
-            ['    foo    bar    ', '	foo	bar	'],
-            ['     foo     bar     ', '	foo	bar	', 5],
-            ['    foo  bar  ', '		foo	bar	', 2],
-            ['foobar', '	foo	bar	', 0],
         ];
     }
 

@@ -1788,7 +1788,6 @@ function libstr_snakeize(string $str): string
             if ((string)(int)$match === $match) {
                 return '_' . $match . '_';
             }
-            return null;
         },
         $str
     );

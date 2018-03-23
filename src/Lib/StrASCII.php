@@ -274,7 +274,8 @@ function libstr_ascii_endsWithAny(string $str, array $substrings, bool $caseSens
  */
 function libstr_ascii_hasLowerCase(string $str): bool
 {
-    return libstr_ascii_matchesPattern($str, '/.*[[:lower:]]/');
+
+    return libstr_ascii_matchesPattern($str, '.*[[:lower:]]');
 }
 
 /**
@@ -286,7 +287,7 @@ function libstr_ascii_hasLowerCase(string $str): bool
  */
 function libstr_ascii_hasUpperCase(string $str): bool
 {
-    return libstr_ascii_matchesPattern($str, '/.*[[:upper:]]/');
+    return libstr_ascii_matchesPattern($str, '.*[[:upper:]]');
 }
 
 /**
@@ -298,6 +299,7 @@ function libstr_ascii_hasUpperCase(string $str): bool
  */
 function libstr_ascii_matchesPattern(string $str, string $pattern): bool
 {
+    $pattern = "/${pattern}/";
     return (bool)\preg_match($pattern, $str);
 }
 
@@ -310,7 +312,7 @@ function libstr_ascii_matchesPattern(string $str, string $pattern): bool
  */
 function libstr_ascii_isAlpha(string $str): bool
 {
-    return libstr_ascii_matchesPattern($str,'/^[[:alpha:]]*$/');
+    return libstr_ascii_matchesPattern($str,'^[[:alpha:]]*$');
 }
 
 /**
@@ -322,7 +324,7 @@ function libstr_ascii_isAlpha(string $str): bool
  */
 function libstr_ascii_isAlphanumeric(string $str): bool
 {
-    return libstr_ascii_matchesPattern($str,'/^[[:alnum:]]*$/');
+    return libstr_ascii_matchesPattern($str,'^[[:alnum:]]*$');
 }
 
 /**
@@ -333,7 +335,7 @@ function libstr_ascii_isAlphanumeric(string $str): bool
  */
 function libstr_ascii_isBlank(string $str): bool
 {
-    return libstr_ascii_matchesPattern($str,'/^[[:space:]]*$/');
+    return libstr_ascii_matchesPattern($str,'^[[:space:]]*$');
 }
 
 /**
@@ -356,7 +358,7 @@ function libstr_ascii_isBase64(string $str): bool
  */
 function libstr_ascii_isHexadecimal(string $str): bool
 {
-    return libstr_ascii_matchesPattern($str,'/^[[:xdigit:]]*$/');
+    return libstr_ascii_matchesPattern($str,'^[[:xdigit:]]*$');
 }
 
 /**
@@ -384,7 +386,7 @@ function libstr_ascii_isJson(string $str): bool
  */
 function libstr_ascii_isLowerCase(string $str): bool
 {
-    return libstr_ascii_matchesPattern($str, '/^[[:lower:]]*$/');
+    return libstr_ascii_matchesPattern($str, '^[[:lower:]]*$');
 }
 
 /**
@@ -396,7 +398,7 @@ function libstr_ascii_isLowerCase(string $str): bool
  */
 function libstr_ascii_isUpperCase(string $str): bool
 {
-    return libstr_ascii_matchesPattern($str,'/^[[:upper:]]*$/');
+    return libstr_ascii_matchesPattern($str,'^[[:upper:]]*$');
 }
 
 /**
@@ -1046,18 +1048,6 @@ function libstr_ascii_humanize(string $str): string
 }
 
 /**
- * Splits on newlines and carriage returns, returning an array of strings
- * corresponding to the lines in the string.
- *
- * @param  string $str
- * @return array of strings
- */
-function libstr_ascii_lines(string $str): array
-{
-    return libstr_ascii_split($str, '[\r\n]{1,2}');
-}
-
-/**
  * Splits the string with the provided regular expression, returning an
  * array of strings. An optional integer $limit will truncate the
  * results.
@@ -1420,21 +1410,6 @@ function libstr_ascii_titleize(string $str, array $ignore = []): string
         },
         $str
     );
-}
-
-/**
- * Converts each tab in the string to some number of spaces, as defined by
- * $tabLength. By default, each tab is converted to 4 consecutive spaces.
- *
- * @param  string $str
- * @param  int    $tabLength Number of spaces to replace each tab with
- * @return string
- */
-function libstr_ascii_toSpaces(string $str, int $tabLength = 4): string
-{
-    $spaces = \str_repeat(' ', $tabLength);
-
-    return \str_replace("\t", $spaces, $str);
 }
 
 /**
