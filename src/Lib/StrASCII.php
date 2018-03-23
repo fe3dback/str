@@ -951,7 +951,7 @@ function libstr_ascii_upperCaseFirst(string $str): string
  */
 function libstr_ascii_collapseWhitespace(string $str): string
 {
-    $str = libstr_ascii_regexReplace($str, '[[:space:]]+', ' ');
+    $str = libstr_ascii_regexReplace($str, '\s+', ' ');
     return libstr_ascii_trim($str);
 }
 
@@ -966,7 +966,7 @@ function libstr_ascii_collapseWhitespace(string $str): string
  * @param  string $options     Matching conditions to be used
  * @return string
  */
-function libstr_ascii_regexReplace(string $str, string $pattern, string $replacement, string $options = 'ms'): string
+function libstr_ascii_regexReplace(string $str, string $pattern, string $replacement, string $options = ''): string
 {
     $pattern = '/' . $pattern . '/' . $options;
     return \preg_replace($pattern, $replacement, $str);
@@ -1062,7 +1062,7 @@ function libstr_ascii_lines(string $str): array
  * array of strings. An optional integer $limit will truncate the
  * results.
  *
- * @todo this doesn't work correctly.
+ * @todo this supposedly doesn't work correctly.
  *
  * @param  string $str
  * @param  string $pattern The regex with which to split the string
@@ -1076,14 +1076,18 @@ function libstr_ascii_split(string $str, string $pattern, int $limit = -1): arra
 
     $pattern = '/' . $pattern . '/';
 
-    $array = \preg_split($pattern, $str);
+    // preg_split returns the remaining unsplit string in the last index when
+    // supplying a limit
+    $limit = ($limit > 0) ? $limit + 1 : -1;
+
+    $array = \preg_split($pattern, $str, $limit);
+    if ($limit > 0 && \count($array) === $limit) {
+        array_pop($array);
+    }
 
     $result = [];
-
-    if ($limit) {
-        for ($i = 0; $i < $limit; $i++) {
-            $result[] = $array[$i];
-        }
+    foreach ($array as $string) {
+        $result[] = $string;
     }
 
     return $result;

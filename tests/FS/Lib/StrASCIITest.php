@@ -1447,7 +1447,7 @@ class StrASCIITest extends TestCase
             ['foo bar', '  foo   bar  '],
             ['test string', 'test string'],
             ['123', ' 123 '],
-            ['1 2 3', '  1  2  3　　'],
+            ['1 2 3', '  1  2  3   '],
             ['', ' '],
             ['', ''],
         ];
@@ -1605,7 +1605,7 @@ class StrASCIITest extends TestCase
         $expectedCount = count($expected);
 
         if ($expectedCount === 0) { $this->assertEmpty($result); }
-        if ($expectedCount === 1) { $this->assertEquals($expected, $result); }
+        if ($expectedCount === 1) { $this->assertEquals($expected[0], $result[0]); }
 
         for ($i = 0; $i < $expectedCount - 1; $i++) {
             $this->assertEquals($expected[$i], $result[$i]);
@@ -1820,7 +1820,7 @@ class StrASCIITest extends TestCase
             ['foobar', '  foo   bar  '],
             ['teststring', 'test string'],
             ['123', ' 123 '],
-            ['123', '  1  2  3　　'],
+            ['123', '  1  2  3    '],
             ['', ' '],
             ['', ''],
         ];
