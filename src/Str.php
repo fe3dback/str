@@ -10,32 +10,14 @@ class Str
     * @var string
     * @internal
     */
-    private $__str_buffer = '';
-
-    private static $inst;
+    private $__str_buffer;
 
     public function __construct($str)
     {
         $this->__str_buffer = $str;
     }
 
-    public static function getInstance($str): Str
-    {
-        if (!self::$inst) {
-            self::$inst = new self($str);
-        }
-
-        return self::$inst;
-    }
-
     public function __toString(): string
-    {
-        $reset = $this->__str_buffer;
-        $this->__str_buffer = '';
-        return $reset;
-    }
-
-    public function getString(): string
     {
         return $this->__str_buffer;
     }
@@ -299,7 +281,9 @@ class Str
         $chars = [];
 
         for ($i = 0, $iMax = $this->length(); $i < $iMax; $i++) {
-            $chars[] = $this->at($i);
+            $tmp = $this->__str_buffer;
+            $chars[] = (string)$this->at($i);
+            $this->__str_buffer = $tmp;
         }
 
         return $chars;
@@ -423,10 +407,14 @@ class Str
             return \mb_substr_count($this->__str_buffer, $needle);
         }
 
+        $tmp = $this->__str_buffer;
         $this->__str_buffer = \mb_strtoupper($this->__str_buffer);
         $needle = \mb_strtoupper($needle);
+        $result = \mb_substr_count($this->__str_buffer, $needle);
 
-        return \mb_substr_count($this->__str_buffer, $needle);
+        $this->__str_buffer = $tmp;
+
+        return $result;
     }
 
     /**
@@ -610,19 +598,21 @@ class Str
      *
      * @internal
      */
-    private function applyPadding(int $left = 0, int $right = 0, string $padStr = ' '): string
+    private function applyPadding(int $left = 0, int $right = 0, string $padStr = ' '): Str
     {
         if ($right + $left <= 0) { return $this->__str_buffer; }
         if ('' === $padStr) { return $this->__str_buffer;}
 
         if (1 === \mb_strlen($padStr)) {
-            return str_repeat($padStr, $left) . $this->__str_buffer . str_repeat($padStr, $right);
+            $this->__str_buffer = str_repeat($padStr, $left) . $this->__str_buffer . str_repeat($padStr, $right);
+            return $this;
         }
 
         $leftPadding = \mb_substr(str_repeat($padStr, $left), 0, $left);
         $rightPadding = \mb_substr(str_repeat($padStr, $right), 0, $right);
 
-        return $leftPadding . $this->__str_buffer . $rightPadding;
+        $this->__str_buffer = $leftPadding . $this->__str_buffer . $rightPadding;
+        return $this;
     }
 
     /**
@@ -1335,7 +1325,7 @@ class Str
         $langSpecific = $this->langSpecificCharsArray($language);
 
         if (!empty($langSpecific)) {
-            $str = \str_replace($langSpecific[0], $langSpecific[1], $this->__str_buffer);
+            $this->__str_buffer = \str_replace($langSpecific[0], $langSpecific[1], $this->__str_buffer);
         }
 
         // @todo optimize
@@ -1765,7 +1755,9 @@ class Str
             return ((int)$this->__str_buffer > 0);
         }
 
-        return (bool)$this->regexReplace('[[:space:]]', '');
+        $this->regexReplace('[[:space:]]+', '');
+
+        return (bool)$this->__str_buffer;
     }
 
     /**
@@ -2118,7 +2110,8 @@ class Str
 
         foreach ($words as $word) {
             $this->__str_buffer = $word;
-            $result[] = $this->trim($quote);
+            $this->trim($quote);
+            $result[] = $this->__str_buffer;
         }
 
         $this->__str_buffer = \implode(' ', $result);
