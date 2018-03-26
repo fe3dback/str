@@ -22,6 +22,11 @@ class Str
         return $this->__str_buffer;
     }
 
+    public function getString(): string
+    {
+        return $this->__str_buffer;
+    }
+
     /**
      * Returns the substring beginning at $start with the specified $length.
      * It differs from the mb_substr() function in that providing a $length of 0

@@ -19,7 +19,6 @@ $s
 
 $send = function (string $s) {};
 $send((string)$s); // same
-$send($s->toString()); // same
 $send($s->getString()); // same
 ```
 
