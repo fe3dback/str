@@ -13,7 +13,7 @@ class StrTest extends TestCase
         $s = new Str('Hello world');
         $this->assertEquals((string)$s, 'Hello world');
         $this->assertEquals((string)$s, $s);
-        $this->assertEquals((string)$s, 'Hello world');
+        $this->assertEquals($s->getString(), 'Hello world');
     }
 
     public function testPrefixSuffix()
