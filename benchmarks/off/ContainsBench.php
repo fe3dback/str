@@ -7,13 +7,13 @@ use Stringy\Stringy;
 
 class ContainsBench
 {
-    public function bench_contains_Str() {
-        (new Str(' hello world '))->contains('test');
-    }
-
-    public function bench_contains_Stringy() {
-        (new Stringy(' hello world '))->contains('test');
-    }
+//    public function bench_contains_Str() {
+//        (new Str(' hello world '))->contains('test');
+//    }
+//
+//    public function bench_contains_Stringy() {
+//        (new Stringy(' hello world '))->contains('test');
+//    }
 
     public function bench_all_Str() {
         (new Str(' hello world '))->containsAll(['test', 'foo', 'bar']);
