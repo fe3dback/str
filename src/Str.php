@@ -599,14 +599,14 @@ class Str
      * @param  int    $left   Length of left padding
      * @param  int    $right  Length of right padding
      * @param  string $padStr String used to pad
-     * @return string
+     * @return Str
      *
      * @internal
      */
     private function applyPadding(int $left = 0, int $right = 0, string $padStr = ' '): Str
     {
-        if ($right + $left <= 0) { return $this->__str_buffer; }
-        if ('' === $padStr) { return $this->__str_buffer;}
+        if ($right + $left <= 0) { return $this; }
+        if ('' === $padStr) { return $this;}
 
         if (1 === \mb_strlen($padStr)) {
             $this->__str_buffer = str_repeat($padStr, $left) . $this->__str_buffer . str_repeat($padStr, $right);

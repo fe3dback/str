@@ -8,6 +8,13 @@ use PHPUnit\Framework\TestCase;
 
 class StrAllTest extends TestCase
 {
+    public function testGetString()
+    {
+        $s = new Str('Hello');
+        $this->assertEquals('Hello', (string)$s);
+        $this->assertEquals('Hello', $s->getString());
+    }
+
     /**
      * @dataProvider HasPrefixProvider
      * @param array $inp
