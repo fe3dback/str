@@ -46,7 +46,7 @@ composer require str/str
 - [x] hasPrefix
 - [x] hasSuffix
 - [x] contains
-- [x] replace - add limit param
+- [x] replace
 - [x] toLowerCase
 - [x] toUpperCase
 - [x] trim
@@ -87,7 +87,6 @@ composer require str/str
 - [x] lowerCaseFirst
 - [x] regexReplace
 - [x] upperCaseFirst
-- [x] isUUIDv4
 - [x] hasLowerCase
 - [x] hasUpperCase
 - [x] htmlDecode
@@ -125,6 +124,7 @@ composer require str/str
 - [x] underscored
 
 ### New Features
+- [x] replaceWithLimit
 - [x] move
 - [x] overwrite
 - [x] snakeize
@@ -135,6 +135,7 @@ composer require str/str
 - [x] isEmail
 - [x] isIpV4
 - [x] isIpV6
+- [x] isUUIDv4
 - [x] random
 - [x] appendUniqueIdentifier
 - [x] quote

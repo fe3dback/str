@@ -284,9 +284,12 @@ class Str
 
     public function between(string $start, string $end, int $offset = 0): Str
     {
-        $o = [];
-        preg_match( '/.{' . $offset . '}' . $start . '([^' . $end . ']+)' . $end . '/u', $this->__str_buffer, $o);
-        $this->__str_buffer = [] !== $o ? $o[1] : '';
+        $posStart = \mb_strpos($this->__str_buffer, $start, $offset);
+        if ($posStart === false) { $this->__str_buffer = ''; return $this; }
+        $substrIndex = $posStart + \mb_strlen($start);
+        $posEnd = \mb_strpos($this->__str_buffer, $end, $substrIndex);
+        if ($posEnd === false || $posEnd === $substrIndex) { $this->__str_buffer = ''; return $this; }
+        $this->__str_buffer = \mb_substr($this->__str_buffer, $substrIndex, $posEnd - $substrIndex);
         return $this;
     }
 
@@ -443,5 +446,49 @@ class Str
         $result = [];
         foreach ($array as $string) { $result[] = $string; }
         return $result;
+    }
+
+    public function longestCommonPrefix(string $otherStr): Str
+    {
+        $maxLength = min(\mb_strlen($this->__str_buffer), \mb_strlen($otherStr));
+        $longestCommonPrefix = '';
+        for ($i = 0; $i < $maxLength; $i++) {
+            $char = \mb_substr($this->__str_buffer, $i, 1);
+            if ($char === \mb_substr($otherStr, $i, 1)) { $longestCommonPrefix .= $char; } else { break; }
+        }
+        $this->__str_buffer = $longestCommonPrefix;
+        return $this;
+    }
+
+    public function longestCommonSuffix(string $otherStr): Str
+    {
+        $maxLength = min(\mb_strlen($this->__str_buffer), \mb_strlen($otherStr));
+        $longestCommonSuffix = '';
+        for ($i = 1; $i <= $maxLength; $i++) {
+            $char = \mb_substr($this->__str_buffer, -$i, 1);
+            if ($char === \mb_substr($otherStr, -$i, 1)) { $longestCommonSuffix = $char . $longestCommonSuffix; } else { break; }
+        }
+        $this->__str_buffer = $longestCommonSuffix;
+        return $this;
+    }
+
+    public function longestCommonSubstring(string $otherStr): Str
+    {
+        $strLength = \mb_strlen($this->__str_buffer);
+        $otherLength = \mb_strlen($otherStr);
+        $len = 0;
+        $end = 0;
+        $table = \array_fill(0, $strLength, \array_fill(0, $otherLength, 0));
+        for ($i = 1; $i <= $strLength; $i++) {
+            for ($j = 1; $j <= $otherLength; $j++) {
+                $strChar = \mb_substr($this->__str_buffer, $i - 1, 1);
+                $otherChar = \mb_substr($otherStr, $j - 1, 1);
+                if ($strChar === $otherChar) {
+                    $table[$i][$j] = $table[$i - 1][$j - 1] + 1;
+                    if ($table[$i][$j] > $len) { $len = $table[$i][$j]; $end = $i; } } else { $table[$i][$j] = 0; }
+            }
+        }
+        $this->__str_buffer = \mb_substr($this->__str_buffer, $end - $len, $len);
+        return $this;
     }
 }

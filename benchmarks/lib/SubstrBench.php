@@ -15,13 +15,13 @@ class SubstrBench
 //        (new Stringy(' hello world '))->slice(2);
 //    }
 //
-//    public function bench_longest_common_substring_Str() {
-//        (new Str(' hello world '))->longestCommonSubstring(' helloworld');
-//    }
-//
-//    public function bench_longest_common_substring_Stringy() {
-//        (new Stringy(' hello world '))->longestCommonSubstring(' helloworld');
-//    }
+    public function bench_longest_common_substring_Str() {
+        (new Str(' hello world '))->longestCommonSubstring(' helloworld');
+    }
+
+    public function bench_longest_common_substring_Stringy() {
+        (new Stringy(' hello world '))->longestCommonSubstring(' helloworld');
+    }
 //
 //    public function bench_longest_common_suffix_Str() {
 //        (new Str(' hello world '))->longestCommonSuffix(' hello');
