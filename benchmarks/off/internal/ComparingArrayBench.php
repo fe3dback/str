@@ -2,19 +2,13 @@
 
 class ComparingArrayBench
 {
-    public function bench_isset()
-    {
-        $s = [];
-        return isset($s);
-    }
-
     public function bench_empty()
     {
         $s = [];
         return empty($s);
     }
 
-    public function bench_comparison()
+    public function bench_literal_comparison()
     {
         $s = [];
         return [] !== $s;

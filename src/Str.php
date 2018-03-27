@@ -8,27 +8,13 @@ class Str
 {
     private $__str_buffer;
 
-    public function __construct($str)
-    {
-        $this->__str_buffer = $str;
-    }
-
-    public function __toString(): string
-    {
-        return $this->__str_buffer;
-    }
-
-    public function getString(): string
-    {
-        return $this->__str_buffer;
-    }
+    public function __construct($str) { $this->__str_buffer = $str; }
+    public function __toString(): string { return $this->__str_buffer; }
+    public function getString(): string { return $this->__str_buffer; }
 
     public function substr(int $start = 0, int $length = 0): Str
     {
-        $this->__str_buffer = \mb_substr($this->__str_buffer, $start, $length !== 0 ?
-            $length :
-            \mb_strlen($this->__str_buffer));
-
+        $this->__str_buffer = \mb_substr($this->__str_buffer, $start, $length !== 0 ? $length : \mb_strlen($this->__str_buffer));
         return $this;
     }
 
@@ -73,23 +59,17 @@ class Str
     public function replaceWithLimit(string $old, string $new, int $limit = -1): Str
     {
         if ($old === $new || $limit === 0) { return $this; }
-
-        $strUpper = \mb_strtolower($this->__str_buffer);
-        $oldUpper = \mb_strtolower($old);
-        $oldCount = \mb_substr_count($strUpper, $oldUpper);
-
+        $strLower = \mb_strtolower($this->__str_buffer);
+        $oldLower = \mb_strtolower($old);
+        $oldCount = \mb_substr_count($strLower, $oldLower);
         if ($oldCount === 0) { return $this; }
-
         if ($limit < 0 || $oldCount < $limit) { $limit = $oldCount; }
-
         $offset = 0;
-
         while ($limit--) {
             $pos = \mb_strpos($this->__str_buffer, $old, $offset);
             $offset = $pos + \mb_strlen($old);
             $this->__str_buffer = \mb_substr($this->__str_buffer, 0, $pos) . $new . \mb_substr($this->__str_buffer, $offset);
         }
-
         return $this;
     }
 
@@ -215,7 +195,6 @@ class Str
 
     public function startsWithAny(array $substrings, bool $caseSensitive = true): bool
     {
-        if ([] === $substrings) { return false; }
         foreach ($substrings as $substring) { if ($this->startsWith($substring, $caseSensitive)) { return true; } }
         return false;
     }
@@ -228,7 +207,6 @@ class Str
 
     public function endsWithAny(array $substrings, bool $caseSensitive = true): bool
     {
-        if ([] === $substrings) { return false; }
         foreach ($substrings as $substring) { if ($this->endsWith($substring, $caseSensitive)) { return true; } }
         return false;
     }
@@ -292,5 +270,178 @@ class Str
         while ($i--) { $reversed .= \mb_substr($this->__str_buffer, $i, 1); }
         $this->__str_buffer = $reversed;
         return $this;
+    }
+
+    public function shuffle(): Str
+    {
+        $indexes = \range(0, \mb_strlen($this->__str_buffer) - 1);
+        \shuffle($indexes);
+        $shuffledStr = '';
+        foreach ($indexes as $i) { $shuffledStr .= \mb_substr($this->__str_buffer, $i, 1); }
+        $this->__str_buffer = $shuffledStr;
+        return $this;
+    }
+
+    public function between(string $start, string $end, int $offset = 0): Str
+    {
+        $o = [];
+        preg_match( '/.{' . $offset . '}' . $start . '([^' . $end . ']+)' . $end . '/u', $this->__str_buffer, $o);
+        $this->__str_buffer = [] !== $o ? $o[1] : '';
+        return $this;
+    }
+
+    public function camelize(): Str
+    {
+        $this->__str_buffer = \mb_ereg_replace("^['\s']+|['\s']+\$", '', $this->__str_buffer);
+        $this->__str_buffer = \mb_strtolower(\mb_substr($this->__str_buffer, 0, 1)) . \mb_substr($this->__str_buffer, 1);
+        $this->__str_buffer = preg_replace('/^[-_]+/', '', $this->__str_buffer);
+        $this->__str_buffer = preg_replace_callback('/[-_\s]+(.)?/u', function ($match) { if (isset($match[1])) { return \mb_strtoupper($match[1]); } return ''; }, $this->__str_buffer);
+        $this->__str_buffer = preg_replace_callback('/[\d]+(.)?/u', function ($match) { return \mb_strtoupper($match[0]); }, $this->__str_buffer);
+        return $this;
+    }
+
+    public function lowerCaseFirst(): Str
+    {
+        $this->__str_buffer = \mb_strtolower(\mb_substr($this->__str_buffer, 0, 1)) . \mb_substr($this->__str_buffer, 1);
+        return $this;
+    }
+
+    public function upperCaseFirst(): Str
+    {
+        $this->__str_buffer = \mb_strtoupper(\mb_substr($this->__str_buffer, 0, 1)) . \mb_substr($this->__str_buffer, 1);
+        return $this;
+    }
+
+    public function collapseWhitespace(): Str
+    {
+        $this->__str_buffer = \mb_ereg_replace('[[:space:]]+', ' ', $this->__str_buffer);
+        $this->__str_buffer = \mb_ereg_replace("^['\s']+|['\s']+\$", '', $this->__str_buffer);
+        return $this;
+    }
+
+    public function regexReplace(string $pattern, string $replacement, string $options = 'msr'): Str
+    {
+        $this->__str_buffer = \mb_ereg_replace($pattern, $replacement, $this->__str_buffer, $options);
+        return $this;
+    }
+
+    public function dasherize(): Str
+    {
+        $this->__str_buffer = \mb_ereg_replace("^['\s']+|['\s']+\$", '', $this->__str_buffer);
+        $this->__str_buffer = \mb_strtolower(\mb_ereg_replace('\B([A-Z])', '-\1', $this->__str_buffer));
+        $this->__str_buffer = \mb_ereg_replace('[-_\s]+', '-', $this->__str_buffer);
+        return $this;
+    }
+
+    public function delimit($delimiter): Str
+    {
+        $this->__str_buffer = \mb_ereg_replace("^['\s']+|['\s']+\$", '', $this->__str_buffer);
+        $this->__str_buffer = \mb_strtolower(\mb_ereg_replace('\B([A-Z])', '-\1', $this->__str_buffer));
+        $this->__str_buffer = \mb_ereg_replace('[-_\s]+', $delimiter, $this->__str_buffer);
+        return $this;
+    }
+
+    public function isUUIDv4(): bool
+    {
+        return (bool)\preg_match("/^[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}\Z/", $this->__str_buffer);
+    }
+
+    public function hasLowerCase(): bool
+    {
+        return \mb_ereg_match('.*[[:lower:]]', $this->__str_buffer);
+    }
+
+    public function hasUpperCase(): bool
+    {
+        return \mb_ereg_match('.*[[:upper:]]', $this->__str_buffer);
+    }
+
+    public function matchesPattern(string $pattern): bool
+    {
+        return \mb_ereg_match($pattern, $this->__str_buffer);
+    }
+
+    public function htmlDecode(int $flags = ENT_COMPAT): Str
+    {
+        $this->__str_buffer = \html_entity_decode($this->__str_buffer, $flags);
+        return $this;
+    }
+
+    public function htmlEncode(int $flags = ENT_COMPAT): Str
+    {
+        $this->__str_buffer = \htmlentities($this->__str_buffer, $flags);
+        return $this;
+    }
+
+    public function humanize(): Str
+    {
+        $this->__str_buffer = \str_replace(['_id', '_'], ['', ' '], $this->__str_buffer);
+        $this->__str_buffer = \mb_ereg_replace("^['\s']+|['\s']+\$", '', $this->__str_buffer);
+        $this->__str_buffer = \mb_strtoupper(\mb_substr($this->__str_buffer, 0, 1)) . \mb_substr($this->__str_buffer, 1);
+        return $this;
+    }
+
+    public function isAlpha(): bool
+    {
+        return \mb_ereg_match('^[[:alpha:]]*$', $this->__str_buffer);
+    }
+
+    public function isAlphanumeric(): bool
+    {
+        return \mb_ereg_match('^[[:alnum:]]*$', $this->__str_buffer);
+    }
+
+    public function isBase64(): bool
+    {
+        return (base64_encode(base64_decode($this->__str_buffer)) === $this->__str_buffer);
+    }
+
+    public function isBlank(): bool
+    {
+        return \mb_ereg_match('^[[:space:]]*$', $this->__str_buffer);
+    }
+
+    public function isHexadecimal(): bool
+    {
+        return \mb_ereg_match('^[[:xdigit:]]*$', $this->__str_buffer);
+    }
+
+    public function isJson(): bool
+    {
+        json_decode($this->__str_buffer);
+        return json_last_error() === JSON_ERROR_NONE;
+    }
+
+    public function isLowerCase(): bool
+    {
+        return \mb_ereg_match('^[[:lower:]]*$', $this->__str_buffer);
+    }
+
+    public function isSerialized(): bool
+    {
+        return ($this->__str_buffer === 'b:0;') || (@unserialize($this->__str_buffer, []) !== false);
+    }
+
+    public function isUpperCase(): bool
+    {
+        return \mb_ereg_match('^[[:upper:]]*$', $this->__str_buffer);
+    }
+
+    public function lines(): array
+    {
+        if ('' === $this->__str_buffer) { return []; }
+        return \mb_split('[\r\n]{1,2}', $this->__str_buffer);
+    }
+
+    public function split(string $pattern, int $limit = -1): array
+    {
+        if (0 === $limit || '' === $this->__str_buffer) { return []; }
+        if ($pattern === '') { return [$this->__str_buffer]; }
+        $limit = ($limit > 0) ? $limit + 1 : -1;
+        $array = \mb_split($pattern, $this->__str_buffer, $limit);
+        if ($limit > 0 && \count($array) === $limit) { array_pop($array); }
+        $result = [];
+        foreach ($array as $string) { $result[] = $string; }
+        return $result;
     }
 }

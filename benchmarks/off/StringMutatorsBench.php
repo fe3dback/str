@@ -79,13 +79,13 @@ class StringMutatorsBench
 //        (new Stringy(' hello world '))->dasherize();
 //    }
 //
-    public function bench_reverse_Str() {
-        (new Str(' hello world '))->reverse();
-    }
-
-    public function bench_reverse_Stringy() {
-        (new Stringy(' hello world '))->reverse();
-    }
+//    public function bench_reverse_Str() {
+//        (new Str(' hello world '))->reverse();
+//    }
+//
+//    public function bench_reverse_Stringy() {
+//        (new Stringy(' hello world '))->reverse();
+//    }
 //
 //    public function bench_repeat_Str() {
 //        (new Str(' hello world '))->repeat(2);
