@@ -482,7 +482,7 @@ Returns a new string of a given length such that the end of the string is padded
 __Example:__
 ```php
 $str = new Str('/Acme');
-echo (string)$str->padLeft(6, '/');
+echo (string)$str->padRight(6, '/');
 // /Acme/
 ```
 -----
@@ -1067,7 +1067,7 @@ Returns a string with smart quotes, ellipsis characters, and dashes from Windows
 __Example:__
 ```php
 $str = new Str('“I see…”');
-echo (string)$str->swapCase();
+echo (string)$str->tidy();
 // "I see..."
 ```
 -----
@@ -1160,29 +1160,344 @@ echo (string)$str->underscored();
 ## new
 
 ### replaceWithLimit
-### move
-### overwrite
-### snakeize
-### afterFirst
-### beforeFirst
-### afterLast
-### beforeLast
-### isEmail
-### isIpV4
-### isIpV6
-### isUUIDv4
-### random
-### appendUniqueIdentifier
-### quote
-### unquote
-### words
-### chop
-### join
-### pop
-### shift
-### shiftReversed
-### popReversed
+Replace returns a copy of the string s with the first n non-overlapping instances of 
+old replaced by new. If old is empty, it matches at the beginning of the string and 
+after each UTF-8 sequence, yielding up to k+1 replacements for a k-rune string. 
+If n < 0, there is no limit on the number of replacements.
 
+- __param__ *string* $old
+- __param__ *string* $new
+- __param__ *int* $times Defaults to -1, providing unlimited replacement.
+- __return__ *Str* 
+
+__Example:__
+```php
+$str = new Str('/Acme/');
+echo (string)$str->replaceWithLimit('/', '#', 1);
+// #Acme/
+```
+-----
+### move
+Move substring of desired $length to $destination index of the original string. 
+In case $destination is less than $length returns the string untouched.
+
+- __param__ *int* $start
+- __param__ *int* $length
+- __param__ *int* $destination
+- __return__ *Str* 
+
+__Example:__
+```php
+$str = new Str('/Acme/');
+echo (string)$str->move(0, 2, 2);
+// cm/Ae/
+```
+-----
+### overwrite
+Replaces substring in the original string of $length with given $substr.
+
+- __param__ *int* $start
+- __param__ *int* $length
+- __param__ *string* $substr
+- __return__ *Str* 
+
+__Example:__
+```php
+$str = new Str('/Acme/');
+echo (string)$str->overwrite(0, 2, 'BAR');
+// BARcme/
+```
+-----
+### snakeize
+Returns a snake_case version of the string.
+
+- __return__ *Str* 
+
+__Example:__
+```php
+$str = new Str('Foo Bar');
+echo (string)$str->snakeize();
+// foo_bar
+```
+-----
+### afterFirst
+Inserts given $substr $times into the original string after 
+the first occurrence of $needle.
+
+- __param__ *string* $needle
+- __param__ *string* $substr
+- __param__ *int* $times Defaults to 1.
+- __return__ *Str* 
+
+__Example:__
+```php
+$str = new Str('foo bar baz');
+echo (string)$str->afterFirst('a', 'duh', 2);
+// foo baduhduhr baz
+```
+-----
+### beforeFirst
+Inserts given $substr $times into the original string before 
+the first occurrence of $needle.
+
+- __param__ *string* $needle
+- __param__ *string* $substr
+- __param__ *int* $times Defaults to 1.
+- __return__ *Str* 
+
+__Example:__
+```php
+$str = new Str('foo bar baz');
+echo (string)$str->beforeFirst('a', 'duh');
+// foo bduhar baz
+```
+-----
+### afterLast
+Inserts given $substr $times into the original string after 
+the last occurrence of $needle.
+
+- __param__ *string* $needle
+- __param__ *string* $substr
+- __param__ *int* $times Defaults to 1.
+- __return__ *Str* 
+
+__Example:__
+```php
+$str = new Str('foo bar baz');
+echo (string)$str->afterLast('a', 'duh', 2);
+// foo bar baduhduhz
+```
+-----
+### beforeLast
+Inserts given $substr $times into the original string before 
+the last occurrence of $needle.
+
+- __param__ *string* $needle
+- __param__ *string* $substr
+- __param__ *int* $times Defaults to 1.
+- __return__ *Str* 
+
+__Example:__
+```php
+$str = new Str('foo bar baz');
+echo (string)$str->beforeLast('a', 'duh');
+// foo bar bduhaz
+```
+-----
+### isEmail
+Splits the original string in pieces by '@' delimiter and returns 
+true in case the resulting array consists of 2 parts.
+
+- __return__ *bool* 
+
+__Example:__
+```php
+$str = new Str('test@test@example.com');
+echo $str->isEmail();
+// false
+```
+-----
+### isIpV4
+Checks whether the string is a valid ip v4.
+
+- __return__ *bool* 
+
+__Example:__
+```php
+$str = new Str('192.168.1.1');
+echo $str->isIpV4();
+// true
+```
+-----
+### isIpV6
+Checks whether the string is a valid ip v6.
+
+- __return__ *bool* 
+
+__Example:__
+```php
+$str = new Str('1200::AB00:1234::2552:7777:1313');
+echo $str->isIpV6();
+// false
+```
+-----
+### isUUIDv4
+Checks if the given string is a valid UUID v.4. 
+It doesn't matter whether the given UUID has dashes.
+
+- __return__ *bool* 
+
+__Example:__
+```php
+$str = new Str('76d7cac8-1bd7-11e8-accf-0ed5f89f718b');
+echo $str->isUUIDv4();
+// false
+
+$str = new Str('ae815123-537f-4eb3-a9b8-35881c29e1ac');
+echo $str->isUUIDv4();
+// true
+```
+-----
+### random
+Generates a random string consisting of $possibleChars, if specified, of given $size or
+random length between $size and $sizeMax. If $possibleChars is not specified, the generated string
+will consist of ASCII alphanumeric chars.
+
+- __param__ *int* $size The desired length of the string.
+- __param__ *int* $sizeMax If given and is > $size, the generated string will have random length 
+between $size and $sizeMax. Defaults to -1.
+- __param__ *string* $possibleChars If given, specifies allowed characters to make the string of. 
+Defaults to empty string.
+- __return__ *Str* 
+
+__Example:__
+```php
+$str = new Str('foo bar');
+echo $str->random(3, -1, 'fobarz');
+// zfa
+
+$str = new Str('');
+echo $str->random(3);
+// 1ho
+```
+-----
+### appendUniqueIdentifier
+Appends a random string consisting of $possibleChars, if specified, of given $size or
+random length between $size and $sizeMax to the original string.
+
+- __param__ *int* $size The desired length of the string. Defaults to 4.
+- __param__ *int* $sizeMax If given and is > $size, the generated string will have random length 
+between $size and $sizeMax. Defaults to -1.
+- __param__ *string* $possibleChars If given, specifies allowed characters to make the string of. 
+Defaults to empty string.
+- __return__ *Str* 
+
+__Example:__
+```php
+$str = new Str('foo');
+echo $str->appendUniqueIdentifier(3, -1, 'foba_rz');
+// foozro
+```
+-----
+### quote
+Wraps each word in the string with specified $quote.
+
+- __param__ *string* $quote Defaults to ".
+- __return__ *Str* 
+
+__Example:__
+```php
+$str = new Str('foo bar baz');
+echo $str->quote('*');
+// *foo* *bar* *baz*
+```
+-----
+### unquote
+Unwraps each word in the original string, deleting the specified $quote.
+
+- __param__ *string* $quote Defaults to ".
+- __return__ *Str* 
+
+__Example:__
+```php
+$str = new Str('*foo* bar* ***baz*');
+echo $str->unquote('*');
+// foo bar baz
+```
+-----
+### words
+Splits on whitespace, returning an array of strings corresponding to the words in the string.
+
+- __return__ *array* 
+
+__Example:__
+```php
+$str = new Str('foo bar baz');
+echo $str->words();
+// ['foo', 'bar', 'baz']
+```
+-----
+### chop
+Cuts the original string in pieces of $step size.
+
+- __param__ *int* $step
+- __return__ *array* 
+
+__Example:__
+```php
+$str = new Str('foo bar baz');
+echo $str->chop(2);
+// ['fo', 'o ', 'ba', 'r ', 'ba', 'z']
+```
+-----
+### join
+Joins the original string with an array of other strings with the given $separator.
+
+- __param__ *string* $separator
+- __param__ *array* $otherStrings Defaults to empty array.
+- __return__ *Str* 
+
+__Example:__
+```php
+$str = new Str('foo');
+echo $str->join('*', ['bar', 'baz']);
+// foo*bar*baz
+```
+-----
+### pop
+Returns the substring of the string from the last occurrence of $delimiter to the end.
+
+- __param__ *string* $delimiter
+- __return__ *Str* 
+
+__Example:__
+```php
+$str = new Str('Acme/foo');
+echo $str->pop('/']);
+// foo
+```
+-----
+### shift
+Returns the substring of the original string from beginning to the first occurrence 
+of $delimiter.
+
+- __param__ *string* $delimiter
+- __return__ *Str* 
+
+__Example:__
+```php
+$str = new Str('Acme/foo');
+echo $str->shift('/']);
+// Acme
+```
+-----
+### shiftReversed
+Returns the substring of the original string from the first occurrence of $delimiter to the end.
+
+- __param__ *string* $delimiter
+- __return__ *Str* 
+
+__Example:__
+```php
+$str = new Str('Acme/foo/bar');
+echo $str->shiftReversed('/']);
+// foo/bar
+```
+-----
+### popReversed
+Returns the substring of the original string from the beginning
+to the last occurrence of $delimiter.
+
+- __param__ *string* $delimiter
+- __return__ *Str* 
+
+__Example:__
+```php
+$str = new Str('Acme/foo/bar');
+echo $str->popReversed('/']);
+// Acme/foo
+```
+-----
 
 ## benchmark
 
