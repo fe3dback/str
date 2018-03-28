@@ -5,7 +5,7 @@ namespace Benchmark;
 use Str\Str;
 use Stringy\Stringy;
 
-class GetBench
+class FirstAndLastBench
 {
     public function bench_first_Str() {
         (new Str('Hello world'))->first(6);
