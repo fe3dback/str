@@ -7,19 +7,19 @@ _in dev, please do not use in production_
 # str/str
 
 ```php
-$s = new Str('Hello, 世界');
-$s->last(2); // 世界
-$s->chars(); // ['H','e','l','l','o',',',' ','世','界']
+$str = new Str('Hello, 世界');
+$str->last(2); // 世界
+$str->chars(); // ['世', '界']
 
-$s
-    ->ensureLeft('H') // Hello, 世界
+$str
+    ->ensureLeft('Hello, ') // Hello, 世界
     ->ensureRight('!!!') // Hello, 世界!!!
     ->trimRight('!') // Hello, 世界
-    ->append('Str say - '); // Str say - Hello, 世界
+    ->prepend('Str say - '); // Str say - Hello, 世界
 
 $send = function (string $s) {};
-$send((string)$s); // same
-$send($s->getString()); // same
+$send((string)$str); // same
+$send($str->getString()); // same
 ```
 
 A fast string manipulation library with multi-byte support. 
@@ -708,7 +708,7 @@ echo (string)$str->htmlEncode();
 ```
 -----
 ### humanize
-Capitalizes the first word of the string, replaces underscores with spaces, and strips '_id'.
+Capitalizes the first word of the string, replaces underscores with spaces.
 
 - __return__ *Str* 
 
@@ -1192,7 +1192,7 @@ In case $destination is less than $length returns the string untouched.
 __Example:__
 ```php
 $str = new Str('/Acme/');
-echo (string)$str->move(0, 2, 2);
+echo (string)$str->move(0, 2, 4);
 // cm/Ae/
 ```
 -----
@@ -1350,7 +1350,7 @@ will consist of ASCII alphanumeric chars.
 - __param__ *int* $sizeMax If given and is > $size, the generated string will have random length 
 between $size and $sizeMax. Defaults to -1.
 - __param__ *string* $possibleChars If given, specifies allowed characters to make the string of. 
-Defaults to empty string.
+Defaults to ASCII alphanumeric chars.
 - __return__ *Str* 
 
 __Example:__
@@ -1372,7 +1372,7 @@ random length between $size and $sizeMax to the original string.
 - __param__ *int* $sizeMax If given and is > $size, the generated string will have random length 
 between $size and $sizeMax. Defaults to -1.
 - __param__ *string* $possibleChars If given, specifies allowed characters to make the string of. 
-Defaults to empty string.
+Defaults to ASCII alphanumeric chars.
 - __return__ *Str* 
 
 __Example:__
@@ -1456,7 +1456,7 @@ Returns the substring of the string from the last occurrence of $delimiter to th
 __Example:__
 ```php
 $str = new Str('Acme/foo');
-echo $str->pop('/']);
+echo $str->pop('/');
 // foo
 ```
 -----
@@ -1470,7 +1470,7 @@ of $delimiter.
 __Example:__
 ```php
 $str = new Str('Acme/foo');
-echo $str->shift('/']);
+echo $str->shift('/');
 // Acme
 ```
 -----
@@ -1483,7 +1483,7 @@ Returns the substring of the original string from the first occurrence of $delim
 __Example:__
 ```php
 $str = new Str('Acme/foo/bar');
-echo $str->shiftReversed('/']);
+echo $str->shiftReversed('/');
 // foo/bar
 ```
 -----
@@ -1497,7 +1497,7 @@ to the last occurrence of $delimiter.
 __Example:__
 ```php
 $str = new Str('Acme/foo/bar');
-echo $str->popReversed('/']);
+echo $str->popReversed('/');
 // Acme/foo
 ```
 -----

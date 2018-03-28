@@ -8,7 +8,7 @@ use Stringy\Stringy;
 class ReplaceBench
 {
     public function bench_replace_Str() {
-        (new Str('oink oink oink'))->replace('k', 'ky', 3);
+        (new Str('oink oink oink'))->replace('k', 'ky');
     }
 
     public function bench_replace_Stringy() {
