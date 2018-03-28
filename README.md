@@ -76,32 +76,6 @@ echo (string)$str->ensureRight('/');
 // /Acme/
 ```
 -----
-### hasPrefix
-Check if the string has $prefix at the start.
- 
-- __param__ *string* $prefix
-- __return__ *bool*
-
-__Example:__
-```php
-$str = new Str('/Acme/');
-echo $str->hasPrefix('/');
-// true
-```
------
-### hasSuffix
-Check if the string has $suffix at the end.
- 
-- __param__ *string* $suffix
-- __return__ *bool*
-
-__Example:__
-```php
-$str = new Str('/Acme/');
-echo $str->hasSuffix('/');
-// true
-```
------
 ### contains
 Check if the string contains $needle substring.
  
@@ -667,12 +641,15 @@ An alias for mb_ereg_replace(). Note that the 'i' option with multi-byte pattern
 mb_ereg_replace() requires PHP 5.6+ for correct results. This is due to a lack of support in 
 the bundled version of Oniguruma in PHP < 5.6, and current versions of HHVM (3.8 and below).
 
+- __param__ *string* $pattern The regular expression pattern.
+- __param__ *string* $replacement The string to replace with.
+- __param__ *string* $options Matching conditions to be used. Defaults to 'msr'.
 - __return__ *Str* 
 
 __Example:__
 ```php
 $str = new Str('Acme Foo');
-echo (string)$str->regexReplace();
+echo (string)$str->regexReplace('A', 'a');
 // acme Foo
 ```
 -----
@@ -1159,6 +1136,32 @@ echo (string)$str->underscored();
 
 ## new
 
+### hasPrefix
+Check if the string has $prefix at the start.
+ 
+- __param__ *string* $prefix
+- __return__ *bool*
+
+__Example:__
+```php
+$str = new Str('/Acme/');
+echo $str->hasPrefix('/');
+// true
+```
+-----
+### hasSuffix
+Check if the string has $suffix at the end.
+ 
+- __param__ *string* $suffix
+- __return__ *bool*
+
+__Example:__
+```php
+$str = new Str('/Acme/');
+echo $str->hasSuffix('/');
+// true
+```
+-----
 ### replaceWithLimit
 Replace returns a copy of the string s with the first n non-overlapping instances of 
 old replaced by new. If old is empty, it matches at the beginning of the string and 
