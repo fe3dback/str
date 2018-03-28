@@ -7,19 +7,19 @@ _in dev, please do not use in production_
 # str/str
 
 ```php
-$s = new Str('Hello, 世界');
-$s->last(2); // 世界
-$s->chars(); // ['H','e','l','l','o',',',' ','世','界']
+$str = new Str('Hello, 世界');
+$str->last(2); // 世界
+$str->chars(); // ['世', '界']
 
-$s
-    ->ensureLeft('H') // Hello, 世界
+$str
+    ->ensureLeft('Hello, ') // Hello, 世界
     ->ensureRight('!!!') // Hello, 世界!!!
     ->trimRight('!') // Hello, 世界
-    ->append('Str say - '); // Str say - Hello, 世界
+    ->prepend('Str say - '); // Str say - Hello, 世界
 
 $send = function (string $s) {};
-$send((string)$s); // same
-$send($s->getString()); // same
+$send((string)$str); // same
+$send($str->getString()); // same
 ```
 
 A fast string manipulation library with multi-byte support. 

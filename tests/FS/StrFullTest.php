@@ -6,7 +6,7 @@ namespace Str;
 
 use PHPUnit\Framework\TestCase;
 
-class StrNewTest extends TestCase
+class StrFullTest extends TestCase
 {
     /**
      * @dataProvider HasPrefixProvider
@@ -235,6 +235,10 @@ class StrNewTest extends TestCase
                 [
                     ['界Hello, 世界', '界'],
                     '界Hello, 世界',
+                ],
+                [
+                    ['世界', 'Hello, '],
+                    'Hello, 世界',
                 ],
                 [
                     ['世', '世'],
@@ -1648,9 +1652,10 @@ class StrNewTest extends TestCase
     public function humanizeProvider()
     {
         return [
-            ['Author', 'author_id'],
+            ['Authorid', 'authorid'],
+            ['Author id', 'author_id'],
             ['Test user', ' _test_user_'],
-            ['Συγγραφέας', ' συγγραφέας_id ']
+            ['Συγγραφέας id', ' συγγραφέας_id ']
         ];
     }
 
@@ -1949,13 +1954,7 @@ class StrNewTest extends TestCase
     {
         $s = new Str($str);
         $result = $s->split($pattern, $limit);
-        $expectedLen = \count($expected);
-
-        if ($expectedLen === 0) { $this->assertEmpty($result); }
-
-        for ($i = 0; $i < $expectedLen; $i++) {
-            $this->assertEquals($expected[$i], $result[$i]);
-        }
+        $this->assertEquals($expected, $result, (string)print_r($expected, true) . (string)print_r($result, true));
     }
     public function splitProvider()
     {
@@ -2061,6 +2060,925 @@ class StrNewTest extends TestCase
             [' ', 'toy car', 'fòô bàř'],
             ['', 'fòô bàř', ''],
             ['', '', 'fòô bàř'],
+        ];
+    }
+
+    /**
+     * @dataProvider safeTruncateProvider()
+     * @param $expected
+     * @param $str
+     * @param $length
+     * @param string $substring
+     */
+    public function testSafeTruncate($expected, $str, $length, $substring = '')
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->safeTruncate($length, $substring), $str);
+    }
+    public function safeTruncateProvider()
+    {
+        return [
+            ['Test foo bar', 'Test foo bar', 12],
+            ['Test foo', 'Test foo bar', 11],
+            ['Test foo', 'Test foo bar', 8],
+            ['Test', 'Test foo bar', 7],
+            ['Test', 'Test foo bar', 4],
+            ['Test foo bar', 'Test foo bar', 12, '...'],
+            ['Test foo...', 'Test foo bar', 11, '...'],
+            ['Test...', 'Test foo bar', 8, '...'],
+            ['Test...', 'Test foo bar', 7, '...'],
+            ['T...', 'Test foo bar', 4, '...'],
+            ['Test....', 'Test foo bar', 11, '....'],
+            ['Tëst fòô bàř', 'Tëst fòô bàř', 12, ''],
+            ['Tëst fòô', 'Tëst fòô bàř', 11, ''],
+            ['Tëst fòô', 'Tëst fòô bàř', 8, ''],
+            ['Tëst', 'Tëst fòô bàř', 7, ''],
+            ['Tëst', 'Tëst fòô bàř', 4, ''],
+            ['Tëst fòô bàř', 'Tëst fòô bàř', 12, 'ϰϰ'],
+            ['Tëst fòôϰϰ', 'Tëst fòô bàř', 11, 'ϰϰ'],
+            ['Tëstϰϰ', 'Tëst fòô bàř', 8, 'ϰϰ'],
+            ['Tëstϰϰ', 'Tëst fòô bàř', 7, 'ϰϰ'],
+            ['Tëϰϰ', 'Tëst fòô bàř', 4, 'ϰϰ'],
+            ['What are your plans...', 'What are your plans today?', 22, '...']
+        ];
+    }
+
+    /**
+     * @dataProvider slugifyProvider()
+     * @param $expected
+     * @param $str
+     * @param string $replacement
+     */
+    public function testSlugify($expected, $str, $replacement = '-')
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->slugify($replacement), $str);
+    }
+    public function slugifyProvider()
+    {
+        return [
+            ['foo-bar', ' foo  bar '],
+            ['foo-bar', 'foo -.-"-...bar'],
+            ['another-foo-bar', 'another..& foo -.-"-...bar'],
+            ['foo-dbar', " Foo d'Bar "],
+            ['a-string-with-dashes', 'A string-with-dashes'],
+            ['user-host', 'user@host'],
+            ['using-strings-like-foo-bar', 'Using strings like fòô bàř'],
+            ['numbers-1234', 'numbers 1234'],
+            ['perevirka-ryadka', 'перевірка рядка'],
+            ['bukvar-s-bukvoy-y', 'букварь с буквой ы'],
+            ['podekhal-k-podezdu-moego-doma', 'подъехал к подъезду моего дома'],
+            ['foo:bar:baz', 'Foo bar baz', ':'],
+            ['a_string_with_underscores', 'A_string with_underscores', '_'],
+            ['a_string_with_dashes', 'A string-with-dashes', '_'],
+            ['a\string\with\dashes', 'A string-with-dashes', '\\'],
+            ['an_odd_string', '--   An odd__   string-_', '_']
+        ];
+    }
+
+    /**
+     * @dataProvider toAsciiProvider()
+     * @param $expected
+     * @param $str
+     * @param string $language
+     * @param bool $removeUnsupported
+     */
+    public function testToAscii($expected, $str, $language = 'en', $removeUnsupported = true)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->toAscii($language, $removeUnsupported), $str);
+    }
+    public function toAsciiProvider()
+    {
+        return [
+            ['foo bar', 'fòô bàř'],
+            [' TEST ', ' ŤÉŚŢ '],
+            ['f = z = 3', 'φ = ź = 3'],
+            ['perevirka', 'перевірка'],
+            ['lysaya gora', 'лысая гора'],
+            ['user@host', 'user@host'],
+            ['shchuka', 'щука'],
+            ['', '漢字'],
+            ['xin chao the gioi', 'xin chào thế giới'],
+            ['XIN CHAO THE GIOI', 'XIN CHÀO THẾ GIỚI'],
+            ['dam phat chet luon', 'đấm phát chết luôn'],
+            [' ', ' '], // no-break space (U+00A0)
+            ['           ', '           '], // spaces U+2000 to U+200A
+            [' ', ' '], // narrow no-break space (U+202F)
+            [' ', ' '], // medium mathematical space (U+205F)
+            [' ', '　'], // ideographic space (U+3000)
+            ['', '𐍉'], // some uncommon, unsupported character (U+10349)
+            ['𐍉', '𐍉', 'en', false],
+            ['aouAOU', 'äöüÄÖÜ'],
+            ['aeoeueAEOEUE', 'äöüÄÖÜ', 'de'],
+            ['aeoeueAEOEUE', 'äöüÄÖÜ', 'de_DE']
+        ];
+    }
+
+    /**
+     * @dataProvider sliceProvider()
+     * @param $expected
+     * @param $str
+     * @param $start
+     * @param null $end
+     */
+    public function testSlice($expected, $str, $start, $end = null)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->slice($start, $end), $str);
+    }
+    public function sliceProvider()
+    {
+        return [
+            ['foobar', 'foobar', 0],
+            ['foobar', 'foobar', 0, null],
+            ['foobar', 'foobar', 0, 6],
+            ['fooba', 'foobar', 0, 5],
+            ['', 'foobar', 3, 0],
+            ['', 'foobar', 3, 2],
+            ['ba', 'foobar', 3, 5],
+            ['ba', 'foobar', 3, -1],
+            ['fòôbàř', 'fòôbàř', 0, null],
+            ['fòôbàř', 'fòôbàř', 0, null],
+            ['fòôbàř', 'fòôbàř', 0, 6],
+            ['fòôbà', 'fòôbàř', 0, 5],
+            ['', 'fòôbàř', 3, 0],
+            ['', 'fòôbàř', 3, 2],
+            ['bà', 'fòôbàř', 3, 5],
+            ['bà', 'fòôbàř', 3, -1]
+        ];
+    }
+
+    /**
+     * @dataProvider stripWhitespaceProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testStripWhitespace($expected, $str)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->stripWhitespace(), $str);
+    }
+    public function stripWhitespaceProvider()
+    {
+        return [
+            ['foobar', '  foo   bar  '],
+            ['teststring', 'test string'],
+            ['Οσυγγραφέας', '   Ο     συγγραφέας  '],
+            ['123', ' 123 '],
+            ['', ' '], // no-break space (U+00A0)
+            ['', '           '], // spaces U+2000 to U+200A
+            ['', ' '], // narrow no-break space (U+202F)
+            ['', ' '], // medium mathematical space (U+205F)
+            ['', '　'], // ideographic space (U+3000)
+            ['123', '  1  2  3　　'],
+            ['', ' '],
+            ['', ''],
+        ];
+    }
+
+    /**
+     * @dataProvider truncateProvider()
+     * @param $expected
+     * @param $str
+     * @param $length
+     * @param string $substring
+     */
+    public function testTruncate($expected, $str, $length, $substring = '')
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->truncate($length, $substring), $str);
+    }
+    public function truncateProvider()
+    {
+        return [
+            ['Test foo bar', 'Test foo bar', 12],
+            ['Test foo ba', 'Test foo bar', 11],
+            ['Test foo', 'Test foo bar', 8],
+            ['Test fo', 'Test foo bar', 7],
+            ['Test', 'Test foo bar', 4],
+            ['Test foo bar', 'Test foo bar', 12, '...'],
+            ['Test foo...', 'Test foo bar', 11, '...'],
+            ['Test ...', 'Test foo bar', 8, '...'],
+            ['Test...', 'Test foo bar', 7, '...'],
+            ['T...', 'Test foo bar', 4, '...'],
+            ['Test fo....', 'Test foo bar', 11, '....'],
+            ['Test fòô bàř', 'Test fòô bàř', 12, ''],
+            ['Test fòô bà', 'Test fòô bàř', 11, ''],
+            ['Test fòô', 'Test fòô bàř', 8, ''],
+            ['Test fò', 'Test fòô bàř', 7, ''],
+            ['Test', 'Test fòô bàř', 4, ''],
+            ['Test fòô bàř', 'Test fòô bàř', 12, 'ϰϰ'],
+            ['Test fòô ϰϰ', 'Test fòô bàř', 11, 'ϰϰ'],
+            ['Test fϰϰ', 'Test fòô bàř', 8, 'ϰϰ'],
+            ['Test ϰϰ', 'Test fòô bàř', 7, 'ϰϰ'],
+            ['Teϰϰ', 'Test fòô bàř', 4, 'ϰϰ'],
+            ['What are your pl...', 'What are your plans today?', 19, '...']
+        ];
+    }
+
+    /**
+     * @dataProvider upperCamelizeProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testUpperCamelize($expected, $str)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->upperCamelize(), $str);
+    }
+    public function upperCamelizeProvider()
+    {
+        return [
+            ['CamelCase', 'camelCase'],
+            ['CamelCase', 'Camel-Case'],
+            ['CamelCase', 'camel case'],
+            ['CamelCase', 'camel -case'],
+            ['CamelCase', 'camel - case'],
+            ['CamelCase', 'camel_case'],
+            ['CamelCTest', 'camel c test'],
+            ['StringWith1Number', 'string_with1number'],
+            ['StringWith22Numbers', 'string-with-2-2 numbers'],
+            ['1Camel2Case', '1camel2case'],
+            ['CamelΣase', 'camel σase'],
+            ['ΣτανιλCase', 'στανιλ case'],
+            ['ΣamelCase', 'Σamel  Case']
+        ];
+    }
+
+    /**
+     * @dataProvider surroundProvider()
+     * @param $expected
+     * @param $str
+     * @param $substring
+     */
+    public function testSurround($expected, $str, $substring)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->surround($substring), $str);
+    }
+    public function surroundProvider()
+    {
+        return [
+            ['__foobar__', 'foobar', '__'],
+            ['test', 'test', ''],
+            ['**', '', '*'],
+            ['¬fòô bàř¬', 'fòô bàř', '¬'],
+            ['ßå∆˚ test ßå∆˚', ' test ', 'ßå∆˚']
+        ];
+    }
+
+    /**
+     * @dataProvider swapCaseProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testSwapCase($expected, $str)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->swapCase(), $str);
+    }
+    public function swapCaseProvider()
+    {
+        return [
+            ['TESTcASE', 'testCase'],
+            ['tEST-cASE', 'Test-Case'],
+            [' - σASH  cASE', ' - Σash  Case'],
+            ['νΤΑΝΙΛ', 'Ντανιλ']
+        ];
+    }
+
+    /**
+     * @dataProvider tidyProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testTidy($expected, $str)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->tidy(), $str);
+    }
+    public function tidyProvider()
+    {
+        /** @noinspection UnNecessaryDoubleQuotesInspection */
+        return [
+            ['"I see..."', '“I see…”'],
+            ["'This too'", "‘This too’"],
+            ['test-dash', 'test—dash'],
+            ['Ο συγγραφέας είπε...', 'Ο συγγραφέας είπε…']
+        ];
+    }
+
+    /** @noinspection ArrayTypeOfParameterByDefaultValueInspection */
+    /**
+     * @dataProvider titleizeProvider()
+     * @param $expected
+     * @param $str
+     * @param $ignore
+     */
+    public function testTitleize($expected, $str, $ignore = [])
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->titleize($ignore), $str);
+    }
+    public function titleizeProvider()
+    {
+        $ignore = ['at', 'by', 'for', 'in', 'of', 'on', 'out', 'to', 'the'];
+        return [
+            ['Title Case', 'TITLE CASE'],
+            ['Testing The Method', 'testing the method'],
+            ['Testing the Method', 'testing the method', $ignore],
+            ['I Like to Watch Dvds at Home', 'i like to watch DVDs at home', $ignore],
+            ['Θα Ήθελα Να Φύγει', '  Θα ήθελα να φύγει  ', []]
+        ];
+    }
+
+    /**
+     * @dataProvider toBooleanProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testToBoolean($expected, $str)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->toBoolean(), $str);
+    }
+    public function toBooleanProvider()
+    {
+        return [
+            [true, 'true'],
+            [true, '1'],
+            [true, 'on'],
+            [true, 'ON'],
+            [true, 'yes'],
+            [true, '999'],
+            [false, 'false'],
+            [false, '0'],
+            [false, 'off'],
+            [false, 'OFF'],
+            [false, 'no'],
+            [false, '-999'],
+            [false, ''],
+            [false, ' '],
+            [false, '  '] // narrow no-break space (U+202F)
+        ];
+    }
+
+    /**
+     * @dataProvider toSpacesProvider()
+     * @param $expected
+     * @param $str
+     * @param int $tabLength
+     */
+    public function testToSpaces($expected, $str, $tabLength = 4)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->toSpaces($tabLength), $str);
+    }
+    public function toSpacesProvider()
+    {
+        return [
+            ['    foo    bar    ', '	foo	bar	'],
+            ['     foo     bar     ', '	foo	bar	', 5],
+            ['    foo  bar  ', '		foo	bar	', 2],
+            ['foobar', '	foo	bar	', 0],
+            ["    foo\n    bar", "	foo\n	bar"],
+            ["    fòô\n    bàř", "	fòô\n	bàř"]
+        ];
+    }
+
+    /**
+     * @dataProvider toTabsProvider()
+     * @param $expected
+     * @param $str
+     * @param int $tabLength
+     */
+    public function testToTabs($expected, $str, $tabLength = 4)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->toTabs($tabLength), $str);
+    }
+    public function toTabsProvider()
+    {
+        return [
+            ['	foo	bar	', '    foo    bar    '],
+            ['	foo	bar	', '     foo     bar     ', 5],
+            ['		foo	bar	', '    foo  bar  ', 2],
+            ["	foo\n	bar", "    foo\n    bar"],
+            ["	fòô\n	bàř", "    fòô\n    bàř"]
+        ];
+    }
+
+    /**
+     * @dataProvider toTitleCaseProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testToTitleCase($expected, $str)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->toTitleCase(), $str);
+    }
+    public function toTitleCaseProvider()
+    {
+        return [
+            ['Foo Bar', 'foo bar'],
+            [' Foo_Bar ', ' foo_bar '],
+            ['Fòô Bàř', 'fòô bàř'],
+            [' Fòô_Bàř ', ' fòô_bàř '],
+            ['Αυτοκίνητο Αυτοκίνητο', 'αυτοκίνητο αυτοκίνητο'],
+        ];
+    }
+
+    /**
+     * @dataProvider underscoredProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testUnderscored($expected, $str)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->underscored(), $str);
+    }
+    public function underscoredProvider()
+    {
+        return [
+            ['test_case', 'testCase'],
+            ['test_case', 'Test-Case'],
+            ['test_case', 'test case'],
+            ['test_case', 'test -case'],
+            ['_test_case', '-test - case'],
+            ['test_case', 'test_case'],
+            ['test_c_test', '  test c test'],
+            ['test_u_case', 'TestUCase'],
+            ['test_c_c_test', 'TestCCTest'],
+            ['string_with1number', 'string_with1number'],
+            ['string_with_2_2_numbers', 'String-with_2_2 numbers'],
+            ['1test2case', '1test2case'],
+            ['yes_we_can', 'yesWeCan'],
+            ['test_σase', 'test Σase'],
+            ['στανιλ_case', 'Στανιλ case'],
+            ['σash_case', 'Σash  Case']
+        ];
+    }
+
+    /**
+     * @dataProvider moveProvider()
+     * @param $expected
+     * @param $str
+     * @param $start
+     * @param $length
+     * @param $destination
+     */
+    public function testMove($expected, $str, $start, $length, $destination)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->move($start, $length, $destination), $str);
+    }
+    public function moveProvider()
+    {
+        return [
+            ['stte_case', 'test_case', 0, 2, 4],
+            ['cm/Ae/', '/Acme/', 0, 2, 4],
+            ['Στανιλ case', 'Στανιλ case', 0, 4, 1],
+            ['ιλΣταν case', 'Στανιλ case', 0, 4, 6],
+        ];
+    }
+
+    /**
+     * @dataProvider overwriteProvider()
+     * @param $expected
+     * @param $str
+     * @param $start
+     * @param $length
+     * @param $substr
+     */
+    public function testOverwrite($expected, $str, $start, $length, $substr)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->overwrite($start, $length, $substr), $str);
+    }
+    public function overwriteProvider()
+    {
+        return [
+            ['overwrittenst_case', 'test_case', 0, 2, 'overwritten'],
+            ['oh ιλ case', 'Στανιλ case', 0, 4, 'oh '],
+            ['Στανλ case', 'Στανιλ case', 4, 1, ''],
+        ];
+    }
+
+    /**
+     * @dataProvider snakeizeProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testSnakeize($expected, $str)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->snakeize(), $str);
+    }
+    public function snakeizeProvider()
+    {
+        return [
+            ['camel_case', 'CamelCase'],
+            ['camel_case', 'Camel-Case'],
+            ['camel_case', 'camel case'],
+            ['camel_case', 'camel -case'],
+            ['camel_case', 'camel - case'],
+            ['camel_case', 'camel_case'],
+            ['camel_c_test', 'camel c test'],
+            ['string_with_1_number', 'string_with1number'],
+            ['string_with_2_2_numbers', 'string-with-2-2 numbers'],
+            ['data_rate', 'data_rate'],
+            ['background_color', 'background-color'],
+            ['yes_we_can', 'yes_we_can'],
+            ['moz_something', '-moz-something'],
+            ['car_speed', '_car_speed_'],
+            ['1_camel_2_case', '1camel2case'],
+            ['camel_σase', 'camel σase'],
+            ['στανιλ_case', 'Στανιλ case'],
+            ['σamel_case', 'σamel  Case'],
+            ['serve_http_or_another_abbreviation', 'Serve HTTP or another ABBREVIATION']
+        ];
+    }
+
+    /**
+     * @dataProvider afterFirstProvider()
+     * @param $expected
+     * @param $str
+     * @param $needle
+     * @param $substr
+     * @param int $times
+     */
+    public function testAfterFirst($expected, $str, $needle, $substr, $times = 1)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->afterFirst($needle, $substr, $times), $str);
+    }
+    public function afterFirstProvider()
+    {
+        return [
+            ['CameHERE!HERE!lCase', 'CamelCase', 'me', 'HERE!', 2],
+            ['Camel-Case', 'Camel-Case', 'e', 'not gonna happen', 0],
+            ['Στανν_νιλ case', 'Στανιλ case', 'ν', 'ν_ν']
+        ];
+    }
+
+    /**
+     * @dataProvider beforeFirstProvider()
+     * @param $expected
+     * @param $str
+     * @param $needle
+     * @param $substr
+     * @param int $times
+     */
+    public function testBeforeFirst($expected, $str, $needle, $substr, $times = 1)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->beforeFirst($needle, $substr, $times), $str);
+    }
+    public function beforeFirstProvider()
+    {
+        return [
+            ['CaHERE!HERE!melCase', 'CamelCase', 'me', 'HERE!', 2],
+            ['Camel-Case', 'Camel-Case', 'e', 'not gonna happen', 0],
+            ['Σταν_ννιλ case', 'Στανιλ case', 'ν', 'ν_ν']
+        ];
+    }
+
+    /**
+     * @dataProvider afterLastProvider()
+     * @param $expected
+     * @param $str
+     * @param $needle
+     * @param $substr
+     * @param int $times
+     */
+    public function testAfterLast($expected, $str, $needle, $substr, $times = 1)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->afterLast($needle, $substr, $times), $str);
+    }
+    public function afterLastProvider()
+    {
+        return [
+            ['CamelCaHERE!HERE!se', 'CamelCase', 'a', 'HERE!', 2],
+            ['Camel-Case', 'Camel-Case', 'e', 'not gonna happen', 0],
+            ['Στανιλν_ν case', 'Στανιλ case', 'λ', 'ν_ν']
+        ];
+    }
+
+    /**
+     * @dataProvider beforeLastProvider()
+     * @param $expected
+     * @param $str
+     * @param $needle
+     * @param $substr
+     * @param int $times
+     */
+    public function testBeforeLastFirst($expected, $str, $needle, $substr, $times = 1)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->beforeLast($needle, $substr, $times), $str);
+    }
+    public function beforeLastProvider()
+    {
+        return [
+            ['CamelCHERE!HERE!ase', 'CamelCase', 'a', 'HERE!', 2],
+            ['Camel-Case', 'Camel-Case', 'e', 'not gonna happen', 0],
+            ['Στανιν_νλ case', 'Στανιλ case', 'λ', 'ν_ν']
+        ];
+    }
+
+    /**
+     * @dataProvider isIpV4Provider()
+     * @param $expected
+     * @param $str
+     */
+    public function testIsIpV4($expected, $str)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->isIpV4(), $str);
+    }
+    public function isIpV4Provider()
+    {
+        return [
+            [true, '192.168.1.1'],
+            [false, '1234.53..1'],
+            [true, '249.212.23.124']
+        ];
+    }
+
+    /**
+     * @dataProvider isIpV6Provider()
+     * @param $expected
+     * @param $str
+     */
+    public function testIsIpV6($expected, $str)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->isIpV6(), $str);
+    }
+    public function isIpV6Provider()
+    {
+        return [
+            [true, '2001:470:9b36:1::2'],
+            [false, '1200::AB00:1234::2552:7777:1313'],
+            [true, '2001:cdba:0000:0000:0000:0000:3257:9652']
+        ];
+    }
+
+    /**
+     * @dataProvider randomProvider()
+     * @param $expected
+     * @param $size
+     * @param $sizeMax
+     * @param $possibleChars
+     */
+    public function testRandom($expected, $size, $sizeMax = -1, $possibleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789')
+    {
+        $s = new Str('');
+        $this->assertEquals($expected, \mb_strlen((string)$s->random($size, $sizeMax, $possibleChars)));
+    }
+    public function randomProvider()
+    {
+        return [
+            [5, 5],
+            [8, 8, -1, 'ФОРЫВДалыдлорафдлуОГР123']
+        ];
+    }
+
+    /**
+     * @dataProvider appendUniqueIdentifierProvider()
+     * @param $expected
+     * @param $str
+     * @param $size
+     * @param int $sizeMax
+     * @param string $possibleChars
+     */
+    public function testAppendUniqueIdentifier($expected, $str, $size = 4, $sizeMax = -1, $possibleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789')
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, \mb_strlen((string)$s->appendUniqueIdentifier($size, $sizeMax, $possibleChars)));
+    }
+    public function appendUniqueIdentifierProvider()
+    {
+        return [
+            [5, 'a'],
+            [8, 'afd', 5, -1, 'ФОРЫВДалыдлорафдлуОГР123']
+        ];
+    }
+
+    /**
+     * @dataProvider wordsProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testWords($expected, $str)
+    {
+        $s = new Str($str);
+        $result = $s->words();
+        $expectedCount = count($expected);
+
+        if ($expectedCount === 0) { $this->assertEmpty($result); }
+
+        for ($i = 0; $i < $expectedCount; $i++) {
+            $this->assertEquals($expected[$i], $result[$i]);
+        }
+    }
+    public function wordsProvider()
+    {
+        return [
+            [[], ''],
+            [[''], '  '],
+            [['foo', 'bar'], "foo\nbar"],
+            [['foo', 'bar'], 'foo  bar'],
+            [['foo', 'bar'], 'foo   bar'],
+            [['fòô', 'bàř'], 'fòô bàř']
+        ];
+    }
+
+    /**
+     * @dataProvider quoteProvider()
+     * @param $expected
+     * @param $str
+     * @param string $quote
+     */
+    public function testQuote($expected, $str, $quote = '"')
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->quote($quote));
+    }
+    public function quoteProvider()
+    {
+        return [
+            ['"Hey," "there" "are" "your" "quoted" "words."', 'Hey,  there are your     quoted words.'],
+            ['%$Hey,%$ %$there%$ %$are%$ %$your%$ %$quoted%$ %$words.%$', 'Hey,  there are your     quoted words.', '%$']
+        ];
+    }
+
+    /**
+     * @dataProvider unquoteProvider()
+     * @param $expected
+     * @param $str
+     * @param string $quote
+     */
+    public function testUnquote($expected, $str, $quote = '"')
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->unquote($quote));
+    }
+    public function unquoteProvider()
+    {
+        return [
+            ['Hey, there are your quoted words.', '"Hey," "there" "are" "your" "quoted" "words."'],
+            ['Hey, there are your quoted words.', '%$Hey,%$ %$there%$ %$are%$ %$your%$ %$quoted%$ %$words.%$', '%$']
+        ];
+    }
+
+    /**
+     * @dataProvider chopProvider()
+     * @param $expected
+     * @param $str
+     * @param $step
+     */
+    public function testChop($expected, $str, $step = 1)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->chop($step), $str);
+    }
+    public function chopProvider()
+    {
+        return [
+            [[], ''],
+            [[], '  ', -9],
+            [['foo', 'bar'], 'foobar', 3],
+            [['foob', 'ar'], 'foobar', 4],
+            [['fòô', ' bà', 'ř'], 'fòô bàř', 3]
+        ];
+    }
+
+    /**
+     * @dataProvider isEmailProvider()
+     * @param $expected
+     * @param $str
+     */
+    public function testIsEmail($expected, $str)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->isEmail(), $str);
+    }
+    public function isEmailProvider()
+    {
+        return [
+            [true, 'this.is.a.valid@email.com'],
+            [false, 'this@is/not@a.valid@email.com'],
+            [true, 'validemail22_@localhost']
+        ];
+    }
+
+    /**
+     * @dataProvider joinProvider()
+     * @param $expected
+     * @param $str
+     * @param $separator
+     * @param array $otherStrings
+     */
+    public function testJoin($expected, $str, $separator, $otherStrings = [])
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->join($separator, $otherStrings), $str);
+    }
+    public function joinProvider()
+    {
+        return [
+            ['', '', '$$', ['']],
+            ['  %sdlkfj%sdlfkjas', '  ', '%', ['sdlkfj', 'sdlfkjas']],
+            ['foobar', 'foobar', '$$']
+        ];
+    }
+
+    /**
+     * @dataProvider shiftProvider()
+     *
+     * @param $expected
+     * @param $str
+     * @param $delimiter
+     */
+    public function testShift($expected, $str, $delimiter)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->shift($delimiter), $str);
+    }
+    public function shiftProvider()
+    {
+        return [
+            ['https:', 'https://repl.it/repls/TediousHarmlessGenre', '/'],
+            ['', 'string', ''],
+            ['foobar', 'foobar', '$$']
+        ];
+    }
+
+    /**
+     * @dataProvider shiftReversedProvider()
+     *
+     * @param $expected
+     * @param $str
+     * @param $delimiter
+     */
+    public function testShiftReversed($expected, $str, $delimiter)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->shiftReversed($delimiter), $str);
+    }
+    public function shiftReversedProvider()
+    {
+        return [
+            ['/repl.it/repls/TediousHarmlessGenre', 'https://repl.it/repls/TediousHarmlessGenre', '/'],
+            ['', 'string', ''],
+            ['foobar', 'foobar', '$$']
+        ];
+    }
+
+    /**
+     * @dataProvider popProvider()
+     *
+     * @param $expected
+     * @param $str
+     * @param $delimiter
+     */
+    public function testPop($expected, $str, $delimiter)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->pop($delimiter), $str);
+    }
+    public function popProvider()
+    {
+        return [
+            ['TediousHarmlessGenre', 'https://repl.it/repls/TediousHarmlessGenre', '/'],
+            ['', 'string', ''],
+            ['foobar', 'foobar', '$$']
+        ];
+    }
+
+    /**
+     * @dataProvider popReversedProvider()
+     *
+     * @param $expected
+     * @param $str
+     * @param $delimiter
+     */
+    public function testPopReversed($expected, $str, $delimiter)
+    {
+        $s = new Str($str);
+        $this->assertEquals($expected, $s->popReversed($delimiter), $str);
+    }
+    public function popReversedProvider()
+    {
+        return [
+            ['https://repl.it/repls', 'https://repl.it/repls/TediousHarmlessGenre', '/'],
+            ['', 'string', ''],
+            ['foobar', 'foobar', '$$']
         ];
     }
 }
