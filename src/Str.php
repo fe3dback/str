@@ -732,7 +732,7 @@ class Str
 
     public function swapCase(): Str
     {
-        $this->s = \preg_replace_callback('/[\S]/u', function ($match) { if ($match[0] === \mb_strtoupper($match[0])) { return \mb_strtolower($match[0]); } return \mb_strtoupper($match[0]); }, $this->s);
+        $this->s = \mb_strtolower($this->s) ^ \mb_strtoupper($this->s) ^ $this->s;
         return $this;
     }
 
@@ -744,11 +744,11 @@ class Str
 
     public function titleize(array $ignore = []): Str
     {
-        $this->s = \mb_ereg_replace("^[\s]+|[\s]+\$", '', $this->s);
+        $this->s = \trim($this->s);
         $this->s = preg_replace_callback('/([\S]+)/u', function ($match) use ($ignore) {
-            if ($ignore && \in_array($match[0], $ignore, true)) { return $match[0]; }
-            $this->s = \mb_strtoupper(\mb_substr($match[0], 0, 1)) . \mb_strtolower(\mb_substr($match[0], 1));
-            return $this->s; }, $this->s);
+            if (\in_array($match[0], $ignore, true)) { return $match[0]; }
+            return \mb_strtoupper(\mb_substr($match[0], 0, 1)) . \mb_strtolower(\mb_substr($match[0], 1));
+            }, $this->s);
         return $this;
     }
 
