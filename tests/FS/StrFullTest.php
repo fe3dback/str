@@ -2387,6 +2387,9 @@ class StrFullTest extends TestCase
         return [
             ['Title Case', 'TITLE CASE'],
             ['Testing The Method', 'testing the method'],
+            ['Testing The Method', '  testing the method  '],
+            ['Testing The Method', 'testing the method  '],
+            ['2 Testing The Method', '     2 testing the method'],
             ['Testing the Method', 'testing the method', $ignore],
             ['I Like to Watch Dvds at Home', 'i like to watch DVDs at home', $ignore],
             ['Θα Ήθελα Να Φύγει', '  Θα ήθελα να φύγει  ', []]
