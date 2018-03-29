@@ -9,3 +9,6 @@ md:
 
 internal-tests:
 	./vendor/bin/phpbench run --config=bench_internal.json --report=str --iterations=100 --revs=1000
+
+test:
+    ./vendor/bin/phpunit
