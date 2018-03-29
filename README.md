@@ -2,8 +2,6 @@
 [![Coverage Status](https://coveralls.io/repos/github/fe3dback/str/badge.svg?branch=master)](https://coveralls.io/github/fe3dback/str?branch=master)
 [![BCH compliance](https://bettercodehub.com/edge/badge/fe3dback/str?branch=master)](https://bettercodehub.com/)
 
-_in dev, please do not use in production_
-
 # str/str
 
 ```php
@@ -1528,10 +1526,10 @@ Test subjects:
 RANK (sum time of all benchmarks): 
 __smaller - is better!__
 
-Target | Total Time | Diff
---- | --- | ---
-Str | 32.767 s. | 1x
-Stringy | 75.786 s. | 2.3x
+Target  | Total Time | Diff
+---     | ---        | ---
+Str     | 5.505 s.   | 1x
+Stringy | 10.840 s.  | 2.0x
 
 ----
 

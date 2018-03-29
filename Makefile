@@ -2,7 +2,7 @@ lib-code-tests:
 	./vendor/bin/phpbench run --config=bench_lib.json --report=str --iterations=10 --revs=5000
 
 rank:
-	./vendor/bin/phpbench run --config=bench_lib.json --report=str --iterations=10 --revs=1000 | php benchmarks/score.php
+	./vendor/bin/phpbench run --config=bench_lib.json --report=str --iterations=30 --revs=1000 | php benchmarks/score.php
 
 md:
 	./vendor/bin/phpbench run --config=bench_lib.json --report=str -o markdown > benchmark.md
