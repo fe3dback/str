@@ -2,8 +2,6 @@
 [![Coverage Status](https://coveralls.io/repos/github/fe3dback/str/badge.svg?branch=master)](https://coveralls.io/github/fe3dback/str?branch=master)
 [![BCH compliance](https://bettercodehub.com/edge/badge/fe3dback/str?branch=master)](https://bettercodehub.com/)
 
-_in dev, please do not use in production_
-
 # str/str
 
 ```php
@@ -21,6 +19,13 @@ $send = function (string $s) {};
 $send((string)$str); // same
 $send($str->getString()); // same
 ```
+
+## features
+
+- [x] strongly typed
+- [x] no exceptions thrown
+- [x] fast
+- [x] new functions
 
 A fast string manipulation library with multi-byte support. 
 Inspired by the ["Stringy"](https://github.com/danielstjules/Stringy) library, with focus on speed.
@@ -1519,6 +1524,11 @@ generate md:
 make md
 ```
 
+run tests:
+```bash
+make test
+```
+
 Test subjects:
 - FS ([str/str](https://github.com/fe3dback/str))
 - Stringy ([danielstjules/Stringy](https://github.com/danielstjules/Stringy))
@@ -1528,18 +1538,16 @@ Test subjects:
 RANK (sum time of all benchmarks): 
 __smaller - is better!__
 
-Target | Total Time | Diff
---- | --- | ---
-Str | 32.767 s. | 1x
-Stringy | 75.786 s. | 2.3x
+Target  | Total Time | Diff
+---     | ---        | ---
+Str     | 5.505 s.   | 1x
+Stringy | 10.840 s.  | 2.0x
 
 ----
 
 subject | mode | mem_peak | diff
  --- | --- | --- | --- 
-bench_StrStatic | 239.000μs | 1,328,496b | 1.00x
-bench_Str | 482.000μs | 1,355,320b | 2.02x
-bench_Stringy | 1,479.000μs | 1,872,552b | 6.19x
-bench_StringyStatic | 1,790.000μs | 1,894,024b | 7.49x
+bench_common_Str | 811.098μs | 1,929,728b | 1.00x
+bench_common_Stringy | 5,310.290μs | 1,879,272b | 6.55x
 
 ##### [see all other benchmark results](https://github.com/fe3dback/str/blob/master/benchmark.md)
