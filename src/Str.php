@@ -170,6 +170,8 @@ class Str
     public function __toString(): string { return $this->s; }
     public function getString(): string { return $this->s; }
 
+    public static function make(string $str): Str { return new self($str); }
+
     public function substr(int $start = 0, int $length = 0): Str
     {
         $this->s = \mb_substr($this->s, $start, $length !== 0 ? $length : \mb_strlen($this->s));
