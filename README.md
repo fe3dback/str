@@ -45,6 +45,20 @@ composer require str/str
 
 # Documentation with examples
 
+### make
+Create a new Str object using static method for it.
+ 
+- __param__ *string* $str
+- __return__ *Str*
+
+__Example:__
+```php
+$str = Str::make('Acme');
+echo (string)$str;
+// Acme
+```
+-----
+
 ## Supported Stringy functions
 
 ### ensureLeft
