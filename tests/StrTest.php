@@ -14,6 +14,9 @@ class StrTest extends TestCase
         $this->assertEquals((string)$s, 'Hello world');
         $this->assertEquals((string)$s, $s);
         $this->assertEquals($s->getString(), 'Hello world');
+
+        $s = Str::make('Hii');
+        $this->assertEquals((string)$s, 'Hii');
     }
 
     public function testPrefixSuffix()
