@@ -166,7 +166,7 @@ class Str
             "\xEF\xBE\xA0"],
     ];
 
-    public function __construct($str) { $this->s = $str; }
+    public function __construct(string $str) { $this->s = $str; }
     public function __toString(): string { return $this->s; }
     public function getString(): string { return $this->s; }
 
