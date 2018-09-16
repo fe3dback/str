@@ -1565,3 +1565,11 @@ bench_common_Str | 811.098μs | 1,929,728b | 1.00x
 bench_common_Stringy | 5,310.290μs | 1,879,272b | 6.55x
 
 ##### [see all other benchmark results](https://github.com/fe3dback/str/blob/master/benchmark.md)
+
+## Development
+
+Please use php cs fixer before commit:
+https://github.com/FriendsOfPHP/PHP-CS-Fixer
+
+you can add watcher in any IDE for automatic fix code
+style on save.

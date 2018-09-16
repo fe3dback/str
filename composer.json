@@ -19,7 +19,9 @@
         }
     ],
     "require": {
-        "php": ">=7.0.0"
+        "php": ">=7.0.0",
+        "ext-mbstring": "*",
+        "ext-json": "*"
     },
     "support": {
         "issues": "https://github.com/fe3dback/str/issues",
@@ -30,12 +32,12 @@
             "Str\\": "src/"
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require-dev": {
-        "phpbench/phpbench": "1.0.*",
-        "phpunit/phpunit": "^7.1@dev",
-        "danielstjules/stringy": "^3.1",
-        "php-coveralls/php-coveralls": "2.0.x-dev",
-        "ramsey/uuid": "^3.0@dev"
+        "phpbench/phpbench": "1.0.*@dev",
+        "phpunit/phpunit": "^7.1",
+        "danielstjules/stringy": "3.1",
+        "php-coveralls/php-coveralls": "2.1.0",
+        "ramsey/uuid": "^3.0"
     }
 }

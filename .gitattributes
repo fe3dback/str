@@ -15,6 +15,7 @@ _config.yml
 # unit
 phpunit.xml export-ignore
 tests export-ignore
+build export-ignore
 
 # benchmarks
 benchmarks export-ignore
@@ -23,3 +24,4 @@ bench_lib.json
 
 # dev
 Makefile
+.php_cs.dist export-ignore

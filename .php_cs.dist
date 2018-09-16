@@ -1,0 +1,22 @@
+<?php
+
+$finder = PhpCsFixer\Finder::create()
+    ->exclude('bitrix')
+    ->exclude('local/templates')
+    ->exclude('secure')
+    ->exclude('stat_mails')
+    ->exclude('tests')
+    ->exclude('vendor')
+    ->exclude('uploads')
+    ->in(__DIR__)
+;
+
+return PhpCsFixer\Config::create()
+
+    ->setRules([
+        '@PSR2' => true,
+        '@Symfony' => true,
+        '@DoctrineAnnotation' => true,
+        'array_syntax' => ['syntax' => 'short'],
+    ])
+    ->setFinder($finder);

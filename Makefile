@@ -4,6 +4,9 @@ lib-code-tests:
 rank:
 	./vendor/bin/phpbench run --config=bench_lib.json --report=str --iterations=30 --revs=1000 | php benchmarks/score.php
 
+benchmark:
+	./vendor/bin/phpbench run --config=bench_lib.json --report=str --iterations=5 --revs=10 | php benchmarks/score.php
+
 md:
 	./vendor/bin/phpbench run --config=bench_lib.json --report=str --iterations=10 --revs=5000 -o markdown > benchmark.md
 
