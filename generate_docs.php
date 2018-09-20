@@ -38,13 +38,13 @@ $templateMethodReturn = <<<RAW
 - %return%
 RAW;
 $templateMethod = <<<RAW
-## :small_blue_diamond: %name%
+## %name%
 %description%
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 %params%
 
-**Return:**
+**:small_blue_diamond: Return:**
 %return%
 --------
 RAW;

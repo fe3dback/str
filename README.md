@@ -161,25 +161,25 @@ strongly typed). The code is completely covered by unit tests.
 - <a href="#words">words</a>
 
 ## Functions List:
-## :small_blue_diamond: __construct
+## __construct
 
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $str 
 
-**Return:**
+**:small_blue_diamond: Return:**
 __void__
 --------
-## :small_blue_diamond: __toString
+## __toString
 
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - string 
 --------
-## :small_blue_diamond: afterFirst
+## afterFirst
 Inserts given $substr $times into the original string after
 the first occurrence of $needle.
 
@@ -189,15 +189,15 @@ echo (string)$str->afterFirst('a', 'duh', 2);
 // foo baduhduhr baz
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $needle 
 - string $substr 
 - int $times 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: afterLast
+## afterLast
 Inserts given $substr $times into the original string after
 the last occurrence of $needle.
 
@@ -207,15 +207,15 @@ echo (string)$str->afterLast('a', 'duh', 2);
 // foo bar baduhduhz
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $needle 
 - string $substr 
 - int $times 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: append
+## append
 Append $sub to the string.
 
 ```php
@@ -224,13 +224,13 @@ echo (string)$str->append('/');
 // /Acme/
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $sub 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: appendUniqueIdentifier
+## appendUniqueIdentifier
 Appends a random string consisting of $possibleChars, if specified, of given $size or
 random length between $size and $sizeMax to the original string.
 
@@ -240,15 +240,15 @@ echo $str->appendUniqueIdentifier(3, -1, 'foba_rz');
 // foozro
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - int $size 
 - int $sizeMax 
 - string $possibleChars 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: at
+## at
 Returns the character at $pos, with indexes starting at 0.
 
 ```php
@@ -257,13 +257,13 @@ echo (string)$str->at(2);
 // c
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - int $pos 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: beforeFirst
+## beforeFirst
 Inserts given $substr $times into the original string before
 the first occurrence of $needle.
 
@@ -273,15 +273,15 @@ echo (string)$str->beforeFirst('a', 'duh');
 // foo bduhar baz
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $needle 
 - string $substr 
 - int $times 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: beforeLast
+## beforeLast
 Inserts given $substr $times into the original string before
 the last occurrence of $needle.
 
@@ -291,15 +291,15 @@ echo (string)$str->beforeLast('a', 'duh');
 // foo bar bduhaz
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $needle 
 - string $substr 
 - int $times 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: between
+## between
 Returns the substring between $start and $end, if found, or an empty string.
 An optional $offset may be supplied from which to begin the search for the start string.
 
@@ -309,15 +309,15 @@ echo (string)$str->between('/', '/');
 // Acme
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $start 
 - string $end 
 - int $offset 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: camelize
+## camelize
 Returns a camelCase version of the string. Trims surrounding spaces, capitalizes
 letters following digits, spaces, dashes and underscores, and removes spaces, dashes,
 as well as underscores.
@@ -328,13 +328,13 @@ echo (string)$str->camelize();
 // acMe
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: chars
+## chars
 Returns an array consisting of the characters in the string.
 
 ```php
@@ -343,13 +343,13 @@ echo (string)$str->chars();
 // ['/', 'A', 'c', 'm', 'e', '/']
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - array 
 --------
-## :small_blue_diamond: chop
+## chop
 Cuts the original string in pieces of $step size.
 
 ```php
@@ -358,13 +358,13 @@ echo $str->chop(2);
 // ['fo', 'o ', 'ba', 'r ', 'ba', 'z']
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - int $step 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - array 
 --------
-## :small_blue_diamond: collapseWhitespace
+## collapseWhitespace
 Trims the string and replaces consecutive whitespace characters with a single space.
 This includes tabs and newline characters, as well as multi-byte whitespace such as the
 thin space and ideographic space.
@@ -375,13 +375,13 @@ echo (string)$str->collapseWhitespace();
 // foo bar baz
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: contains
+## contains
 Check if the string contains $needle substring.
 
 ```php
@@ -393,14 +393,14 @@ echo $str->contains('a', false);
 // true
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $needle 
 - bool $caseSensitive 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: containsAll
+## containsAll
 Returns true if the string contains all $needles, false otherwise. By default
 the comparison is case-sensitive, but can be made insensitive by setting $caseSensitive to false.
 
@@ -410,14 +410,14 @@ echo $str->containsAll(['m', 'c', '/']);
 // true
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - array $needles 
 - bool $caseSensitive 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: containsAny
+## containsAny
 Returns true if the string contains any $needles, false otherwise. By default
 the comparison is case-sensitive, but can be made insensitive by setting $caseSensitive to false.
 
@@ -427,14 +427,14 @@ echo $str->containsAny(['foo', 'c', 'bar']);
 // true
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - array $needles 
 - bool $caseSensitive 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: countSubstr
+## countSubstr
 Returns the number of occurrences of $needle in the given string. By default
 the comparison is case-sensitive, but can be made insensitive by setting $caseSensitive to false.
 
@@ -444,14 +444,14 @@ echo $str->countSubstr('m');
 // 2
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $needle 
 - bool $caseSensitive 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - int 
 --------
-## :small_blue_diamond: dasherize
+## dasherize
 Returns a lowercase and trimmed string separated by dashes. Dashes are inserted before
 uppercase characters (with the exception of the first character of the string),
 and in place of spaces as well as underscores.
@@ -462,13 +462,13 @@ echo (string)$str->dasherize();
 // ac-me
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: delimit
+## delimit
 Returns a lowercase and trimmed string separated by the given $delimiter. Delimiters
 are inserted before uppercase characters (with the exception of the first character of the
 string), and in place of spaces, dashes, and underscores. Alpha delimiters are not converted
@@ -480,13 +480,13 @@ echo (string)$str->delimit('#');
 // ac#me
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - $delimiter 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: endsWith
+## endsWith
 Returns true if the string ends with $substring, false otherwise. By default the comparison
 is case-sensitive, but can be made insensitive by setting $caseSensitive to false.
 
@@ -496,14 +496,14 @@ echo $str->endsWith('e/');
 // true
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $substring 
 - bool $caseSensitive 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: endsWithAny
+## endsWithAny
 Returns true if the string ends with any of $substrings, false otherwise. By default
 the comparison is case-sensitive, but can be made insensitive by setting $caseSensitive to false.
 
@@ -513,14 +513,14 @@ echo $str->endsWithAny(['foo', 'e/', 'bar']);
 // true
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - array $substrings 
 - bool $caseSensitive 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: ensureLeft
+## ensureLeft
 Check whether $prefix exists in the string, and prepend $prefix to the string if it doesn't.
 
 ```php
@@ -532,13 +532,13 @@ echo (string)$str->ensureLeft('/');
 // /Acme/
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $check 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: ensureRight
+## ensureRight
 Check whether $suffix exists in the string, and append $suffix to the string if it doesn't.
 
 ```php
@@ -548,13 +548,13 @@ $str = new Str('/Acme/');
 echo (string)$str->ensureRight('/'); // /Acme/
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $check 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: first
+## first
 Returns the first $length characters of the string.
 
 ```php
@@ -563,22 +563,22 @@ echo (string)$str->first(2);
 // /A
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - int $length 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: getString
+## getString
 
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - string 
 --------
-## :small_blue_diamond: hasLowerCase
+## hasLowerCase
 Returns true if the string contains a lower case char, false otherwise.
 
 ```php
@@ -587,13 +587,13 @@ echo $str->hasLowerCase();
 // true
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: hasPrefix
+## hasPrefix
 ## new
 
 Check if the string has $prefix at the start.
@@ -604,13 +604,13 @@ echo $str->hasPrefix('/');
 // true
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $prefix 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: hasSuffix
+## hasSuffix
 Check if the string has $suffix at the end.
 
 ```php
@@ -619,13 +619,13 @@ echo $str->hasSuffix('/');
 // true
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $suffix 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: hasUpperCase
+## hasUpperCase
 Returns true if the string contains an upper case char, false otherwise.
 
 ```php
@@ -634,13 +634,13 @@ echo $str->hasUpperCase();
 // true
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: htmlDecode
+## htmlDecode
 Convert all HTML entities to their applicable characters. An alias of html_entity_decode.
 For a list of flags, refer
 to [PHP documentation](http://php.net/manual/en/function.html-entity-decode.php).
@@ -651,13 +651,13 @@ echo (string)$str->htmlDecode();
 // <Acme>
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - int $flags 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: htmlEncode
+## htmlEncode
 Convert all applicable characters to HTML entities. An alias of htmlentities.
 Refer to [PHP documentation](http://php.net/manual/en/function.htmlentities.php)
 for a list of flags.
@@ -668,13 +668,13 @@ echo (string)$str->htmlEncode();
 // &lt;Acme&gt;
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - int $flags 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: humanize
+## humanize
 Capitalizes the first word of the string, replaces underscores with spaces.
 
 ```php
@@ -683,13 +683,13 @@ echo (string)$str->humanize();
 // Foo
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: indexOf
+## indexOf
 Returns the index of the first occurrence of $needle in the string, and -1 if not found.
 Accepts an optional $offset from which to begin the search.
 
@@ -699,14 +699,14 @@ echo $str->indexOf('m');
 // 4
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $needle 
 - int $offset 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - int 
 --------
-## :small_blue_diamond: indexOfLast
+## indexOfLast
 Returns the index of the last occurrence of $needle in the string, and false if not found.
 Accepts an optional $offset from which to begin the search. Offsets may be negative to
 count from the last character in the string.
@@ -717,14 +717,14 @@ echo $str->indexOfLast('m');
 // 5
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $needle 
 - int $offset 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - int 
 --------
-## :small_blue_diamond: insert
+## insert
 Inserts $substring into the string at the $index provided.
 
 ```php
@@ -733,14 +733,14 @@ echo (string)$str->insert('m', 3);
 // /Acme/
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $substring 
 - int $index 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: isAlpha
+## isAlpha
 Returns true if the string contains only alphabetic chars, false otherwise.
 
 ```php
@@ -749,13 +749,13 @@ echo $str->isAlpha();
 // true
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: isAlphanumeric
+## isAlphanumeric
 Returns true if the string contains only alphabetic and numeric chars, false otherwise.
 
 ```php
@@ -764,24 +764,24 @@ echo $str->isAlphanumeric();
 // true
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: isBase64
+## isBase64
 Check if this string is valid base64 encoded
 data. Function do encode(decode(s)) === s,
 so this is not so fast.
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: isBlank
+## isBlank
 Returns true if the string contains only whitespace chars, false otherwise.
 
 ```php
@@ -790,13 +790,13 @@ echo $str->isBlank();
 // false
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: isEmail
+## isEmail
 Splits the original string in pieces by '@' delimiter and returns
 true in case the resulting array consists of 2 parts.
 
@@ -806,13 +806,13 @@ echo $str->isEmail();
 // false
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: isHexadecimal
+## isHexadecimal
 Returns true if the string contains only hexadecimal chars, false otherwise.
 
 ```php
@@ -821,13 +821,13 @@ echo $str->isHexadecimal();
 // false
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: isIpV4
+## isIpV4
 Return true if this is valid ipv4 address
 
 ```php
@@ -836,13 +836,13 @@ echo $str->isIpV4();
 // true
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: isIpV6
+## isIpV6
 Return true if this is valid ipv6 address
 
 ```php
@@ -851,13 +851,13 @@ echo $str->isIpV6();
 // true
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: isJson
+## isJson
 Returns true if the string is JSON, false otherwise. Unlike json_decode in PHP 5.x,
 this method is consistent with PHP 7 and other JSON parsers, in that an empty string
 is not considered valid JSON.
@@ -868,13 +868,13 @@ echo $str->isJson();
 // false
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: isLowerCase
+## isLowerCase
 Returns true if the string contains only lower case chars, false otherwise.
 
 ```php
@@ -883,13 +883,13 @@ echo $str->isLowerCase();
 // false
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: isSerialized
+## isSerialized
 Returns true if the string is serialized, false otherwise.
 
 ```php
@@ -898,13 +898,13 @@ echo $str->isSerialized();
 // false
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: isUUIDv4
+## isUUIDv4
 It doesn't matter whether the given UUID has dashes.
 
 ```php
@@ -916,13 +916,13 @@ echo $str->isUUIDv4();
 // true
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: isUpperCase
+## isUpperCase
 Returns true if the string contains only upper case chars, false otherwise.
 
 ```php
@@ -931,13 +931,13 @@ echo $str->isUpperCase();
 // false
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: join
+## join
 Joins the original string with an array of other strings with the given $separator.
 
 ```php
@@ -946,14 +946,14 @@ echo $str->join('*', ['bar', 'baz']);
 // foo*bar*baz
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $separator 
 - array $otherStrings 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: last
+## last
 Returns the first $length characters of the string.
 
 ```php
@@ -962,13 +962,13 @@ echo (string)$str->last(2);
 // e/
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - int $length 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: length
+## length
 Returns the length of the string.
 
 ```php
@@ -977,13 +977,13 @@ echo $str->length();
 // 6
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - int 
 --------
-## :small_blue_diamond: lines
+## lines
 Splits on newlines and carriage returns, returning an array of strings
 corresponding to the lines in the string.
 
@@ -993,13 +993,13 @@ echo $str->lines();
 // ['Acme', 'Acme']
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - array 
 --------
-## :small_blue_diamond: longestCommonPrefix
+## longestCommonPrefix
 Returns the longest common prefix between the string and $otherStr.
 
 ```php
@@ -1008,13 +1008,13 @@ echo (string)$str->longestCommonPrefix('Accurate');
 // Ac
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $otherStr 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: longestCommonSubstring
+## longestCommonSubstring
 Returns the longest common substring between the string and $otherStr.
 In the case of ties, it returns that which occurs first.
 
@@ -1024,13 +1024,13 @@ echo (string)$str->longestCommonSubstring('meh');
 // me
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $otherStr 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: longestCommonSuffix
+## longestCommonSuffix
 Returns the longest common suffix between the string and $otherStr.
 
 ```php
@@ -1039,13 +1039,13 @@ echo (string)$str->longestCommonSuffix('Do believe me');
 // me
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $otherStr 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: lowerCaseFirst
+## lowerCaseFirst
 Converts the first character of the string to lower case.
 
 ```php
@@ -1054,13 +1054,13 @@ echo (string)$str->lowerCaseFirst();
 // acme Foo
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: make
+## make
 Create a new Str object using static method for it.
 
 ```php
@@ -1068,13 +1068,13 @@ $str = Str::make('Acme');
 echo (string)$str; // Acme
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $str 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: matchesPattern
+## matchesPattern
 Returns true if the string match regexp pattern
 
 ```php
@@ -1083,13 +1083,13 @@ echo $str->matchesPattern('.*aR');
 // true
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $pattern 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: move
+## move
 Move substring of desired $length to $destination index of the original string.
 In case $destination is less than $length returns the string untouched.
 
@@ -1099,15 +1099,15 @@ echo (string)$str->move(0, 2, 4);
 // cm/Ae/
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - int $start 
 - int $length 
 - int $destination 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: overwrite
+## overwrite
 Replaces substring in the original string of $length with given $substr.
 
 ```php
@@ -1116,15 +1116,15 @@ echo (string)$str->overwrite(0, 2, 'BAR');
 // BARcme/
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - int $start 
 - int $length 
 - string $substr 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: padBoth
+## padBoth
 Returns a new string of a given length such that both sides of the string are padded.
 
 ```php
@@ -1133,14 +1133,14 @@ echo (string)$str->padBoth(6, '/');
 // /Acme/
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - int $length 
 - string $padStr 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: padLeft
+## padLeft
 Returns a new string of a given length such that the beginning of the string is padded.
 
 ```php
@@ -1149,14 +1149,14 @@ echo (string)$str->padLeft(6, '/');
 // /Acme/
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - int $length 
 - string $padStr 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: padRight
+## padRight
 Returns a new string of a given length such that the end of the string is padded.
 
 ```php
@@ -1165,14 +1165,14 @@ echo (string)$str->padRight(6, '/');
 // /Acme/
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - int $length 
 - string $padStr 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: pop
+## pop
 Returns the substring of the string from the last occurrence of $delimiter to the end.
 
 ```php
@@ -1181,13 +1181,13 @@ echo $str->pop('/');
 // foo
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $delimiter 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: popReversed
+## popReversed
 Returns the substring of the original string from the beginning
 to the last occurrence of $delimiter.
 
@@ -1197,13 +1197,13 @@ echo $str->popReversed('/');
 // Acme/foo
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $delimiter 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: prepend
+## prepend
 Prepend $sub to the string.
 
 ```php
@@ -1212,13 +1212,13 @@ echo (string)$str->prepend('/');
 // /Acme/
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $sub 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: quote
+## quote
 Wraps each word in the string with specified $quote.
 
 ```php
@@ -1227,13 +1227,13 @@ echo $str->quote('*');
 // *foo* *bar* *baz*
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $quote 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: random
+## random
 Generates a random string consisting of $possibleChars, if specified, of given $size or
 random length between $size and $sizeMax. If $possibleChars is not specified, the generated string
 will consist of ASCII alphanumeric chars.
@@ -1247,15 +1247,15 @@ echo $str->random(3);
 // 1ho
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - int $size 
 - int $sizeMax 
 - string $possibleChars 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: regexReplace
+## regexReplace
 Replaces all occurrences of $pattern in the string by $replacement.
 An alias for mb_ereg_replace(). Note that the 'i' option with multi-byte patterns in
 mb_ereg_replace() requires PHP 5.6+ for correct results. This is due to a lack of support in
@@ -1267,15 +1267,15 @@ echo (string)$str->regexReplace('A', 'a');
 // acme Foo
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $pattern 
 - string $replacement 
 - string $options 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: removeLeft
+## removeLeft
 Returns the string with the prefix $substring removed, if present.
 
 ```php
@@ -1284,13 +1284,13 @@ echo (string)$str->removeLeft('/');
 // Acme/
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $substring 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: removeRight
+## removeRight
 Returns the string with the suffix $substring removed, if present.
 
 ```php
@@ -1299,13 +1299,13 @@ echo (string)$str->removeRight('/');
 // /Acme
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $substring 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: repeat
+## repeat
 Returns a repeated string given a $multiplier. An alias for str_repeat.
 
 ```php
@@ -1314,13 +1314,13 @@ echo (string)$str->repeat(2);
 // Acme/Acme/
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - int $multiplier 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: replace
+## replace
 Replaces all occurrences of $old in the string by $new.
 
 ```php
@@ -1329,14 +1329,14 @@ echo (string)$str->replace('/', '#');
 // #Acme#
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $old 
 - string $new 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: replaceWithLimit
+## replaceWithLimit
 Replace returns a copy of the string s with the first n non-overlapping instances of
 old replaced by new. If old is empty, it matches at the beginning of the string and
 after each UTF-8 sequence, yielding up to k+1 replacements for a k-rune string.
@@ -1348,15 +1348,15 @@ echo (string)$str->replaceWithLimit('/', '#', 1);
 // #Acme/
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $old 
 - string $new 
 - int $limit 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: reverse
+## reverse
 Returns a reversed string. A multi-byte version of strrev().
 
 ```php
@@ -1365,13 +1365,13 @@ echo (string)$str->reverse();
 // /emcA/
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: safeTruncate
+## safeTruncate
 Truncates the string to a given $length, while ensuring that it does not split words.
 If $substring is provided, and truncating occurs, the string is further truncated
 so that the $substring may be appended without exceeding the desired length.
@@ -1382,14 +1382,14 @@ echo (string)$str->safeTruncate(22, '...');
 // What are your plans...
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - int $length 
 - string $substring 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: shift
+## shift
 Returns the substring of the original string from beginning to the first occurrence
 of $delimiter.
 
@@ -1399,13 +1399,13 @@ echo $str->shift('/');
 // Acme
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $delimiter 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: shiftReversed
+## shiftReversed
 Returns the substring of the original string from the first occurrence of $delimiter to the end.
 
 ```php
@@ -1414,13 +1414,13 @@ echo $str->shiftReversed('/');
 // foo/bar
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $delimiter 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: shuffle
+## shuffle
 A multi-byte str_shuffle() function. It returns a string with its characters in random order.
 
 ```php
@@ -1429,13 +1429,13 @@ echo (string)$str->shuffle();
 // mAe//c
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: slice
+## slice
 Returns the substring beginning at $start, and up to, but not including the index
 specified by $end. If $end is omitted, the function extracts the remaining string.
 If $end is negative, it is computed from the end of the string.
@@ -1446,14 +1446,14 @@ echo (string)$str->slice(2);
 // me
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - int $start 
 - int|null $end 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: slugify
+## slugify
 Converts the string into an URL slug. This includes replacing non-ASCII characters with
 their closest ASCII equivalents, removing remaining non-ASCII and non-alphanumeric characters,
 and replacing whitespace with $replacement. The $replacement defaults to a single dash, and
@@ -1466,14 +1466,14 @@ echo (string)$str->slugify();
 // acme-foo-bar
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $replacement 
 - string $language 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: snakeize
+## snakeize
 Returns a snake_case version of the string.
 
 ```php
@@ -1482,13 +1482,13 @@ echo (string)$str->snakeize();
 // foo_bar
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: split
+## split
 Splits the string with the provided $pattern, returning an array of strings.
 An optional integer $limit will truncate the results.
 
@@ -1498,14 +1498,14 @@ echo $str->split('#', 1);
 // ['Acme']
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $pattern 
 - int $limit 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - array 
 --------
-## :small_blue_diamond: startsWith
+## startsWith
 Returns true if the string begins with $substring, false otherwise. By default
 the comparison is case-sensitive, but can be made insensitive by setting $caseSensitive to false.
 
@@ -1515,14 +1515,14 @@ echo $str->startsWith('/A');
 // true
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $substring 
 - bool $caseSensitive 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: startsWithAny
+## startsWithAny
 Returns true if the string begins with any of $substrings, false otherwise. By default
 the comparison is case-sensitive, but can be made insensitive by setting $caseSensitive to false.
 
@@ -1532,14 +1532,14 @@ echo $str->startsWithAny(['foo', '/A', 'bar']);
 // true
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - array $substrings 
 - bool $caseSensitive 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: stripWhitespace
+## stripWhitespace
 Strip all whitespace characters. This includes tabs and newline characters,
 as well as multi-byte whitespace such as the thin space and ideographic space.
 
@@ -1549,13 +1549,13 @@ echo (string)$str->stripWhitespace();
 // Acmefoo
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: substr
+## substr
 Returns the substring beginning at $start with the specified $length.
 It differs from the mb_substr() function in that providing a $length of 0 will
 return the rest of the string, rather than an empty string.
@@ -1566,14 +1566,14 @@ echo (string)$str->substr(1, 4);
 // Acme
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - int $start 
 - int $length 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: surround
+## surround
 Surrounds the string with the given $substring.
 
 ```php
@@ -1582,13 +1582,13 @@ echo (string)$str->surround('/');
 // /Acme/
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $substring 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: swapCase
+## swapCase
 Returns a case swapped version of the string.
 
 ```php
@@ -1597,13 +1597,13 @@ echo (string)$str->swapCase();
 // FOoBarBaZ
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: tidy
+## tidy
 Returns a string with smart quotes, ellipsis characters, and dashes from Windows-1252
 (commonly used in Word documents) replaced by their ASCII equivalents.
 
@@ -1613,13 +1613,13 @@ echo (string)$str->tidy();
 // "I see..."
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: titleize
+## titleize
 Returns a trimmed string with the first letter of each word capitalized.
 Also accepts an array, $ignore, allowing you to list words not to be capitalized.
 
@@ -1629,13 +1629,13 @@ echo (string)$str->titleize(['at', 'to', 'the']);
 // I Like to Watch Dvds at Home
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - array $ignore 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: toAscii
+## toAscii
 Returns an ASCII version of the string. A set of non-ASCII characters are replaced with
 their closest ASCII counterparts, and the rest are removed by default. The $language or
 locale of the source string can be supplied for language-specific transliteration in
@@ -1648,14 +1648,14 @@ echo (string)$str->toAscii();
 // Acme
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $language 
 - bool $removeUnsupported 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: toBoolean
+## toBoolean
 Returns a boolean representation of the given logical string value. For example,
 'true', '1', 'on' and 'yes' will return true. 'false', '0', 'off', and 'no' will
 return false. In all instances, case is ignored. For other numeric strings, their
@@ -1669,13 +1669,13 @@ echo $str->toBoolean();
 // true
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - bool 
 --------
-## :small_blue_diamond: toLowerCase
+## toLowerCase
 Make the string lowercase.
 
 ```php
@@ -1684,13 +1684,13 @@ echo (string)$str->toLowerCase();
 // /acme/
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: toSpaces
+## toSpaces
 Converts each tab in the string to some number of spaces, as defined by $tabLength.
 By default, each tab is converted to 4 consecutive spaces.
 
@@ -1700,13 +1700,13 @@ echo (string)$str->toSpaces(0);
 // foobar
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - int $tabLength 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: toTabs
+## toTabs
 Converts each occurrence of some consecutive number of spaces, as defined by $tabLength,
 to a tab. By default, each 4 consecutive spaces are converted to a tab.
 
@@ -1716,13 +1716,13 @@ echo (string)$str->toTabs();
 // foo    bar
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - int $tabLength 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: toTitleCase
+## toTitleCase
 Converts the first character of each word in the string to uppercase.
 
 ```php
@@ -1731,13 +1731,13 @@ echo (string)$str->toTitleCase();
 // Foo Bar Baz
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: toUpperCase
+## toUpperCase
 Make the string uppercase.
 
 ```php
@@ -1746,13 +1746,13 @@ echo (string)$str->toUpperCase();
 // /ACME/
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: trim
+## trim
 Returns a string with whitespace removed from the start and end of the string.
 Supports the removal of unicode whitespace. Accepts an optional string of characters
 to strip instead of the defaults.
@@ -1763,13 +1763,13 @@ echo (string)$str->trim('/');
 // Acme
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $chars 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: trimLeft
+## trimLeft
 Returns a string with whitespace removed from the start of the string.
 Supports the removal of unicode whitespace. Accepts an optional string of characters
 to strip instead of the defaults.
@@ -1780,13 +1780,13 @@ echo (string)$str->trimLeft('/');
 // Acme/
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $chars 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: trimRight
+## trimRight
 Returns a string with whitespace removed from the end of the string.
 Supports the removal of unicode whitespace. Accepts an optional string of characters
 to strip instead of the defaults.
@@ -1797,13 +1797,13 @@ echo (string)$str->trimRight('/');
 // /Acme
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $chars 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: truncate
+## truncate
 Truncates the string to a given $length. If $substring is provided, and truncating
 occurs, the string is further truncated so that the substring may be appended
 without exceeding the desired length.
@@ -1814,14 +1814,14 @@ echo (string)$str->truncate(19, '...');
 // What are your pl...
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - int $length 
 - string $substring 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: underscored
+## underscored
 Returns a lowercase and trimmed string separated by underscores. Underscores
 are inserted before uppercase characters (with the exception of the first
 character of the string), and in place of spaces as well as dashes.
@@ -1832,13 +1832,13 @@ echo (string)$str->underscored();
 // foo_bar_baz
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: unquote
+## unquote
 Unwraps each word in the original string, deleting the specified $quote.
 
 ```php
@@ -1847,13 +1847,13 @@ echo $str->unquote('*');
 // foo bar baz
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 - string $quote 
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: upperCamelize
+## upperCamelize
 Returns an UpperCamelCase version of the string. It trims surrounding spaces,
 capitalizes letters following digits, spaces, dashes and underscores,
 and removes spaces, dashes, underscores.
@@ -1864,13 +1864,13 @@ echo (string)$str->upperCamelize();
 // FooBarBaz
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: upperCaseFirst
+## upperCaseFirst
 Converts the first character of the string to upper case.
 
 ```php
@@ -1879,13 +1879,13 @@ echo (string)$str->upperCaseFirst();
 // Acme foo
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - \Str 
 --------
-## :small_blue_diamond: words
+## words
 Splits on whitespace, returning an array of strings corresponding to the words in the string.
 
 ```php
@@ -1894,10 +1894,10 @@ echo $str->words();
 // ['foo', 'bar', 'baz']
 ```
 
-**Parameters:**
+**:small_blue_diamond: Parameters:**
 __nothing__
 
-**Return:**
+**:small_blue_diamond: Return:**
 - array 
 --------
 
