@@ -1,6 +1,6 @@
 {
     "name": "str/str",
-    "description": "A fast string manipulation library with multibyte support. Based on danielstjules/Stringy, with focus on speed.",
+    "description": "A fast modern string manipulation library with multibyte support. Based on Stringy, with focus on speed.",
     "homepage": "https://github.com/fe3dback/str",
     "license": "MIT",
     "authors": [
@@ -38,6 +38,7 @@
         "phpunit/phpunit": "^7.1",
         "danielstjules/stringy": "3.1",
         "php-coveralls/php-coveralls": "2.1.0",
-        "ramsey/uuid": "^3.0"
+        "ramsey/uuid": "^3.0",
+        "phpdocumentor/reflection-docblock": "^4.3"
     }
 }
