@@ -38,8 +38,7 @@ $templateMethodReturn = <<<RAW
 - %return%
 RAW;
 $templateMethod = <<<RAW
-## %name%
-
+## :small_blue_diamond: %name%
 %description%
 
 **Parameters:**
@@ -114,7 +113,9 @@ foreach ($reflection->getMethods() as $method) {
     $methodIndexTemplate = new TemplateFormatter($templateIndexLink);
     $methodIndexTemplate->set('title', $method->getShortName());
     $methodIndexTemplate->set('href', \Str\Str::make((string) $method->getShortName())
-        ->dasherize()
+        ->toLowerCase()
+        ->trim()
+        ->stripWhitespace()
         ->prepend('#')
         ->getString()
     );
@@ -152,9 +153,12 @@ foreach ($reflection->getMethods() as $method) {
         $methodTemplate->set('return', '__void__');
     }
 
-    $functionsDocumentation[] = $methodTemplate->format();
+    $functionsDocumentation[$method->getShortName()] = $methodTemplate->format();
     $functionsIndex[$method->getShortName()] = $methodIndexTemplate->format();
 }
+
+ksort($functionsDocumentation);
+$functionsDocumentation = array_values($functionsDocumentation);
 
 ksort($functionsIndex);
 $functionsIndex = array_values($functionsIndex);
