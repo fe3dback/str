@@ -4,8 +4,6 @@
 [![Coverage Status](https://coveralls.io/repos/github/fe3dback/str/badge.svg?branch=master)](https://coveralls.io/github/fe3dback/str?branch=master)
 [![BCH compliance](https://bettercodehub.com/edge/badge/fe3dback/str?branch=master)](https://bettercodehub.com/)
 
-![str/str](/docs/index/str.png)
-
 ```php
 $str = new Str('Hello, 世界');
 $str->last(2); // 世界

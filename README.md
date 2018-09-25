@@ -1,10 +1,10 @@
 ## About
 
+# str/str
+
 [![Build Status](https://travis-ci.org/fe3dback/str.svg?branch=master)](https://travis-ci.org/fe3dback/str) 
 [![Coverage Status](https://coveralls.io/repos/github/fe3dback/str/badge.svg?branch=master)](https://coveralls.io/github/fe3dback/str?branch=master)
 [![BCH compliance](https://bettercodehub.com/edge/badge/fe3dback/str?branch=master)](https://bettercodehub.com/)
-
-# str/str
 
 ```php
 $str = new Str('Hello, 世界');
@@ -21,6 +21,7 @@ $send = function (string $s) {};
 $send((string)$str); // same
 $send($str->getString()); // same
 ```
+
 
 ---------------------
 
@@ -51,16 +52,20 @@ strongly typed). The code is completely covered by unit tests.
 ---------------------
 
 ## Functions Index:
-- <a href="#__construct">__construct</a>
-- <a href="#__tostring">__toString</a>
+
+A
 - <a href="#afterfirst">afterFirst</a>
 - <a href="#afterlast">afterLast</a>
 - <a href="#append">append</a>
 - <a href="#appenduniqueidentifier">appendUniqueIdentifier</a>
 - <a href="#at">at</a>
+
+B
 - <a href="#beforefirst">beforeFirst</a>
 - <a href="#beforelast">beforeLast</a>
 - <a href="#between">between</a>
+
+C
 - <a href="#camelize">camelize</a>
 - <a href="#chars">chars</a>
 - <a href="#chop">chop</a>
@@ -69,14 +74,24 @@ strongly typed). The code is completely covered by unit tests.
 - <a href="#containsall">containsAll</a>
 - <a href="#containsany">containsAny</a>
 - <a href="#countsubstr">countSubstr</a>
+
+D
 - <a href="#dasherize">dasherize</a>
 - <a href="#delimit">delimit</a>
+
+E
 - <a href="#endswith">endsWith</a>
 - <a href="#endswithany">endsWithAny</a>
 - <a href="#ensureleft">ensureLeft</a>
 - <a href="#ensureright">ensureRight</a>
+
+F
 - <a href="#first">first</a>
+
+G
 - <a href="#getstring">getString</a>
+
+H
 - <a href="#haslowercase">hasLowerCase</a>
 - <a href="#hasprefix">hasPrefix</a>
 - <a href="#hassuffix">hasSuffix</a>
@@ -84,6 +99,8 @@ strongly typed). The code is completely covered by unit tests.
 - <a href="#htmldecode">htmlDecode</a>
 - <a href="#htmlencode">htmlEncode</a>
 - <a href="#humanize">humanize</a>
+
+I
 - <a href="#indexof">indexOf</a>
 - <a href="#indexoflast">indexOfLast</a>
 - <a href="#insert">insert</a>
@@ -100,7 +117,11 @@ strongly typed). The code is completely covered by unit tests.
 - <a href="#isserialized">isSerialized</a>
 - <a href="#isuuidv4">isUUIDv4</a>
 - <a href="#isuppercase">isUpperCase</a>
+
+J
 - <a href="#join">join</a>
+
+L
 - <a href="#last">last</a>
 - <a href="#length">length</a>
 - <a href="#lines">lines</a>
@@ -108,17 +129,27 @@ strongly typed). The code is completely covered by unit tests.
 - <a href="#longestcommonsubstring">longestCommonSubstring</a>
 - <a href="#longestcommonsuffix">longestCommonSuffix</a>
 - <a href="#lowercasefirst">lowerCaseFirst</a>
+
+M
 - <a href="#make">make</a>
 - <a href="#matchespattern">matchesPattern</a>
 - <a href="#move">move</a>
+
+O
 - <a href="#overwrite">overwrite</a>
+
+P
 - <a href="#padboth">padBoth</a>
 - <a href="#padleft">padLeft</a>
 - <a href="#padright">padRight</a>
 - <a href="#pop">pop</a>
 - <a href="#popreversed">popReversed</a>
 - <a href="#prepend">prepend</a>
+
+Q
 - <a href="#quote">quote</a>
+
+R
 - <a href="#random">random</a>
 - <a href="#regexreplace">regexReplace</a>
 - <a href="#removeleft">removeLeft</a>
@@ -127,6 +158,8 @@ strongly typed). The code is completely covered by unit tests.
 - <a href="#replace">replace</a>
 - <a href="#replacewithlimit">replaceWithLimit</a>
 - <a href="#reverse">reverse</a>
+
+S
 - <a href="#safetruncate">safeTruncate</a>
 - <a href="#shift">shift</a>
 - <a href="#shiftreversed">shiftReversed</a>
@@ -141,6 +174,8 @@ strongly typed). The code is completely covered by unit tests.
 - <a href="#substr">substr</a>
 - <a href="#surround">surround</a>
 - <a href="#swapcase">swapCase</a>
+
+T
 - <a href="#tidy">tidy</a>
 - <a href="#titleize">titleize</a>
 - <a href="#toascii">toAscii</a>
@@ -154,31 +189,18 @@ strongly typed). The code is completely covered by unit tests.
 - <a href="#trimleft">trimLeft</a>
 - <a href="#trimright">trimRight</a>
 - <a href="#truncate">truncate</a>
+
+U
 - <a href="#underscored">underscored</a>
 - <a href="#unquote">unquote</a>
 - <a href="#uppercamelize">upperCamelize</a>
 - <a href="#uppercasefirst">upperCaseFirst</a>
+
+W
 - <a href="#words">words</a>
 
+
 ## Functions List:
-## __construct
-
-
-**:small_blue_diamond: Parameters:**
-- string $str 
-
-**:small_blue_diamond: Return:**
-__void__
---------
-## __toString
-
-
-**:small_blue_diamond: Parameters:**
-__nothing__
-
-**:small_blue_diamond: Return:**
-- string 
---------
 ## afterFirst
 Inserts given $substr $times into the original string after
 the first occurrence of $needle.
@@ -189,12 +211,12 @@ echo (string)$str->afterFirst('a', 'duh', 2);
 // foo baduhduhr baz
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $needle 
 - string $substr 
 - int $times 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## afterLast
@@ -207,12 +229,12 @@ echo (string)$str->afterLast('a', 'duh', 2);
 // foo bar baduhduhz
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $needle 
 - string $substr 
 - int $times 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## append
@@ -224,10 +246,10 @@ echo (string)$str->append('/');
 // /Acme/
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $sub 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## appendUniqueIdentifier
@@ -240,12 +262,12 @@ echo $str->appendUniqueIdentifier(3, -1, 'foba_rz');
 // foozro
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - int $size 
 - int $sizeMax 
 - string $possibleChars 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## at
@@ -257,10 +279,10 @@ echo (string)$str->at(2);
 // c
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - int $pos 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## beforeFirst
@@ -273,12 +295,12 @@ echo (string)$str->beforeFirst('a', 'duh');
 // foo bduhar baz
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $needle 
 - string $substr 
 - int $times 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## beforeLast
@@ -291,12 +313,12 @@ echo (string)$str->beforeLast('a', 'duh');
 // foo bar bduhaz
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $needle 
 - string $substr 
 - int $times 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## between
@@ -309,12 +331,12 @@ echo (string)$str->between('/', '/');
 // Acme
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $start 
 - string $end 
 - int $offset 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## camelize
@@ -328,10 +350,10 @@ echo (string)$str->camelize();
 // acMe
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## chars
@@ -343,10 +365,10 @@ echo (string)$str->chars();
 // ['/', 'A', 'c', 'm', 'e', '/']
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - array 
 --------
 ## chop
@@ -358,10 +380,10 @@ echo $str->chop(2);
 // ['fo', 'o ', 'ba', 'r ', 'ba', 'z']
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - int $step 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - array 
 --------
 ## collapseWhitespace
@@ -375,10 +397,10 @@ echo (string)$str->collapseWhitespace();
 // foo bar baz
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## contains
@@ -393,11 +415,11 @@ echo $str->contains('a', false);
 // true
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $needle 
 - bool $caseSensitive 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## containsAll
@@ -410,11 +432,11 @@ echo $str->containsAll(['m', 'c', '/']);
 // true
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - array $needles 
 - bool $caseSensitive 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## containsAny
@@ -427,11 +449,11 @@ echo $str->containsAny(['foo', 'c', 'bar']);
 // true
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - array $needles 
 - bool $caseSensitive 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## countSubstr
@@ -444,11 +466,11 @@ echo $str->countSubstr('m');
 // 2
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $needle 
 - bool $caseSensitive 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - int 
 --------
 ## dasherize
@@ -462,10 +484,10 @@ echo (string)$str->dasherize();
 // ac-me
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## delimit
@@ -480,10 +502,10 @@ echo (string)$str->delimit('#');
 // ac#me
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - $delimiter 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## endsWith
@@ -496,11 +518,11 @@ echo $str->endsWith('e/');
 // true
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $substring 
 - bool $caseSensitive 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## endsWithAny
@@ -513,11 +535,11 @@ echo $str->endsWithAny(['foo', 'e/', 'bar']);
 // true
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - array $substrings 
 - bool $caseSensitive 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## ensureLeft
@@ -532,10 +554,10 @@ echo (string)$str->ensureLeft('/');
 // /Acme/
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $check 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## ensureRight
@@ -548,10 +570,10 @@ $str = new Str('/Acme/');
 echo (string)$str->ensureRight('/'); // /Acme/
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $check 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## first
@@ -563,19 +585,19 @@ echo (string)$str->first(2);
 // /A
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - int $length 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## getString
 
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - string 
 --------
 ## hasLowerCase
@@ -587,10 +609,10 @@ echo $str->hasLowerCase();
 // true
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## hasPrefix
@@ -604,10 +626,10 @@ echo $str->hasPrefix('/');
 // true
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $prefix 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## hasSuffix
@@ -619,10 +641,10 @@ echo $str->hasSuffix('/');
 // true
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $suffix 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## hasUpperCase
@@ -634,10 +656,10 @@ echo $str->hasUpperCase();
 // true
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## htmlDecode
@@ -651,10 +673,10 @@ echo (string)$str->htmlDecode();
 // <Acme>
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - int $flags 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## htmlEncode
@@ -668,10 +690,10 @@ echo (string)$str->htmlEncode();
 // &lt;Acme&gt;
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - int $flags 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## humanize
@@ -683,10 +705,10 @@ echo (string)$str->humanize();
 // Foo
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## indexOf
@@ -699,11 +721,11 @@ echo $str->indexOf('m');
 // 4
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $needle 
 - int $offset 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - int 
 --------
 ## indexOfLast
@@ -717,11 +739,11 @@ echo $str->indexOfLast('m');
 // 5
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $needle 
 - int $offset 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - int 
 --------
 ## insert
@@ -733,11 +755,11 @@ echo (string)$str->insert('m', 3);
 // /Acme/
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $substring 
 - int $index 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## isAlpha
@@ -749,10 +771,10 @@ echo $str->isAlpha();
 // true
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## isAlphanumeric
@@ -764,10 +786,10 @@ echo $str->isAlphanumeric();
 // true
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## isBase64
@@ -775,10 +797,10 @@ Check if this string is valid base64 encoded
 data. Function do encode(decode(s)) === s,
 so this is not so fast.
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## isBlank
@@ -790,10 +812,10 @@ echo $str->isBlank();
 // false
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## isEmail
@@ -806,10 +828,10 @@ echo $str->isEmail();
 // false
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## isHexadecimal
@@ -821,10 +843,10 @@ echo $str->isHexadecimal();
 // false
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## isIpV4
@@ -836,10 +858,10 @@ echo $str->isIpV4();
 // true
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## isIpV6
@@ -851,10 +873,10 @@ echo $str->isIpV6();
 // true
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## isJson
@@ -868,10 +890,10 @@ echo $str->isJson();
 // false
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## isLowerCase
@@ -883,10 +905,10 @@ echo $str->isLowerCase();
 // false
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## isSerialized
@@ -898,10 +920,10 @@ echo $str->isSerialized();
 // false
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## isUUIDv4
@@ -916,10 +938,10 @@ echo $str->isUUIDv4();
 // true
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## isUpperCase
@@ -931,10 +953,10 @@ echo $str->isUpperCase();
 // false
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## join
@@ -946,11 +968,11 @@ echo $str->join('*', ['bar', 'baz']);
 // foo*bar*baz
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $separator 
 - array $otherStrings 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## last
@@ -962,10 +984,10 @@ echo (string)$str->last(2);
 // e/
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - int $length 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## length
@@ -977,10 +999,10 @@ echo $str->length();
 // 6
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - int 
 --------
 ## lines
@@ -993,10 +1015,10 @@ echo $str->lines();
 // ['Acme', 'Acme']
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - array 
 --------
 ## longestCommonPrefix
@@ -1008,10 +1030,10 @@ echo (string)$str->longestCommonPrefix('Accurate');
 // Ac
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $otherStr 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## longestCommonSubstring
@@ -1024,10 +1046,10 @@ echo (string)$str->longestCommonSubstring('meh');
 // me
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $otherStr 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## longestCommonSuffix
@@ -1039,10 +1061,10 @@ echo (string)$str->longestCommonSuffix('Do believe me');
 // me
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $otherStr 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## lowerCaseFirst
@@ -1054,10 +1076,10 @@ echo (string)$str->lowerCaseFirst();
 // acme Foo
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## make
@@ -1068,10 +1090,10 @@ $str = Str::make('Acme');
 echo (string)$str; // Acme
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $str 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## matchesPattern
@@ -1083,10 +1105,10 @@ echo $str->matchesPattern('.*aR');
 // true
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $pattern 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## move
@@ -1099,12 +1121,12 @@ echo (string)$str->move(0, 2, 4);
 // cm/Ae/
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - int $start 
 - int $length 
 - int $destination 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## overwrite
@@ -1116,12 +1138,12 @@ echo (string)$str->overwrite(0, 2, 'BAR');
 // BARcme/
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - int $start 
 - int $length 
 - string $substr 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## padBoth
@@ -1133,11 +1155,11 @@ echo (string)$str->padBoth(6, '/');
 // /Acme/
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - int $length 
 - string $padStr 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## padLeft
@@ -1149,11 +1171,11 @@ echo (string)$str->padLeft(6, '/');
 // /Acme/
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - int $length 
 - string $padStr 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## padRight
@@ -1165,11 +1187,11 @@ echo (string)$str->padRight(6, '/');
 // /Acme/
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - int $length 
 - string $padStr 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## pop
@@ -1181,10 +1203,10 @@ echo $str->pop('/');
 // foo
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $delimiter 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## popReversed
@@ -1197,10 +1219,10 @@ echo $str->popReversed('/');
 // Acme/foo
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $delimiter 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## prepend
@@ -1212,10 +1234,10 @@ echo (string)$str->prepend('/');
 // /Acme/
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $sub 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## quote
@@ -1227,10 +1249,10 @@ echo $str->quote('*');
 // *foo* *bar* *baz*
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $quote 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## random
@@ -1247,12 +1269,12 @@ echo $str->random(3);
 // 1ho
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - int $size 
 - int $sizeMax 
 - string $possibleChars 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## regexReplace
@@ -1267,12 +1289,12 @@ echo (string)$str->regexReplace('A', 'a');
 // acme Foo
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $pattern 
 - string $replacement 
 - string $options 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## removeLeft
@@ -1284,10 +1306,10 @@ echo (string)$str->removeLeft('/');
 // Acme/
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $substring 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## removeRight
@@ -1299,10 +1321,10 @@ echo (string)$str->removeRight('/');
 // /Acme
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $substring 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## repeat
@@ -1314,10 +1336,10 @@ echo (string)$str->repeat(2);
 // Acme/Acme/
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - int $multiplier 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## replace
@@ -1329,11 +1351,11 @@ echo (string)$str->replace('/', '#');
 // #Acme#
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $old 
 - string $new 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## replaceWithLimit
@@ -1348,12 +1370,12 @@ echo (string)$str->replaceWithLimit('/', '#', 1);
 // #Acme/
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $old 
 - string $new 
 - int $limit 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## reverse
@@ -1365,10 +1387,10 @@ echo (string)$str->reverse();
 // /emcA/
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## safeTruncate
@@ -1382,11 +1404,11 @@ echo (string)$str->safeTruncate(22, '...');
 // What are your plans...
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - int $length 
 - string $substring 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## shift
@@ -1399,10 +1421,10 @@ echo $str->shift('/');
 // Acme
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $delimiter 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## shiftReversed
@@ -1414,10 +1436,10 @@ echo $str->shiftReversed('/');
 // foo/bar
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $delimiter 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## shuffle
@@ -1429,10 +1451,10 @@ echo (string)$str->shuffle();
 // mAe//c
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## slice
@@ -1446,11 +1468,11 @@ echo (string)$str->slice(2);
 // me
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - int $start 
 - int|null $end 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## slugify
@@ -1466,11 +1488,11 @@ echo (string)$str->slugify();
 // acme-foo-bar
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $replacement 
 - string $language 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## snakeize
@@ -1482,10 +1504,10 @@ echo (string)$str->snakeize();
 // foo_bar
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## split
@@ -1498,11 +1520,11 @@ echo $str->split('#', 1);
 // ['Acme']
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $pattern 
 - int $limit 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - array 
 --------
 ## startsWith
@@ -1515,11 +1537,11 @@ echo $str->startsWith('/A');
 // true
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $substring 
 - bool $caseSensitive 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## startsWithAny
@@ -1532,11 +1554,11 @@ echo $str->startsWithAny(['foo', '/A', 'bar']);
 // true
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - array $substrings 
 - bool $caseSensitive 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## stripWhitespace
@@ -1549,10 +1571,10 @@ echo (string)$str->stripWhitespace();
 // Acmefoo
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## substr
@@ -1566,11 +1588,11 @@ echo (string)$str->substr(1, 4);
 // Acme
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - int $start 
 - int $length 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## surround
@@ -1582,10 +1604,10 @@ echo (string)$str->surround('/');
 // /Acme/
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $substring 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## swapCase
@@ -1597,10 +1619,10 @@ echo (string)$str->swapCase();
 // FOoBarBaZ
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## tidy
@@ -1613,10 +1635,10 @@ echo (string)$str->tidy();
 // "I see..."
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## titleize
@@ -1629,10 +1651,10 @@ echo (string)$str->titleize(['at', 'to', 'the']);
 // I Like to Watch Dvds at Home
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - array $ignore 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## toAscii
@@ -1648,11 +1670,11 @@ echo (string)$str->toAscii();
 // Acme
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $language 
 - bool $removeUnsupported 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## toBoolean
@@ -1669,10 +1691,10 @@ echo $str->toBoolean();
 // true
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - bool 
 --------
 ## toLowerCase
@@ -1684,10 +1706,10 @@ echo (string)$str->toLowerCase();
 // /acme/
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## toSpaces
@@ -1700,10 +1722,10 @@ echo (string)$str->toSpaces(0);
 // foobar
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - int $tabLength 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## toTabs
@@ -1716,10 +1738,10 @@ echo (string)$str->toTabs();
 // foo    bar
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - int $tabLength 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## toTitleCase
@@ -1731,10 +1753,10 @@ echo (string)$str->toTitleCase();
 // Foo Bar Baz
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## toUpperCase
@@ -1746,10 +1768,10 @@ echo (string)$str->toUpperCase();
 // /ACME/
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## trim
@@ -1763,10 +1785,10 @@ echo (string)$str->trim('/');
 // Acme
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $chars 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## trimLeft
@@ -1780,10 +1802,10 @@ echo (string)$str->trimLeft('/');
 // Acme/
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $chars 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## trimRight
@@ -1797,10 +1819,10 @@ echo (string)$str->trimRight('/');
 // /Acme
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $chars 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## truncate
@@ -1814,11 +1836,11 @@ echo (string)$str->truncate(19, '...');
 // What are your pl...
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - int $length 
 - string $substring 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## underscored
@@ -1832,10 +1854,10 @@ echo (string)$str->underscored();
 // foo_bar_baz
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## unquote
@@ -1847,10 +1869,10 @@ echo $str->unquote('*');
 // foo bar baz
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 - string $quote 
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## upperCamelize
@@ -1864,10 +1886,10 @@ echo (string)$str->upperCamelize();
 // FooBarBaz
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## upperCaseFirst
@@ -1879,10 +1901,10 @@ echo (string)$str->upperCaseFirst();
 // Acme foo
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - \Str 
 --------
 ## words
@@ -1894,10 +1916,10 @@ echo $str->words();
 // ['foo', 'bar', 'baz']
 ```
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 __nothing__
 
-**:small_blue_diamond: Return:**
+**Return:**
 - array 
 --------
 

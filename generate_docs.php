@@ -41,10 +41,10 @@ $templateMethod = <<<RAW
 ## %name%
 %description%
 
-**:small_blue_diamond: Parameters:**
+**Parameters:**
 %params%
 
-**:small_blue_diamond: Return:**
+**Return:**
 %return%
 --------
 RAW;
@@ -108,6 +108,10 @@ foreach ($reflection->getMethods() as $method) {
         continue;
     }
 
+    if (\Str\Str::make($method->getShortName())->startsWith('_')) {
+        continue;
+    }
+
     $doc = $factory->create($method->getDocComment());
 
     $methodIndexTemplate = new TemplateFormatter($templateIndexLink);
@@ -161,13 +165,28 @@ ksort($functionsDocumentation);
 $functionsDocumentation = array_values($functionsDocumentation);
 
 ksort($functionsIndex);
-$functionsIndex = array_values($functionsIndex);
 
 // -------------------------------------
 
 $documentTemplate = new TemplateFormatter($templateDocument);
 $documentTemplate->set('__functions_list__', implode("\n", $functionsDocumentation));
-$documentTemplate->set('__functions_index__', implode("\n", $functionsIndex));
+
+$indexLastChar = null;
+$indexStrResult = '';
+foreach ($functionsIndex as $_index => $_template) {
+    $char = \Str\Str::make((string) $_index)
+        ->first(1)
+        ->toUpperCase();
+
+    if ($indexLastChar !== $char->getString()) {
+        $indexLastChar = $char->getString();
+        $indexStrResult .= sprintf("\n%s\n", $indexLastChar);
+    }
+
+    $indexStrResult .= sprintf("%s\n", $_template);
+}
+
+$documentTemplate->set('__functions_index__', $indexStrResult);
 
 $directoryIterator = new RecursiveDirectoryIterator(__DIR__.'/docs/index');
 $iterator = new IteratorIterator($directoryIterator);
