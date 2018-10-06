@@ -968,6 +968,9 @@ class StrFullTest extends TestCase
             [true, 'FOO bars', 'o BARs', false],
             [true, 'FÒÔ bàřs', 'ô bàřs', false],
             [true, 'fòô bàřs', 'ô BÀŘs', false],
+            [false, 'ПриветМир.xlsx', 'xlsx2', false],
+            [true, 'ПриветМир.xlsx', 'xlsx', false],
+            [false, 'ПриветМир.xls', 'xlsx', false],
             [false, 'foo bar', 'foo'],
             [false, 'foo bar', 'foo bars'],
             [false, 'FOO bar', 'foo bars'],
@@ -1916,7 +1919,9 @@ class StrFullTest extends TestCase
         $result = $s->lines();
         $expectedCount = count($expected);
 
-        if ($expectedCount === 0) { $this->assertEmpty($result); }
+        if ($expectedCount === 0) {
+            $this->assertEmpty($result);
+        }
 
         for ($i = 0; $i < $expectedCount; $i++) {
             $this->assertEquals($expected[$i], $result[$i]);
@@ -2783,7 +2788,9 @@ class StrFullTest extends TestCase
         $result = $s->words();
         $expectedCount = count($expected);
 
-        if ($expectedCount === 0) { $this->assertEmpty($result); }
+        if ($expectedCount === 0) {
+            $this->assertEmpty($result);
+        }
 
         for ($i = 0; $i < $expectedCount; $i++) {
             $this->assertEquals($expected[$i], $result[$i]);

@@ -35,7 +35,7 @@
     "minimum-stability": "stable",
     "require-dev": {
         "phpbench/phpbench": "1.0.*@dev",
-        "phpunit/phpunit": "^7.1",
+        "phpunit/phpunit": "6.5.13",
         "danielstjules/stringy": "3.1",
         "php-coveralls/php-coveralls": "2.1.0",
         "ramsey/uuid": "^3.0",

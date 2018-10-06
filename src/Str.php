@@ -245,8 +245,6 @@ class Str
     /**
      * hasPrefix
      *
-     * ## new
-     *
      * Check if the string has $prefix at the start.
      *
      * ```php
@@ -257,14 +255,12 @@ class Str
      *
      * @since 1.0.0
      * @param string $prefix
+     * @deprecated use startsWith instead
      * @return bool
      */
     public function hasPrefix(string $prefix): bool
     {
-        if ('' === $this->s || '' === $prefix) {
-            return false;
-        }
-        return (0 === \mb_strpos($this->s, $prefix));
+        return $this->startsWith($prefix);
     }
 
     /**
@@ -280,14 +276,12 @@ class Str
      *
      * @since 1.0.0
      * @param string $suffix
+     * @deprecated use endsWith instead
      * @return bool
      */
     public function hasSuffix(string $suffix): bool
     {
-        if ('' === $this->s || '' === $suffix) {
-            return false;
-        }
-        return \mb_substr($this->s, -\mb_strlen($suffix)) === $suffix;
+        return $this->endsWith($suffix);
     }
 
     /**
@@ -866,9 +860,14 @@ class Str
      */
     public function startsWith(string $substring, bool $caseSensitive = true): bool
     {
+        if ('' === $this->s || '' === $substring) {
+            return false;
+        }
+
         if ($caseSensitive) {
             return 0 === \mb_strpos($this->s, $substring);
         }
+
         return 0 === \mb_stripos($this->s, $substring);
     }
 
@@ -918,10 +917,15 @@ class Str
      */
     public function endsWith(string $substring, bool $caseSensitive = true): bool
     {
+        if ('' === $this->s || '' === $substring) {
+            return false;
+        }
+
         if ($caseSensitive) {
             return \mb_substr($this->s, -\mb_strlen($substring)) === $substring;
         }
-        return -1 !== \mb_strripos($this->s, $substring);
+
+        return (($r = \mb_strripos($this->s, $substring)) !== -1) && $r !== false;
     }
 
     /**
