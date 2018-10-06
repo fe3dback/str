@@ -1,5 +1,5 @@
 __Requirements__:
-- php7.0
+- php7.1
 
 ```bash
 composer require str/str
