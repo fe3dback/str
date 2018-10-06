@@ -68,7 +68,8 @@ class StrTest extends TestCase
         $this->assertFalse($s->isEmail());
 
         $s = new Str('HeL世');
-        $this->assertEquals([' ','H','e','L','世'],
+        $this->assertEquals(
+            [' ','H','e','L','世'],
             $s
             ->prepend(' ')
             ->chars()
@@ -92,6 +93,10 @@ class StrTest extends TestCase
 
         $s = new Str('2001:cdba::3257:9652');
         $this->assertTrue($s->isIpV6());
+
+        $s = new Str('');
+        $this->assertEquals($s->indexOf(''), -1);
+        $this->assertEquals($s->padBoth(1, ''), '');
     }
 
     public function testModifiers()
@@ -210,6 +215,26 @@ class StrTest extends TestCase
         $this->assertEquals('foo-and-other-stuff', $s->slugify());
         $this->assertEquals('foo_and_other_stuff', $s->underscored());
 
+        $s = new Str('foo');
+        $this->assertEquals('', $s->random(0, 10, 'test'));
+        $this->assertEquals('', $s->random(0, 0, 'test'));
+        $this->assertEquals('', $s->random(15, 5, 'test'));
+
+        $s = new Str('foo');
+        $this->assertEquals('', $s->appendUniqueIdentifier(0, 10, 'test'));
+        $this->assertEquals('', $s->appendUniqueIdentifier(0, 0, 'test'));
+        $this->assertEquals('', $s->appendUniqueIdentifier(15, 5, 'test'));
+
+        $s = new Str('chop_string');
+        $this->assertEquals(['chop_string'], $s->chop(100));
+
+        $s = new Str('Uppercam');
+        $this->assertEquals('Uppercam', $s->upperCamelize());
+
+        $s = new Str('äö');
+        $this->assertEquals('aeoe', $s->slugify('-', 'de'));
+        $this->assertEquals('aeoe', $s->overwrite(0, 0, 'zzaa'));
+
         $s = new Str('fòôbàř');
         $this->assertEquals('òôbàř', $s->slice(1));
         $this->assertEquals('oobar', $s->toAscii());
@@ -266,12 +291,16 @@ class StrTest extends TestCase
         $s = new Str('[fòôbàř]');
         $this->assertEquals('fòôbàř]', $s->trimLeft('['));
         $this->assertEquals('fòôbàř', $s->trimRight(']'));
-        $this->assertEquals('fòôbàř', $s
+        $this->assertEquals(
+            'fòôbàř',
+            $s
             ->ensureLeft('!!')
             ->ensureRight('!!')
             ->trim('!')
         );
-        $this->assertEquals('fòôbà', $s
+        $this->assertEquals(
+            'fòôbà',
+            $s
             ->ensureLeft('!!!')
             ->ensureRight('!!!')
             ->trim('!ř')
