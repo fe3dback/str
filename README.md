@@ -28,7 +28,7 @@ $send($str->getString()); // same
 ## Install
 
 __Requirements__:
-- php7.0
+- php7.1
 
 ```bash
 composer require str/str
@@ -616,8 +616,6 @@ __nothing__
 - bool 
 --------
 ## hasPrefix
-## new
-
 Check if the string has $prefix at the start.
 
 ```php
