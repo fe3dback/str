@@ -381,7 +381,7 @@ class Str
      */
     public function replace(string $old, string $new): Str
     {
-        $this->s = \mb_ereg_replace(\preg_quote($old, '/'), $new, $this->s);
+        $this->s = (string) \mb_ereg_replace(\preg_quote($old, '/'), $new, $this->s);
         return $this;
     }
 
@@ -488,7 +488,7 @@ class Str
     public function trim(string $chars = ''): Str
     {
         $chars = '' === $chars ? '\s' : \preg_quote($chars, '/');
-        $this->s = \mb_ereg_replace("^[$chars]+|[$chars]+\$", '', $this->s);
+        $this->s = (string) \mb_ereg_replace("^[$chars]+|[$chars]+\$", '', $this->s);
         return $this;
     }
 
@@ -512,7 +512,7 @@ class Str
     public function trimLeft(string $chars = ''): Str
     {
         $chars = '' === $chars ? '\s' : \preg_quote($chars, '/');
-        $this->s = \mb_ereg_replace("^[$chars]+", '', $this->s);
+        $this->s = (string) \mb_ereg_replace("^[$chars]+", '', $this->s);
         return $this;
     }
 
@@ -537,7 +537,7 @@ class Str
     public function trimRight(string $chars = ''): Str
     {
         $chars = '' === $chars ? '\s' : \preg_quote($chars, '/');
-        $this->s = \mb_ereg_replace("[$chars]+\$", '', $this->s);
+        $this->s = (string) \mb_ereg_replace("[$chars]+\$", '', $this->s);
         return $this;
     }
 
@@ -1235,16 +1235,16 @@ class Str
      */
     public function camelize(): Str
     {
-        $this->s = \mb_ereg_replace("^['\s']+|['\s']+\$", '', $this->s);
+        $this->s = (string) \mb_ereg_replace("^['\s']+|['\s']+\$", '', $this->s);
         $this->s = \mb_strtolower(\mb_substr($this->s, 0, 1)) . \mb_substr($this->s, 1);
-        $this->s = preg_replace('/^[-_]+/', '', $this->s);
-        $this->s = preg_replace_callback('/[-_\s]+(.)?/u', function ($match) {
+        $this->s = (string) \preg_replace('/^[-_]+/', '', $this->s);
+        $this->s = (string) \preg_replace_callback('/[-_\s]+(.)?/u', function ($match) {
             if (isset($match[1])) {
                 return \mb_strtoupper($match[1]);
             }
             return '';
         }, $this->s);
-        $this->s = preg_replace_callback('/[\d]+(.)?/u', function ($match) {
+        $this->s = (string) \preg_replace_callback('/[\d]+(.)?/u', function ($match) {
             return \mb_strtoupper($match[0]);
         }, $this->s);
         return $this;
@@ -1308,8 +1308,8 @@ class Str
      */
     public function collapseWhitespace(): Str
     {
-        $this->s = \mb_ereg_replace('[[:space:]]+', ' ', $this->s);
-        $this->s = \mb_ereg_replace("^['\s']+|['\s']+\$", '', $this->s);
+        $this->s = (string) \mb_ereg_replace('[[:space:]]+', ' ', $this->s);
+        $this->s = (string) \mb_ereg_replace("^['\s']+|['\s']+\$", '', $this->s);
         return $this;
     }
 
@@ -1335,7 +1335,7 @@ class Str
      */
     public function regexReplace(string $pattern, string $replacement, string $options = 'msr'): Str
     {
-        $this->s = \mb_ereg_replace($pattern, $replacement, $this->s, $options);
+        $this->s = (string) \mb_ereg_replace($pattern, $replacement, $this->s, $options);
         return $this;
     }
 
@@ -1357,9 +1357,9 @@ class Str
      */
     public function dasherize(): Str
     {
-        $this->s = \mb_ereg_replace("^['\s']+|['\s']+\$", '', $this->s);
-        $this->s = \mb_strtolower(\mb_ereg_replace('\B([A-Z])', '-\1', $this->s));
-        $this->s = \mb_ereg_replace('[-_\s]+', '-', $this->s);
+        $this->s = (string) \mb_ereg_replace("^['\s']+|['\s']+\$", '', $this->s);
+        $this->s = \mb_strtolower((string) \mb_ereg_replace('\B([A-Z])', '-\1', $this->s));
+        $this->s = (string) \mb_ereg_replace('[-_\s]+', '-', $this->s);
         return $this;
     }
 
@@ -1383,9 +1383,9 @@ class Str
      */
     public function delimit($delimiter): Str
     {
-        $this->s = \mb_ereg_replace("^['\s']+|['\s']+\$", '', $this->s);
-        $this->s = \mb_strtolower(\mb_ereg_replace('\B([A-Z])', '-\1', $this->s));
-        $this->s = \mb_ereg_replace('[-_\s]+', $delimiter, $this->s);
+        $this->s = (string) \mb_ereg_replace("^['\s']+|['\s']+\$", '', $this->s);
+        $this->s = \mb_strtolower((string) \mb_ereg_replace('\B([A-Z])', '-\1', $this->s));
+        $this->s = (string) \mb_ereg_replace('[-_\s]+', $delimiter, $this->s);
         return $this;
     }
 
@@ -1533,7 +1533,7 @@ class Str
     public function humanize(): Str
     {
         $this->s = \str_replace('_', ' ', $this->s);
-        $this->s = \mb_ereg_replace("^['\s']+|['\s']+\$", '', $this->s);
+        $this->s = (string) \mb_ereg_replace("^['\s']+|['\s']+\$", '', $this->s);
         $this->s = \mb_strtoupper(\mb_substr($this->s, 0, 1)) . \mb_substr($this->s, 1);
         return $this;
     }
@@ -1937,11 +1937,11 @@ class Str
         $this->s = \str_replace('@', $replacement, $this->s);
         $quotedReplacement = \preg_quote($replacement, '/');
         $pattern = "/[^a-zA-Z\d\s-_$quotedReplacement]/u";
-        $this->s = \preg_replace($pattern, '', $this->s);
+        $this->s = (string) \preg_replace($pattern, '', $this->s);
         $this->s = \strtolower($this->s);
-        $this->s = \preg_replace("/^['\s']+|['\s']+\$/", '', $this->s);
-        $this->s = \preg_replace('/\B([A-Z])/', '/-\1/', $this->s);
-        $this->s = \preg_replace('/[-_\s]+/', $replacement, $this->s);
+        $this->s = (string) \preg_replace("/^['\s']+|['\s']+\$/", '', $this->s);
+        $this->s = (string) \preg_replace('/\B([A-Z])/', '/-\1/', $this->s);
+        $this->s = (string) \preg_replace('/[-_\s]+/', $replacement, $this->s);
         $l = \strlen($replacement);
         if (0 === \strpos($this->s, $replacement)) {
             $this->s = \substr($this->s, $l);
@@ -1984,7 +1984,7 @@ class Str
             $this->s = \str_replace($value, $key, $this->s);
         }
         if ($removeUnsupported) {
-            $this->s = \preg_replace('/[^\x20-\x7E]/', '', $this->s);
+            $this->s = (string) \preg_replace('/[^\x20-\x7E]/', '', $this->s);
         }
         return $this;
     }
@@ -2040,7 +2040,7 @@ class Str
      */
     public function stripWhitespace(): Str
     {
-        $this->s = \mb_ereg_replace('[[:space:]]+', '', $this->s);
+        $this->s = (string) \mb_ereg_replace('[[:space:]]+', '', $this->s);
         return $this;
     }
 
@@ -2089,12 +2089,12 @@ class Str
      */
     public function upperCamelize(): Str
     {
-        $this->s = \mb_ereg_replace("^[\s]+|[\s]+\$", '', $this->s);
-        $this->s = preg_replace('/^[-_]+/', '', $this->s);
-        $this->s = preg_replace_callback('/[-_\s]+(.)?/u', function ($match) {
+        $this->s = (string) \mb_ereg_replace("^[\s]+|[\s]+\$", '', $this->s);
+        $this->s = (string) \preg_replace('/^[-_]+/', '', $this->s);
+        $this->s = (string) \preg_replace_callback('/[-_\s]+(.)?/u', function ($match) {
             return (string)\mb_strtoupper($match[1]);
         }, $this->s);
-        $this->s = preg_replace_callback('/[\d]+(.)?/u', function ($match) {
+        $this->s = (string) \preg_replace_callback('/[\d]+(.)?/u', function ($match) {
             return \mb_strtoupper($match[0]);
         }, $this->s);
         $this->s = \mb_strtoupper(\mb_substr($this->s, 0, 1)) . \mb_substr($this->s, 1);
@@ -2159,7 +2159,7 @@ class Str
      */
     public function tidy(): Str
     {
-        $this->s = \preg_replace(['/\x{2026}/u', '/[\x{201C}\x{201D}]/u', '/[\x{2018}\x{2019}]/u', '/[\x{2013}\x{2014}]/u'], ['...', '"', "'", '-'], $this->s);
+        $this->s = (string) \preg_replace(['/\x{2026}/u', '/[\x{201C}\x{201D}]/u', '/[\x{2018}\x{2019}]/u', '/[\x{2013}\x{2014}]/u'], ['...', '"', "'", '-'], $this->s);
         return $this;
     }
 
@@ -2182,7 +2182,7 @@ class Str
     public function titleize(array $ignore = []): Str
     {
         $this->s = \trim($this->s);
-        $this->s = preg_replace_callback('/([\S]+)/u', function ($match) use ($ignore) {
+        $this->s = (string) \preg_replace_callback('/([\S]+)/u', function ($match) use ($ignore) {
             if (\in_array($match[0], $ignore, true)) {
                 return $match[0];
             }
@@ -2220,7 +2220,7 @@ class Str
         if (\is_numeric($this->s)) {
             return $this->s + 0 > 0;
         }
-        return (bool)\mb_ereg_replace('[[:space:]]+', '', $this->s);
+        return (bool)(string) \mb_ereg_replace('[[:space:]]+', '', $this->s);
     }
 
     /**
@@ -2305,9 +2305,9 @@ class Str
      */
     public function underscored(): Str
     {
-        $this->s = \mb_ereg_replace("^['\s']+|['\s']+\$", '', $this->s);
-        $this->s = \mb_strtolower(\mb_ereg_replace('\B([A-Z])', '-\1', $this->s));
-        $this->s = \mb_ereg_replace('[-_\s]+', '_', $this->s);
+        $this->s = (string) \mb_ereg_replace("^['\s']+|['\s']+\$", '', $this->s);
+        $this->s = \mb_strtolower((string) \mb_ereg_replace('\B([A-Z])', '-\1', $this->s));
+        $this->s = (string) \mb_ereg_replace('[-_\s]+', '_', $this->s);
         return $this;
     }
 
@@ -2385,20 +2385,20 @@ class Str
      */
     public function snakeize(): Str
     {
-        $this->s = \mb_ereg_replace('::', '/', $this->s);
-        $this->s = \mb_ereg_replace('([A-Z]+)([A-Z][a-z])', '\1_\2', $this->s);
-        $this->s = \mb_ereg_replace('([a-z\d])([A-Z])', '\1_\2', $this->s);
-        $this->s = \mb_ereg_replace('\s+', '_', $this->s);
-        $this->s = \mb_ereg_replace('\s+', '_', $this->s);
-        $this->s = \mb_ereg_replace('^\s+|\s+$', '', $this->s);
-        $this->s = \mb_ereg_replace('-', '_', $this->s);
+        $this->s = (string) \mb_ereg_replace('::', '/', $this->s);
+        $this->s = (string) \mb_ereg_replace('([A-Z]+)([A-Z][a-z])', '\1_\2', $this->s);
+        $this->s = (string) \mb_ereg_replace('([a-z\d])([A-Z])', '\1_\2', $this->s);
+        $this->s = (string) \mb_ereg_replace('\s+', '_', $this->s);
+        $this->s = (string) \mb_ereg_replace('\s+', '_', $this->s);
+        $this->s = (string) \mb_ereg_replace('^\s+|\s+$', '', $this->s);
+        $this->s = (string) \mb_ereg_replace('-', '_', $this->s);
         $this->s = \mb_strtolower($this->s);
-        $this->s = \mb_ereg_replace_callback('([\d|A-Z])', function ($matches) {
+        $this->s = (string) \mb_ereg_replace_callback('([\d|A-Z])', function ($matches) {
             $match = $matches[1];
             return (string)(int)$match === $match ? '_' . $match . '_' : '';
         }, $this->s);
-        $this->s = \mb_ereg_replace('_+', '_', $this->s);
-        $this->s = \preg_replace('/^[_]+|[_]+$/', '', $this->s);
+        $this->s = (string) \mb_ereg_replace('_+', '_', $this->s);
+        $this->s = (string) \preg_replace('/^[_]+|[_]+$/', '', $this->s);
 
         return $this;
     }
@@ -2714,7 +2714,7 @@ class Str
         $result = [];
         foreach ($words as $word) {
             $this->s = $word;
-            $this->s = \mb_ereg_replace("^[$quote]+|[$quote]+\$", '', $this->s);
+            $this->s = (string) \mb_ereg_replace("^[$quote]+|[$quote]+\$", '', $this->s);
             $result[] = $this->s;
         }
         $this->s = \implode(' ', $result);
