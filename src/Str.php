@@ -1936,7 +1936,7 @@ class Str
         }
         $this->s = \str_replace('@', $replacement, $this->s);
         $quotedReplacement = \preg_quote($replacement, '/');
-        $pattern = "/[^a-zA-Z\d\s-_$quotedReplacement]/u";
+        $pattern = "/[^-_a-zA-Z\d\s$quotedReplacement]/u";
         $this->s = (string) \preg_replace($pattern, '', $this->s);
         $this->s = \strtolower($this->s);
         $this->s = (string) \preg_replace("/^['\s']+|['\s']+\$/", '', $this->s);
