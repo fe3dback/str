@@ -12,7 +12,7 @@
     </filter>
 
     <logging>
-        <log type="coverage-html" target="build/cov/html/" title="Str" charset="UTF-8" />
+        <log type="coverage-html" target="build/cov/html/"/>
         <log type="coverage-clover" target="build/logs/clover.xml"/>
         <log type="coverage-text" target="php://stdout" />
     </logging>

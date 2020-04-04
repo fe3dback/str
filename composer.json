@@ -32,10 +32,11 @@
             "Str\\": "src/"
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require-dev": {
-        "phpbench/phpbench": "1.0.*@dev",
-        "phpunit/phpunit": "6.5.13",
+        "phpbench/phpbench": "^0.16",
+        "phpunit/phpunit": "^7.0",
         "danielstjules/stringy": "3.1",
         "php-coveralls/php-coveralls": "2.1.0",
         "ramsey/uuid": "^3.0",
