@@ -103,7 +103,7 @@ class StrTest extends TestCase
     {
         $s = new Str('Önnek İş');
         $this->assertEquals('Önnekİş', $s->stripWhitespace());
-        $this->assertEquals('önnekiş', $s->toLowerCase());
+        $this->assertEquals('önneki̇ş', $s->toLowerCase());
         $this->assertTrue($s->hasPrefix('ön'));
         $this->assertEquals('ö', $s->at(0));
 

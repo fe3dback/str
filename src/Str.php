@@ -1932,7 +1932,7 @@ class Str
             $this->s = \str_replace($languageSpecific[$language][0], $languageSpecific[$language][1], $this->s);
         }
         foreach (self::CHARS_ARRAY as $key => $value) {
-            $this->s = \str_replace($value, $key, $this->s);
+            $this->s = \str_replace($value, (string)$key, $this->s);
         }
         $this->s = \str_replace('@', $replacement, $this->s);
         $quotedReplacement = \preg_quote($replacement, '/');
@@ -1981,7 +1981,7 @@ class Str
             $this->s = \str_replace($languageSpecific[$language][0], $languageSpecific[$language][1], $this->s);
         }
         foreach (self::CHARS_ARRAY as $key => $value) {
-            $this->s = \str_replace($value, $key, $this->s);
+            $this->s = \str_replace($value, (string)$key, $this->s);
         }
         if ($removeUnsupported) {
             $this->s = (string) \preg_replace('/[^\x20-\x7E]/', '', $this->s);
