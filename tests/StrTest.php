@@ -103,8 +103,14 @@ class StrTest extends TestCase
     {
         $s = new Str('Önnek İş');
         $this->assertEquals('Önnekİş', $s->stripWhitespace());
-        $this->assertEquals('önneki̇ş', $s->toLowerCase());
-        $this->assertTrue($s->hasPrefix('ön'));
+
+        if (PHP_VERSION_ID >= 70300) {
+            $this->assertEquals('önneki̇ş', $s->toLowerCase());
+        } else {
+            $this->assertEquals('önnekiş', $s->toLowerCase());
+        }
+
+        $this->assertTrue($s->startsWith('ön'));
         $this->assertEquals('ö', $s->at(0));
 
         $s = new Str('hello world');

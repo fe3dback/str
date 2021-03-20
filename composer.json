@@ -19,7 +19,7 @@
         }
     ],
     "require": {
-        "php": ">=7.1.0",
+        "php": ">=7.2.0",
         "ext-mbstring": "*",
         "ext-json": "*"
     },
@@ -35,7 +35,7 @@
     "minimum-stability": "stable",
     "require-dev": {
         "phpbench/phpbench": "dev-master",
-        "phpunit/phpunit": ">=7.0",
+        "phpunit/phpunit": "^8.5",
         "danielstjules/stringy": "3.1",
         "php-coveralls/php-coveralls": "^2.4",
         "ramsey/uuid": "^4.1",
