@@ -600,7 +600,7 @@ class StrFullTest extends TestCase
     public function testChars($expected, $str)
     {
         $s = new Str($str);
-        $this->assertInternalType('array', $expected);
+        $this->assertIsArray($expected);
         $this->assertEquals($expected, $s->chars());
     }
 
